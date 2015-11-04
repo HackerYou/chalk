@@ -1,0 +1,154 @@
+@font-face {
+  font-family: 'Nimbus Sans';
+  font-weight: 400;
+  src: url('fonts/nimbussansnovusdot-reg-webfont.eot'); /* IE9 Compat Modes */
+  src: url('fonts/nimbussansnovusdot-reg-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/nimbussansnovusdot-reg-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('fonts/nimbussansnovusdot-reg-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('fonts/nimbussansnovusdot-reg-webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+  font-family: 'Nimbus Sans Light';
+  font-weight: 300;
+  src: url('fonts/nimbussansnovusdot-lig-webfont.eot'); /* IE9 Compat Modes */
+  src: url('fonts/nimbussansnovusdot-lig-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/nimbussansnovusdot-lig-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('fonts/nimbussansnovusdot-lig-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('fonts/nimbussansnovusdot-lig-webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+  font-family: 'Nimbus Sans Bold';
+  font-weight: 700;
+  src: url('fonts/nimbussansnovusdot-sembol-webfont.eot'); /* IE9 Compat Modes */
+  src: url('fonts/nimbussansnovusdot-sembol-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/nimbussansnovusdot-sembol-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('fonts/nimbussansnovusdot-sembol-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('fonts/nimbussansnovusdot-sembol-webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+$baseFont: 'Nimbus Sans Light';
+$headerFont: 'Nimbus Sans Bold';
+$regularFont: 'Nimbus Sans';
+
+html {
+  font-size: 62.5%
+}
+
+body {
+  font-family: $baseFont;
+}
+
+h1, h2, h3, h4 {
+  font-family: $headerFont;
+  margin: 0 0 1.7rem 0;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 7.594rem;
+  line-height: 1;
+}
+
+h2 {
+  font-size: 5.063rem;
+  line-height: 1;
+}
+
+h3 {
+  font-size: 3.375rem;
+  line-height: 1.2;
+}
+
+h4 {
+  font-size: 2.25rem;
+  line-height: 1.2;
+}
+
+p {
+  font-size: 1.7rem;
+  line-height: 1.5;
+  letter-spacing: 0.05rem;
+  margin: 0 0 1.7rem 0;
+  font-weight: 300;
+}
+
+p.large {
+  font-size: 2.2rem;
+}
+
+strong {
+  font-family: $headerFont;
+  margin: 0 0 1.7rem 0;
+  font-weight: 700;
+}
+
+em {
+  font-family: $regularFont;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0;
+}
+
+small {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  font-family: $regularFont;
+  font-weight: 400;
+}
+
+a {
+  color: $blue;
+  border-bottom: 1px solid $blue;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+a:enter {
+  color: $blueDark;
+  border-bottom: 1px solid transparent;
+}
+
+.error { color: $red; }
+.success { color: $green; }
+.muted { color: $grey; }
+.warning { color: $redLight;}
+
+p.error { 
+  font-weight: 700;
+  font-family: $headerFont;
+}
+
+p.success { 
+  font-weight: 700;
+  font-family: $headerFont;
+}
+
+p.warning {
+  color: $red;
+}
+
+p.muted {
+  color: $grey;
+}
+
+ul, ol {
+  font-size: 1.7rem;
+}
+
+ul li, ol li {
+  line-height: 1.7;
+}
+
+
+
+
+
+
+
+
+
+
+
+

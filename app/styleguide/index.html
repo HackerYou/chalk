@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>HY Notes Styleguide</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="../styles/style.css" rel="stylesheet"/>
+    <body></body>
+    <div id="content" class="wrapper">
+      <header class="sgTop">
+        <div class="top">
+          <h1>HY Notes Style Guide</h1>
+        </div>
+      </header>
+      <div class="guide clearfix">
+        <section class="content">
+          <article id="color">
+            <h2 class="style">Colours</h2>
+            <div class="swatchContainer">
+              <div class="guideItem swatchItem">
+                <div class="title">
+                  <p>Red</p>
+                  <pre><code class="scss">$red: #D31C1D;
+$redLight: #E53D3E;
+$redDark: #A61617;</code></pre>
+                </div>
+                <div class="swatch swatchRed">
+                  <div class="diff diffL swatchRedLight"></div>
+                  <div class="diff diffR swatchRedDark"></div>
+                </div>
+              </div>
+              <div class="guideItem swatchItem">
+                <div class="title">
+                  <p>Black</p>
+                  <pre><code class="scss">$black: #231F20;
+$blackLight: #3E3739;
+$blackDark: #080707;</code></pre>
+                </div>
+                <div class="swatch swatchBlack">
+                  <div class="diff diffL swatchBlackLight"></div>
+                  <div class="diff diffR swatchBlackDark"></div>
+                </div>
+              </div>
+              <div class="guideItem swatchItem">
+                <div class="title">
+                  <p>Blue</p>
+                  <pre><code class="scss">$blue: #26A6C9;
+$blueLight: #46BCDC;
+$blueDark: #1E839E;</code></pre>
+                </div>
+                <div class="swatch swatchBlue">
+                  <div class="diff diffL swatchBlueLight"></div>
+                  <div class="diff diffR swatchBlueDark"></div>
+                </div>
+              </div>
+              <div class="guideItem swatchItem">
+                <div class="title">
+                  <p>Green</p>
+                  <pre><code class="scss">$green: #88CF41;
+$greenLight: #A2D96A;
+$greenDark: #6FB02D;</code></pre>
+                </div>
+                <div class="swatch swatchGreen">
+                  <div class="diff diffL swatchGreenLight"></div>
+                  <div class="diff diffR swatchGreenDark"></div>
+                </div>
+              </div>
+              <div class="guideItem swatchItem">
+                <div class="title">
+                  <p>Grey</p>
+                  <pre><code class="scss">$grey: #ADB2A8;
+$greyLight: #C7CAC3;
+$greyDark: #949A8D;</code></pre>
+                </div>
+                <div class="swatch swatchGrey">
+                  <div class="diff diffL swatchGreyLight"></div>
+                  <div class="diff diffR swatchGreyDark"></div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article id="typography">
+            <h2 class="style">Typography</h2>
+            <div id="h1" class="guideItem">
+              <div class="title">
+                <p>h1</p>
+                <pre><code class="html">&lt;h1&gt;This is an h1 tag&lt;/h1&gt;</code></pre>
+              </div>
+              <h1>This is an h1 tag</h1>
+            </div>
+            <div id="h2" class="guideItem">
+              <div class="title">
+                <p>h2</p>
+                <pre><code class="html">&lt;h2&gt;This is an h2 tag&lt;/h2&gt;</code></pre>
+              </div>
+              <h2>This is an h2 tag</h2>
+            </div>
+            <div id="h3" class="guideItem">
+              <div class="title">
+                <p>h3</p>
+                <pre><code class="html">&lt;h3&gt;This is an h3 tag&lt;/h3&gt;</code></pre>
+              </div>
+              <h3>This is an h3 tag</h3>
+            </div>
+            <div id="h4" class="guideItem">
+              <div class="title">
+                <p>h4</p>
+                <pre><code class="html">&lt;h4&gt;This is an h4&lt;/h4&gt;</code></pre>
+              </div>
+              <h4>This is an h4 tag</h4>
+            </div>
+            <div id="p" class="guideItem">
+              <div class="title">
+                <p>p</p>
+                <pre><code class="html">&lt;p&gt;This is a p tag&lt;/p&gt;</code></pre>
+              </div>
+              <p>
+                <Lorem>ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Lorem>
+              </p>
+            </div>
+            <div id="plarge" class="guideItem">
+              <div class="title">
+                <p>p.large</p>
+                <pre><code class="html">&lt;p class="large"&gt;This is a p tag with a class of large&lt;/p&gt;</code></pre>
+              </div>
+              <p class="large">
+                <Lorem>ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Lorem>
+              </p>
+            </div>
+            <div id="strong" class="guideItem">
+              <div class="title">
+                <p>strong</p>
+                <pre><code class="html">&lt;p&gt;This is a &lt;strong&gt;strong tag&lt;strong&gt;&lt;/p&gt;</code></pre>
+              </div>
+              <p>
+                <Lorem>ipsum dolor <strong>sit amet</strong>, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud <strong>exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</strong>.</Lorem>
+              </p>
+            </div>
+            <div id="em" class="guideItem">
+              <div class="title">
+                <p>em</p>
+                <pre><code class="html">&lt;p&gt;This is an &lt;em&gt;em tag&lt;em&gt;&lt;/p&gt;</code></pre>
+              </div>
+              <p>
+                <Lorem>ipsum dolor <em>sit amet</em>, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,quis nostrud <em>exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat</em>.</Lorem>
+              </p>
+            </div>
+            <div id="small" class="guideItem">
+              <div class="title">
+                <p>small</p>
+                <pre><code class="html">&lt;p&gt;This is a &lt;small&gt;small tag&lt;small&gt;&lt;/p&gt;</code></pre>
+              </div>
+              <p><small>This is small text</small>.</p>
+            </div>
+            <div id="a" class="guideItem">
+              <div class="title">
+                <p>a</p>
+                <pre><code class="html">&lt;p&gt;This is an &lt;a href="#"&gt;anchor tag&lt;/a&gt;&lt;/p&gt;</code></pre>
+              </div>
+              <p>
+                <Vestibulum>id <a href="#">ligula porta felis</a> euismod semper. Nulla vitae elit libero, a pharetra augue.</Vestibulum>
+              </p>
+            </div>
+            <div id="ahover" class="guideItem">
+              <div class="title">
+                <p>a:hover</p>
+                <pre><code class="html">&lt;p&gt;This is an &lt;a href="#"&gt;anchor tag&lt;/a&gt; with a hover state&lt;/p&gt;</code></pre>
+              </div>
+              <p>
+                <Vestibulum>id <a href="#">ligula porta felis</a> euismod semper. Nulla vitae elit libero, a pharetra augue.</Vestibulum>
+              </p>
+            </div>
+            <div id="ul" class="guideItem">
+              <div class="title">
+                <p>ul</p>
+                <pre><code class="html">&lt;ul&gt;
+   &lt;li&gt;This is a unordered list item&lt;/li&gt;
+   &lt;li&gt;This is a unordered list item&lt;/li&gt;
+   &lt;li&gt;This is a unordered list item&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+              </div>
+              <ul>
+                <li>item 1</li>
+                <li>item 2</li>
+                <li>item 3</li>
+                <li>item 4</li>
+                <li>item 5</li>
+              </ul>
+            </div>
+            <div id="ol" class="guideItem">
+              <div class="title">
+                <p>ol</p>
+                <pre><code class="html">&lt;ol&gt;
+   &lt;li&gt;This is an ordered list item&lt;/li&gt;
+   &lt;li&gt;This is an ordered list item&lt;/li&gt;
+   &lt;li&gt;This is an ordered list item&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+              </div>
+              <ol>
+                <li>item 1</li>
+                <li>item 2</li>
+                <li>item 3</li>
+                <li>item 4</li>
+                <li>item 5</li>
+              </ol>
+            </div>
+          </article>
+          <article id="status">
+            <h2 class="style">Type Status Classes</h2>
+            <div id="perror" class="guideItem">
+              <div class="title">
+                <p>p.error</p>
+                <pre><code class="html">&lt;p class="error"&gt;This is a p tag with a class of error&lt;/p&gt;</code></pre>
+              </div>
+              <p class="error">This is an error message</p>
+            </div>
+            <div id="psuccess" class="guideItem">
+              <div class="title">
+                <p>p.success</p>
+                <pre><code class="html">&lt;p class="success"&gt;This is a p tag with a class of success&lt;/p&gt;</code></pre>
+              </div>
+              <p class="success">This is a success message</p>
+            </div>
+            <div id="pmuted" class="guideItem">
+              <div class="title">
+                <p>p.muted</p>
+                <pre><code class="html">&lt;p class="muted"&gt;This is a p tag with a class of muted&lt;/p&gt;</code></pre>
+              </div>
+              <p class="muted">This is muted text</p>
+            </div>
+            <div id="pwarning" class="guideItem">
+              <div class="title">
+                <p>p.warning</p>
+                <pre><code class="html">&lt;p class="warning"&gt;This is a p tag with a class of warning&lt;/p&gt;</code></pre>
+              </div>
+              <p class="warning">This is warning text</p>
+            </div>
+          </article>
+          <article id="forms">
+            <h2 class="style">Forms</h2>
+            <div id="input" class="guideItem">
+              <div class="title">
+                <p>input (text, date, email, number, password)</p>
+                <pre><code class="html">&lt;input type="text" /&gt;</code></pre>
+              </div>
+              <input type="text" placeholder="Input Field"/>
+            </div>
+            <div id="textarea" class="guideItem">
+              <div class="title">
+                <p>textarea</p>
+                <pre><code class="html">&lt;textarea&gt;&lt;/textarea&gt;</code></pre>
+              </div>
+              <textarea></textarea>
+            </div>
+            <div id="inputerror" class="guideItem">
+              <div class="title">
+                <p>input.error (text, date, email, number, password)</p>
+                <pre><code class="html">&lt;input type="text" class="error" /&gt;</code></pre>
+              </div>
+              <input type="text" placeholder="Input Field" value="Error Text" class="error"/>
+            </div>
+            <div id="inputsuccess" class="guideItem">
+              <div class="title">
+                <p>input.success (text, date, email, number, password)</p>
+                <pre><code class="html">&lt;input type="text" class="success" /&gt;</code></pre>
+              </div>
+              <input type="text" placeholder="Input Field" value="Success Text" class="success"/>
+            </div>
+            <div id="label" class="guideItem">
+              <div class="title">
+                <p>Label </p>
+                <pre><code class="html">&lt;label&gt;Input Label&lt;/label&gt;</code></pre>
+              </div>
+              <label>Input Label</label>
+              <input type="text" placeholder="Input Field"/>
+            </div>
+            <div id="labelinline" class="guideItem">
+              <div class="title">
+                <p>Inline Label</p>
+                <pre><code class="html">&lt;label class="inline"&gt;Input Label&lt;/label&gt;</code></pre>
+              </div>
+              <label class="inline">Input Label</label>
+              <input type="text" placeholder="Input Field"/>
+            </div>
+            <div id="select" class="guideItem">
+              <div class="title">
+                <p>select</p>
+                <pre><code class="html">&lt;select&gt;&lt;/select&gt;</code></pre>
+              </div>
+              <select>
+                <option value="Option 1">Option 1</option>
+                <option value="Option 2">Option 2</option>
+                <option value="Option 3">Option 3</option>
+              </select>
+            </div>
+          </article>
+          <article id="buttons">
+            <h2 class="style">Buttons</h2>
+            <div id="btn" class="guideItem">
+              <div class="title">
+                <p>button</p>
+                <pre><code class="html">&lt;button&gt;Click Me&lt;/button&gt;
+&lt;a href="#" class="button"&gt;Click Me&lt;/a&gt;</code></pre>
+              </div>
+              <button class="default">Click Me</button><a class="button">Click Me</a>
+            </div>
+            <div id="btnprimary" class="guideItem">
+              <div class="title">
+                <p>button.primary</p>
+                <pre><code class="html">&lt;button class="primary"&gt;Click Me&lt;/button&gt;
+&lt;a href="#" class="button primary"&gt;Click Me&lt;/a&gt;</code></pre>
+              </div>
+              <button class="primary">Click Me</button><a class="button primary">Click Me</a>
+            </div>
+            <div id="btnsuccess" class="guideItem">
+              <div class="title">
+                <p>button.success</p>
+                <pre><code class="html">&lt;button class="success"&gt;Click Me&lt;/button&gt;
+&lt;a href="#" class="button success"&gt;Click Me&lt;/a&gt;</code></pre>
+              </div>
+              <button class="success">Click Me</button><a class="button success">Click Me</a>
+            </div>
+            <div id="btnerror" class="guideItem">
+              <div class="title">
+                <p>button.error</p>
+                <pre><code class="html">&lt;button class="error"&gt;Click Me&lt;/button&gt;
+&lt;a href="#" class="button error"&gt;Click Me&lt;/a&gt;</code></pre>
+              </div>
+              <button class="error">Click Me</button><a class="button error">Click Me</a>
+            </div>
+            <div id="submit" class="guideItem">
+              <div class="title">
+                <p>input submit</p>
+                <pre><code class="html">&lt;input type="submit" /&gt;</code></pre>
+              </div>
+              <input type="submit"/>
+            </div>
+          </article>
+          <article id="codetags">
+            <h2 class="style">Code</h2>
+            <div id="code" class="guideItem">
+              <div class="title">
+                <p>code</p>
+                <pre><code class="html">&lt;p&gt;This is &lt;code&gt;a code tag&lt;/code&gt;&lt;/p&gt;</code></pre>
+              </div>
+              <p>this is <code>a code tag</code></p>
+            </div>
+            <div id="kbd" class="guideItem">
+              <div class="title">
+                <p>kbd</p>
+                <pre><code class="html">&lt;p&gt;This is &lt;kbd&gt;a kbd tag&lt;/kbd&gt;&lt;/p&gt;</code></pre>
+              </div>
+              <p>this is a <kbd>kbd</kbd> tag</p>
+            </div>
+            <div id="pre" class="guideItem">
+              <div class="title">
+                <p>pre</p>
+                <pre><code class="html">&lt;pre&gt;
+ &lt;code&gt;
+   
+ &lt;/code&gt;
+&lt;/pre&gt;</code></pre>
+              </div>
+              <pre><code>for (var i = 0; i &gt; 10; i++) {
+  console.log(i);
+}</code></pre>
+            </div>
+          </article>
+        </section>
+        <aside class="sg">
+          <ul class="styleNav">
+            <li><a href="#color">Colours</a></li>
+            <li><a href="#typography">Typography</a>
+              <ul>
+                <li><a href="#h1">h1</a></li>
+                <li><a href="#h2">h2</a></li>
+                <li><a href="#h3">h3</a></li>
+                <li><a href="#p">p</a></li>
+                <li><a href="#plarge">p.large</a></li>
+                <li><a href="#strong">strong</a></li>
+                <li><a href="#em">em</a></li>
+                <li><a href="#small">small</a></li>
+                <li><a href="#a">a</a></li>
+                <li><a href="#ahover">ahover</a></li>
+                <li><a href="#ul">ul</a></li>
+                <li><a href="#ol">ol</a></li>
+              </ul>
+            </li>
+            <li><a href="#status">Status
+                <ul>
+                  <li><a href="#perror">p.error</a></li>
+                  <li><a href="#psuccess">p.success</a></li>
+                  <li><a href="#pmuted">p.muted</a></li>
+                  <li><a href="#pwarning">p.warning</a></li>
+                </ul></a></li>
+            <li><a href="#forms">Forms
+                <ul>
+                  <li><a href="#input">input</a></li>
+                  <li><a href="#inputerror">input.error</a></li>
+                  <li><a href="#inputsuccess">input.success</a></li>
+                  <li><a href="#label">label</a></li>
+                  <li><a href="#labelinline">label.inline</a></li>
+                  <li><a href="#select">select</a></li>
+                  <li><a href="#textarea">textarea</a></li>
+                </ul></a></li>
+            <li><a href="#buttons">Buttons
+                <ul>
+                  <li><a href="#btn">button</a></li>
+                  <li><a href="#btnprimary">primary button</a></li>
+                  <li><a href="#btnsuccess">success button</a></li>
+                  <li><a href="#btnerror">error button</a></li>
+                </ul></a></li>
+            <li><a href="#codetags">Code Elements
+                <ul>
+                  <li><a href="#code">code</a></li>
+                  <li><a href="#kbd">keyboard</a></li>
+                  <li><a href="#pre">pre</a></li>
+                </ul></a></li>
+          </ul>
+        </aside>
+      </div>
+      <footer>Copyright 2015 HackerYou</footer>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/highlight.min.js"></script>
+    <script src="scripts/vendor/jquery.sticky-kit.min.js"></script>
+    <script src="scripts/main.min.js"></script>
+  </head>
+</html>

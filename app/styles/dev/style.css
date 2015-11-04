@@ -1,0 +1,27 @@
+@import 'setup.css';
+@import 'partials/brand.css';
+
+img { max-width: 100% }
+svg { max-height: 100% }
+
+body {
+  color: $black;
+  background-color: white;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+@import 'partials/typography.css';
+@import 'partials/code.css';
+@import 'partials/buttons.css';
+@import 'partials/forms.css';
+@import 'styleGuide.css';
+
+.wrapper {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+
+

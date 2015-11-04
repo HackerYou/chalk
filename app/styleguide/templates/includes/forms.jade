@@ -1,0 +1,56 @@
+article#forms
+	h2.style Forms
+
+	.guideItem#input
+		.title
+			p input (text, date, email, number, password)
+			pre
+				code.html &lt;input type="text" /&gt;
+		input(type="text" placeholder="Input Field")
+
+	.guideItem#textarea
+		.title
+			p textarea
+			pre
+				code.html &lt;textarea&gt;&lt;/textarea&gt;
+		textarea
+
+	.guideItem#inputerror
+		.title
+			p input.error (text, date, email, number, password)
+			pre
+				code.html &lt;input type="text" class="error" /&gt;
+		input(type="text" placeholder="Input Field" class="error" value="Error Text")
+
+	.guideItem#inputsuccess
+		.title
+			p input.success (text, date, email, number, password)
+			pre
+				code.html &lt;input type="text" class="success" /&gt;
+		input(type="text" placeholder="Input Field" class="success" value="Success Text")
+
+	.guideItem#label
+		.title
+			p Label 
+			pre
+				code.html &lt;label&gt;Input Label&lt;/label&gt;
+		label Input Label
+		input(type="text" placeholder="Input Field")
+
+	.guideItem#labelinline
+		.title
+			p Inline Label
+			pre
+				code.html &lt;label class="inline"&gt;Input Label&lt;/label&gt;
+		label.inline Input Label
+		input(type="text" placeholder="Input Field")
+
+	.guideItem#select
+		.title
+			p select
+			pre
+				code.html &lt;select&gt;&lt;/select&gt;
+		select
+			option(value="Option 1") Option 1
+			option(value="Option 2") Option 2
+			option(value="Option 3") Option 3

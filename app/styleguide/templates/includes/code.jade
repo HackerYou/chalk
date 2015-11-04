@@ -1,0 +1,31 @@
+article#codetags
+	h2.style Code
+	.guideItem#code
+		.title
+			p code
+			pre
+				code.html &lt;p&gt;This is &lt;code&gt;a code tag&lt;/code&gt;&lt;/p&gt;
+		p this is <code>a code tag</code>
+
+	.guideItem#kbd
+		.title
+			p kbd
+			pre
+				code.html &lt;p&gt;This is &lt;kbd&gt;a kbd tag&lt;/kbd&gt;&lt;/p&gt;
+		p this is a <kbd>kbd</kbd> tag
+
+	.guideItem#pre
+		.title
+			p pre
+			pre
+				code.html
+					| &lt;pre&gt;
+					|  &lt;code&gt;
+					|    
+					|  &lt;/code&gt;
+					| &lt;/pre&gt;
+		pre
+			code
+				| for (var i = 0; i &gt; 10; i++) {
+				|   console.log(i);
+				| }

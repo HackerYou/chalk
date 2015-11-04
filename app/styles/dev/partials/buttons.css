@@ -1,0 +1,56 @@
+button, .button {
+  display: inline-block;
+  background: $grey;
+  border: 0;
+  border-radius: 0;
+  color: white;
+  font-size: 1.5rem;
+  padding: 1.5rem 2rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  transition: all 0.5s;
+  &:hover {
+    background: $greyLight;
+    border: 0;
+    color: white;
+  }
+  &.primary {
+    background: $blue;
+    color: white;
+    &:hover {
+      background: $blueLight;
+    }
+  }
+  &.success {
+    background: $green;
+    color: white;
+    &:hover {
+      background: $greenLight;
+    }
+  }
+  &.error {
+    background: $red;
+    color: white;
+    &:hover {
+      background: $redLight;
+    }
+  }
+}
+
+input[type="submit"] {
+  display: inline-block;
+  background: $black;
+  border: 0;
+  border-radius: 0;
+  color: white;
+  font-size: 1.5rem;
+  padding: 1.5rem 2rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  transition: all 0.5s;
+  &:hover {
+    background: $blackLight;
+    border: 0;
+    color: white;
+  }
+}
