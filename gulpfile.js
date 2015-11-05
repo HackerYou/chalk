@@ -17,7 +17,8 @@ var paths = {
 	distI: './app/images/',
 	srcGuideT: './app/styleguide/templates/',
 	distGuideT: './app/styleguide/',
-	includes: './app/src/templates/includes/'
+	includes: './app/src/templates/includes/',
+	jsx: 'app/components/app.jsx'
 }
 
 // Setup PostCSS Plugins
@@ -90,6 +91,23 @@ gulp.task('bs-guide', function () {
 	})
 });
 
+gulp.task('js', function() {
+	browserify(paths.jsx)
+		.transform(babelify,{presets: ["es2015", "react"]})
+		.bundle().on('error', function(err) {
+			console.log("Error:",err.message);
+		})
+		.pipe(source('app.js'))
+		.pipe(gulp.dest('app/components'));
+});
+
+gulp.task('bs-client', function () {
+	browserSync({
+		server: {
+			baseDir: './app'
+		}
+	})
+});
 // gulp.task('images', function () {
 // 	return gulp.src(paths.srcI + '*')
 // 		.pipe($.imagemin())
@@ -97,4 +115,15 @@ gulp.task('bs-guide', function () {
 // });
 
 // gulp.task('default', ['styles', 'templates', 'scripts', 'images', 'browser-sync','watch']);
+gulp.task('default', ['js','bs-client'], () => {
+	gulp.watch('app/components/**/*.jsx',['js']);
+	gulp.watch('app/components/app.js', reload);
+});
+
 gulp.task('styleguide', ['styles', 'guidetemplate', 'guidescripts', 'bs-guide','guidewatch']);
+
+
+
+
+
+

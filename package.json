@@ -1,21 +1,30 @@
 {
-  "name": "deadset",
+  "name": "chalk",
   "version": "0.0.1",
   "description": "",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Drew Minns",
+  "contributors": [ 
+    {
+      "name": "Drew Minns"
+    },
+    {
+      "name": "Kristen Spencer"
+    },
+    {
+      "name": "Ryan Christiani"
+    }
+  ],
   "license": "ISC",
   "devDependencies": {
     "autoprefixer-core": "^5.2.1",
-    "babelify": "^6.1.3",
+    "babelify": "^7.2.0",
     "browser-sync": "^2.7.13",
     "browserify": "^11.0.1",
     "cssnext": "^1.8.0",
     "gulp": "^3.9.0",
-    "gulp-babel": "^5.1.0",
     "gulp-concat": "^2.6.0",
     "gulp-imagemin": "^2.3.0",
     "gulp-jade": "^1.0.1",
@@ -39,11 +48,16 @@
     "postcss-simple-vars": "^0.3.0",
     "postcss-size": "^0.2.0",
     "precss": "^0.3.0",
-    "react": "^0.13.3",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
-    "pixrem": "^1.3.1"
+    "babel-preset-es2015": "^6.0.15",
+    "babel-preset-react": "^6.0.15",
+    "history": "^1.13.0",
+    "pixrem": "^1.3.1",
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2",
+    "react-router": "^1.0.0-rc4"
   }
 }
