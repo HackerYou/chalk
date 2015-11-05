@@ -33,7 +33,7 @@ var processors = [
 	require('postcss-reporter')() // https://github.com/postcss/postcss-reporter
 ];
 
-gulp.task('styles', function () {
+gulp.task('styles', () => {
 	return gulp.src(paths.srcCSS + 'style.css')
 		.pipe($.plumber({
 		  errorHandler: $.notify.onError("Error: <%= error.message %>")
@@ -46,7 +46,7 @@ gulp.task('styles', function () {
 		.pipe(reload({stream:true}));
 });
 
-gulp.task('guidetemplate', function () {
+gulp.task('guidetemplate', () => {
 	return gulp.src([paths.srcGuideT + '**/*.jade', '!' + paths.srcGuideT + 'layout.jade', '!' + paths.includes + '**/*.jade'])
 		.pipe($.plumber({
 		  errorHandler: $.notify.onError("Error: <%= error.message %>")
@@ -58,7 +58,7 @@ gulp.task('guidetemplate', function () {
 		.pipe(reload({stream:true}));
 });
 
-gulp.task('guidescripts', function () {
+gulp.task('guidescripts', () => {
 	var b = browserify({
 	  entries: paths.srcGuideJS + 'app.js',
 	  debug: true,
@@ -77,7 +77,7 @@ gulp.task('guidescripts', function () {
 	  .pipe(reload({stream:true}));
 });	
 
-gulp.task('guidewatch', function() {
+gulp.task('guidewatch', () => {
 	gulp.watch(paths.srcCSS + '**/*.css', ['styles']);
 	gulp.watch(paths.srcGuideJS + '**/*.js', ['guidescripts']);
 	gulp.watch(paths.srcGuideT + '**/*.jade', ['guidetemplate']);
@@ -86,7 +86,7 @@ gulp.task('guidewatch', function() {
 gulp.task('bs-guide', function () {
 	browserSync({
 		server: {
-			baseDir: './'
+			baseDir: './app/styleguide'
 		}
 	})
 });
@@ -118,9 +118,10 @@ gulp.task('bs-client', function () {
 gulp.task('default', ['js','bs-client'], () => {
 	gulp.watch('app/components/**/*.jsx',['js']);
 	gulp.watch('app/components/app.js', reload);
+	gulp.watch(paths.srcCSS + '**/*.css', ['styles']);
 });
 
-gulp.task('styleguide', ['styles', 'guidetemplate', 'guidescripts', 'bs-guide','guidewatch']);
+gulp.task('guide', ['styles', 'guidetemplate', 'guidescripts', 'bs-guide','guidewatch']);
 
 
 
