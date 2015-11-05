@@ -19,7 +19,7 @@
 }
 
 @font-face {
-  font-family: 'Nimbus Sans Bold';
+  font-family: 'Nimbus Sans Semi-Bold';
   font-weight: 700;
   src: url('fonts/nimbussansnovusdot-sembol-webfont.eot'); /* IE9 Compat Modes */
   src: url('fonts/nimbussansnovusdot-sembol-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
@@ -28,9 +28,19 @@
        url('fonts/nimbussansnovusdot-sembol-webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
 }
 
-$baseFont: 'Nimbus Sans Light';
-$headerFont: 'Nimbus Sans Bold';
-$regularFont: 'Nimbus Sans';
+@font-face {
+  font-family: 'Nimbus Sans Medium';
+  font-weight: 700;
+  src: url('fonts/nimbussansnovusdot-med-webfont.eot'); /* IE9 Compat Modes */
+  src: url('fonts/nimbussansnovusdot-med-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/nimbussansnovusdot-med-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('fonts/nimbussansnovusdot-med-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('fonts/nimbussansnovusdot-med-webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+$baseFont: 'Nimbus Sans Light', "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+$headerFont: 'Nimbus Sans Semi-Bold', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+$regularFont: 'Nimbus Sans', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 
 html {
   font-size: 62.5%
@@ -48,17 +58,22 @@ h1, h2, h3, h4 {
 
 h1 {
   font-size: 7.594rem;
-  line-height: 1;
+  line-height: 1.2;
 }
 
 h2 {
   font-size: 5.063rem;
-  line-height: 1;
+  line-height: 1.2;
 }
 
 h3 {
   font-size: 3.375rem;
   line-height: 1.2;
+}
+
+h3.title {
+  font-size: 3.375rem;
+  line-height: 1;
 }
 
 h4 {
@@ -93,7 +108,7 @@ em {
 
 small {
   font-size: 1.2rem;
-  line-height: 1.6;
+  line-height: 1.2;
   font-family: $regularFont;
   font-weight: 400;
 }

@@ -12,7 +12,7 @@ header.sgTop {
 	font-size: 1.7rem;
 }
 
-.title {
+div.title {
 	color: $black;
 	font-family: 'Work Sans', sans-serif; 
   font-weight: 300;
