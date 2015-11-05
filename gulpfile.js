@@ -5,7 +5,6 @@ var gulp = require('gulp'),
 		babelify = require('babelify'),
 		browserSync = require('browser-sync'),
 		reload = browserSync.reload,
-		babe = require('gulp-babel'),
 		$ = require('gulp-load-plugins')();
 
 // Define paths
