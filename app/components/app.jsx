@@ -59,6 +59,8 @@ ReactDom.render(
 			<Route path='/lesson' component={Lesson} />
 			<Route path='/topics' component={Topics} />
 			<Route path='/exercises' component={Exercises} />
+			<Route path='/instructors' component={Instructors} />
+			<Route path='/media' component={Media} />
 		</Route>
 	</Router>)
 	, document.getElementById('app'));
