@@ -23,6 +23,7 @@
     "babelify": "^7.2.0",
     "browser-sync": "^2.7.13",
     "browserify": "^11.0.1",
+    "connect-history-api-fallback": "^1.1.0",
     "cssnext": "^1.8.0",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",

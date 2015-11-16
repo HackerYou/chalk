@@ -5,7 +5,9 @@ var gulp = require('gulp'),
 		babelify = require('babelify'),
 		browserSync = require('browser-sync'),
 		reload = browserSync.reload,
-		$ = require('gulp-load-plugins')();
+		$ = require('gulp-load-plugins')(),
+		historyApiFallback = require('connect-history-api-fallback');
+
 
 // Define paths
 var paths = {
@@ -105,7 +107,8 @@ gulp.task('bs-client', function () {
 	browserSync({
 		server: {
 			baseDir: './app'
-		}
+		},
+		middleware : [ historyApiFallback() ]
 	})
 });
 // gulp.task('images', function () {
