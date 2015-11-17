@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { Router, Route, Link, Navigation } from 'react-router';
-
+import { Router, Route, Link, Navigation, History } from 'react-router';
 let createBrowserHistory = require('history/lib/createBrowserHistory');
 
 import Login from './login/index.jsx';
@@ -15,6 +14,12 @@ import Media from './media/index.jsx';
 import Instructors from './instructors/index.jsx';
 
 let App = React.createClass({
+	displayName: 'App',
+	getInitialState(){
+		return{
+			user: {}
+		}
+	},
 	render() {
 		return (
 			<div>
