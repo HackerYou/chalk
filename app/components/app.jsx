@@ -12,6 +12,7 @@ import Topics from './topics/index.jsx';
 import Footer from './footer/index.jsx';
 import Media from './media/index.jsx';
 import Instructors from './instructors/index.jsx';
+import Header from './header/index.jsx';
 
 let App = React.createClass({
 	displayName: 'App',
@@ -30,17 +31,7 @@ let App = React.createClass({
 	render() {
 		return (
 			<div>
-				<header className="mainHeader">
-					<ul>
-						<li>
-							<Link to="/">Home</Link>
-						</li>
-						<li>
-							<Link to="dashboard">Dashboard Link</Link>
-						</li>
-					</ul>
-				</header>
-
+				<Header user={this.state.user}/>
 				<section>
 					{this.props.children || <Login />}
 				</section>
