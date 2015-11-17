@@ -38,6 +38,17 @@
        url('fonts/nimbussansnovusdot-med-webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
 }
 
+@font-face {
+  font-family: 'chalk';
+  src:url('fonts/chalk.eot?83k4wi');
+  src:url('fonts/chalk.eot?83k4wi#iefix') format('embedded-opentype'),
+    url('fonts/chalk.ttf?83k4wi') format('truetype'),
+    url('fonts/chalk.woff?83k4wi') format('woff'),
+    url('fonts/chalk.svg?83k4wi#chalk') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 $baseFont: 'Nimbus Sans Light', "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 $headerFont: 'Nimbus Sans Semi-Bold', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 $regularFont: 'Nimbus Sans', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -71,10 +82,6 @@ h3 {
   line-height: 1.2;
 }
 
-h3.title {
-  font-size: 3.375rem;
-  line-height: 1;
-}
 
 h4 {
   font-size: 2.25rem;
@@ -87,6 +94,11 @@ p {
   letter-spacing: 0.05rem;
   margin: 0 0 1.7rem 0;
   font-weight: 300;
+}
+
+p.title {
+  font-family: $headerFont;
+  font-weight: 700;
 }
 
 p.large {
@@ -125,10 +137,10 @@ a:enter {
   border-bottom: 1px solid transparent;
 }
 
-.error { color: $red; }
-.success { color: $green; }
-.muted { color: $grey; }
-.warning { color: $redLight;}
+.red { color: $red; }
+.green { color: $green; }
+.grey { color: $grey; }
+.redLight { color: $redLight;}
 
 p.error { 
   font-weight: 700;
@@ -157,13 +169,79 @@ ul li, ol li {
 }
 
 
+i[class^="chalk-"] {
+  font-family: 'chalk';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  margin-right: 1rem;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-
-
-
-
-
-
-
-
+.chalk-rightArrow:before {
+  content: "\e906";
+}
+.chalk-copy:before {
+  content: "\e905";
+}
+.chalk-add:before {
+  content: "\e900";
+}
+.chalk-leftArrow:before {
+  content: "\e901";
+}
+.chalk-close:before {
+  content: "\e902";
+}
+.chalk-remove:before {
+  content: "\e903";
+}
+.chalk-code:before {
+  content: "\e904";
+}
+.chalk-doc:before {
+  content: "\e907";
+}
+.chalk-download:before {
+  content: "\e908";
+}
+.chalk-edit:before {
+  content: "\e909";
+}
+.chalk-github:before {
+  content: "\e90a";
+}
+.chalk-heart:before {
+  content: "\e90b";
+}
+.chalk-home:before {
+  content: "\e90c";
+}
+.chalk-image:before {
+  content: "\e90d";
+}
+.chalk-link:before {
+  content: "\e90e";
+}
+.chalk-log-out:before {
+  content: "\e90f";
+}
+.chalk-email:before {
+  content: "\e910";
+}
+.chalk-save:before {
+  content: "\e911";
+}
+.chalk-twitter:before {
+  content: "\e912";
+}
+.chalk-users:before {
+  content: "\e913";
+}
 
