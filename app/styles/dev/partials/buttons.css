@@ -1,13 +1,13 @@
 button, .button {
-  font-family: 'Nimbus Sans Medium', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-family: $regularFont;
   display: inline-block;
   background: $grey;
   border: 0;
   border-radius: 0;
   color: white;
   font-size: 1.5rem;
-  padding: 1.5rem 2.5rem;
-  margin-right: 1rem;
+  padding: 1.7rem 2.5rem 1.9rem;
+  margin: 0 1rem;
   cursor: pointer;
   transition: all 0.5s;
   &:hover {
@@ -39,6 +39,7 @@ button, .button {
 }
 
 input[type="submit"] {
+  font-family: $regularFont;
   display: inline-block;
   background: $black;
   border: 0;
@@ -53,5 +54,19 @@ input[type="submit"] {
     background: $blackLight;
     border: 0;
     color: white;
+  }
+}
+
+
+button.small {
+  display: inline-block;
+  font-family: $regularFont;
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: white;
+  background: $grey;
+  padding: 0.5rem 1rem;
+  &.active {
+    background: $red;
   }
 }
