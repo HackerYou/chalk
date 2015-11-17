@@ -15,9 +15,16 @@ import Instructors from './instructors/index.jsx';
 
 let App = React.createClass({
 	displayName: 'App',
+	componentDidMount(){
+		let data = require('./sample-data.js');
+		this.setState({
+			user: data.user
+		});
+	},
 	getInitialState(){
 		return{
-			user: {}
+			user: {},
+			announcement: {}
 		}
 	},
 	render() {
@@ -30,18 +37,6 @@ let App = React.createClass({
 						</li>
 						<li>
 							<Link to="dashboard">Dashboard Link</Link>
-						</li>
-						<li>
-							<Link to="classroom">Classroom Link</Link>
-						</li>
-						<li>
-							<Link to="exercises">Exercises Link</Link>
-						</li>
-						<li>
-							<Link to="lesson">Lesson Link</Link>
-						</li>
-						<li>
-							<Link to="topic">Topic Link</Link>
 						</li>
 					</ul>
 				</header>

@@ -29,6 +29,7 @@ module.exports = {
   },
   "announcement": [
       {
+        "title": 'Salad Club is on Wednesday!',
         "audience": "Fall 2015",
         "created_by": "564a42fd281a1ebebd7bdcda",
         "created_at": 1447707389404,
@@ -36,6 +37,7 @@ module.exports = {
         "_id": "564a42fd793d43b7cb955af6"
       },
       {
+        "title": 'Picture day on Friday',
         "audience": "Summer 2015",
         "created_by": "564a42fde8c9dd253301806a",
         "created_at": 1447707389430,
@@ -43,13 +45,15 @@ module.exports = {
         "_id": "564a42fdee5b088ff417822a"
       },
       {
+        "title": 'Projects due on Monday',
         "audience": "Fall 2015",
         "created_by": "564a42fd206e0f1245e10f08",
-        "created_at": 1447707389430,
+        "created_at": 1447789255759,
         "body": "Ut elit irure esse ea sint ea est. Sit labore enim proident est commodo adipisicing qui ea. Laboris sunt ad Lorem id sunt commodo deserunt sunt aute excepteur proident ex culpa laborum.",
         "_id": "564a42fd4f7c83ea9c67b40d"
       },
       {
+        "title": 'External booking coming up tomorrow',
         "audience": "All",
         "created_by": "564a42fdb05418a7d488b07d",
         "created_at": 1447707389456,
@@ -57,6 +61,7 @@ module.exports = {
         "_id": "564a42fdb44cd52bb29042ae"
       },
       {
+        "title": 'Hi Drew',
         "audience": "Summer 2015",
         "created_by": "564a42fd38fbb2c193da3b63",
         "created_at": 1447707389479,
