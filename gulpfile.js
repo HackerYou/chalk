@@ -86,7 +86,7 @@ gulp.task('guidewatch', () => {
 gulp.task('bs-guide', function () {
 	browserSync({
 		server: {
-			baseDir: './app/styleguide'
+			baseDir: './app'
 		}
 	})
 });
