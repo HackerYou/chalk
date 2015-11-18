@@ -12,7 +12,7 @@ import Topics from './topics/index.jsx';
 import Footer from './footer/index.jsx';
 import Media from './media/index.jsx';
 import Instructors from './instructors/index.jsx';
-import Header from './header/index.jsx';
+import Headline from './headline/index.jsx';
 
 let App = React.createClass({
 	displayName: 'App',
@@ -29,9 +29,15 @@ let App = React.createClass({
 		}
 	},
 	render() {
+		var header; 
+		if (location.pathname == '/'){
+			header = null;
+		} else{
+			header = <Headline user={this.state.user}/>;
+		}
 		return (
 			<div>
-				<Header user={this.state.user}/>
+				{header}
 				<section>
 					{this.props.children || <Login />}
 				</section>
