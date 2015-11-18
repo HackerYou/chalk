@@ -1,12 +1,39 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 import Announcements from '../announcements/index.jsx';
+import Course from '../course/index.jsx';
 
 export default React.createClass({
+	displayName: 'Dashboard',
+	getInitialState(){
+		return{
+			courses: {}
+		}
+	},
+	componentDidMount(){
+		let data = require('../sample-data.js');
+		this.setState({
+			courses: data.user.courses
+		});
+	},
+	renderCourses(key){
+		return <Course key={key} index={key} details={this.state.courses[key]} />
+	},
 	render() {
 		return (
 			<div>
-				<h2>Dashboard</h2>
+				<h3>What would you like to do?</h3>
+				<div className='buttons'>
+					<Link to='classroom'><button className="primary">Manage Classrooms</button></Link>
+					<Link to='topics'><button className="primary">Manage Topics</button></Link>
+					<Link to='#'><button className="primary">Course Templates</button></Link>
+					<Link to='instructors'><button className="primary">Manage Instructors</button></Link>
+				</div>	
+				<h1>Your Classrooms</h1>
+				<ul className="course-list">
+					 {Object.keys(this.state.courses).map(this.renderCourses)}
+				</ul>
 				<Announcements />
 			</div>
 		)

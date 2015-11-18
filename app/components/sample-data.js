@@ -68,5 +68,77 @@ module.exports = {
         "body": "Exercitation commodo velit incididunt officia nisi adipisicing veniam. Lorem ipsum sit ea qui dolore eu deserunt. Officia cupidatat Lorem amet reprehenderit do veniam commodo duis cillum nulla sint.",
         "_id": "564a42fd14effab9e9803fa0"
       }
-    ]
+    ],
+    "course": {
+      "lessons": [
+        {
+          "description": "aliqua adipisicing ullamco fugiat ex reprehenderit eiusmod",
+          "title": "incididunt ad",
+          "_id": "564cba27884fff60185139f6",
+          "exercises": 3
+        },
+        {
+          "description": "laboris Lorem excepteur voluptate est et nisi",
+          "title": "irure irure",
+          "_id": "564cba27c00e4845aaae2a2a",
+          "exercises": 5
+        },
+        {
+          "description": "nisi eu elit sit incididunt ad laboris",
+          "title": "eu nulla",
+          "_id": "564cba277847bfd77286502a",
+          "exercises": 2
+        },
+        {
+          "description": "incididunt excepteur proident et cupidatat aliquip id",
+          "title": "id aute",
+          "_id": "564cba27ae53e493b1344afb",
+          "exercises": 6
+        },
+        {
+          "description": "esse ullamco proident officia nisi et mollit",
+          "title": "labore esse",
+          "_id": "564cba27ea83e9fb93c793e9",
+          "exercises": 3
+        },
+        {
+          "description": "ipsum commodo excepteur dolore nisi non exercitation",
+          "title": "proident consequat",
+          "_id": "564cba27d17358b7d05fc908",
+          "exercises": 6
+        },
+        {
+          "description": "ut reprehenderit cupidatat tempor cillum fugiat non",
+          "title": "sit non",
+          "_id": "564cba2770940d4abf168ee0",
+          "exercises": 3
+        },
+        {
+          "description": "Lorem ex quis occaecat mollit culpa velit",
+          "title": "nulla eiusmod",
+          "_id": "564cba27e902d061c05c190d",
+          "exercises": 7
+        },
+        {
+          "description": "nulla ad eiusmod dolor consequat exercitation sint",
+          "title": "cillum sint",
+          "_id": "564cba2773d9a3c3e47aa4cf",
+          "exercises": 3
+        },
+        {
+          "description": "labore nostrud aliquip deserunt et dolore proident",
+          "title": "commodo nisi",
+          "_id": "564cba2702a89b0ef39e35b6",
+          "exercises": 0
+        }
+      ],
+      "instructor": "Kristen Spencer",
+      "term": "Fall 2015",
+      "title": "sit qui adipisicing",
+      "created_by": "564cba276cd2035b3fae6802",
+      "decription": "sit minim esse sint consectetur est commodo pariatur cillum culpa culpa laborum eu et irure",
+      "created_at": 1447868967553,
+      "_id": "564cba27c48acc6c248af1e1",
+      "students": 27
+    }
 }
