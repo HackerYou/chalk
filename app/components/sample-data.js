@@ -134,7 +134,7 @@ module.exports = {
       ],
       "instructor": "Kristen Spencer",
       "term": "Fall 2015",
-      "title": "sit qui adipisicing",
+      "title": "Intro To Web Development",
       "created_by": "564cba276cd2035b3fae6802",
       "decription": "sit minim esse sint consectetur est commodo pariatur cillum culpa culpa laborum eu et irure",
       "created_at": 1447868967553,

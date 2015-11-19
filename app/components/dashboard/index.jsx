@@ -25,7 +25,7 @@ export default React.createClass({
 			<div>
 				<h3>What would you like to do?</h3>
 				<div className='buttons'>
-					<Link to='classroom'><button className="primary">Manage Classrooms</button></Link>
+					<Link to='manage-classrooms'><button className="primary">Manage Classrooms</button></Link>
 					<Link to='topics'><button className="primary">Manage Topics</button></Link>
 					<Link to='#'><button className="primary">Course Templates</button></Link>
 					<Link to='instructors'><button className="primary">Manage Instructors</button></Link>
