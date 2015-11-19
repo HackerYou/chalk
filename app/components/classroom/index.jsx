@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router';
 import Announcements from '../announcements/index.jsx';
 import LessonDetails from '../lessondetails/index.jsx';
 
@@ -27,8 +27,8 @@ export default React.createClass({
 			<div>
 				<h1>{this.state.course.title}</h1>
 				<p className="title">Drag and drop to reorganize lessons</p>
-				<button className="success"><i className="chalk-edit"></i>edit classroom</button>
-				<button className="primary"><i className="chalk-home"></i>back to dashboard</button>
+				<Link to='edit-classroom'><button className="success"><i className="chalk-edit"></i>edit classroom</button></Link>
+				<Link to='dashboard'><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
 				<ul className="lessons">
 					{(this.state.lessons).map(this.renderLessons)}
 					<li className="new-lesson">
