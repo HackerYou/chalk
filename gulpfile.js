@@ -31,7 +31,8 @@ var processors = [
 	require('pixrem')(),
 	require('postcss-size')(), // https://github.com/postcss/postcss-size
 	require('postcss-quantity-queries')(), // https://github.com/pascalduez/postcss-quantity-queries
-	require('autoprefixer-core')({ browsers: ['last 2 version'] }), // https://github.com/postcss/autoprefixer-core
+	require('postcss-sassy-mixins')(), // https://github.com/andyjansson/postcss-sassy-mixins
+	require('autoprefixer-core')({ browsers: ['last 5 versions', '> 10%'] }), // https://github.com/postcss/autoprefixer-core
 	require('postcss-reporter')() // https://github.com/postcss/postcss-reporter
 ];
 

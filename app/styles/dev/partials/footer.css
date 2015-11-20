@@ -1,0 +1,16 @@
+footer.mainFooter {
+	margin: 10rem 0;
+	ul {
+		list-style: none;
+		padding: 0;
+		a {
+			color: $red;
+			font-family: $headerFont;
+			font-weight: 700;
+			border: 0;
+			i {
+				color: $black;
+			}
+		}
+	}
+}

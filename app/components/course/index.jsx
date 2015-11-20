@@ -9,7 +9,7 @@ export default React.createClass({
 				<h3>{this.props.details.title}</h3>
 				<h4>{this.props.details.instructor}</h4>
 				<p className="red">{this.props.details.term}</p>
-				<Link to="classroom"><button className="primary">View Class</button></Link>			
+				<Link className="linkBtn" to="classroom"><button className="primary">View Class</button></Link>			
 			</li>
 		)
 	}

@@ -38,6 +38,10 @@ button, .button {
   }
 }
 
+a.linkBtn {
+  border: 0;
+}
+
 input[type="submit"] {
   font-family: $regularFont;
   display: inline-block;

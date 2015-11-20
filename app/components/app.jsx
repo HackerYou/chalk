@@ -38,7 +38,7 @@ let App = React.createClass({
 			header = <Headline user={this.state.user}/>;
 		}
 		return (
-			<div>
+			<div className="wrapper">
 				{header}
 				<section>
 					{this.props.children || <Login />}
