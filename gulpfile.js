@@ -112,13 +112,9 @@ gulp.task('bs-client', function () {
 		middleware : [ historyApiFallback() ]
 	})
 });
-// gulp.task('images', function () {
-// 	return gulp.src(paths.srcI + '*')
-// 		.pipe($.imagemin())
-// 		.pipe(gulp.dest(paths.distI));
-// });
+ 
+gulp.task('build', ['js','styles']);
 
-// gulp.task('default', ['styles', 'templates', 'scripts', 'images', 'browser-sync','watch']);
 gulp.task('default', ['js','bs-client'], () => {
 	gulp.watch('app/components/**/*.jsx',['js']);
 	gulp.watch('app/components/app.js', reload);
