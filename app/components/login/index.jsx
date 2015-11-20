@@ -13,16 +13,22 @@ export default React.createClass({
 	},
 	render() {
 		return (
-			<div>
+			<div className="card loginCard">
 				<form onSubmit={this.login}>
-					<img src="../images/logo-hackeryou.svg" alt="HackerYou Logo"></img>
-					<h1>Chalk</h1>
-					<label htmlFor="email">email</label>
-					<input type="text" ref="email" placeholder="Your Email"/>
-					<label htmlFor="password">password</label>
-					<input type="password" ref="password" placeholder="Password"/>
-					<button className="primary">Sign In</button>
-					<a href="#">Lost your password?</a>
+					<img src="../images/logo-hackeryou.svg" className="loginLogo" alt="HackerYou Logo" />
+					<h1>chalk</h1>
+					<div className="fieldGroup">
+						<label htmlFor="email" className="inline">email</label>
+						<input type="text" ref="email" placeholder="Your Email"/>
+					</div>
+					<div className="fieldGroup">
+						<label htmlFor="password" className="inline">password</label>
+						<input type="password" ref="password" placeholder="Password"/>
+					</div>
+					<div className="fieldGroup">
+						<input type="submit" className="button primary" value="Sign In" />
+					</div>
+					<p><a href="#">Lost your password?</a></p>
 				</form>
 			</div>
 		)
