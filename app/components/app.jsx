@@ -15,6 +15,7 @@ import Instructors from './instructors/index.jsx';
 import Headline from './headline/index.jsx';
 import EditClassroom from './edit-classroom/index.jsx';
 import ManageClassrooms from './manage-classrooms/index.jsx';
+import EditLesson from './edit-lesson/index.jsx';
 
 let App = React.createClass({
 	displayName: 'App',
@@ -62,6 +63,7 @@ ReactDom.render(
 			<Route path='/media' component={Media} />
 			<Route path='/edit-classroom' component={EditClassroom} />
 			<Route path='/manage-classrooms' component={ManageClassrooms} />
+			<Route path='/edit-lesson' component={EditLesson} />
 		</Route>
 	</Router>)
 	, document.getElementById('app'));

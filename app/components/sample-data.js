@@ -3,20 +3,20 @@ module.exports = {
     "courses": [
       {
         "term": "Fall 2015",
-        "instructor": "SuttonAlston",
-        "title": "esse aute minim",
+        "instructor": "Drew Minns",
+        "title": "Advanced Wordpress",
         "_id": "564a36c9b8c1f60f95731146"
       },
       {
         "term": "Summer 2015",
-        "instructor": "BassWalsh",
-        "title": "fugiat proident mollit",
+        "instructor": "Ryan Christiani",
+        "title": "Intro To JavaScript and jQuery",
         "_id": "564a36c9a1d42c84af93bee3"
       },
       {
         "term": "Summer 2015",
-        "instructor": "GuzmanFlores",
-        "title": "sunt sit velit",
+        "instructor": "Kristen Spencer",
+        "title": "Advanced Web Development",
         "_id": "564a36c977e2663dc15d6529"
       }
     ],
@@ -73,61 +73,61 @@ module.exports = {
       "lessons": [
         {
           "description": "aliqua adipisicing ullamco fugiat ex reprehenderit eiusmod",
-          "title": "incididunt ad",
+          "title": "Flexbox",
           "_id": "564cba27884fff60185139f6",
           "exercises": 3
         },
         {
           "description": "laboris Lorem excepteur voluptate est et nisi",
-          "title": "irure irure",
+          "title": "Working With jQuery Plugins",
           "_id": "564cba27c00e4845aaae2a2a",
           "exercises": 5
         },
         {
           "description": "nisi eu elit sit incididunt ad laboris",
-          "title": "eu nulla",
+          "title": "AJAX",
           "_id": "564cba277847bfd77286502a",
           "exercises": 2
         },
         {
           "description": "incididunt excepteur proident et cupidatat aliquip id",
-          "title": "id aute",
+          "title": "HTML Forms",
           "_id": "564cba27ae53e493b1344afb",
           "exercises": 6
         },
         {
           "description": "esse ullamco proident officia nisi et mollit",
-          "title": "labore esse",
+          "title": "Organizing Your JavaScript Code",
           "_id": "564cba27ea83e9fb93c793e9",
           "exercises": 3
         },
         {
           "description": "ipsum commodo excepteur dolore nisi non exercitation",
-          "title": "proident consequat",
+          "title": "CSS Selectors",
           "_id": "564cba27d17358b7d05fc908",
           "exercises": 6
         },
         {
           "description": "ut reprehenderit cupidatat tempor cillum fugiat non",
-          "title": "sit non",
+          "title": "Transitions and Transforms",
           "_id": "564cba2770940d4abf168ee0",
           "exercises": 3
         },
         {
           "description": "Lorem ex quis occaecat mollit culpa velit",
-          "title": "nulla eiusmod",
+          "title": "CSS Animations",
           "_id": "564cba27e902d061c05c190d",
           "exercises": 7
         },
         {
           "description": "nulla ad eiusmod dolor consequat exercitation sint",
-          "title": "cillum sint",
+          "title": "Working with PSDs",
           "_id": "564cba2773d9a3c3e47aa4cf",
           "exercises": 3
         },
         {
           "description": "labore nostrud aliquip deserunt et dolore proident",
-          "title": "commodo nisi",
+          "title": "Github",
           "_id": "564cba2702a89b0ef39e35b6",
           "exercises": 0
         }

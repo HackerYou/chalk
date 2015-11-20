@@ -36,8 +36,8 @@ export default React.createClass({
 			<div>
 				<h1>{this.state.course.title}</h1>
 				<p className="title">Drag and drop to reorganize lessons</p>
-				<Link to='edit-classroom'><button className="success"><i className="chalk-edit"></i>edit classroom</button></Link>
-				<Link to='dashboard'><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
+				<Link className="linkBtn" to='edit-classroom'><button className="success"><i className="chalk-edit"></i>edit classroom</button></Link>
+				<Link className="linkBtn" to='dashboard'><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
 				<ul className="lessons">
 					{(this.state.lessons).map(this.renderLessons)}
 					<li className="new-lesson">
