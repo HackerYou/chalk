@@ -7,7 +7,7 @@ export default React.createClass({
 		if(this.props.isOpen){
 			return (
 				<ReactCSSTransitionGroup transitionName={this.props.transitionName} transitionEnterTimeout={200} transitionLeaveTimeout={200}>
-					<div className="modal">
+					<div className="modal card">
 						{this.props.children}
 					</div>
 				</ReactCSSTransitionGroup>

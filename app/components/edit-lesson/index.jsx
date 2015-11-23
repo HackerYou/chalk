@@ -8,12 +8,12 @@ export default React.createClass({
 		return (
 			<div>
 				<Link className="linkBtn" to="classroom"><button className="primary"><i className="chalk-home"></i>back to classroom</button></Link>
-				<button className="success">save content</button>
-				<form action="">
+				<button className="success"><i className="chalk-save"></i>save content</button>
+				<form action="" className="card">
 					<label htmlFor="lessonName">Lesson Name</label>
 					<input type="text" placeholder="enter lesson name here"/>
-					<button className="success">Save Lesson</button>
-					<button className="error">Cancel</button>
+					<button className="success"><i className="chalk-save"></i>Save Lesson</button>
+					<button className="error"><i className="chalk-close"></i>Cancel</button>
 				</form>
 				<div>
 					<Lesson />

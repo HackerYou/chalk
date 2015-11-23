@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import Announcements from '../announcements/index.jsx';
 import LessonDetails from '../lessondetails/index.jsx';
 import Modal from '../modal/index.jsx';
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
@@ -46,7 +45,7 @@ export default React.createClass({
 				{links}
 				<ul className="lessons">
 					{(this.state.lessons).map(this.renderLessons)}
-					<li className="new-lesson">
+					<li className="new-lesson card">
 						<h3>Create new lesson</h3>
 						<p>Plan lesson and choose new topics</p>
 						<button className="success">Create</button>
@@ -54,9 +53,11 @@ export default React.createClass({
 				</ul>
 				<div className="sidebar">
 					<aside>
-						<h3>Members</h3>
-						<p><i className="chalk-users"></i>{this.state.course.students} members of the classroom</p>
-						<button onClick={this.openModal} className="success">Manage classroom members</button>
+						<div className="card">
+							<h3>Members</h3>
+							<p><i className="chalk-users"></i>{this.state.course.students} members of the classroom</p>
+							<button onClick={this.openModal} className="success">Manage classroom members</button>
+						</div>
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<i className="chalk-close" onClick={this.closeModal}></i>
 							<h2>Add Members</h2>
@@ -79,7 +80,6 @@ export default React.createClass({
 							<button>Cancel</button>
 						</Modal>
 					</aside>
-					<Announcements />
 				</div>
 			</div>
 		)

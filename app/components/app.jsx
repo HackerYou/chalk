@@ -9,6 +9,7 @@ import Classroom from './classroom/index.jsx';
 import Lesson from './lesson/index.jsx';
 import Exercises from './exercises/index.jsx';
 import Topics from './topics/index.jsx';
+import LessonTopics from './lesson-topic/index.jsx';
 import Footer from './footer/index.jsx';
 import Media from './media/index.jsx';
 import Instructors from './instructors/index.jsx';
@@ -16,6 +17,7 @@ import Headline from './headline/index.jsx';
 import EditClassroom from './edit-classroom/index.jsx';
 import ManageClassrooms from './manage-classrooms/index.jsx';
 import EditLesson from './edit-lesson/index.jsx';
+import EditTopics from './topic-edit/index.jsx';
 
 let App = React.createClass({
 	displayName: 'App',
@@ -64,6 +66,7 @@ ReactDom.render(
 			<Route path='/edit-classroom' component={EditClassroom} />
 			<Route path='/manage-classrooms' component={ManageClassrooms} />
 			<Route path='/edit-lesson' component={EditLesson} />
+			<Route path='/edit-topic' component={EditTopics} />
 		</Route>
 	</Router>)
 	, document.getElementById('app'));
