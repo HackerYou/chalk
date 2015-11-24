@@ -350,5 +350,42 @@ module.exports = {
         "body": "exercitation in proident est pariatur eiusmod ad velit aliquip eiusmod commodo enim dolor esse exercitation occaecat do enim velit nulla fugiat Lorem sint irure et cillum sit voluptate exercitation qui anim ad duis ea proident",
         "created_at": 1447965995383,
         "_id": "564e352ba76ddc1ba5ed8591"
-      }
+      },
+      "media": [
+          {
+            "created_by": "Kristen",
+            "created_at": 1448313738184,
+            "name": "reprehenderit ad sit",
+            "path": "http://filepath.com",
+            "_id": "5653838a7309e8aa45f5608c"
+          },
+          {
+            "created_by": "Drew",
+            "created_at": 1448313738194,
+            "name": "quis incididunt id",
+            "path": "http://filepath.com",
+            "_id": "5653838a989ac4d018557542"
+          },
+          {
+            "created_by": "Drew",
+            "created_at": 1448313738194,
+            "name": "exercitation labore voluptate",
+            "path": "http://filepath.com",
+            "_id": "5653838a378c0f87d5349c61"
+          },
+          {
+            "created_by": "Ryan",
+            "created_at": 1448313738194,
+            "name": "id enim labore",
+            "path": "http://filepath.com",
+            "_id": "5653838a6c21af22b636dae1"
+          },
+          {
+            "created_by": "Ryan",
+            "created_at": 1448313738209,
+            "name": "dolor ea amet",
+            "path": "http://filepath.com",
+            "_id": "5653838a6b0dcc1ed7273664"
+          }
+        ]
 }

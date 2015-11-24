@@ -41,7 +41,6 @@ export default React.createClass({
 					<button className="success">Save Topic</button>
 					<button className="error">Cancel</button>
 				</div>
-
 			</div>
 		)
 	}

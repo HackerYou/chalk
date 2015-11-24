@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import Announcements from '../announcements/index.jsx';
 import Course from '../course/index.jsx';
 
 export default React.createClass({
@@ -54,7 +53,6 @@ export default React.createClass({
 				<ul className="course-list">
 					 {Object.keys(this.state.courses).map(this.renderCourses)}
 				</ul>
-				<Announcements />
 			</div>
 		)
 	}
