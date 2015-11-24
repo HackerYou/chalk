@@ -1,21 +1,25 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Router, Route, Link, Navigation, History } from 'react-router';
-let createBrowserHistory = require('history/lib/createBrowserHistory');
-let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import Login from './login/index.jsx';
 import Dashboard from './dashboard/index.jsx';
 import Classroom from './classroom/index.jsx';
 import Lesson from './lesson/index.jsx';
 import Exercises from './exercises/index.jsx';
 import Topics from './topics/index.jsx';
+import LessonTopics from './lesson-topic/index.jsx';
 import Footer from './footer/index.jsx';
 import Media from './media/index.jsx';
 import Instructors from './instructors/index.jsx';
 import Headline from './headline/index.jsx';
 import EditClassroom from './edit-classroom/index.jsx';
 import ManageClassrooms from './manage-classrooms/index.jsx';
+import EditLesson from './edit-lesson/index.jsx';
+import EditTopics from './topic-edit/index.jsx';
+import CourseTemplates from './course-templates/index.jsx';
 
+let createBrowserHistory = require('history/lib/createBrowserHistory');
+let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 let App = React.createClass({
 	displayName: 'App',
 	componentDidMount(){
@@ -62,6 +66,9 @@ ReactDom.render(
 			<Route path='/media' component={Media} />
 			<Route path='/edit-classroom' component={EditClassroom} />
 			<Route path='/manage-classrooms' component={ManageClassrooms} />
+			<Route path='/edit-lesson' component={EditLesson} />
+			<Route path='/edit-topic' component={EditTopics} />
+			<Route path='/course-templates' component={CourseTemplates} />
 		</Route>
 	</Router>)
 	, document.getElementById('app'));

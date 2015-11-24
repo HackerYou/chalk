@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import Announcements from '../announcements/index.jsx';
 import Course from '../course/index.jsx';
 
 export default React.createClass({
@@ -22,7 +21,7 @@ export default React.createClass({
 	render() {
 		return (
 			<div>
-				<Link to='dashboard'><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
+				<Link className="linkBtn"to='dashboard'><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
 				<div>
 					<h2>Create a new classroom</h2>
 					<form action="">
@@ -54,7 +53,6 @@ export default React.createClass({
 				<ul className="course-list">
 					 {Object.keys(this.state.courses).map(this.renderCourses)}
 				</ul>
-				<Announcements />
 			</div>
 		)
 	}

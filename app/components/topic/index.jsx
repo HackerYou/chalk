@@ -1,17 +1,14 @@
 import React from 'react';
-import Exercise from '../exercise/index.jsx';
+import { Link } from 'react-router';
 
 export default React.createClass({
 	displayName: 'Topic',
-	renderExercises(key, index){
-		return <Exercise key={index} index={index} details={this.props.details.exercises[index]} />
-	},
 	render(){
 		return (
-			<div>
+			<div className="card">
 				<h3>{this.props.details.title}</h3>
-				<p>{this.props.details.body}</p>
-				<a href="#">{(this.props.details.exercises).map(this.renderExercises)}</a>
+				<p className="red">{this.props.details.category}</p>
+				<Link className="linkBtn" to="edit-topic"><button className="primary">View/Edit</button></Link>
 			</div>
 		)
 	}

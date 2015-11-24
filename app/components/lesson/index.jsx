@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router';
-import Topic from '../topic/index.jsx';
+import LessonTopic from '../lesson-topic/index.jsx';
+import Modal from '../modal/index.jsx';
 
 export default React.createClass({
 	displayName: 'Lesson',
 	getInitialState(){
 		return {
 			lesson: {},
-			topic: []
+			topic: [],
+			isModalOpen: false
 		}
 	},
 	componentDidMount(){
@@ -18,17 +20,63 @@ export default React.createClass({
 		});
 	},
 	renderTopics(key, index){
-		return <Topic key={index} index={index} details={this.state.lesson.topic[index]} />
+		return <LessonTopic key={index} index={index} details={this.state.lesson.topic[index]} />
+	},
+	openModal(){
+		this.setState({isModalOpen: true});
+	},
+	closeModal(){
+		this.setState({isModalOpen: false});
 	},
 	render() {
+		let links, edit; 
+		if (location.pathname == '/lesson'){
+			links = <div><Link className="linkBtn" to="classroom"><button className="primary"><i className="chalk-home"></i>back to classroom</button></Link>
+				<Link className="linkBtn" to="edit-lesson"><button className="success"><i className="chalk-edit"></i>edit lesson</button></Link></div>;
+				
+		} else{
+			links = null;
+		}
+
+		if (location.pathname =='/edit-lesson'){
+			edit = <div>
+							<div onClick={this.openModal}><h3><i className="chalk-add"></i>Add Topic</h3></div>
+							<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
+								<i className="chalk-close" onClick={this.closeModal}></i>
+								<form action="">
+									<h2>Add Topic</h2>
+									<h3>Search By Topic Name</h3>
+									<input type="text" placeholder='eg. Floats'/>
+									<h4>or</h4>
+									<h3>Add your own content</h3>
+									<textarea name="content" id="" cols="30" rows="10"></textarea>
+									<h3>Media</h3>
+									<input type="file" placeholder="drag and drop files here"/>
+									<button className="success">Save Content</button>
+									<button className="error">Cancel</button>
+								</form>
+
+
+							</Modal>
+						</div>
+
+		} else{
+			edit = null;
+		}
+
+
 		return (
 			<div>
-				<h1>{this.state.lesson.title}</h1>
+				{links}
 				<div>
-					{(this.state.topic).map(this.renderTopics)}
+					<h1>{this.state.lesson.title}</h1>
+					<div className="card">
+						{(this.state.topic).map(this.renderTopics)}
+					</div>
+					{edit}
 				</div>
-				<button className="primary"><i className="chalk-home"></i>back to classroom</button>
-				<button className="success"><i className="chalk-edit"></i>edit lesson</button>
+				{links}
+				
 			</div>
 
 		)
