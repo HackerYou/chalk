@@ -20,16 +20,18 @@ export default React.createClass({
 	},
 	render() {
 		return (
-			<div>
-				<h3>What would you like to manage?</h3>
-				<div className='buttons'>
-					<Link className="linkBtn" to='manage-classrooms'><button className="primary">Classrooms</button></Link>
-					<Link className="linkBtn" to='topics'><button className="primary">Topics</button></Link>
-					<Link className="linkBtn" to='course-templates'><button className="primary">Course Templates</button></Link>
-					<Link className="linkBtn" to='instructors'><button className="primary">Instructors</button></Link>
-					<Link className="linkBtn" to='media'><button className="primary">Media</button></Link>
-					<Link className="linkBtn" to='#'><button className="primary">Members</button></Link>
-				</div>	
+			<div className="container full">
+				<header className="intro">
+					<h3>What would you like to do?</h3>
+					<div className='buttons'>
+						<Link className="linkBtn" to='manage-classrooms'><button className="primary">Classrooms</button></Link>
+						<Link className="linkBtn" to='topics'><button className="primary">Topics</button></Link>
+						<Link className="linkBtn" to='course-templates'><button className="primary">Course Templates</button></Link>
+						<Link className="linkBtn" to='instructors'><button className="primary">Instructors</button></Link>
+						<Link className="linkBtn" to='media'><button className="primary">Media</button></Link>
+						<Link className="linkBtn" to='#'><button className="primary">Members</button></Link>
+					</div>
+				</header>
 				<h1>Your Classrooms</h1>
 				<ul className="course-list">
 					 {Object.keys(this.state.courses).map(this.renderCourses)}

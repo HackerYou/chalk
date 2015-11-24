@@ -44,7 +44,7 @@ let App = React.createClass({
 		return (
 			<div className="wrapper">
 				{header}
-				<section>
+				<section className="mainContent">
 					{this.props.children || <Login />}
 				</section>
 				<Footer />
