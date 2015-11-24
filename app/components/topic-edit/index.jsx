@@ -10,7 +10,6 @@ export default React.createClass({
 		return {
 			topics: [],
 			files: [],
-			value: '',
 			copied: false
 		}
 	}, 
@@ -27,7 +26,6 @@ export default React.createClass({
 		this.setState({files: this.state.files.concat(files)});	
 	},
 	onClipboardClick(){
-		console.log('hi')
 		this.setState({value: this.props.value});
 	},
 	render() {
@@ -54,7 +52,7 @@ export default React.createClass({
 						<div key={index}>
 							<p><i className="chalk-doc"></i>{file.name}</p>
 							<input type="text" defaultValue={file.preview}/>
-							<CopyToClipboard value={file.preview} text={file.preview} onCopy={() => this.setState({copied: true})}>
+							<CopyToClipboard text={file.preview} onCopy={() => this.setState({copied: true})}>
 							<button className="success"><i className="chalk-copy"></i></button>
 							</CopyToClipboard>
 							<button className="error">Delete File</button>
