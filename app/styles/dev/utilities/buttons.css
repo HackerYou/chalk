@@ -6,10 +6,11 @@ button, .button {
   border-radius: 0;
   color: white;
   font-size: 1.5rem;
-  padding: 1.7rem 2.5rem 1.9rem;
-  margin: 0 1rem;
+  padding: 1.7rem 2.5rem 1.6rem;
+  margin-right: 1rem;
   cursor: pointer;
   transition: all 0.5s;
+  outline: none;
   &:hover {
     background: $greyLight;
     border: 0;
@@ -18,22 +19,28 @@ button, .button {
   &.primary {
     background: $blue;
     color: white;
+    border: 1px solid $blueLight;
     &:hover {
       background: $blueLight;
+      border: 1px solid $blue;
     }
   }
   &.success {
     background: $green;
+    border: 1px solid $greenLight;
     color: white;
     &:hover {
       background: $greenLight;
+      border: 1px solid $green;
     }
   }
   &.error {
     background: $red;
+    border: 1px solid $redLight;
     color: white;
     &:hover {
       background: $redLight;
+      border: 1px solid $red;
     }
   }
 }
