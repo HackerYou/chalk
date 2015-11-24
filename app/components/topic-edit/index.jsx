@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Topic from '../topic/index.jsx';
 import CopyToClipboard from 'react-copy-to-clipboard';
-let Dropzone = require('react-dropzone');
+import Dropzone from 'react-dropzone';
 
 export default React.createClass({
 	displayName: 'EditTopics',
@@ -24,9 +24,6 @@ export default React.createClass({
 	},
 	onDrop(files){
 		this.setState({files: this.state.files.concat(files)});	
-	},
-	onClipboardClick(){
-		this.setState({value: this.props.value});
 	},
 	render() {
 		return (
