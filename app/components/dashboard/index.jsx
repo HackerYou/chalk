@@ -22,14 +22,16 @@ export default React.createClass({
 	},
 	render() {
 		return (
-			<div>
-				<h3>What would you like to do?</h3>
-				<div className='buttons'>
-					<Link className="linkBtn" to='manage-classrooms'><button className="primary">Manage Classrooms</button></Link>
-					<Link className="linkBtn" to='topics'><button className="primary">Manage Topics</button></Link>
-					<Link className="linkBtn" to='#'><button className="primary">Course Templates</button></Link>
-					<Link className="linkBtn" to='instructors'><button className="primary">Manage Instructors</button></Link>
-				</div>	
+			<div className="container full">
+			<header className="intro">
+					<h3>What would you like to do?</h3>
+					<div className='buttons'>
+						<Link className="linkBtn" to='manage-classrooms'><button className="primary">Manage Classrooms</button></Link>
+						<Link className="linkBtn" to='topics'><button className="primary">Manage Topics</button></Link>
+						<Link className="linkBtn" to='#'><button className="primary">Course Templates</button></Link>
+						<Link className="linkBtn" to='instructors'><button className="primary">Manage Instructors</button></Link>
+					</div>
+			</header>
 				<h1>Your Classrooms</h1>
 				<ul className="course-list">
 					 {Object.keys(this.state.courses).map(this.renderCourses)}
