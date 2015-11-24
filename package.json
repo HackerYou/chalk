@@ -64,7 +64,9 @@
     "pixrem": "^3.0.0",
     "react": "^0.14.2",
     "react-addons-create-fragment": "^0.14.2",
+    "react-copy-to-clipboard": "^3.0.4",
     "react-dom": "^0.14.2",
+    "react-dropzone": "^3.0.0",
     "react-router": "^1.0.0-rc4"
   }
 }
