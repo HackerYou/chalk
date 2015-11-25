@@ -5,11 +5,15 @@ export default React.createClass({
 	displayName: 'LessonDetails',
 	render() {
 		return (
-			<li className="card">
-				<h3>{this.props.details.title}</h3>
-				<p>{this.props.details.description}</p>
-				<p className="red">{this.props.details.exercises} Exercises</p>
-				<Link className="linkBtn"to="lesson"><button className="primary">View Lesson</button></Link>
+			<li className="lessonRow">
+				<div className="lessonInfo">
+					<p className="lessonTitle">{this.props.details.title}</p>
+					<p className="red lessonExercise">{this.props.details.exercises} Exercises</p>
+				</div>
+				<div className="lessonMeta">
+					<Link to="lesson">view</Link> |
+					<Link to="edit-lesson">edit</Link>
+				</div>
 			</li>
 		)
 	}
