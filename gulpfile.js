@@ -25,13 +25,14 @@ var paths = {
 
 // Setup PostCSS Plugins
 var processors = [
+	require('postcss-sassy-mixins')(), // https://github.com/andyjansson/postcss-sassy-mixins
 	require('precss')(),
 	require('postcss-pseudo-class-enter')(), //https://github.com/jonathantneal/postcss-pseudo-class-enter
 	require('postcss-position')(), // https://github.com/seaneking/postcss-position
 	require('pixrem')(),
+	require('css-mqpacker')(), // https://github.com/hail2u/node-css-mqpacker
 	require('postcss-size')(), // https://github.com/postcss/postcss-size
 	require('postcss-quantity-queries')(), // https://github.com/pascalduez/postcss-quantity-queries
-	require('postcss-sassy-mixins')(), // https://github.com/andyjansson/postcss-sassy-mixins
 	require('lost')(), // https://github.com/corysimmons/lost/wiki/Installation
 	require('autoprefixer')({ browsers: ['last 5 versions', '> 10%'] }), // https://github.com/postcss/autoprefixer-core
 	require('postcss-reporter')() // https://github.com/postcss/postcss-reporter

@@ -47,38 +47,62 @@ export default React.createClass({
 	render() {
 		let links;
 		if (location.pathname == '/classroom'){
-			links = <div><Link className="linkBtn" to='edit-classroom'><button className="success"><i className="chalk-edit"></i>edit classroom</button></Link>
+			links = <div className="headerLinks"><Link className="linkBtn" to='edit-classroom'><button className="success"><i className="chalk-edit"></i>edit classroom</button></Link>
 				<Link className="linkBtn" to='dashboard'><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link></div>;
 		} else {
 			links = null;
 		}
 		let lessons = this.state.course.lessons;
 		return (
-			<div>
-				<h1>{this.state.course.title}</h1>
-				<p className="title">Drag and drop to reorganize lessons</p>
-				{links}
-				<ul className="lessons">
-					{(this.state.lessons).map(this.renderLessons)}
-					<li className="new-lesson card">
-						<h3>Create new lesson</h3>
-						<p>Plan lesson and choose new topics</p>
-						<button className="success">Create</button>
-					</li>
-				</ul>
-				<div className="sidebar">
-					<aside>
-						<div className="card">
+			<div className="container full">
+				<header className="topContent">
+					{links}
+					<h1>{this.state.course.title}</h1>
+					<p className="title">Drag and drop to reorganize lessons</p>
+				</header>
+				<section className="lessonsWrap">
+					<ol className="lessonColumn">
+						<li className="lessonGroup">
+							<h3>Topic Section Title</h3>
+							<div className="card">	
+								<ol>
+									{(this.state.lessons).map(this.renderLessons)}
+									<li className="new-lessonRow">
+										<button className="success">Create</button>
+										<p className="lessonTitle">Create new lesson</p>
+									</li>
+								</ol>
+							</div>
+						</li>
+						<li>
+							<article className="lessonNew">
+								<ul>
+									<li className="new-lesson">
+										<h3>Create new lesson</h3>
+										<p>Plan lesson and choose new topics</p>
+										<button className="success">Create</button>
+									</li>
+								</ul>
+							</article>
+						</li>
+					</ol>
+					<aside className="lessonMeta">
+						<section className="sideCard">
 							<h3>Course Topics</h3>
-							<ul>
-								{this.state.topics.map(this.renderTopics)}
-							</ul>
-						</div>
-						<div className="card">
-							<h3>Members</h3>
-							<p><i className="chalk-users"></i>{this.state.course.students} members of the classroom</p>
-							<button onClick={this.openModal} className="success">Manage classroom members</button>
-						</div>
+							<div className="card topicLegend">
+								<ul className="topicList">
+									{this.state.topics.map(this.renderTopics)}
+								</ul>
+								<button className="primary">Show Starred Lessons</button>
+							</div>
+						</section>
+						<section className="sideCard">
+							<div className="card">
+								<h3>Members</h3>
+								<p><i className="chalk-users"></i>{this.state.course.students} members of the classroom</p>
+								<button onClick={this.openModal} className="success">Manage classroom members</button>
+							</div>
+						</section>
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<i className="chalk-close" onClick={this.closeModal}></i>
 							<h2>Add Members</h2>
@@ -101,7 +125,7 @@ export default React.createClass({
 							<button>Cancel</button>
 						</Modal>
 					</aside>
-				</div>
+				</section>
 			</div>
 		)
 	}

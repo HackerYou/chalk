@@ -1,5 +1,5 @@
 button, .button {
-  font-family: $regularFont;
+  font-family: $mediumFont;
   display: inline-block;
   background: $grey;
   border: 0;

@@ -5,12 +5,14 @@ export default React.createClass({
 	displayName: 'Course',
 	render() {
 		return (
-			<li className="card">
+			<article className="card classCard">
 				<h3>{this.props.details.title}</h3>
-				<h4>{this.props.details.instructor}</h4>
-				<p className="red">{this.props.details.term}</p>
-				<Link className="linkBtn" to="classroom"><button className="primary">View Class</button></Link>			
-			</li>
+				<p>Instructor: {this.props.details.instructor}</p>
+				<footer className="classCardMeta">
+					<p className="red"><strong>{this.props.details.term}</strong></p>
+					<Link className="linkBtn" to="classroom"><button className="primary">View Class</button></Link>
+				</footer>
+			</article>
 		)
 	}
 });

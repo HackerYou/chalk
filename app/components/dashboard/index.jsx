@@ -22,7 +22,7 @@ export default React.createClass({
 		return (
 			<div className="container full">
 				<header className="intro">
-					<h3>What would you like to do?</h3>
+					<h2>What would you like to do?</h2>
 					<div className='buttons'>
 						<Link className="linkBtn" to='manage-classrooms'><button className="primary">Classrooms</button></Link>
 						<Link className="linkBtn" to='topics'><button className="primary">Topics</button></Link>
@@ -32,10 +32,12 @@ export default React.createClass({
 						<Link className="linkBtn" to='#'><button className="primary">Members</button></Link>
 					</div>
 				</header>
+				<div className="content">
 				<h1>Your Classrooms</h1>
-				<ul className="course-list">
+					<section className="dashWrap">
 					 {Object.keys(this.state.courses).map(this.renderCourses)}
-				</ul>
+					</section>
+				</div>
 			</div>
 		)
 	}

@@ -1,0 +1,22 @@
+header.mainHeader {
+	padding: 25px 0;
+	margin-bottom: 80px;
+	.innerWrap {
+		position: relative;
+		padding-left: ;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 5rem 3.9rem 3.3rem 260px;
+		img.topLogo {
+			position: absolute;
+			width: 195px;
+			top: -25px;
+			left: 4.5rem;
+		}
+		p.signOut a {
+			color: $black;
+			border: 0;
+		}
+	}
+}
