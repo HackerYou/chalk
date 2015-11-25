@@ -75,61 +75,71 @@ module.exports = {
           "description": "aliqua adipisicing ullamco fugiat ex reprehenderit eiusmod",
           "title": "Flexbox",
           "_id": "564cba27884fff60185139f6",
-          "exercises": 3
+          "exercises": 3,
+          "category": 'HTML & CSS'
         },
         {
           "description": "laboris Lorem excepteur voluptate est et nisi",
           "title": "Working With jQuery Plugins",
           "_id": "564cba27c00e4845aaae2a2a",
-          "exercises": 5
+          "exercises": 5,
+          "category": 'JavaScript/jQuery'
         },
         {
           "description": "nisi eu elit sit incididunt ad laboris",
           "title": "AJAX",
           "_id": "564cba277847bfd77286502a",
-          "exercises": 2
+          "exercises": 2,
+          "category": 'JavaScript/jQuery'
         },
         {
           "description": "incididunt excepteur proident et cupidatat aliquip id",
           "title": "HTML Forms",
           "_id": "564cba27ae53e493b1344afb",
-          "exercises": 6
+          "exercises": 6,
+          "category": 'HTML & CSS'
         },
         {
           "description": "esse ullamco proident officia nisi et mollit",
           "title": "Organizing Your JavaScript Code",
           "_id": "564cba27ea83e9fb93c793e9",
-          "exercises": 3
+          "exercises": 3,
+          "category": 'JavaScript/jQuery'
         },
         {
           "description": "ipsum commodo excepteur dolore nisi non exercitation",
           "title": "CSS Selectors",
           "_id": "564cba27d17358b7d05fc908",
-          "exercises": 6
+          "exercises": 6,
+          "category": 'HTML & CSS'
         },
         {
           "description": "ut reprehenderit cupidatat tempor cillum fugiat non",
           "title": "Transitions and Transforms",
           "_id": "564cba2770940d4abf168ee0",
-          "exercises": 3
+          "exercises": 3,
+          "category": 'HTML & CSS'
         },
         {
           "description": "Lorem ex quis occaecat mollit culpa velit",
           "title": "CSS Animations",
           "_id": "564cba27e902d061c05c190d",
-          "exercises": 7
+          "exercises": 7,
+          "category": 'HTML & CSS'
         },
         {
           "description": "nulla ad eiusmod dolor consequat exercitation sint",
           "title": "Working with PSDs",
           "_id": "564cba2773d9a3c3e47aa4cf",
-          "exercises": 3
+          "exercises": 3,
+          "category": 'HTML & CSS'
         },
         {
           "description": "labore nostrud aliquip deserunt et dolore proident",
           "title": "Github",
           "_id": "564cba2702a89b0ef39e35b6",
-          "exercises": 0
+          "exercises": 0,
+          "category": 'Tools'
         }
       ],
       "instructor": "Kristen Spencer",
