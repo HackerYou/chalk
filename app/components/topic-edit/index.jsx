@@ -30,12 +30,14 @@ export default React.createClass({
 			<div>
 				<Link className="linkBtn" to="topics"><button className="primary"><i className="chalk-home"></i>back to topics</button></Link>
 				<form  className="card" action="">
-					<label htmlFor="name">Topic Name</label>
+					<label htmlFor="name">Name</label>
 					<input type="text" placeholder="Topic Name"/>
-					<label htmlFor="category">Topic Category</label>
+					<label htmlFor="category">Taxonomy</label>
 					<input type="text" placeholder="Topic Category"/>
 					<label htmlFor="objective">Topic Objective</label>
 					<input type="text" placeholder="Enter the key learning outcome associated with this topic"/>
+					<label htmlFor="time">Time Estimate</label>
+					<input type="text" placeholder="eg 30min"/>
 					<button className="success">Save Topic</button>
 					<button className="error">Cancel</button>
 				</form>

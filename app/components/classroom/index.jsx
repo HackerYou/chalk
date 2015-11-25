@@ -10,7 +10,8 @@ export default React.createClass({
 		return{
 			course: {},
 			lessons: [],
-			isModalOpen: false
+			isModalOpen: false, 
+			topics: []
 		}
 	},
 	openModal(){
@@ -19,15 +20,29 @@ export default React.createClass({
 	closeModal(){
 		this.setState({isModalOpen: false});
 	},
-	componentDidMount(){
+	componentWillMount(){
 		let data = require('../sample-data.js');
 		this.setState({
 			course: data.course,
 			lessons: data.course.lessons
 		});
 	},
+	componentDidMount(){
+		let topics = Object.keys(this.state.lessons).map((key) => {
+			return this.state.lessons[key].category;
+		});
+		let uniqueTopics = topics.reduce((a,b) => {
+			if (a.indexOf(b) < 0) a.push(b);
+			return a;
+		}, []);
+
+		this.setState({topics: uniqueTopics});
+	},
 	renderLessons(key, index){
 		return <LessonDetails key={index} index={index} details={this.state.course.lessons[index]} />
+	},
+	renderTopics(key, index){
+		return <li key={index}>{this.state.topics[index]}</li>;
 	},
 	render() {
 		let links;
@@ -53,6 +68,12 @@ export default React.createClass({
 				</ul>
 				<div className="sidebar">
 					<aside>
+						<div className="card">
+							<h3>Course Topics</h3>
+							<ul>
+								{this.state.topics.map(this.renderTopics)}
+							</ul>
+						</div>
 						<div className="card">
 							<h3>Members</h3>
 							<p><i className="chalk-users"></i>{this.state.course.students} members of the classroom</p>

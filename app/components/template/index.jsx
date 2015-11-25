@@ -7,7 +7,9 @@ export default React.createClass({
 		return (
 			<li className="card">
 				<h3>{this.props.details.title}</h3>
-				<button className="primary">View/Edit</button>
+				<Link to="classroom" className="linkBtn">
+					<button className="primary">View/Edit</button>
+				</Link>
 			</li>
 		)
 	}
