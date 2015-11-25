@@ -2,14 +2,25 @@ import React from 'react';
 import Dashboard from '../dashboard/index.jsx';
 import {  Link, History } from 'react-router';
 import Footer from '../footer/index.jsx';
+import auth from '../../services/authentication.jsx';
 // let History = ReactRouter.History;
 
 export default React.createClass({
 	displayName: 'Login',
 	mixins: [History],
+	componentWillMount() {
+		if(auth.authenticated()) {
+			this.history.pushState(null,'/dashboard');
+		}
+	},
 	login(e){
-		e.preventDefault;
-		this.history.pushState(null ,'/dashboard');
+		e.preventDefault();
+		auth.login(this.refs.email.value,this.refs.password.value).then((res) => {
+			console.log(res);
+			if(res.success) {
+				this.history.pushState(null ,'/dashboard');
+			}
+		});
 	},
 	render() {
 		return (
