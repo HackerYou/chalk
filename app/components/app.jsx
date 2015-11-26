@@ -16,6 +16,7 @@ import EditClassroom from './edit-classroom/index.jsx';
 import ManageClassrooms from './manage-classrooms/index.jsx';
 import EditLesson from './edit-lesson/index.jsx';
 import EditTopics from './topic-edit/index.jsx';
+import NewTopic from './topic/new.jsx';
 import CourseTemplates from './course-templates/index.jsx';
 import Members from './members/index.jsx';
 import userData from '../services/user.jsx';
@@ -28,7 +29,7 @@ let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 function userName(context) {
 	if(auth.authenticated() === 'true' && Object.keys(context.state.user).length === 0) {
 		userData.getUser(config.getUserId()).then(data => {
-			console.log(data);
+			userData.storeUser(data.user);
 			context.setState({
 				user: data.user
 			});
@@ -51,17 +52,22 @@ let App = React.createClass({
 			announcement: {}
 		}
 	},
+	clearUser() {
+		this.setState({
+			user: {}
+		});
+	},
 	render() {
 		var header; 
 		if (location.pathname == '/'){
 			header = null;
 		} else{
-			header = <Headline user={this.state.user} history={this.props.history}/>;
+			header = <Headline user={this.state.user} history={this.props.history} clearUser={this.clearUser}/>;
 		}
 		return (
 			<div className="wrapper">
 				{header}
-				<section className="mainContent">
+				<section className="mainContent" >
 					{this.props.children || <Login />}
 				</section>
 				<Footer />
@@ -81,7 +87,8 @@ ReactDom.render(
 			<Route path='/lesson' component={Lesson} />
 			<Route path='/lesson/edit' component={EditLesson}/>
 			<Route path='/topics' component={Topics} />
-			<Route path='/topic/edit' component={EditTopics} />
+			<Route path='/topic/:topicId/edit' component={EditTopics} />
+			<Route path='/topic/new' component={NewTopic} />
 			<Route path='/exercises' component={Exercises} />
 			<Route path='/instructors' component={Instructors} />
 			<Route path='/media' component={Media} />
@@ -90,3 +97,5 @@ ReactDom.render(
 		</Route>
 	</Router>)
 	, document.getElementById('app'));
+
+

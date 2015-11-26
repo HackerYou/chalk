@@ -13,7 +13,7 @@ export default React.createClass({
 		}
 	},
 	componentWillMount() {
-		if(!auth.authenticated() === 'false') {
+		if(auth.authenticated() === 'true') {
 			this.history.pushState(null,'/dashboard');
 		}
 	},
