@@ -1,8 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, History } from 'react-router';
 import Template from '../template/index.jsx';
+import AuthMixin from '../../sercives/authMixin.jsx';
+
 export default React.createClass({
 	displayName: 'CourseTemplates',
+	mixins: [AuthMixin,History],
 	getInitialState(){
 		return{
 			courses: {}
