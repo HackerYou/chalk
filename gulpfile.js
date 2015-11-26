@@ -34,6 +34,7 @@ var processors = [
 	require('postcss-size')(), // https://github.com/postcss/postcss-size
 	require('postcss-quantity-queries')(), // https://github.com/pascalduez/postcss-quantity-queries
 	require('lost')(), // https://github.com/corysimmons/lost/wiki/Installation
+	require('postcss-color-function')(), // https://github.com/postcss/postcss-color-function
 	require('autoprefixer')({ browsers: ['last 5 versions', '> 10%'] }), // https://github.com/postcss/autoprefixer-core
 	require('postcss-reporter')() // https://github.com/postcss/postcss-reporter
 ];

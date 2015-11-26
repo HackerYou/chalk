@@ -29,12 +29,15 @@ body {
 	
 }
 
-
-
-.mainContent {
+.container {
 	lost-utility: clearfix;
 	max-width: 990px;
 	margin: 0 auto;
+}
+
+.full {
+	margin: 0 auto;
+	lost-utility: clearfix;
 }
 
 header.intro {
@@ -44,17 +47,24 @@ header.intro {
 }
 
 header.topContent {
-	margin: 10px 0;
+	margin-bottom: 10px;
+	margin-top: 10px;
 	.headerLinks {
 		margin-bottom: 40px;
 	}
 }
 
+section.detailsForm {
+	padding: 25px 45px 10px;
+	margin: 50px 0;
+}
 
+@import 'partials/modal.css';
 @import 'partials/header.css';
 @import 'partials/footer.css';
 @import 'partials/login.css';
 @import 'partials/dashboard.css';
+@import 'partials/classroom.css';
 @import 'partials/lessons.css';
 
 
