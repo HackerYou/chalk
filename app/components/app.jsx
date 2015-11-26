@@ -75,16 +75,13 @@ ReactDom.render(
 	(<Router history={createBrowserHistory()}>
 		<Route path='/' component={App}>
 			<Route path='/dashboard' component={Dashboard} />
-			<Route path='/classroom' component={Classroom} >
-				<Route path='/classroom/edit' component={EditClassroom}/>
-				<Route path='/classroom/manage' component={ManageClassrooms}/>
-			</Route>
-			<Route path='/lesson' component={Lesson} >
-				<Route path='/lesson/edit' component={EditLesson}/>
-			</Route>
-			<Route path='/topics' component={Topics}>
-				<Route path='/topic/edit' component={EditTopics} />
-			</Route>
+			<Route path='/classroom' component={Classroom} />
+			<Route path='/classroom/edit' component={EditClassroom}/>
+			<Route path='/classroom/manage' component={ManageClassrooms}/>
+			<Route path='/lesson' component={Lesson} />
+			<Route path='/lesson/edit' component={EditLesson}/>
+			<Route path='/topics' component={Topics} />
+			<Route path='/topic/edit' component={EditTopics} />
 			<Route path='/exercises' component={Exercises} />
 			<Route path='/instructors' component={Instructors} />
 			<Route path='/media' component={Media} />
