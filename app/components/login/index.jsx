@@ -3,7 +3,6 @@ import Dashboard from '../dashboard/index.jsx';
 import { Link , History } from 'react-router';
 import Footer from '../footer/index.jsx';
 import auth from '../../services/authentication.jsx';
-// let History = ReactRouter.History;
 
 export default React.createClass({
 	displayName: 'Login',
@@ -21,12 +20,10 @@ export default React.createClass({
 	login(e){
 		e.preventDefault();
 		auth.login(this.refs.email.value,this.refs.password.value).then((res) => {
-			console.log(res);
 			if(res.success) {
 				this.history.pushState(null ,'/dashboard');
 			}
 		}, (err) => {
-			console.log(err);
 			this.setState({
 				error: err.message
 			});

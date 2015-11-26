@@ -24,9 +24,8 @@ export default {
 					let options = {};
 					options[`${config.getAppName()}_loggedIn`] = true;
 					options[`${config.getAppName()}_token`] = res.token;
+					options[`${config.getAppName()}_user_id`] = res.user_id;
 					this.setLocalStorage(options);
-
-					config.getHeaders('x-access-token', res.token);
 					resolve({
 						success: true
 					});
@@ -41,6 +40,7 @@ export default {
 		let options = {};
 		options[`${config.getAppName()}_loggedIn`] = false;
 		options[`${config.getAppName()}_token`] = '';
+		options[`${config.getAppName()}_user_id`] = '';
 		this.setLocalStorage(options);
 	}
 };
