@@ -35,7 +35,6 @@ export default React.createClass({
 	render() {
 		return (
 			<div className="card loginCard">
-				{this.state.error}
 				<form onSubmit={this.login}>
 					<img src="../images/logo-hackeryou.svg" className="loginLogo" alt="HackerYou Logo" />
 					<h1>chalk</h1>
@@ -50,6 +49,7 @@ export default React.createClass({
 					<div className="fieldGroup">
 						<input type="submit" className="button primary" value="Sign In" />
 					</div>
+					<p className="red">{this.state.error}</p>
 					<p><a href="#">Lost your password?</a></p>
 				</form>
 			</div>

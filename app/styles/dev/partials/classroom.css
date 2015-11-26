@@ -1,0 +1,121 @@
+section.lessonsWrap {
+	lost-flex-container: row;
+	margin-bottom: 5rem;
+	.lessonColumn {
+		lost-column: 8/12;
+	}
+	ol {
+		counter-reset: num;
+		list-style-type: none;
+		li:before {
+			font-size: 2.25rem;
+			font-family: $headerFont;
+			font-weight: 700;
+			counter-increment: num;
+			content: counters(num,".") " ";
+		}
+	}
+	ol.lessonColumn {
+		margin: 0;
+		padding: 0;
+		& > li {
+			margin-bottom: 5rem;
+			&:before {
+				content: '';
+			}
+			&:last-child ul {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				li:before {
+					content: '';
+				}
+			}
+		}
+		li:last-child:before {
+			content: '';
+		}
+	}
+}
+
+	ol.lessonColumn .card {
+	padding: 10px 20px;
+	ol {
+		margin: 0;
+		padding: 0;
+		li {
+			padding: 20px 10px;
+		}
+	}
+}
+
+li.lessonRow {
+	lost-flex-container: row;
+	align-items: center;
+	border-bottom: 1px solid $border;
+	&:before {
+		lost-column: 2/12;
+	}
+	.lessonInfo {
+		lost-column: 7/12;
+	}
+	.lessonMeta {
+		lost-column: 3.5/12;
+		lost-flex-container: row;
+		justify-content: flex-end;
+		color: $grey;
+		a {
+			display: inline-block;
+			border: none;
+			color: $grey;
+		}
+	}
+}
+
+
+
+li.new-lessonRow {
+	lost-flex-container: row;
+	align-items: center;
+	/*padding: 25px 10px;*/
+}
+
+article.lessonNew {
+	border: 2px dashed $grey;
+	padding: 30px 20px;
+
+}
+
+aside.lessonMeta {
+	lost-column: 4/12;
+	lost-flex-container: column;
+	.sideCard {
+		lost-row: 1/3;
+		.card {
+			padding: 20px;
+		}
+	}
+}
+
+.topicLegend {
+	ul {
+		padding: 0 0 20px 10px;
+		margin: 0 0 30px;
+		list-style: none;
+		font-weight: 700;
+		font-family: $headerFont;
+		border-bottom: 1px solid $border;
+		li.active {
+			color: $red;
+			position: relative;
+			&:before {
+				content: '>';
+				position: absolute;
+			  left: -12px;
+			}
+		}
+	}
+	button {
+		width: 100%;
+	}
+}
