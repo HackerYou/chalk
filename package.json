@@ -43,6 +43,7 @@
     "lost": "^6.6.2",
     "pixrem": "^3.0.0",
     "postcss": "^5.0.12",
+    "postcss-color-function": "^2.0.0",
     "postcss-custom-selectors": "^3.0.0",
     "postcss-position": "^0.4.0",
     "postcss-pseudo-class-enter": "^2.0.1",
