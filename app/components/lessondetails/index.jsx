@@ -12,7 +12,7 @@ export default React.createClass({
 				</div>
 				<div className="lessonMeta">
 					<Link to="lesson">view</Link> |
-					<Link to="edit-lesson">edit</Link>
+					<Link to="/lesson/edit">edit</Link>
 				</div>
 			</li>
 		)
