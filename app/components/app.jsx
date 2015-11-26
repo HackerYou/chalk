@@ -26,7 +26,7 @@ let createBrowserHistory = require('history/lib/createBrowserHistory');
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 function userName(context) {
-	if(auth.authenticated() === 'true') {
+	if(auth.authenticated() === 'true' && Object.keys(context.state.user).length === 0) {
 		userData.getUser(config.getUserId()).then(data => {
 			console.log(data);
 			context.setState({
