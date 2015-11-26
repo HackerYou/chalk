@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, History } from 'react-router';
 import Template from '../template/index.jsx';
-import AuthMixin from '../../sercives/authMixin.jsx';
+import AuthMixin from '../../services/authMixin.jsx';
 
 export default React.createClass({
 	displayName: 'CourseTemplates',
