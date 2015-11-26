@@ -8,7 +8,7 @@ export default React.createClass({
 	},
 	render(){
 		return (
-			<div>
+			<div className="lessonTopic">
 				<h3>{this.props.details.title}</h3>
 				<p>{this.props.details.body}</p>
 				<a href="#">{(this.props.details.exercises).map(this.renderExercises)}</a>
