@@ -17,6 +17,7 @@ import ManageClassrooms from './manage-classrooms/index.jsx';
 import EditLesson from './edit-lesson/index.jsx';
 import EditTopics from './topic-edit/index.jsx';
 import CourseTemplates from './course-templates/index.jsx';
+import Members from './members/index.jsx';
 
 let createBrowserHistory = require('history/lib/createBrowserHistory');
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
@@ -73,6 +74,7 @@ ReactDom.render(
 			<Route path='/instructors' component={Instructors} />
 			<Route path='/media' component={Media} />
 			<Route path='/course-templates' component={CourseTemplates} />
+			<Route path='/members' component={Members} />
 		</Route>
 	</Router>)
 	, document.getElementById('app'));

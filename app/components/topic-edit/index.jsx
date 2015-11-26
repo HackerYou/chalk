@@ -47,16 +47,16 @@ export default React.createClass({
 					<Dropzone onDrop={this.onDrop}>
 					<p>Drag and drop files here or click to select files to upload</p>
 					</Dropzone>
-					<div>{this.state.files.map((file, index) => 
-						<div key={index}>
+					<ul>{this.state.files.map((file, index) => 
+						<li key={index}>
 							<p><i className="chalk-doc"></i>{file.name}</p>
 							<input type="text" defaultValue={file.preview}/>
 							<CopyToClipboard text={file.preview} onCopy={() => this.setState({copied: true})}>
 							<button className="success"><i className="chalk-copy"></i></button>
 							</CopyToClipboard>
 							<button className="error">Delete File</button>
-						</div>
-					)}</div>
+						</li>
+					)}</ul>
 					<button className="success">Save Topic</button>
 					<button className="error">Cancel</button>
 				</div>
