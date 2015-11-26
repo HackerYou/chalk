@@ -33,14 +33,14 @@ export default React.createClass({
 	render() {
 		let links, edit; 
 		if (location.pathname == '/lesson'){
-			links = <div><Link className="linkBtn" to="classroom"><button className="primary"><i className="chalk-home"></i>back to classroom</button></Link>
+			links = <div className="headerLinks"><Link className="linkBtn" to="classroom"><button className="primary"><i className="chalk-home"></i>back to classroom</button></Link>
 				<Link className="linkBtn" to="edit-lesson"><button className="success"><i className="chalk-edit"></i>edit lesson</button></Link></div>;
 				
 		} else{
 			links = null;
 		}
 
-		if (location.pathname =='/edit-lesson'){
+		if (location.pathname =='/lesson/edit'){
 			edit = <div>
 							<div onClick={this.openModal}><h3><i className="chalk-add"></i>Add Topic</h3></div>
 							<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
@@ -57,8 +57,6 @@ export default React.createClass({
 									<button className="success">Save Content</button>
 									<button className="error">Cancel</button>
 								</form>
-
-
 							</Modal>
 						</div>
 
@@ -68,17 +66,18 @@ export default React.createClass({
 
 
 		return (
-			<div>
+			<div className="full">
+				<header className="topContent container">
 				{links}
-				<div>
-					<h1>{this.state.lesson.title}</h1>
-					<div className="card">
-						{(this.state.topic).map(this.renderTopics)}
-					</div>
+				<h1>{this.state.lesson.title}</h1>
+				</header>
+				<section className="lessonView card">
+					{(this.state.topic).map(this.renderTopics)}
 					{edit}
+				</section>
+				<div className="container">
+					{links}
 				</div>
-				{links}
-				
 			</div>
 
 		)
