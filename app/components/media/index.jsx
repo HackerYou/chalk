@@ -1,8 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, History } from 'react-router';
+import AuthMixin from '../../services/authMixin.jsx';
 import File from '../file/index.jsx';
 
 export default React.createClass({
+	mixins: [AuthMixin,History],
 	displayName: 'media',
 	getInitialState(){
 		return {

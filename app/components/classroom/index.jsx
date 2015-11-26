@@ -1,11 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link , History} from 'react-router';
 import LessonDetails from '../lessondetails/index.jsx';
 import Modal from '../modal/index.jsx';
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+import AuthMixin from '../../services/authMixin.jsx';
 
 export default React.createClass({
 	displayName: 'Classroom',
+	mixins: [AuthMixin,History],
 	getInitialState(){
 		return{
 			course: {},

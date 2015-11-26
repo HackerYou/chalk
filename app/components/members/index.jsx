@@ -1,8 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link , History } from 'react-router';
+import AuthMixin from '../../services/authMixin.jsx';
 
 export default React.createClass({
 	displayName: 'Members',
+	mixins: [AuthMixin,History],
 	getInitialState(){
 		return {
 			members: []

@@ -118,7 +118,7 @@ gulp.task('bs-client', function () {
 gulp.task('build', ['js','styles']);
 
 gulp.task('default', ['js','bs-client'], () => {
-	gulp.watch('app/components/**/*.jsx',['js']);
+	gulp.watch('app/**/*.jsx',['js']);
 	gulp.watch('app/components/app.js', reload);
 	gulp.watch(paths.srcCSS + '**/*.css', ['styles']);
 });

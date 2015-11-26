@@ -1,10 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link , History } from 'react-router';
 import LessonTopic from '../lesson-topic/index.jsx';
 import Modal from '../modal/index.jsx';
+import AuthMixin from '../../services/authMixin.jsx';
 
 export default React.createClass({
 	displayName: 'Lesson',
+	mixins: [AuthMixin,History],
 	getInitialState(){
 		return {
 			lesson: {},
