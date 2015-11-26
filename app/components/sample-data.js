@@ -397,5 +397,269 @@ module.exports = {
             "path": "http://filepath.com",
             "_id": "5653838a6b0dcc1ed7273664"
           }
-        ]
+        ],
+        "members": [
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24",
+                "56561fc0f9bfe0dea9a4c8f7"
+              ],
+              "instructor": false,
+              "admin": true,
+              "email": "test@test.com",
+              "lastName": "Davenport",
+              "firstName": "Santos",
+              "_id": "56561fc07399627c3bbf33c2"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24"
+              ],
+              "instructor": true,
+              "admin": false,
+              "email": "test@test.com",
+              "lastName": "Castro",
+              "firstName": "Avila",
+              "_id": "56561fc0ed71a5aea313b524"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24",
+                "56561fc0f9bfe0dea9a4c8f7",
+                "56561fc038b20debf09b844c"
+              ],
+              "instructor": false,
+              "admin": false,
+              "email": "test@test.com",
+              "lastName": "Bentley",
+              "firstName": "Kim",
+              "_id": "56561fc0dc1e98db12317117"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24"
+              ],
+              "instructor": false,
+              "admin": false,
+              "email": "test@test.com",
+              "lastName": "Mcintosh",
+              "firstName": "Vicki",
+              "_id": "56561fc006e1715a3da157a2"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24",
+                "56561fc0f9bfe0dea9a4c8f7"
+              ],
+              "instructor": false,
+              "admin": false,
+              "email": "test@test.com",
+              "lastName": "Bernard",
+              "firstName": "Brittney",
+              "_id": "56561fc0d7ebe972919787c2"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24",
+                "56561fc0f9bfe0dea9a4c8f7",
+                "56561fc038b20debf09b844c",
+                "56561fc09525600c26a4906e"
+              ],
+              "instructor": true,
+              "admin": true,
+              "email": "test@test.com",
+              "lastName": "Reyes",
+              "firstName": "Parker",
+              "_id": "56561fc03627b80c0bd1f894"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24"
+              ],
+              "instructor": true,
+              "admin": false,
+              "email": "test@test.com",
+              "lastName": "Sanford",
+              "firstName": "Gladys",
+              "_id": "56561fc0a4c0cdb6c122a020"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24"
+              ],
+              "instructor": false,
+              "admin": true,
+              "email": "test@test.com",
+              "lastName": "Cantrell",
+              "firstName": "Bird",
+              "_id": "56561fc0030e8f08e8e97c8b"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24",
+                "56561fc0f9bfe0dea9a4c8f7"
+              ],
+              "instructor": false,
+              "admin": true,
+              "email": "test@test.com",
+              "lastName": "Coffey",
+              "firstName": "Acevedo",
+              "_id": "56561fc0d181b11554ff4de4"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24",
+                "56561fc0f9bfe0dea9a4c8f7",
+                "56561fc038b20debf09b844c"
+              ],
+              "instructor": false,
+              "admin": true,
+              "email": "test@test.com",
+              "lastName": "Benson",
+              "firstName": "Christian",
+              "_id": "56561fc0a2c91883dc5ee92a"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24",
+                "56561fc0f9bfe0dea9a4c8f7",
+                "56561fc038b20debf09b844c",
+                "56561fc09525600c26a4906e"
+              ],
+              "instructor": false,
+              "admin": true,
+              "email": "test@test.com",
+              "lastName": "House",
+              "firstName": "Millie",
+              "_id": "56561fc0b8103af9689d7e7a"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24"
+              ],
+              "instructor": false,
+              "admin": false,
+              "email": "test@test.com",
+              "lastName": "Hartman",
+              "firstName": "Carter",
+              "_id": "56561fc02a4b9cd8a4c729a1"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24",
+                "56561fc0f9bfe0dea9a4c8f7",
+                "56561fc038b20debf09b844c",
+                "56561fc09525600c26a4906e"
+              ],
+              "instructor": true,
+              "admin": true,
+              "email": "test@test.com",
+              "lastName": "Mcpherson",
+              "firstName": "Margaret",
+              "_id": "56561fc09907936918294b55"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24",
+                "56561fc0f9bfe0dea9a4c8f7",
+                "56561fc038b20debf09b844c",
+                "56561fc09525600c26a4906e"
+              ],
+              "instructor": false,
+              "admin": true,
+              "email": "test@test.com",
+              "lastName": "Ryan",
+              "firstName": "Willa",
+              "_id": "56561fc08ea2338827be9451"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24"
+              ],
+              "instructor": false,
+              "admin": false,
+              "email": "test@test.com",
+              "lastName": "Velez",
+              "firstName": "Moses",
+              "_id": "56561fc0ecec3ee09fcfbe5c"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402"
+              ],
+              "instructor": false,
+              "admin": false,
+              "email": "test@test.com",
+              "lastName": "Murray",
+              "firstName": "Alison",
+              "_id": "56561fc025c6fa729b78c2b6"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24"
+              ],
+              "instructor": true,
+              "admin": false,
+              "email": "test@test.com",
+              "lastName": "Robbins",
+              "firstName": "Frances",
+              "_id": "56561fc0c6d1243fa47ea8b9"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24",
+                "56561fc0f9bfe0dea9a4c8f7"
+              ],
+              "instructor": true,
+              "admin": false,
+              "email": "test@test.com",
+              "lastName": "Bowman",
+              "firstName": "Hinton",
+              "_id": "56561fc0c8c048069ca81b8f"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24",
+                "56561fc0f9bfe0dea9a4c8f7",
+                "56561fc038b20debf09b844c",
+                "56561fc09525600c26a4906e"
+              ],
+              "instructor": false,
+              "admin": false,
+              "email": "test@test.com",
+              "lastName": "Warren",
+              "firstName": "Alicia",
+              "_id": "56561fc003bc20d2308b63dd"
+            },
+            {
+              "courses": [
+                "56561fc05840c1d50806d402",
+                "56561fc01a0a05d826c1be24"
+              ],
+              "instructor": false,
+              "admin": true,
+              "email": "test@test.com",
+              "lastName": "Valentine",
+              "firstName": "Laverne",
+              "_id": "56561fc089e74dfc2d66e188"
+            }
+          ]
 }

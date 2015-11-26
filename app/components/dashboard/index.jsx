@@ -6,17 +6,17 @@ export default React.createClass({
 	displayName: 'Dashboard',
 	getInitialState(){
 		return{
-			courses: {}
+			courses: []
 		}
 	},
-	componentDidMount(){
+	componentWillMount(){
 		let data = require('../sample-data.js');
 		this.setState({
 			courses: data.user.courses
 		});
 	},
-	renderCourses(key){
-		return <Course key={key} index={key} details={this.state.courses[key]} />
+	renderCourses(key, index){
+		return <Course key={index} index={index} details={this.state.courses[index]} />
 	},
 	render() {
 		return (
@@ -29,13 +29,13 @@ export default React.createClass({
 						<Link className="linkBtn" to='course-templates'><button className="primary">Course Templates</button></Link>
 						<Link className="linkBtn" to='instructors'><button className="primary">Instructors</button></Link>
 						<Link className="linkBtn" to='media'><button className="primary">Media</button></Link>
-						<Link className="linkBtn" to='#'><button className="primary">Members</button></Link>
+						<Link className="linkBtn" to='members'><button className="primary">Members</button></Link>
 					</div>
 				</header>
 				<div className="content">
 				<h1>Your Classrooms</h1>
 					<section className="dashWrap">
-					 {Object.keys(this.state.courses).map(this.renderCourses)}
+					 {(this.state.courses).map(this.renderCourses)}
 					</section>
 				</div>
 			</div>

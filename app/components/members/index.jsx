@@ -1,36 +1,38 @@
 import React from 'react';
 import { Link } from 'react-router';
-import File from '../file/index.jsx';
 
 export default React.createClass({
-	displayName: 'media',
+	displayName: 'Members',
 	getInitialState(){
 		return {
-			media: []
+			members: []
 		}
 	},
 	componentWillMount(){
 		let data = require('../sample-data.js');
 		this.setState({
-			media: data.media
+			members: data.members
 		});
 	},
-	renderFiles(key, index){
-		return <File key={index} details={this.state.media[index]} />
+	renderMembers(key, index){
+		return <li key={index}>
+							<p><strong>{this.state.members[index].firstName + ' ' + this.state.members[index].lastName}</strong></p>
+							<p>{this.state.members[index].email}</p>
+						</li>
 	},
 	render() {
 		return (
 			<div>
 				<Link to="dashboard" className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
-				<h1>Media</h1>
+				<h1>Manage Members</h1>
 				<form action="" className="card">
-					<h3>Search</h3>
-					<input type="search"/>
+					<label htmlFor="search">Search by name or email</label>
+					<input type="text" id="search"/>
 				</form>
-				<ul className="card">
-					{this.state.media.map(this.renderFiles)}
+				<ul>
+					{this.state.members.map(this.renderMembers)}
 				</ul>
 			</div>
-		)
+			)
 	}
 });
