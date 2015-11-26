@@ -5,7 +5,7 @@ export default React.createClass({
 	displayName: 'Exercise',
 	render() {
 		return (
-			<p className="red"><i className="chalk-download"></i>Download{this.props.details.title}</p>
+			<p className="red"><i className="chalk-download"></i>Download {this.props.details.title}</p>
 		)
 	}
 });

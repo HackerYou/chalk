@@ -41,6 +41,8 @@ input[type=week] {
   transition: all 0.5s;
   font-family: $regularFont;
   font-weight: 400;
+  position: relative;
+  top: -2px;
   &:active, &:focus {
     outline: 0;
     border-bottom: 2px solid $blue;
@@ -86,6 +88,8 @@ label {
     margin-right: 1rem;
     min-width: 6rem;
     text-align: right;
+    position: relative;
+    top: -5px;
   }
 }
 
@@ -112,32 +116,3 @@ select {
   }
 }
 
-/*MODAL STYLES*/
-
-.modal i{
-  font-size: 30px;
-  &:hover{
-    cursor: pointer;
-  }
-}
-
-.modal-animation-enter {
-    opacity: 0.00;
-    transform: scale(0.7);
-    transition: all 0.2s;
-}
-
-.modal-animation-enter.modal-animation-enter-active {
-    opacity: 1;
-    transform: scale(1);
-}
-.modal-animation-leave {
-    opacity: 1;
-    transform: scale(1);
-    transition: all 0.2s;
-}
-
-.modal-animation-leave.modal-animation-leave-active {
-    opacity: 0.00;
-    transform: scale(0.7);
-}
