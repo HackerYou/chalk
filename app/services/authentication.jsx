@@ -1,13 +1,14 @@
 import config from './config.jsx';
 
-let userLoggedin = false;
 
 export default {
 	authenticated() {
-		return userLoggedin
+		return localStorage.getItem(`${config.getAppName()}_loggedIn`);
 	},
-	setLocalStorage(token) {
-		localStorage.set('token',token);
+	setLocalStorage(options) {
+		Object.keys(options).map(key => {
+			localStorage.setItem(key,options[key]);
+		});
 	},
 	login(email,password) {
 		return new Promise((resolve,reject) => {
@@ -20,30 +21,26 @@ export default {
 				}
 			}).then(res => {
 				if(res.success) {
-					userLoggedin = true;
-					this.setLocalStorage(res.token);
+					let options = {};
+					options[`${config.getAppName()}_loggedIn`] = true;
+					options[`${config.getAppName()}_token`] = res.token;
+					this.setLocalStorage(options);
+
 					config.getHeaders('x-access-token', res.token);
 					resolve({
 						success: true
 					});
 				}	
 				else {
-					reject({
-						success: false
-					});
+					reject(res);
 				}
 			});
 		});
 	},
 	logOut() {
-		this.setLocalStorage('');
-	},
-	authMixin: {
-		willTransitionTo() {
-			console.log(this);
-			if(!this.authenticated()) {
-				this.history.pushState(null,'/');
-			}
-		}	
+		let options = {};
+		options[`${config.getAppName()}_loggedIn`] = false;
+		options[`${config.getAppName()}_token`] = '';
+		this.setLocalStorage(options);
 	}
 };

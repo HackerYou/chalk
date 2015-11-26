@@ -1,9 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link , History } from 'react-router';
 import Topic from '../topic/index.jsx';
+import AuthMixin from '../../services/authMixin.jsx';
+
 
 export default React.createClass({
 	displayName: 'Topics',
+	mixins: [AuthMixin, History],
 	getInitialState(){
 		return {
 			topics: [] 

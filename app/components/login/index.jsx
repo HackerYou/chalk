@@ -1,6 +1,6 @@
 import React from 'react';
 import Dashboard from '../dashboard/index.jsx';
-import {  Link, History } from 'react-router';
+import { Link , History } from 'react-router';
 import Footer from '../footer/index.jsx';
 import auth from '../../services/authentication.jsx';
 // let History = ReactRouter.History;
@@ -8,8 +8,13 @@ import auth from '../../services/authentication.jsx';
 export default React.createClass({
 	displayName: 'Login',
 	mixins: [History],
+	getInitialState() {
+		return {
+			error: ''
+		}
+	},
 	componentWillMount() {
-		if(auth.authenticated()) {
+		if(!auth.authenticated() === 'false') {
 			this.history.pushState(null,'/dashboard');
 		}
 	},
@@ -20,11 +25,17 @@ export default React.createClass({
 			if(res.success) {
 				this.history.pushState(null ,'/dashboard');
 			}
+		}, (err) => {
+			console.log(err);
+			this.setState({
+				error: err.message
+			});
 		});
 	},
 	render() {
 		return (
 			<div className="card loginCard">
+				{this.state.error}
 				<form onSubmit={this.login}>
 					<img src="../images/logo-hackeryou.svg" className="loginLogo" alt="HackerYou Logo" />
 					<h1>chalk</h1>

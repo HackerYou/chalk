@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, History } from 'react-router';
 import Course from '../course/index.jsx';
-import Auth from '../../services/authentication.jsx';
+import AuthMixin from '../../services/authMixin.jsx';
 
 export default React.createClass({
 	displayName: 'Dashboard',
-	mixins: [Auth.authMixin],
+	mixins: [AuthMixin,History],
 	getInitialState(){
 		return{
 			courses: {}

@@ -22,6 +22,7 @@ let createBrowserHistory = require('history/lib/createBrowserHistory');
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 let App = React.createClass({
 	displayName: 'App',
+	mixins: [History],
 	componentDidMount(){
 		let data = require('./sample-data.js');
 		this.setState({
@@ -39,7 +40,7 @@ let App = React.createClass({
 		if (location.pathname == '/'){
 			header = null;
 		} else{
-			header = <Headline user={this.state.user}/>;
+			header = <Headline user={this.state.user} history={this.props.history}/>;
 		}
 		return (
 			<div className="wrapper">
@@ -56,18 +57,21 @@ let App = React.createClass({
 
 ReactDom.render(
 	(<Router history={createBrowserHistory()}>
-			<Route path='/' component={App}>
+		<Route path='/' component={App}>
 			<Route path='/dashboard' component={Dashboard} />
-			<Route path='/classroom' component={Classroom} />
-			<Route path='/lesson' component={Lesson} />
-			<Route path='/topics' component={Topics} />
+			<Route path='/classroom' component={Classroom} >
+				<Route path='/classroom/edit' component={EditClassroom}/>
+				<Route path='/classroom/manage' component={ManageClassrooms}/>
+			</Route>
+			<Route path='/lesson' component={Lesson} >
+				<Route path='/lesson/edit' component={EditLesson}/>
+			</Route>
+			<Route path='/topics' component={Topics}>
+				<Route path='/topic/edit' component={EditTopics} />
+			</Route>
 			<Route path='/exercises' component={Exercises} />
 			<Route path='/instructors' component={Instructors} />
 			<Route path='/media' component={Media} />
-			<Route path='/edit-classroom' component={EditClassroom} />
-			<Route path='/manage-classrooms' component={ManageClassrooms} />
-			<Route path='/edit-lesson' component={EditLesson} />
-			<Route path='/edit-topic' component={EditTopics} />
 			<Route path='/course-templates' component={CourseTemplates} />
 		</Route>
 	</Router>)
