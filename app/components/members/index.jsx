@@ -20,6 +20,8 @@ export default React.createClass({
 		return <li key={index}>
 							<p><strong>{this.state.members[index].firstName + ' ' + this.state.members[index].lastName}</strong></p>
 							<p>{this.state.members[index].email}</p>
+							<p>{this.state.members[index].courses.length} Classrooms</p>
+							<p>Remove User? <i className="chalk-remove"></i></p>
 						</li>
 	},
 	render() {
