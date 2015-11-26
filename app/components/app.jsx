@@ -18,18 +18,36 @@ import EditLesson from './edit-lesson/index.jsx';
 import EditTopics from './topic-edit/index.jsx';
 import CourseTemplates from './course-templates/index.jsx';
 import Members from './members/index.jsx';
+<<<<<<< HEAD
 import CreateLesson from './lesson-create/index.jsx';
+=======
+import userData from '../services/user.jsx';
+import config from '../services/config.jsx';
+import auth from '../services/authentication.jsx';
+>>>>>>> ed813bda40d9a7f1967e4df8f5004f406b9abe64
 
 let createBrowserHistory = require('history/lib/createBrowserHistory');
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+
+function userName(context) {
+	if(auth.authenticated() === 'true' && Object.keys(context.state.user).length === 0) {
+		userData.getUser(config.getUserId()).then(data => {
+			console.log(data);
+			context.setState({
+				user: data.user
+			});
+		});
+	}
+};
+
 let App = React.createClass({
 	displayName: 'App',
 	mixins: [History],
-	componentDidMount(){
-		let data = require('./sample-data.js');
-		this.setState({
-			user: data.user
-		});
+	componentDidMount() {
+		userName(this);
+	},
+	componentWillReceiveProps(){
+		userName(this);
 	},
 	getInitialState(){
 		return{
