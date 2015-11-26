@@ -43,24 +43,31 @@ export default React.createClass({
 		}
 
 		if (location.pathname =='/lesson/edit'){
-			edit = <div >
+			edit = <div>
 							<div onClick={this.openModal} className="lessonEditContainer"><h3><i className="chalk-add"></i>Add Topic</h3></div>
 							<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
-								<div className="lessonModal">
 									<i className="chalk-close" onClick={this.closeModal}></i>
-									<form action="">
-										<h2>Add Topic</h2>
-										<h3>Search By Topic Name</h3>
-										<input type="text" placeholder='eg. Floats'/>
-										<h4>or</h4>
-										<h3>Add your own content</h3>
-										<textarea name="content" id="" cols="30" rows="10"></textarea>
-										<h3>Media</h3>
-										<input type="file" placeholder="drag and drop files here"/>
+									<h2>Add Topic</h2>
+									<div className="lessonModalWrap">
+										<div className="lessonModalColumn">
+											<form action="">
+												<h3>Search By Topic Name</h3>
+												<input type="text" placeholder='eg. Floats'/>
+											</form>
+										</div>
+										<div className="lessonModalColumn lessonAddContent">
+											<h3>Add your own content</h3>
+											<form action="">
+												<textarea name="content" id="" ></textarea>
+												<h3>Media</h3>
+												<input type="file" placeholder="drag and drop files here"/>
+											</form>
+										</div>
+									</div>
+									<div className="modalBtns">
 										<button className="success">Save Content</button>
 										<button className="error">Cancel</button>
-									</form>
-								</div>
+									</div>
 							</Modal>
 						</div>
 

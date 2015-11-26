@@ -6,26 +6,53 @@
 	background: rgba(0,0,0,0.5);
 	position: fixed 0;
 	z-index: 9999;
+	overflow: scroll;
 }
 
 .modalBody {
-	height: 90%;
-	width: 90%;
-	/*padding: 45px;*/
+	width: 95%;
+	padding: 45px 45px 67px;
 	position: absolute;
-	overflow-y: scroll;
-	left: 5%;
-	top: 5%;
+	left: 2.5%;
+	top: 2.5%;
+	margin: 2.5% 0;
 	i.chalk-close {
 		position: absolute;
-		top: 5px;
-		right: 5px;
+		top: 10px;
+		right: 10px;
 		margin: 0;
 	}
 }
 
-.lessonModal {
-	padding: 45px;
+.lessonModalWrap {
+	lost-flex-container: row;
+	height: 100%;
+	.lessonModalColumn:first-child {
+		lost-column: 1/2;
+	}
+	.lessonModalColumn:first-child {
+		lost-column: 2/6;
+	}
+	.lessonModalColumn:last-child {
+		lost-column: 4/6;
+	}
+}
+
+.lessonModalColumn input[type=text], .lessonModalColumn textarea {
+	width: 100%;
+}
+
+.lessonAddContent {
+	textarea {
+		min-height: 400px;
+	}
+}
+
+/*.lessonAddContent*/
+.modalBtns {
+	position: absolute;
+	bottom: 15px;
+	right: 15px;
 }
 
 /*MODAL STYLES*/
