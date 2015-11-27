@@ -26,7 +26,7 @@ export default React.createClass({
 				<header className="intro">
 					<h2>What would you like to do?</h2>
 					<div className='buttons'>
-						<Link className="linkBtn" to='manage-classrooms'><button className="primary">Classrooms</button></Link>
+						<Link className="linkBtn" to='/classroom/manage'><button className="primary">Classrooms</button></Link>
 						<Link className="linkBtn" to='topics'><button className="primary">Topics</button></Link>
 						<Link className="linkBtn" to='course-templates'><button className="primary">Course Templates</button></Link>
 						<Link className="linkBtn" to='instructors'><button className="primary">Instructors</button></Link>
