@@ -1,0 +1,47 @@
+section.topicsWrap {
+	lost-flex-container: row;
+	margin-bottom: 5rem;
+	.topicCard {
+		lost-waffle: 1/3;
+		padding: 35px 15px 20px 20px;
+		footer.classCardMeta {
+			margin-top: 4rem;
+			lost-flex-container: row;
+			align-items: baseline;
+			justify-content: flex-end;
+		}
+	}
+}
+
+.topicsForm .fieldRow {
+	margin-bottom: 10px;
+}
+
+.topicRow {
+	margin: 25px 0;
+	padding: 45px 45px 40px 45px;
+	.topicLong {
+		width: 63%;
+	}
+	textarea {
+		width: 100%;
+	}
+}
+
+.dropZone {
+	width: 100%;
+	border: 2px dashed $border;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100px;
+	p {
+		margin: 0;
+	}
+}
+
+ul.uploadedFiles {
+	padding: 0;
+	margin-bottom: 25px;
+	list-style-type: none;
+}
