@@ -49,7 +49,7 @@ export default React.createClass({
 	render() {
 		let links;
 		if (location.pathname == '/classroom'){
-			links = <div className="headerLinks"><Link className="linkBtn" to='/classroom/edit'><button className="success"><i className="chalk-edit"></i>edit classroom</button></Link>
+			links = <div className="headerLinks"><Link className="linkBtn" to='classroom/edit'><button className="success"><i className="chalk-edit"></i>edit classroom</button></Link>
 				<Link className="linkBtn" to='dashboard'><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link></div>;
 		} else {
 			links = null;
@@ -70,7 +70,7 @@ export default React.createClass({
 								<ol>
 									{(this.state.lessons).map(this.renderLessons)}
 									<li className="new-lessonRow">
-										<button className="success">Create</button>
+										<Link to="lesson/create" className="linkBtn"><button className="success">Create</button></Link>
 										<p className="lessonTitle">Create new lesson</p>
 									</li>
 								</ol>
@@ -82,7 +82,7 @@ export default React.createClass({
 									<li className="new-lesson">
 										<h3>Create new lesson</h3>
 										<p>Plan lesson and choose new topics</p>
-										<button className="success">Create</button>
+										<Link to="lesson/create" className="linkBtn"><button className="success">Create</button></Link>
 									</li>
 								</ul>
 							</article>

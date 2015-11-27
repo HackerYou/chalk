@@ -2,7 +2,7 @@ import React from 'react';
 import { Link , History } from 'react-router';
 import Topic from '../topic/index.jsx';
 import AuthMixin from '../../services/authMixin.jsx';
-
+import topicData from '../../services/topic.jsx';
 
 export default React.createClass({
 	displayName: 'Topics',
@@ -13,16 +13,15 @@ export default React.createClass({
 		}
 	}, 
 	componentWillMount(){
-		let data = require('../sample-data.js');
-		this.setState({
-			topics: data.lesson.topic
+		topicData.getTopics().then(res => {
+			console.log(res.topic)
+			this.setState({topics: res.topic});
 		});
 	},
 	renderTopics(key, index){
 		return <Topic key={index} index={index} details={this.state.topics[index]} />
 	},
 	render() {
-		console.log(this.state);
 		return (
 			<div>
 				<Link className="linkBtn" to="dashboard"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
