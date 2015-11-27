@@ -35,8 +35,8 @@ export default React.createClass({
 	render() {
 		let links, edit; 
 		if (location.pathname == '/lesson'){
-			links = <div className="headerLinks"><Link className="linkBtn" to="classroom"><button className="primary"><i className="chalk-home"></i>back to classroom</button></Link>
-				<Link className="linkBtn" to="edit-lesson"><button className="success"><i className="chalk-edit"></i>edit lesson</button></Link></div>;
+			links = <div className="headerLinks"><Link className="linkBtn" to="/classroom"><button className="primary"><i className="chalk-home"></i>back to classroom</button></Link>
+				<Link className="linkBtn" to="/lesson/edit"><button className="success"><i className="chalk-edit"></i>edit lesson</button></Link></div>;
 				
 		} else{
 			links = null;
@@ -66,7 +66,7 @@ export default React.createClass({
 									</div>
 									<div className="modalBtns">
 										<button className="success">Save Content</button>
-										<button className="error">Cancel</button>
+										<button className="error" onClick={this.closeModal}>Cancel</button>
 									</div>
 							</Modal>
 						</div>

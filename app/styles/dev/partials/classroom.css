@@ -56,14 +56,21 @@ li.lessonRow {
 	&:before {
 		lost-column: 2/12;
 	}
+	&:hover > .lessonMeta span {
+		display: inline-block;
+	}
 	.lessonInfo {
 		lost-column: 7/12;
 	}
 	.lessonMeta {
+		/*display: none;*/
 		lost-column: 3.5/12;
 		lost-flex-container: row;
 		justify-content: flex-end;
 		color: $grey;
+		span {
+			display: none;
+		}
 		a {
 			display: inline-block;
 			border: none;

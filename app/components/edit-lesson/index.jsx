@@ -8,7 +8,7 @@ export default React.createClass({
 		return (
 			<div>
 				<header className="topContent container">
-					<Link className="linkBtn" to="classroom"><button className="primary"><i className="chalk-home"></i>back to classroom</button></Link>
+					<Link className="linkBtn" to="/classroom"><button className="primary"><i className="chalk-home"></i>back to classroom</button></Link>
 					<button className="success"><i className="chalk-save"></i>save content</button>
 				</header>
 				<section className="full card detailsForm">

@@ -49,7 +49,7 @@ export default React.createClass({
 	render() {
 		let links;
 		if (location.pathname == '/classroom'){
-			links = <div className="headerLinks"><Link className="linkBtn" to='edit-classroom'><button className="success"><i className="chalk-edit"></i>edit classroom</button></Link>
+			links = <div className="headerLinks"><Link className="linkBtn" to='/classroom/edit'><button className="success"><i className="chalk-edit"></i>edit classroom</button></Link>
 				<Link className="linkBtn" to='dashboard'><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link></div>;
 		} else {
 			links = null;

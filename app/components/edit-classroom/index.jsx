@@ -7,7 +7,7 @@ export default React.createClass({
 	render() {
 		return (
 			<div>
-				<Link to="dashboard" className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
+				<Link to="/classroom" className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to classroom</button></Link>
 				<form action="">
 					<h2>Edit Classroom</h2>
 					<label htmlFor="name">Classroom Name</label>
