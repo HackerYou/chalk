@@ -70,7 +70,7 @@ export default React.createClass({
 								<ol>
 									{(this.state.lessons).map(this.renderLessons)}
 									<li className="new-lessonRow">
-										<Link to="lesson/edit" className="linkBtn"><button className="success">Create</button></Link>
+										<Link to="lesson/create" className="linkBtn"><button className="success">Create</button></Link>
 										<p className="lessonTitle">Create new lesson</p>
 									</li>
 								</ol>
@@ -82,7 +82,7 @@ export default React.createClass({
 									<li className="new-lesson">
 										<h3>Create new lesson</h3>
 										<p>Plan lesson and choose new topics</p>
-										<Link to="lesson/edit" className="linkBtn"><button className="success">Create</button></Link>
+										<Link to="lesson/create" className="linkBtn"><button className="success">Create</button></Link>
 									</li>
 								</ul>
 							</article>

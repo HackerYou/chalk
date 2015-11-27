@@ -27,7 +27,7 @@ export default React.createClass({
 			<div>
 				<Link className="linkBtn" to="dashboard"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
 				<h1>Manage Topics</h1>
-				<Link className="linkBtn" to="edit-topic"><button className="success"><i className="chalk-edit"></i>Create New Topic</button></Link>
+				<Link className="linkBtn" to="topic/edit"><button className="success"><i className="chalk-edit"></i>Create New Topic</button></Link>
 				<form  className="card" action="">
 					<label htmlFor="search">Search</label>
 					<input type="search" placeholder="Search for a topic"/>
