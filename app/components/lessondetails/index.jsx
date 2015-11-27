@@ -11,8 +11,10 @@ export default React.createClass({
 					<p className="red lessonExercise">{this.props.details.exercises} Exercises</p>
 				</div>
 				<div className="lessonMeta">
-					<Link to="lesson">view</Link> |
-					<Link to="/lesson/edit">edit</Link>
+					<span>
+						<Link to="lesson">view</Link> |
+						<Link to="/lesson/edit">edit</Link>
+					</span>
 				</div>
 			</li>
 		)
