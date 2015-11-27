@@ -15,7 +15,7 @@ export default React.createClass({
 			topic: [],
 			files: [],
 			copied: false, 
-			category: ''
+			category: 'HTML & CSS'
 		}
 	}, 
 	componentWillMount(){
@@ -40,6 +40,12 @@ export default React.createClass({
 			this.history.pushState(null,`/topics`);
 		});
 	},
+	deleteTopic(e){
+		e.preventDefault();
+		topicData.deleteTopic(this.state.topic._id).then(res =>{
+			this.history.pushState(null, `/topics`);
+		});
+	},
 	handleChange(e){
 		console.log(e.target.id +"="+e.target.value)
 		let stateObj = this.state.topic;
@@ -52,6 +58,7 @@ export default React.createClass({
 		return (
 			<div>
 				<Link className="linkBtn" to="topics"><button className="primary"><i className="chalk-home"></i>back to topics</button></Link>
+				<button onClick={this.deleteTopic}className="error"><i className="chalk-remove"></i>delete topic</button>
 					<form action="" className="card" onSubmit={this.editTopic}>
 						<label htmlFor="name">Name</label>
 						<input type="text" placeholder="Topic Name" value={this.state.topic.title} onChange={this.handleChange} id="title" ref="name"/>

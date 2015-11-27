@@ -40,5 +40,14 @@ export default {
 				'x-access-token' : config.getToken(),
 			}
 		});
+	},
+	deleteTopic(id){
+		return $.ajax({
+			url: `${config.getApiUrl()}/topic/${id}`,
+			method: 'DELETE',
+			headers: {
+				'x-access-token' : config.getToken()
+			}
+		});
 	}
 };
