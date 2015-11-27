@@ -18,9 +18,11 @@ export default React.createClass({
 	},
 	openModal(){
 		this.setState({isModalOpen: true});
+		document.body.className = 'noScroll';
 	},
 	closeModal(){
 		this.setState({isModalOpen: false});
+		document.body.className = '';
 	},
 	componentWillMount(){
 		let data = require('../sample-data.js');
@@ -108,23 +110,47 @@ export default React.createClass({
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<i className="chalk-close" onClick={this.closeModal}></i>
 							<h2>Add Members</h2>
-							<form action="">
-								<label htmlFor="search">Search By Name</label>
-								<input type="text" placeholder="Name" id="search"/>
-								<label htmlFor="email">Add by email</label>
-								<small>Separate emails by comma</small>
-								<input type="text" id="email" placeholder="enter emails"/>
-								<button className="success">Send Email</button>
-							</form>
-							<h3>Members</h3>
-							<ul>
-								<li>Firstname Lastname email@email.com goes here</li>
-								<li>Firstname Lastname email@email.com goes here</li>
-								<li>Firstname Lastname email@email.com goes here</li>
-								<li>Firstname Lastname email@email.com goes here</li>
-							</ul>
-							<button className="primary">Save Members</button>
-							<button>Cancel</button>
+							<div className="membersModalWrap">
+								<div className="memberModalColumn memberModalForm">
+									<form action="">
+										<label htmlFor="search">Search By Name</label>
+										<input type="text" placeholder="Name" id="search"/>
+										<label htmlFor="email">Add by email<br /> <small>Separate emails by comma</small></label>
+										
+										<input type="text" id="email" placeholder="enter emails"/>
+										<button className="success">Send Email</button>
+									</form>
+								</div>
+								<div className="memberModalColumn memberModalManage">
+									<h3>Classroom Members</h3>
+									<ul className="membersModalList">
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+									</ul>
+								</div>
+							</div>
+							<div className="modalBtns">
+								<button className="primary">Save Members</button>
+								<button onClick={this.closeModal}>Cancel</button>
+							</div>
 						</Modal>
 					</aside>
 				</section>

@@ -24,6 +24,11 @@
 	}
 }
 
+
+/*================================================
+=            Single Lesson Edit Modal            =
+================================================*/
+
 .lessonModalWrap {
 	lost-flex-container: row;
 	height: 100%;
@@ -47,6 +52,54 @@
 		min-height: 400px;
 	}
 }
+/*=====  End of Single Lesson Edit Modal  ======*/
+
+/*===============================================
+=            Classroom Members Modal            =
+===============================================*/
+
+.membersModalWrap {
+	lost-flex-container: row;
+	height: 100%;
+	.memberModalColumn:first-child {
+		lost-column: 2/5;
+	}
+	.memberModalColumn:last-child {
+		lost-column: 3/5;
+	}
+}
+
+.memberModalForm {
+	input[type="text"] {
+		width: 100%;
+	}
+}
+
+.memberModalManage {
+	padding-bottom: 50px;
+	ul.membersModalList {
+		padding: 10px 25px;
+		margin: 0;
+		list-style: none;
+		background: $inputGrey;
+		overflow-y: scroll;
+		max-height: 400px;
+		li {
+			margin: 10px 0;
+			i {
+				color: $red;
+				font-size: 1.3rem;
+			}
+		}
+	}
+}
+
+
+
+
+/*=====  End of Classroom Members Modal  ======*/
+
+
 
 /*.lessonAddContent*/
 .modalBtns {
