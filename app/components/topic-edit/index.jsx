@@ -3,24 +3,23 @@ import { Link } from 'react-router';
 import Topic from '../topic/index.jsx';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import Dropzone from 'react-dropzone';
+import topicData from '../../services/topic.jsx';
 
 export default React.createClass({
 	displayName: 'EditTopics',
 	getInitialState(){
 		return {
-			topics: [],
+			topic: [],
 			files: [],
 			copied: false
 		}
 	}, 
 	componentWillMount(){
-		let data = require('../sample-data.js');
-		this.setState({
-			topics: data.lesson.topic
+		topicData.getTopicById(this.props.params.topicId).then(data => {
+			this.setState({
+				topic: data.topic
+			});
 		});
-	},
-	renderTopics(key, index){
-		return <Topic key={index} index={index} details={this.state.topics[index]} />
 	},
 	onDrop(files){
 		this.setState({files: this.state.files.concat(files)});	
@@ -31,7 +30,7 @@ export default React.createClass({
 				<Link className="linkBtn" to="topics"><button className="primary"><i className="chalk-home"></i>back to topics</button></Link>
 				<form  className="card" action="">
 					<label htmlFor="name">Name</label>
-					<input type="text" placeholder="Topic Name"/>
+					<input type="text" placeholder="Topic Name" value={this.state.topic.title}/>
 					<label htmlFor="category">Taxonomy</label>
 					<input type="text" placeholder="Topic Category"/>
 					<label htmlFor="objective">Topic Objective</label>

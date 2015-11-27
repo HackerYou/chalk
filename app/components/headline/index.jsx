@@ -6,13 +6,14 @@ export default React.createClass({
 	displayName: 'Header',
 	logOut() {
 		auth.logOut();
+		this.props.clearUser();
 		this.props.history.pushState(null,'/');
 	},
 	render() {
 		return (
 			<header className="mainHeader">
 				<div className="innerWrap card">
-					<img src="../images/logo-hackeryou.svg" alt="HackerYou Logo" className="topLogo" />
+					<img src="/images/logo-hackeryou.svg" alt="HackerYou Logo" className="topLogo" />
 					<h3>Hello, {this.props.user.firstName} {this.props.user.lastName}</h3>
 
 					<p className="signOut"><a href="#" className="strong" onClick={this.logOut}><i className="chalk-log-out"></i>Log out of {this.props.user.email}</a></p>
