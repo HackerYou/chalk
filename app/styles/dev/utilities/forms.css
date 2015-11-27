@@ -12,9 +12,14 @@ fieldset {
 
 label {
   vertical-align: middle;
-  &.largeLabel {
+  &.inline.largeLabel {
     font-size: 3rem;
     line-height: 1.2;
+    width: auto;
+    min-width: 70px;
+    &:nth-of-type(2) {
+      margin-left: 10px;
+    }
   }
 }
 
@@ -89,8 +94,8 @@ label {
   &.inline {
     display: inline-block;
     margin: 0;
-    margin-right: 1rem;
-    min-width: 6rem;
+    margin-right: 10px;
+    width: 60px;
     text-align: right;
     position: relative;
     top: -5px;
@@ -113,12 +118,6 @@ select {
   }
 }
 
-.fieldGroup {
-  margin: 0;
-  label.inline {
-
-  }
-}
 
 .fieldRow {
   margin-bottom: 25px;
