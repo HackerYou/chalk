@@ -1,18 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link , History } from 'react-router';
 import Topic from '../topic/index.jsx';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import Dropzone from 'react-dropzone';
 import AuthMixin from '../../services/authMixin.jsx';
 import topicData from '../../services/topic.jsx';
+import TabMixin from '../../services/tabMixin.jsx';
 
 export default React.createClass({
 	displayName: 'EditTopics',
+	mixins:[AuthMixin,History, TabMixin],
 	getInitialState(){
 		return {
 			topic: [],
 			files: [],
-			copied: false
+			copied: false, 
+			category: 'HTML & CSS'
 		}
 	}, 
 	componentWillMount(){
@@ -29,20 +32,38 @@ export default React.createClass({
 		e.preventDefault();
 		topicData.updateTopic( this.state.topic._id, {
 			title: this.refs.name.value,
-			category: this.refs.category.value
+			category: this.refs.category.value,
+			description: this.refs.description.value,
+			body : this.refs.body.value,
+			"time": this.refs.time.value
 		}).then(res => {
-			this.history.pushState(null,`/topics/`);
+			this.history.pushState(null,`/topics`);
 		});
 	},
+	deleteTopic(e){
+		e.preventDefault();
+		topicData.deleteTopic(this.state.topic._id).then(res =>{
+			this.history.pushState(null, `/topics`);
+		});
+	},
+	handleChange(e){
+		console.log(e.target.id +"="+e.target.value)
+		let stateObj = this.state.topic;
+		stateObj[e.target.id] = e.target.value;
+		this.setState({
+			topic: stateObj
+		});
+	},	
 	render() {
 		return (
 			<div>
 				<Link className="linkBtn" to="topics"><button className="primary"><i className="chalk-home"></i>back to topics</button></Link>
+				<button onClick={this.deleteTopic}className="error"><i className="chalk-remove"></i>delete topic</button>
 					<form action="" className="card" onSubmit={this.editTopic}>
 						<label htmlFor="name">Name</label>
-						<input type="text" placeholder="Topic Name" value={this.state.topic.title} ref="name"/>
+						<input type="text" placeholder="Topic Name" value={this.state.topic.title} onChange={this.handleChange} id="title" ref="name"/>
 						<label htmlFor="category">Category</label>
-						<select name="category" id="category" ref="category">
+						<select name="category" id="category" onChange={this.handleChange}ref="category" value={this.state.topic.category}>
 							<option value="html&css">HTML & CSS</option>
 							<option value="javascript">JavaScript</option>
 							<option value="git">Git</option>
@@ -51,14 +72,15 @@ export default React.createClass({
 							<option value="workflow">Workflow</option>
 						</select>
 						<label htmlFor="objective">Topic Objective</label>
-						<input type="text" placeholder="Enter the key learning outcome associated with this topic" />
+						<input ref="description" id="description" onChange={this.handleChange} type="text" value={this.state.topic.description} placeholder="Enter the key learning outcome associated with this topic" />
 						<label htmlFor="time">Time Estimate</label>
-						<input type="text" placeholder="enter a number in minutes"/>
+						<input id="time" onChange={this.handleChange} value={this.state.topic.time} ref="time" type="text" placeholder="enter a number in minutes"/>
 						<button className="success">Save Topic</button>
 						<Link className="linkBtn" to="topics">
 							<button className="error">Cancel</button>
 						</Link>
-							<textarea name="" id="" cols="140" rows="30"></textarea>
+							<textarea onKeyDown={TabMixin.keyHandler} value={this.state.topic.body} ref="body" name="" id="body" onChange={this.handleChange} cols="140" rows="30">
+							</textarea>
 							<h3>Media</h3>
 							<Dropzone onDrop={this.onDrop}>
 								<p>Drag and drop files here or click to select files to upload</p>
