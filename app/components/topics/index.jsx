@@ -24,10 +24,17 @@ export default React.createClass({
 	render() {
 		return (
 			<div>
-				<Link className="linkBtn" to="dashboard"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
-				<h1>Manage Topics</h1>
-				<Link className="linkBtn" to="/topic/new"><button className="success"><i className="chalk-edit"></i>Create New Topic</button></Link>
-				<form  className="card" action="">
+				<div className="container">
+					<header className="topContent">
+					<Link className="linkBtn" to="dashboard"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
+					</header>
+					<h1>Manage Topics</h1>
+					<header className="topContent">
+					<Link className="linkBtn" to="/topic/new"><button className="success"><i className="chalk-edit"></i>Create New Topic</button></Link>
+					</header>
+				</div>
+				<section className="full card detailsForm">
+				<form action="">
 					<label htmlFor="search">Search</label>
 					<input type="search" placeholder="Search for a topic"/>
 					<label htmlFor="category">Category</label>
@@ -37,6 +44,7 @@ export default React.createClass({
 						<option value="javascript">JavaScript</option>
 					</select>
 				</form>
+				</section>
 				<div>
 				{(this.state.topics).map(this.renderTopics)}
 				</div>

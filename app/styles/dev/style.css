@@ -56,25 +56,16 @@ header.topContent {
 
 section.detailsForm {
 	padding: 25px 45px 10px;
-	margin: 50px 0;
+	margin: 30px 0 50px;
 }
 
-.example-enter {
-  opacity: 0.01;
-}
-
-.example-enter.example-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-
-.example-leave {
-  opacity: 1;
-}
-
-.example-leave.example-leave-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in;
+.setupCard {
+	padding: 25px 45px 50px;
+	margin: 50px 0 60px;
+	& + .content {
+		border-top: 1px solid $greyLight;
+		padding-top: 30px;
+	}
 }
 
 @import 'partials/modal.css';
@@ -84,6 +75,7 @@ section.detailsForm {
 @import 'partials/dashboard.css';
 @import 'partials/classroom.css';
 @import 'partials/lessons.css';
+@import 'partials/template.css';
 
 
 

@@ -12,6 +12,10 @@ fieldset {
 
 label {
   vertical-align: middle;
+  &.largeLabel {
+    font-size: 3rem;
+    line-height: 1.2;
+  }
 }
 
 input[type=text],
@@ -97,7 +101,7 @@ select {
   appearance: none;
   border: 0;
   border-radius: 0;
-  padding: 1.7rem 15rem 1.7rem 1.3rem;
+  padding: 1.7rem 15rem 1.5rem 1.3rem;
   font-size: 1.5rem;
   display: inline-block;
   min-width: 27rem;
@@ -113,6 +117,32 @@ select {
   margin: 0;
   label.inline {
 
+  }
+}
+
+.fieldRow {
+  margin-bottom: 25px;
+  input[type=text],
+  input[type=date],
+  input[type=datetime],
+  input[type=datetime-local],
+  input[type=email],
+  input[type=month],
+  input[type=number],
+  input[type=password],
+  input[type=search],
+  input[type=tel],
+  input[type=time],
+  input[type=url],
+  input[type=week] {
+    margin-bottom: 0;
+    margin-right: 15px;
+  }
+  textarea {
+    width: 100%;
+  }
+  select {
+    margin-right: 15px;
   }
 }
 

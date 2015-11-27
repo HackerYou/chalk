@@ -23,18 +23,28 @@ export default React.createClass({
 	render() {
 		return (
 			<div>
-				<Link to="dashboard" className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
-				<h1>Course Templates</h1>
-				<form action="" className="card">
-					<h2>Create New Template</h2>
-					<h3>Template Name</h3>
-					<input type="text" placeholder="Intro to HTML"/>
-					<button className="success">Save Template</button>
-					<button className="error">Cancel</button>
-				</form>
-				<ul className="templates">
-					{Object.keys(this.state.courses).map(this.renderTemplates)}
-				</ul>
+				<div className="container">
+					<header className="topContent">
+						<Link to="dashboard" className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
+					</header>
+					<h1>Course Templates</h1>
+				</div>
+				<section className="full card detailsForm">
+					<form action="">
+						<h2>Create New Template</h2>
+						<div className="fieldRow">
+							<label htmlFor="enddate" className="inline largeLabel">Template Name</label>
+							<input type="text" placeholder="Intro to HTML"/>
+							<button className="success">Save Template</button>
+							<button className="error">Cancel</button>
+						</div>
+					</form>
+				</section>
+				<div className="container">
+					<section className="templateWrap">
+						{Object.keys(this.state.courses).map(this.renderTemplates)}
+					</section>
+				</div>
 			</div>
 		)
 	}
