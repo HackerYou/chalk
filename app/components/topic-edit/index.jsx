@@ -6,6 +6,7 @@ import Dropzone from 'react-dropzone';
 import AuthMixin from '../../services/authMixin.jsx';
 import topicData from '../../services/topic.jsx';
 import TabMixin from '../../services/tabMixin.jsx';
+import media from '../../services/media.jsx';
 
 export default React.createClass({
 	displayName: 'EditTopics',
@@ -26,7 +27,10 @@ export default React.createClass({
 		});
 	},
 	onDrop(files){
-		this.setState({files: this.state.files.concat(files)});	
+		media.uploadFile(files).then(res => {
+			this.setState({files: this.state.files.concat(res.media)});	
+		});
+
 	},
 	editTopic(e) {
 		e.preventDefault();
@@ -104,8 +108,8 @@ export default React.createClass({
 								<li key={index} className="mediaRow">
 									<p className="mediaIcon"><i className="chalk-doc"></i>{file.name}</p>
 									<div className="mediaLink">
-										<input type="text" defaultValue={file.preview}/>
-										<CopyToClipboard text={file.preview} onCopy={() => this.setState({copied: true})}>
+										<input type="text" defaultValue={file.path}/>
+										<CopyToClipboard text={file.path} onCopy={() => this.setState({copied: true})}>
 											<button className="success mediaCopy"><i className="chalk-copy"></i></button>
 										</CopyToClipboard>
 									</div>
