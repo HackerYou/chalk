@@ -59,12 +59,16 @@ li.lessonRow {
 	&:hover > .lessonMeta span {
 		display: inline-block;
 	}
+	a {
+		display: inline-block;
+		border: 0;
+		color: $black;
+	}
 	.lessonInfo {
-		lost-column: 7/12;
+		lost-column: 8/12;
 	}
 	.lessonMeta {
-		/*display: none;*/
-		lost-column: 3.5/12;
+		lost-column: 2/12;
 		lost-flex-container: row;
 		justify-content: flex-end;
 		color: $grey;

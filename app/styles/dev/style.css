@@ -55,7 +55,7 @@ header.topContent {
 }
 
 section.detailsForm {
-	padding: 25px 45px 10px;
+	padding: 35px 45px 15px;
 	margin: 30px 0 50px;
 }
 
@@ -78,6 +78,8 @@ section.detailsForm {
 @import 'partials/template.css';
 @import 'partials/topics.css';
 @import 'partials/media.css';
+@import 'partials/instructor.css';
+@import 'partials/member.css';
 
 
 

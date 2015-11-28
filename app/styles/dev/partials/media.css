@@ -1,9 +1,23 @@
+.mediaWrap {
+	padding: 15px 25px 15px 25px;
+	ul.mediaList {
+		padding: 0;
+		margin: 0;
+		li {
+			border-bottom: 1px solid $border;
+			&:last-child {
+				border: 0;
+			}
+		}
+	}
+}
+
 .mediaRow {
-	display: flex;
-	align-items: center;
+	lost-flex-container: row;
 	justify-content: space-between;
-	padding: 15px 0;
+	padding: 25px 0;
 	.mediaIcon {
+		lost-column: 1/4;
 		display: flex;
 		align-items: center;
 		margin: 0;
@@ -16,10 +30,14 @@
 		margin: 0 10px 0 0;
 		border-radius: 5px;
 		border: 2px solid $greyLight;
+		padding: 1rem;
 	}
 	.mediaCopy {
-		padding: 1.2rem 1.2rem 1.3rem 1.7rem;
-		font-size: 2.3rem;
+		padding: 0.7rem 0.6rem 0.7rem 1rem;
+		font-size: 2rem;
 		border-radius: 5px;
+	}
+	.error {
+		padding: 0.7rem 2rem 0.7rem 2rem;
 	}
 }

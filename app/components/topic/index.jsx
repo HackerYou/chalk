@@ -10,11 +10,11 @@ export default React.createClass({
 	},
 	render(){
 		return (
-			<article className="card topicCard">
+			<article className="card topicCard" onClick={this.editTopic}>
 				<h3>{this.props.details.title}</h3>
 				<p className="red">{this.props.details.category}</p>
 				<footer className="classCardMeta">
-					<button onClick={this.editTopic} className="primary">View/Edit</button>
+					<button className="primary">View/Edit</button>
 				</footer>
 			</article>
 		)
