@@ -1,9 +1,14 @@
 section.templateWrap {
 	lost-flex-container: row;
 	margin-bottom: 5rem;
-	article.classCard {
+	.classCard {
+		display: inline-block;
 		lost-waffle: 1/2;
-		padding: 35px 15px 20px 20px;
+		border: 0;
+		color: $black;
+		article {
+			padding: 35px 15px 20px 20px;
+		}
 		footer.classCardMeta {
 			margin-top: 4rem;
 			lost-flex-container: row;

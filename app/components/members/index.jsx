@@ -21,21 +21,29 @@ export default React.createClass({
 							<p><strong>{this.state.members[index].firstName + ' ' + this.state.members[index].lastName}</strong></p>
 							<p>{this.state.members[index].email}</p>
 							<p>{this.state.members[index].courses.length} Classrooms</p>
-							<p>Remove User? <i className="chalk-remove"></i></p>
+							<p>Remove User? <i className="chalk-remove red"></i></p>
 						</li>
 	},
 	render() {
 		return (
 			<div>
-				<Link to="dashboard" className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
-				<h1>Manage Members</h1>
-				<form action="" className="card">
-					<label htmlFor="search">Search by name or email</label>
-					<input type="text" id="search"/>
-				</form>
-				<ul>
-					{this.state.members.map(this.renderMembers)}
-				</ul>
+				<div className="container">
+					<header className="topContent">
+						<Link to="dashboard" className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
+						<h1>Manage Members</h1>
+					</header>
+				</div>
+				<section className="full card detailsForm">
+					<form action="">
+						<label htmlFor="search" className="inline largeLabel">Search by name or email</label>
+						<input type="text" id="search"/>
+					</form>
+				</section>
+				<div className="container card memberWrap">
+					<ul className="memberList">
+						{this.state.members.map(this.renderMembers)}
+					</ul>
+				</div>
 			</div>
 			)
 	}

@@ -6,10 +6,10 @@ export default React.createClass({
 	render() {
 		return (
 			<li className="lessonRow">
-				<div className="lessonInfo">
+				<Link to="lesson" className="lessonInfo">
 					<p className="lessonTitle">{this.props.details.title}</p>
 					<p className="red lessonExercise">{this.props.details.exercises} Exercises</p>
-				</div>
+				</Link>
 				<div className="lessonMeta">
 					<span>
 						<Link to="lesson">view</Link> |
