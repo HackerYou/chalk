@@ -57,7 +57,7 @@ export default React.createClass({
 	render() {
 		return (
 			<div>
-				<Link className="linkBtn" to="topics"><button className="primary"><i className="chalk-home"></i>back to topics</button></Link>
+				<Link className="linkBtn" to="/topics"><button className="primary"><i className="chalk-home"></i>back to topics</button></Link>
 				<button onClick={this.deleteTopic}className="error"><i className="chalk-remove"></i>delete topic</button>
 					<form action="" className="card" onSubmit={this.editTopic}>
 						<label htmlFor="name">Name</label>
