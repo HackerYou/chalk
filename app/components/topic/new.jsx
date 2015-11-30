@@ -17,15 +17,23 @@ export default React.createClass({
 	render(){
 		return (
 			<div>
-				<Link className="linkBtn" to="topics"><button className="primary"><i className="chalk-home"></i>back to topics</button></Link>
-				<form  className="card" action="" onSubmit={this.createTopic}>
-					<label htmlFor="name">Name</label>
-					<input type="text" placeholder="Topic Name" ref="name" />
-					<button className="success">Create Topic</button>
-					<Link className="linkBtn" to="topics">
-						<button className="error">Cancel</button>
-					</Link>
+				<div className="container">
+					<header className="topContent">
+						<Link className="linkBtn" to="topics"><button className="primary"><i className="chalk-home"></i>back to topics</button></Link>
+					</header>
+				</div>
+				<section className="full card detailsForm topicsForm">
+				<form action="" onSubmit={this.createTopic}>
+					<div className="fieldRow">
+						<label htmlFor="name" className="inline largeLabel">Name</label>
+						<input type="text" placeholder="Topic Name" ref="name" />
+						<button className="success">Create Topic</button>
+						<Link className="linkBtn" to="topics">
+							<button className="error">Cancel</button>
+						</Link>
+					</div>
 				</form>
+				</section>
 			</div>
 		)
 	}
