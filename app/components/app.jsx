@@ -23,6 +23,7 @@ import Members from './members/index.jsx';
 import userData from '../services/user.jsx';
 import config from '../services/config.jsx';
 import auth from '../services/authentication.jsx';
+import Modal from './modal/index.jsx';
 
 
 let createBrowserHistory = require('history/lib/createBrowserHistory');
@@ -35,6 +36,11 @@ function userName(context) {
 			context.setState({
 				user: data.user
 			});
+			if(context.state.user.first_sign_up === true) {
+				context.setState({
+					isModalOpen: true
+				});
+			}
 		});
 	}
 };
@@ -53,13 +59,36 @@ let App = React.createClass({
 	getInitialState(){
 		return{
 			user: {},
-			announcement: {}
+			announcement: {},
+			isModalOpen: false,
+			sign_up_error: ''
 		}
 	},
 	clearUser() {
 		this.setState({
 			user: {}
 		});
+	},
+	updateUser(e) {
+		e.preventDefault();
+		if(this.refs.password.value === this.refs.confirm.value) {
+			let model = this.state.user;
+			console.log(this.refs.password.value);
+			model.firstName = this.refs.firstName.value;
+			model.lastName = this.refs.lastName.value;
+			model.password = this.refs.password.value;
+			userData.updateUser(model).then((res) => {
+				this.setState({
+					user: res.user,
+					isModalOpen: false
+				});
+			});	
+		}
+		else {
+			this.setState({
+				sign_up_error: 'Make sure your passwords match.'
+			});
+		}
 	},
 	render() {
 		var header; 
@@ -74,6 +103,23 @@ let App = React.createClass({
 				<section className="mainContent" >
 					{this.props.children || <Login />}
 				</section>
+				<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
+					<h2>Welcome to HackerYou!</h2>
+					<form action="" onSubmit={this.updateUser}>
+						<h3>Tell us a bit about yourself!</h3>
+						<label htmlFor="firstName">First Name</label>
+						<input type="text" placeholder="First Name" ref="firstName" id="firstName"/>
+						<label htmlFor="lastName">Last Name</label>
+						<input type="text" placeholder="Last Name" ref="lastName" id="lastName" />
+						<h3>Create New Password</h3>
+						{this.state.sign_up_error}
+						<label htmlFor="password">New Password</label>
+						<input type="password" placeholder="New Password" ref="password"id="password"/>
+						<label htmlFor="confirm">Confirm Password</label>
+						<input type="password" placeholder="Confirm Password" ref="confirm" id="confirm" />
+						<button>Let's Go!</button>	
+					</form>					
+				</Modal>
 				<Footer />
 			</div>
 		);
