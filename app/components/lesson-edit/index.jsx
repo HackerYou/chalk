@@ -2,14 +2,24 @@ import React from 'react';
 import { Link } from 'react-router';
 import Lesson from '../lesson/index.jsx';
 import Modal from '../modal/index.jsx';
+import lessonData from '../../services/lesson.jsx';
 
 export default React.createClass({
-	displayName: 'CreateLesson',
+	displayName: 'EditLesson',
 	getInitialState(){
 		return {
 			isModalOpen: false,
+			lesson: [],
 			topics: []
 		}
+	},
+	componentWillMount(){
+		console.log(this.props);	
+		lessonData.getLessonById(this.props.params.lessonId).then(res => {
+			this.setState({
+				lesson: res.lesson
+			});
+		});
 	},
 	openModal(){
 		this.setState({isModalOpen: true});
@@ -24,7 +34,7 @@ export default React.createClass({
 				<button className="success"><i className="chalk-save"></i>save lesson</button>
 				<form action="" className="card">
 					<label htmlFor="lessonName">Lesson Name</label>
-					<input type="text" placeholder="enter lesson name here"/>
+					<input type="text" placeholder="enter lesson name here" value={this.state.lesson.title}/>
 					<button className="success"><i className="chalk-save"></i>Save Lesson</button>
 					<button className="error"><i className="chalk-close"></i>Cancel</button>
 				</form>
