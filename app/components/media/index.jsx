@@ -27,27 +27,37 @@ export default React.createClass({
 			});
 	},
 	renderFiles(key, index){
-		return <li key={index}>
-					<p><i className="chalk-doc"></i>{this.state.media[index].name}</p>
-						<input type="text" defaultValue={this.state.media[index].path}/>
-					<CopyToClipboard text={this.state.media[index].path} onCopy={() => this.setState({copied: true})}>
-						<button className="success"><i className="chalk-copy"></i></button>
-					</CopyToClipboard>
+		return <li key={index} className="mediaRow">
+					<p className="mediaIcon"><i className="chalk-doc"></i>{this.state.media[index].name}</p>
+						<div className="mediaLink">
+							<input type="text" defaultValue={this.state.media[index].path}/>
+							<CopyToClipboard text={this.state.media[index].path} onCopy={() => this.setState({copied: true})}>
+								<button className="success mediaCopy"><i className="chalk-copy"></i></button>
+							</CopyToClipboard>
+						</div>
 					<button onClick={this.deleteFile.bind(this, index)} className="error">Delete File</button>
 				</li>
 	},
 	render() {
 		return (
 			<div>
-				<Link to="dashboard" className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
-				<h1>Media</h1>
-				<form action="" className="card">
-					<h3>Search</h3>
-					<input type="search"/>
-				</form>
-				<ul className="card">
-					{this.state.media.map(this.renderFiles)}
-				</ul>
+				<div className="container">
+					<header className="topContent">
+						<Link to="dashboard" className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
+						<h1>Media</h1>
+					</header>
+				</div>
+				<section className="full card detailsForm">
+					<form action="">
+						<label htmlFor="search" className="inline largeLabel">Search</label>
+						<input type="search"/>
+					</form>
+				</section>
+				<div className="container card mediaWrap">
+					<ul className="mediaList">
+						{this.state.media.map(this.renderFiles)}
+					</ul>
+				</div>
 			</div>
 		)
 	}
