@@ -14,12 +14,12 @@ import Instructors from './instructors/index.jsx';
 import Headline from './headline/index.jsx';
 import EditClassroom from './edit-classroom/index.jsx';
 import ManageClassrooms from './manage-classrooms/index.jsx';
-import EditLesson from './edit-lesson/index.jsx';
+import EditLesson from './lesson-edit/index.jsx';
 import EditTopics from './topic-edit/index.jsx';
 import NewTopic from './topic/new.jsx';
+import NewLesson from './lesson-edit/new.jsx';
 import CourseTemplates from './course-templates/index.jsx';
 import Members from './members/index.jsx';
-import CreateLesson from './lesson-create/index.jsx';
 import userData from '../services/user.jsx';
 import config from '../services/config.jsx';
 import auth from '../services/authentication.jsx';
@@ -135,8 +135,8 @@ ReactDom.render(
 			<Route path='/classroom/edit' component={EditClassroom}/>
 			<Route path='/classroom/manage' component={ManageClassrooms}/>
 			<Route path='/lesson' component={Lesson} />
-			<Route path='/lesson/edit' component={EditLesson}/>
-			<Route path='/lesson/create' component={CreateLesson} />
+			<Route path='/lesson/:lessonId/edit' component={EditLesson}/>
+			<Route path='/lesson/new' component={NewLesson} />
 			<Route path='/topics' component={Topics} />
 			<Route path='/topic/:topicId/edit' component={EditTopics} />
 			<Route path='/topic/new' component={NewTopic} />

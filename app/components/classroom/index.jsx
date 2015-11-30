@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link , History} from 'react-router';
 import LessonDetails from '../lessondetails/index.jsx';
-import Modal from '../modal/index.jsx';
+import Modal from '../modal/index.jsx'; 
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import AuthMixin from '../../services/authMixin.jsx';
 
@@ -72,7 +72,7 @@ export default React.createClass({
 								<ol>
 									{(this.state.lessons).map(this.renderLessons)}
 									<li className="new-lessonRow">
-										<Link to="lesson/create" className="linkBtn"><button className="success">Create</button></Link>
+										<Link to="lesson/new" className="linkBtn"><button className="success">Create</button></Link>
 										<p className="lessonTitle">Create new lesson</p>
 									</li>
 								</ol>
@@ -84,7 +84,7 @@ export default React.createClass({
 									<li className="new-lesson">
 										<h3>Create new lesson</h3>
 										<p>Plan lesson and choose new topics</p>
-										<Link to="lesson/create" className="linkBtn"><button className="success">Create</button></Link>
+										<Link to="lesson/new" className="linkBtn"><button className="success">Create</button></Link>
 									</li>
 								</ul>
 							</article>
