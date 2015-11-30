@@ -9,7 +9,9 @@ export default React.createClass({
 	mixins: [History],
 	getInitialState() {
 		return {
-			error: ''
+			error: '',
+			lostPassword: false,
+			passwordMessage: ''
 		}
 	},
 	componentWillMount() {
@@ -29,12 +31,26 @@ export default React.createClass({
 			});
 		});
 	},
+	lostPassword() {
+		this.setState({
+			lostPassword: true
+		});
+	},
+	sendResetEmail(e) {
+		e.preventDefault();
+		userData.lostPassword(this.refs.email.value).then(res => {
+			if(res.status === 'success') {
+				this.setState({
+					passwordMessage: 'Email sent!'
+				});
+			}
+		});
+	},
 	render() {
-		return (
-			<div className="card loginCard">
-				<form onSubmit={this.login}>
-					<img src="../images/logo-hackeryou.svg" className="loginLogo" alt="HackerYou Logo" />
-					<h1>chalk</h1>
+		let form;
+		if(this.state.lostPassword !== true) {
+			form = (
+				<div>
 					<div className="fieldGroup">
 						<label htmlFor="email" className="inline">email</label>
 						<input type="text" ref="email" placeholder="Your Email"/>
@@ -44,10 +60,33 @@ export default React.createClass({
 						<input type="password" ref="password" placeholder="Password"/>
 					</div>
 					<div className="fieldGroup">
-						<input type="submit" className="button primary" value="Sign In" />
+						<input type="submit" className="button primary" value="Sign In" onClick={this.login} />
 					</div>
 					<p className="red">{this.state.error}</p>
-					<p><a href="#">Lost your password?</a></p>
+					<p><a href="#" onClick={this.lostPassword}>Lost your password?</a></p>
+				</div>
+			);
+		}
+		else {
+			form = (
+				<div>
+					<h3>Reset password</h3>
+					<div className="fieldGroup">
+						<label htmlFor="email" className="inline">email</label>
+						<input type="text" ref="email" placeholder="Your Email"/>
+					</div>
+					<div className="fieldGroup">
+						<input type="submit" className="button primary" value="Reset Password" onClick={this.sendResetEmail}/>
+					</div>
+				</div>
+			)
+		}
+		return (
+			<div className="card loginCard">
+				<form >
+					<img src="../images/logo-hackeryou.svg" className="loginLogo" alt="HackerYou Logo" />
+					<h1>chalk</h1>
+					{form}
 				</form>
 			</div>
 		)

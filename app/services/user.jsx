@@ -17,6 +17,20 @@ export default {
 				'x-access-token' : config.getToken()
 			}
 		});
+	},
+	updateUser(model) {
+		return $.ajax({
+			url: `${config.getApiUrl()}/user/${model._id}`,
+			method: 'PUT',
+			headers: {
+				'x-access-token' : config.getToken(),
+				'Content-Type': 'application/json'
+			},
+			data: JSON.stringify(model)
+		});
+	},
+	lostPassword(email) {
+
 	}
 };
 
