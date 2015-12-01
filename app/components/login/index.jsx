@@ -3,6 +3,7 @@ import Dashboard from '../dashboard/index.jsx';
 import { Link , History } from 'react-router';
 import Footer from '../footer/index.jsx';
 import auth from '../../services/authentication.jsx';
+import userData from '../../services/user.jsx';
 
 export default React.createClass({
 	displayName: 'Login',
@@ -41,7 +42,7 @@ export default React.createClass({
 		userData.lostPassword(this.refs.email.value).then(res => {
 			if(res.status === 'success') {
 				this.setState({
-					passwordMessage: 'Email sent!'
+					passwordMessage: res.message
 				});
 			}
 		});
@@ -71,6 +72,7 @@ export default React.createClass({
 			form = (
 				<div>
 					<h3>Reset password</h3>
+					{this.passwordMessage}
 					<div className="fieldGroup">
 						<label htmlFor="email" className="inline">email</label>
 						<input type="text" ref="email" placeholder="Your Email"/>
