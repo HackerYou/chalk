@@ -1,23 +1,44 @@
 import config from './config.jsx';
 
 export default {
-	getTemplates() {
+	getTemplates(){
 		return $.ajax({
-			url: `${config.getApiUrl()}/course`,
+			url: `${config.getApiUrl()}/course/template`,
 			method: 'GET',
 			headers: {
-				'x-access-token' : config.getToken(),
+				'x-access-token': config.getToken()
 			}
+		});
 	},
-	addTemplate(course){
+	createTemplate(course){
 		return $.ajax({
-			url: `${config.getApiUrl()}/course`,
+			url: `${config.getApiUrl()}/course/template`,
 			method: 'POST',
 			headers: {
 				'x-access-token' : config.getToken(),
 				'Content-Type' : 'application/json'
 			},
-			data: JSON.stringify(course);
+			data: JSON.stringify(course)
 		});
-	}
-};
+	},
+	getTemplateById(id){
+		return $.ajax({
+			url: `${config.getApiUrl()}/course/template/${id}`,
+			method: 'GET',
+			headers: {
+				'x-access-token': config.getToken()
+			}
+		});
+	},
+	addSectionToCourse(id, data	){
+		return $.ajax({
+			url: `${config.getApiUrl()}/course/${id}/section`,
+			method: 'POST',
+			headers: {
+				'x-access-token': config.getToken(),
+				'Content-Type': 'application.json'
+			},
+			data: JSON.stringify(data)
+		});
+	}	
+}
