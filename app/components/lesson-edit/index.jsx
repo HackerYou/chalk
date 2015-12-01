@@ -5,6 +5,8 @@ import Modal from '../modal/index.jsx';
 import lessonData from '../../services/lesson.jsx';
 import topicsData from '../../services/topic.jsx';
 
+//TO DO: Save Lesson, Edit Lesson Title, send Cancel back to classroom, markdown rendering
+
 export default React.createClass({
 	displayName: 'EditLesson',
 	getInitialState(){
@@ -41,16 +43,20 @@ export default React.createClass({
 	},
 	addTopic(e){
 		e.preventDefault();
-		lessonData.addTopicToLesson(this.props.params.lessonId, e.target.id, {
+		let addTopic = lessonData.addTopicToLesson(this.props.params.lessonId, e.target.id, {
 			'topics': e.target.id
-		}).then(res=>{
-			this.closeModal();
-			topicsData.getTopicById(e.target.id).then(res=>{
-				let updatedTopics = this.state.lessonTopics.slice();
-				updatedTopics.push(res.topic);
-				this.setState({lessonTopics: updatedTopics});
-			});
 		});
+
+		let getTopic = topicsData.getTopicById(e.target.id);
+
+		$.when(addTopic, getTopic).then((addRes, getRes)=>{
+			console.log(getRes[0].topic);
+			this.closeModal();
+			let updatedTopics = this.state.lessonTopics.slice();
+			updatedTopics.push(getRes[0].topic);
+			this.setState({lessonTopics: updatedTopics});
+		});
+		
 
 	},
 	deleteTopic(index){
