@@ -20,6 +20,26 @@ export default {
 				'x-access-token' : config.getToken(),
 			}
 		});
+	},
+	addTopicToLesson(lessonId, topicId, data){
+		return $.ajax({
+			url: `${config.getApiUrl()}/lesson/${lessonId}/topic/${topicId}`,
+			method: 'PUT',
+			headers: {
+				'x-access-token' : config.getToken(),
+				'Content-Type': 'application/json'
+			},
+			data: JSON.stringify(data)
+		});
+	},
+	deleteTopicFromLesson(lessonId, topicId){
+		return $.ajax({
+			url: `${config.getApiUrl()}/lesson/${lessonId}/topic/${topicId}`,
+			method: 'DELETE',
+			headers: {
+				'x-access-token' : config.getToken()
+			}
+		});
 	}
 
 }
