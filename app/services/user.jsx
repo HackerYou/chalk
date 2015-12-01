@@ -30,7 +30,14 @@ export default {
 		});
 	},
 	lostPassword(email) {
-
+		return $.ajax({
+			url: `${config.getApiUrl()}/user/reset/${email}`,
+			method: 'PUT',
+			headers: {
+				'x-access-token' : config.getToken(),
+				'Content-Type': 'application/json'
+			}
+		});
 	}
 };
 
