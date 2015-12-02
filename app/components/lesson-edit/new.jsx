@@ -35,7 +35,7 @@ export default React.createClass({
 						<label htmlFor="name" className="inline largeLabel">Name</label>
 						<input type="text" placeholder="Lesson Name" ref="name" />
 						<button className="success">Create Lesson</button>
-						<Link className="linkBtn" to="classroom">
+						<Link className="linkBtn" to={`/course-templates/${this.props.params.classroomId}/edit`}>
 							<button className="error">Cancel</button>
 						</Link>
 					</div>
