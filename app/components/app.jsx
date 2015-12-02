@@ -19,6 +19,7 @@ import EditTopics from './topic-edit/index.jsx';
 import NewTopic from './topic/new.jsx';
 import NewLesson from './lesson-edit/new.jsx';
 import CourseTemplates from './course-templates/index.jsx';
+import EditTemplate from './course-templates/edit.jsx';
 import Members from './members/index.jsx';
 import userData from '../services/user.jsx';
 import config from '../services/config.jsx';
@@ -144,6 +145,7 @@ ReactDom.render(
 			<Route path='/instructors' component={Instructors} />
 			<Route path='/media' component={Media} />
 			<Route path='/course-templates' component={CourseTemplates} />
+			<Route path='/course-templates/:templateId/edit' component={EditTemplate}/>
 			<Route path='/members' component={Members} />
 		</Route>
 	</Router>)
