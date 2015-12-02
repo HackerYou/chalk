@@ -39,16 +39,15 @@ export default React.createClass({
 	createSection(e){
 		e.preventDefault();
 		coursesData.addSectionToCourse(this.props.params.templateId, {
-			sections: this.refs.section.value
+			title: this.refs.section.value
 		}).then(res=>{
 			console.log(res.course)
 			this.setState({course: res.course});
-		});
-		
+		});	
 	},
-	renderSections(key, index){
-		return <li key={index} className="lessonGroup">
-				<h3>{this.state.sections[index]}</h3>
+	renderSections(){
+		return <li className="lessonGroup">
+				<h3></h3>
 				<div className="card">
 					<ol>
 						<li className="new-lessonRow">
@@ -77,7 +76,7 @@ export default React.createClass({
 				</header>
 				<section className="lessonsWrap">
 					<ol className="lessonColumn">
-						{(this.state.sections).map(this.renderSections)}
+						{this.renderSections}
 						<li>
 							<article className="lessonNew">
 								<ul>
