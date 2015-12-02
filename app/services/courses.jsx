@@ -22,6 +22,7 @@ export default {
 		});
 	},
 	getTemplateById(id){
+		console.log(id);
 		return $.ajax({
 			url: `${config.getApiUrl()}/course/template/${id}`,
 			method: 'GET',
@@ -36,9 +37,19 @@ export default {
 			method: 'POST',
 			headers: {
 				'x-access-token': config.getToken(),
-				'Content-Type': 'application.json'
+				'Content-Type': 'application/json'
 			},
 			data: JSON.stringify(data)
+		});
+	},
+	addLessonToSection(sectionId, lessonId){
+		return $.ajax({
+			url: `${config.getApiUrl()}/course/section/${sectionId}/lesson/${lessonId}`,
+			method: 'PUT',
+			headers: {
+				'x-access-token': config.getToken(),
+				'Content-Type': 'application/json'
+			}
 		});
 	}	
 }

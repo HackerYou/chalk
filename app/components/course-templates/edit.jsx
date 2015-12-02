@@ -27,31 +27,42 @@ export default React.createClass({
 	},
 	componentWillMount(){
 		coursesData.getTemplateById(this.props.params.templateId).then(res=>{
-			this.setState({course: res.course });
+			this.setState({
+				course: res.course,
+				sections: res.course.sections
+			 });
 		});
 	},
-	renderLessons(key, index){
-		return <LessonDetails key={index} index={index} details={this.state.course.lessons[index]} />
+	renderLessons(key){
+		return <LessonDetails key={key} index={key} details={this.state.course.lessons[key]} />
 	},
 	renderTopics(key, index){
-		return <li key={index}>{this.state.topics[index]}</li>;
+		return <li key={index}>{this.state.sections[index].title}</li>;
 	},
 	createSection(e){
 		e.preventDefault();
 		coursesData.addSectionToCourse(this.props.params.templateId, {
 			title: this.refs.section.value
 		}).then(res=>{
-			console.log(res.course)
-			this.setState({course: res.course});
+			this.setState({
+				course: res.course,
+				sections: res.course.sections
+			});
 		});	
 	},
-	renderSections(){
-		return <li className="lessonGroup">
-				<h3></h3>
+	createLesson(e){
+		let classroomId = this.props.params.templateId;
+		let sectionId = e.target.id;
+		this.history.pushState(null,`lesson/${classroomId}/${sectionId}/new`);
+	},
+	renderSections(key, index){
+		return <li key={index} className="lessonGroup">
+				<h3>{this.state.sections[index].title}</h3>
 				<div className="card">
 					<ol>
+						
 						<li className="new-lessonRow">
-							<Link to="lesson/new" className="linkBtn"><button className="success">Create</button></Link>
+							<button id={this.state.sections[index]._id}onClick={this.createLesson}className="success">Create</button>
 							<p className="lessonTitle">Create new lesson</p>
 						</li>
 					</ol>
@@ -69,6 +80,7 @@ export default React.createClass({
 		let lessons = this.state.course.lessons;
 		return (
 			<div className="container full">
+				<Link to='dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
 				<header className="topContent">
 					{links}
 					<h1>{this.state.course.title}</h1>
@@ -76,7 +88,7 @@ export default React.createClass({
 				</header>
 				<section className="lessonsWrap">
 					<ol className="lessonColumn">
-						{this.renderSections}
+						{(this.state.sections).map(this.renderSections)}
 						<li>
 							<article className="lessonNew">
 								<ul>
@@ -94,7 +106,7 @@ export default React.createClass({
 							<h3>Course Topics</h3>
 							<div className="card topicLegend">
 								<ul className="topicList">
-									{this.state.topics.map(this.renderTopics)}
+									{(this.state.sections).map(this.renderTopics)}
 								</ul>
 								<button className="primary">Show Starred Lessons</button>
 							</div>

@@ -21,6 +21,17 @@ export default {
 			}
 		});
 	},
+	updateLesson(id, data){
+		return $.ajax({
+			url: `${config.getApiUrl()}/lesson/${id}`,
+			method: 'PUT',
+			headers: {
+				'x-access-token': config.getToken(),
+				'Content-Type': 'application/json'
+			},
+			data: JSON.stringify(data)
+		});
+	},
 	addTopicToLesson(lessonId, topicId, data){
 		return $.ajax({
 			url: `${config.getApiUrl()}/lesson/${lessonId}/topic/${topicId}`,
