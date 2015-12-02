@@ -33,8 +33,8 @@ export default React.createClass({
 			 });
 		});
 	},
-	renderLessons(key){
-		return <LessonDetails key={key} index={key} details={this.state.course.lessons[key]} />
+	renderLessons(key, index){
+		return <LessonDetails key={index} index={index} details={key} />
 	},
 	renderTopics(key, index){
 		return <li key={index}>{this.state.sections[index].title}</li>;
@@ -56,11 +56,12 @@ export default React.createClass({
 		this.history.pushState(null,`lesson/${classroomId}/${sectionId}/new`);
 	},
 	renderSections(key, index){
+		console.log(this.state.sections[index].lessons)
 		return <li key={index} className="lessonGroup">
 				<h3>{this.state.sections[index].title}</h3>
 				<div className="card">
 					<ol>
-						
+						{(this.state.sections[index].lessons).map(this.renderLessons)}
 						<li className="new-lessonRow">
 							<button id={this.state.sections[index]._id}onClick={this.createLesson}className="success">Create</button>
 							<p className="lessonTitle">Create new lesson</p>

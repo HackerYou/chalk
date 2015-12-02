@@ -8,7 +8,6 @@ export default React.createClass({
 			<li className="lessonRow">
 				<Link to="lesson" className="lessonInfo">
 					<p className="lessonTitle">{this.props.details.title}</p>
-					<p className="red lessonExercise">{this.props.details.exercises} Exercises</p>
 				</Link>
 				<div className="lessonMeta">
 					<span>
