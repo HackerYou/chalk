@@ -21,8 +21,16 @@ export default {
 			data: JSON.stringify(course)
 		});
 	},
+	deleteCourse(id){
+		return $.ajax({
+			url: `${config.getApiUrl()}/course/${id}`,
+			method: 'DELETE',
+			headers: {
+				'x-access-token': config.getToken()
+			}
+		});
+	},
 	getTemplateById(id){
-		console.log(id);
 		return $.ajax({
 			url: `${config.getApiUrl()}/course/template/${id}`,
 			method: 'GET',
@@ -40,6 +48,15 @@ export default {
 				'Content-Type': 'application/json'
 			},
 			data: JSON.stringify(data)
+		});
+	},
+	removeSectionFromCourse(courseId, sectionId){
+		return $.ajax({
+			url: `${config.getApiUrl()}/course/${courseId}/section/${sectionId}`,
+			method: 'DELETE',
+			headers: {
+				'x-access-token': config.getToken()
+			}
 		});
 	},
 	addLessonToSection(sectionId, lessonId){

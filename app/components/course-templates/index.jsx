@@ -38,7 +38,7 @@ export default React.createClass({
 			<div>
 				<div className="container">
 					<header className="topContent">
-						<Link to="dashboard" className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
+						<Link to="/dashboard" className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
 					</header>
 					<h1>Course Templates</h1>
 				</div>

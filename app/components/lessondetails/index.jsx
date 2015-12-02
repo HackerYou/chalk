@@ -6,13 +6,13 @@ export default React.createClass({
 	render() {
 		return (
 			<li className="lessonRow">
-				<Link to="lesson" className="lessonInfo">
+				<Link to={`/lesson/${this.props.details._id}`} className="lessonInfo">
 					<p className="lessonTitle">{this.props.details.title}</p>
 				</Link>
 				<div className="lessonMeta">
 					<span>
-						<Link to="lesson">view</Link> |
-						<Link to="/lesson/edit">edit</Link>
+						<Link to={`/lesson/${this.props.details._id}/${this.props.classroomId}`}>view</Link> |
+						<Link to={`/lesson/${this.props.details._id}/${this.props.classroomId}/edit`}>edit</Link>
 					</span>
 				</div>
 			</li>
