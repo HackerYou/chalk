@@ -1,14 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, History } from 'react-router';
 import Lesson from '../lesson/index.jsx';
 import Modal from '../modal/index.jsx';
 import lessonData from '../../services/lesson.jsx';
 import topicsData from '../../services/topic.jsx';
 
-//TO DO: Save Lesson, Edit Lesson Title, send Cancel back to classroom, markdown rendering
-
 export default React.createClass({
 	displayName: 'EditLesson',
+	mixins: [History],
 	getInitialState(){
 		return {
 			isModalOpen: false,
@@ -50,7 +49,6 @@ export default React.createClass({
 		let getTopic = topicsData.getTopicById(e.target.id);
 
 		$.when(addTopic, getTopic).then((addRes, getRes)=>{
-			console.log(getRes[0].topic);
 			this.closeModal();
 			let updatedTopics = this.state.lessonTopics.slice();
 			updatedTopics.push(getRes[0].topic);
@@ -73,16 +71,31 @@ export default React.createClass({
 						<button data-id={this.state.lessonTopics[index]._id} onClick={this.deleteTopic.bind(this, index)}className="error">Delete Topic</button>					
 						</div>
 	},
+	handleChange(e){
+		let stateObj = this.state.lesson;
+		stateObj[e.target.id] = e.target.value;
+		this.setState({
+			lesson: stateObj
+		});
+	},	
+	saveLesson(e){
+		e.preventDefault();
+		//update title of lesson
+		lessonData.updateLesson(this.props.params.lessonId, {
+			title: this.state.lesson.title
+		}).then(res=>{console.log(res)});
+		// send user back to the classroom they were editing
+		let classroomId = this.props.params.classroomId;
+		this.history.pushState(null,`course-templates/${classroomId}/edit`);
+	},
 	render() {
 		return (
 			<div>
 				<Link className="linkBtn" to="classroom"><button className="primary"><i className="chalk-home"></i>back to classroom</button></Link>
-				<button className="success"><i className="chalk-save"></i>save lesson</button>
 				<form action="" className="card">
 					<label htmlFor="lessonName">Lesson Name</label>
-					<input type="text" placeholder="enter lesson name here" value={this.state.lesson.title}/>
-					<button className="success"><i className="chalk-save"></i>Save Lesson</button>
-					<button className="error"><i className="chalk-close"></i>Cancel</button>
+					<input onChange={this.handleChange} type="text" placeholder="enter lesson name here" value={this.state.lesson.title} id="title"/>
+					<button className="success" onClick={this.saveLesson}><i className="chalk-save"></i>Save Lesson</button>
 				</form>
 				<div className="card">
 						<h2>{this.state.lesson.title}</h2>

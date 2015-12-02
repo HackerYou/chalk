@@ -136,8 +136,8 @@ ReactDom.render(
 			<Route path='/classroom/edit' component={EditClassroom}/>
 			<Route path='/classroom/manage' component={ManageClassrooms}/>
 			<Route path='/lesson' component={Lesson} />
-			<Route path='/lesson/:lessonId/edit' component={EditLesson}/>
-			<Route path='/lesson/new' component={NewLesson} />
+			<Route path='/lesson/:lessonId/:classroomId/edit' component={EditLesson}/>
+			<Route path='/lesson/:classroomId/:sectionId/new' component={NewLesson} />
 			<Route path='/topics' component={Topics} />
 			<Route path='/topic/:topicId/edit' component={EditTopics} />
 			<Route path='/topic/new' component={NewTopic} />
