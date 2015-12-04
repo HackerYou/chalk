@@ -1,17 +1,15 @@
 import React from 'react';
 import Exercise from '../exercise/index.jsx';
+import Markdown from 'react-remarkable';
+
 
 export default React.createClass({
 	displayName: 'LessonTopic',
-	renderExercises(key, index){
-		return <Exercise key={index} index={index} details={this.props.details.exercises[index]} />
-	},
 	render(){
 		return (
 			<div className="lessonTopic">
 				<h3>{this.props.details.title}</h3>
-				<p>{this.props.details.body}</p>
-				<a href="#">{(this.props.details.exercises).map(this.renderExercises)}</a>
+				<Markdown>{(this.props.details.body)}</Markdown>
 			</div>
 		)
 	}

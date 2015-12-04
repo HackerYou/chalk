@@ -5,6 +5,8 @@ import Modal from '../modal/index.jsx';
 import AuthMixin from '../../services/authMixin.jsx';
 import lessonData from '../../services/lesson.jsx';
 
+
+
 export default React.createClass({
 	displayName: 'Lesson',
 	mixins: [AuthMixin,History],
