@@ -33,8 +33,8 @@ export default React.createClass({
 			 });
 		});
 	},
-	renderLessons(key){
-		return <LessonDetails key={key} index={key} details={this.state.course.lessons[key]} />
+	renderLessons(key, index){
+		return <LessonDetails key={index} index={index} details={key} classroomId={this.props.params.templateId} />
 	},
 	renderTopics(key, index){
 		return <li key={index}>{this.state.sections[index].title}</li>;
@@ -55,34 +55,45 @@ export default React.createClass({
 		let sectionId = e.target.id;
 		this.history.pushState(null,`lesson/${classroomId}/${sectionId}/new`);
 	},
+	deleteSection(e){
+		// console.log(e.target.className);
+		coursesData.removeSectionFromCourse(this.props.params.templateId, e.target.className).then(res=>{
+			let newSections = (this.state.sections).filter((obj)=>{
+				return obj._id !== e.target.className;
+			});
+			this.setState({
+				sections: newSections
+			});
+
+		});
+	},
 	renderSections(key, index){
 		return <li key={index} className="lessonGroup">
 				<h3>{this.state.sections[index].title}</h3>
+				<button onClick={this.deleteSection} className={this.state.sections[index]._id}>delete section</button>
 				<div className="card">
 					<ol>
-						
+						{(this.state.sections[index].lessons).map(this.renderLessons)}
 						<li className="new-lessonRow">
-							<button id={this.state.sections[index]._id}onClick={this.createLesson}className="success">Create</button>
+							<button id={this.state.sections[index]._id} onClick={this.createLesson}className="success">Create</button>
 							<p className="lessonTitle">Create new lesson</p>
 						</li>
 					</ol>
 				</div>
 				</li>
 	},
+	deleteTemplate(){
+		coursesData.deleteCourse(this.props.params.templateId).then(res=>{
+			this.history.pushState(null,`course-templates`);
+		});
+	},
 	render() {
-		let links;
-		if (location.pathname == '/classroom'){
-			links = <div className="headerLinks"><Link className="linkBtn" to='classroom/edit'><button className="success"><i className="chalk-edit"></i>edit classroom</button></Link>
-				<Link className="linkBtn" to='dashboard'><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link></div>;
-		} else {
-			links = null;
-		}
 		let lessons = this.state.course.lessons;
 		return (
 			<div className="container full">
-				<Link to='dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
+				<Link to='/dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
+				<button className="error" onClick={this.deleteTemplate}><i className="chalk-remove"></i>delete template</button>
 				<header className="topContent">
-					{links}
 					<h1>{this.state.course.title}</h1>
 					<p className="title">Drag and drop to reorganize lessons</p>
 				</header>

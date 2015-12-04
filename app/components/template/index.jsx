@@ -6,7 +6,6 @@ export default React.createClass({
 	mixins: [History],
 	editTemplate(){
 		let id = this.props.details._id;
-		console.log(id)
 		this.history.pushState(null,`/course-templates/${id}/edit`);
 	},
 	render() {

@@ -1,15 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router';
 import Course from '../course/index.jsx';
+import coursesData from '../../services/courses.jsx';
 
 export default React.createClass({
 	displayName: 'ManageClassrooms',
 	getInitialState(){
 		return {
-			courses: {}
+			courses: {},
+			templates: []
 		}
 	},
 	componentDidMount(){
+		coursesData.getTemplates().then(res=>{
+			this.setState({
+				templates: res.course
+			});
+		});
 		let data = require('../sample-data.js');
 		this.setState({
 			courses: data.user.courses
@@ -17,6 +24,9 @@ export default React.createClass({
 	},
 	renderCourses(key){
 		return <Course key={key} index={key} details={this.state.courses[key]} />
+	},
+	renderOptions(key, index){
+		return <option key={index} value={this.state.templates[index]._id}>{this.state.templates[index].title}</option>
 	},
 	render() {
 		return (
@@ -30,8 +40,7 @@ export default React.createClass({
 						<div className="fieldRow">
 							<label htmlFor="template" className="inline">Template</label>
 							<select name="template" id="template">
-								<option value="1">Template One</option>
-								<option value="2">Template Two</option>
+								{(this.state.templates).map(this.renderOptions)}
 							</select>
 						</div>
 						<div className="fieldRow">
