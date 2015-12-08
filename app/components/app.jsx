@@ -4,6 +4,7 @@ import { Router, Route, Link, Navigation, History } from 'react-router';
 import Login from './login/index.jsx';
 import Dashboard from './dashboard/index.jsx';
 import Classroom from './classroom/index.jsx';
+import EditClassroom from './classroom/edit.jsx';
 import Lesson from './lesson/index.jsx';
 import Exercises from './exercises/index.jsx';
 import Topics from './topics/index.jsx';
@@ -12,7 +13,6 @@ import Footer from './footer/index.jsx';
 import Media from './media/index.jsx';
 import Instructors from './instructors/index.jsx';
 import Headline from './headline/index.jsx';
-import EditClassroom from './edit-classroom/index.jsx';
 import ManageClassrooms from './manage-classrooms/index.jsx';
 import EditLesson from './lesson-edit/index.jsx';
 import EditTopics from './topic-edit/index.jsx';
@@ -132,9 +132,8 @@ ReactDom.render(
 	(<Router history={createBrowserHistory()}>
 		<Route path='/' component={App}>
 			<Route path='/dashboard' component={Dashboard} />
-			<Route path='/classroom' component={Classroom} />
-			<Route path='/classroom/edit' component={EditClassroom}/>
 			<Route path='/classroom/manage' component={ManageClassrooms}/>
+			<Route path='/classroom/:courseId/edit' component={EditClassroom} />
 			<Route path='/lesson/:lessonId/:classroomId' component={Lesson} />
 			<Route path='/lesson/:lessonId/:classroomId/edit' component={EditLesson}/>
 			<Route path='/lesson/:classroomId/:sectionId/new' component={NewLesson} />

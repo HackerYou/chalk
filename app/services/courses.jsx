@@ -59,6 +59,15 @@ export default {
 			}
 		});
 	},
+	getCourseById(id){
+		return $.ajax({
+			url: `${config.getApiUrl()}/course/${id}`,
+			method: 'GET',
+			headers: {
+				'x-access-token': config.getToken()
+			}
+		});
+	},
 	addSectionToCourse(id, data	){
 		return $.ajax({
 			url: `${config.getApiUrl()}/course/${id}/section`,

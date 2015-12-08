@@ -7,12 +7,12 @@ import AuthMixin from '../../services/authMixin.jsx';
 import coursesData from '../../services/courses.jsx';
 
 export default React.createClass({
-	displayName: 'Classroom',
+	displayName: 'EditCourse',
 	mixins: [AuthMixin,History],
 	getInitialState(){
 		return{
 			course: {},
-			lessons: [],
+			sections: [],
 			isModalOpen: false, 
 			topics: []
 		}
@@ -27,74 +27,89 @@ export default React.createClass({
 	},
 	componentWillMount(){
 		let id = this.props.params.courseId;
-		console.log(id)
 		coursesData.getCourseById(id).then(res=>{
 			console.log(res.course);
 			this.setState({
-				course: res.course
+				course: res.course,
+				sections: res.course.sections
 			});
 		});
-		let data = require('../sample-data.js');
-		this.setState({
-			course: data.course,
-			lessons: data.course.lessons
-		});
-	},
-	componentDidMount(){
-		let topics = Object.keys(this.state.lessons).map((key) => {
-			return this.state.lessons[key].category;
-		});
-		let uniqueTopics = topics.reduce((a,b) => {
-			if (a.indexOf(b) < 0) a.push(b);
-			return a;
-		}, []);
-
-		this.setState({topics: uniqueTopics});
 	},
 	renderLessons(key, index){
-		return <LessonDetails key={index} index={index} details={this.state.course.lessons[index]} />
+		return <LessonDetails key={index} index={index} details={key} classroomId={this.props.params.templateId} />
 	},
 	renderTopics(key, index){
-		return <li key={index}>{this.state.topics[index]}</li>;
+		return <li key={index}>{this.state.sections[index].title}</li>;
+	},
+	createSection(e){
+		e.preventDefault();
+		coursesData.addSectionToCourse(this.props.params.templateId, {
+			title: this.refs.section.value
+		}).then(res=>{
+			this.setState({
+				course: res.course,
+				sections: res.course.sections
+			});
+		});	
+	},
+	createLesson(e){
+		let classroomId = this.props.params.templateId;
+		let sectionId = e.target.id;
+		this.history.pushState(null,`lesson/${classroomId}/${sectionId}/new`);
+	},
+	deleteSection(e){
+		// console.log(e.target.className);
+		coursesData.removeSectionFromCourse(this.props.params.templateId, e.target.className).then(res=>{
+			let newSections = (this.state.sections).filter((obj)=>{
+				return obj._id !== e.target.className;
+			});
+			this.setState({
+				sections: newSections
+			});
+
+		});
+	},
+	renderSections(key, index){
+		return <li key={index} className="lessonGroup">
+				<h3>{this.state.sections[index].title}</h3>
+				<button onClick={this.deleteSection} className={this.state.sections[index]._id}>delete section</button>
+				<div className="card">
+					<ol>
+						{(this.state.sections[index].lessons).map(this.renderLessons)}
+						<li className="new-lessonRow">
+							<button id={this.state.sections[index]._id} onClick={this.createLesson}className="success">Create</button>
+							<p className="lessonTitle">Create new lesson</p>
+						</li>
+					</ol>
+				</div>
+				</li>
+	},
+	deleteTemplate(){
+		coursesData.deleteCourse(this.props.params.courseId).then(res=>{
+			this.history.pushState(null,`/classroom/manage`);
+		});
 	},
 	render() {
-		let links;
-		if (location.pathname == '/classroom'){
-			links = <div className="headerLinks"><Link className="linkBtn" to='classroom/edit'><button className="success"><i className="chalk-edit"></i>edit classroom</button></Link>
-				<Link className="linkBtn" to='dashboard'><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link></div>;
-		} else {
-			links = null;
-		}
 		let lessons = this.state.course.lessons;
 		return (
 			<div className="container full">
+				<Link to='/dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
+				<button className="error" onClick={this.deleteTemplate}><i className="chalk-remove"></i>delete course</button>
 				<header className="topContent">
-					{links}
 					<h1>{this.state.course.title}</h1>
 					<p className="title">Drag and drop to reorganize lessons</p>
 				</header>
 				<section className="lessonsWrap">
 					<ol className="lessonColumn">
-						<li className="lessonGroup">
-							<h3>Topic Section Title</h3>
-							<div className="card">	
-								<ol>
-									{(this.state.lessons).map(this.renderLessons)}
-									<li className="new-lessonRow">
-										<Link to="lesson/new" className="linkBtn"><button className="success">Create</button></Link>
-										<p className="lessonTitle">Create new lesson</p>
-									</li>
-								</ol>
-							</div>
-						</li>
+						{(this.state.sections).map(this.renderSections)}
 						<li>
 							<article className="lessonNew">
 								<ul>
-									<li className="new-lesson">
-										<h3>Create new lesson</h3>
-										<p>Plan lesson and choose new topics</p>
-										<Link to="lesson/new" className="linkBtn"><button className="success">Create</button></Link>
-									</li>
+									<form className="new-lesson">
+										<h3>Add new section</h3>
+										<input ref="section" type="text" placeholder="topic section title"/>
+										<button onClick={this.createSection}className="success">Create</button>
+									</form>
 								</ul>
 							</article>
 						</li>
@@ -104,7 +119,7 @@ export default React.createClass({
 							<h3>Course Topics</h3>
 							<div className="card topicLegend">
 								<ul className="topicList">
-									{this.state.topics.map(this.renderTopics)}
+									{(this.state.sections).map(this.renderTopics)}
 								</ul>
 								<button className="primary">Show Starred Lessons</button>
 							</div>

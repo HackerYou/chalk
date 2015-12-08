@@ -36,10 +36,11 @@ export default React.createClass({
 		let createCourse = coursesData.createCourse({
 			'title': this.refs.title.value,
 			'template': this.refs.template.value,
-			//these don't seem to be posting to the course, what is the proper key?
 			'term': this.refs.term.value,
+			//these don't seem to be posting to the course, what is the proper key?
 			'start_date': this.refs.start.value,
 			'end_date': this.refs.end.value,
+			//
 			'instructor': this.refs.instructor.value,
 			'description': this.refs.description.value
 		});
@@ -50,7 +51,9 @@ export default React.createClass({
 			let data = getRes[0].course.sections;
 			coursesData.updateCourse(courseId, {
 				'sections': data
-			}).then(res=>{console.log(res)});
+			}).then(res=>{
+				this.setState({courses: this.state.courses.concat(res.course)});
+			});
 		});
 	},
 	render() {
