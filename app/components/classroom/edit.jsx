@@ -28,7 +28,6 @@ export default React.createClass({
 	componentWillMount(){
 		let id = this.props.params.courseId;
 		coursesData.getCourseById(id).then(res=>{
-			console.log(res.course);
 			this.setState({
 				course: res.course,
 				sections: res.course.sections
@@ -53,26 +52,13 @@ export default React.createClass({
 		});	
 	},
 	createLesson(e){
-		let classroomId = this.props.params.templateId;
+		let classroomId = this.props.params.courseId;
 		let sectionId = e.target.id;
 		this.history.pushState(null,`lesson/${classroomId}/${sectionId}/new`);
-	},
-	deleteSection(e){
-		// console.log(e.target.className);
-		coursesData.removeSectionFromCourse(this.props.params.templateId, e.target.className).then(res=>{
-			let newSections = (this.state.sections).filter((obj)=>{
-				return obj._id !== e.target.className;
-			});
-			this.setState({
-				sections: newSections
-			});
-
-		});
-	},
+	}, 
 	renderSections(key, index){
 		return <li key={index} className="lessonGroup">
 				<h3>{this.state.sections[index].title}</h3>
-				<button onClick={this.deleteSection} className={this.state.sections[index]._id}>delete section</button>
 				<div className="card">
 					<ol>
 						{(this.state.sections[index].lessons).map(this.renderLessons)}
