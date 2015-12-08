@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, History } from 'react-router';
 import Course from '../course/index.jsx';
 import AuthMixin from '../../services/authMixin.jsx';
+import coursesData from '../../services/courses.jsx';
 
 export default React.createClass({
 	displayName: 'Dashboard',
@@ -12,9 +13,13 @@ export default React.createClass({
 		}
 	},
 	componentWillMount(){
-		let data = require('../sample-data.js');
-		this.setState({
-			courses: data.user.courses
+		coursesData.getCourses().then(res=>{
+			let courses = (res.course).filter((obj)=>{
+				return obj.template === false;
+			});
+			this.setState({
+				courses: courses
+			});
 		});
 	},
 	renderCourses(key, index){

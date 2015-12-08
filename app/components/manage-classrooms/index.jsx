@@ -19,8 +19,11 @@ export default React.createClass({
 		});
 
 		coursesData.getCourses().then(res=>{
+			let courses = res.course.filter((obj)=>{
+				return obj.template === false;
+			});
 			this.setState({
-				courses: res.course
+				courses: courses
 			});
 		});
 	},

@@ -14,6 +14,7 @@ export default React.createClass({
 	},
 	componentWillMount(){
 		courseData.getTemplates().then(res=>{
+			console.log(res);
 			this.setState({courses: res.course});
 		})
 	},
