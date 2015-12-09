@@ -11,15 +11,20 @@ export default React.createClass({
 			templates: []
 		}
 	},
-	componentDidMount(){
+	componentWillMount(){
 		coursesData.getTemplates().then(res=>{
 			this.setState({
 				templates: res.course
 			});
 		});
-		let data = require('../sample-data.js');
-		this.setState({
-			courses: data.user.courses
+
+		coursesData.getCourses().then(res=>{
+			let courses = res.course.filter((obj)=>{
+				return obj.template === false;
+			});
+			this.setState({
+				courses: courses
+			});
 		});
 	},
 	renderCourses(key){
@@ -27,6 +32,32 @@ export default React.createClass({
 	},
 	renderOptions(key, index){
 		return <option key={index} value={this.state.templates[index]._id}>{this.state.templates[index].title}</option>
+	},
+	createCourse(e){
+		e.preventDefault();
+		//create course
+		let createCourse = coursesData.createCourse({
+			'title': this.refs.title.value,
+			'template': this.refs.template.value,
+			'term': this.refs.term.value,
+			//these don't seem to be posting to the course, what is the proper key?
+			'start_date': this.refs.start.value,
+			'end_date': this.refs.end.value,
+			//
+			'instructor': this.refs.instructor.value,
+			'description': this.refs.description.value
+		});
+		let getTemplate = coursesData.getTemplateById(this.refs.template.value);
+
+		$.when(createCourse, getTemplate).then((createRes, getRes)=>{
+			let courseId = createRes[0].course._id;
+			let data = getRes[0].course.sections;
+			coursesData.updateCourse(courseId, {
+				'sections': data
+			}).then(res=>{
+				this.setState({courses: this.state.courses.concat(res.course)});
+			});
+		});
 	},
 	render() {
 		return (
@@ -36,26 +67,28 @@ export default React.createClass({
 				</header>
 				<div className="card setupCard">
 					<h2>Create a new classroom</h2>
-					<form action="">
+					<form onSubmit={this.createCourse} action="">
 						<div className="fieldRow">
 							<label htmlFor="template" className="inline">Template</label>
-							<select name="template" id="template">
+							<select ref="template" name="template" id="template">
 								{(this.state.templates).map(this.renderOptions)}
 							</select>
 						</div>
 						<div className="fieldRow">
+							<label htmlFor="title" className="inline">Title</label>
+							<input ref="title" id="term" type="text" placeholder="Enter Course Title"/>
 							<label htmlFor="term" className="inline">Term</label>
-							<input id="term" type="text" placeholder="Enter Term"/>
+							<input ref="term" id="term" type="text" placeholder="eg Fall 2015"/>
 						</div>
 						<div className="fieldRow">
 							<label htmlFor="startdate" className="inline">Start Date</label>
-							<input id="startdate" type="text" placeholder="Enter Start Date"/>
+							<input ref="start" id="startdate" type="text" placeholder="Enter Start Date"/>
 							<label htmlFor="enddate" className="inline">End Date</label>
-							<input type="text" id="enddate" placeholder="Enter End Date"/>
+							<input ref="end" type="text" id="enddate" placeholder="Enter End Date"/>
 						</div>
 						<div className="fieldRow">
 							<label htmlFor="instructor" className="inline">Instructor</label>
-							<select name="instructor" id="instructor">
+							<select ref="instructor" name="instructor" id="instructor">
 								<option value="drew">Drew Minns</option>
 								<option value="ryan">Ryan Christiani</option>
 								<option value="kristen">Kristen Spencer</option>
@@ -64,10 +97,9 @@ export default React.createClass({
 						</div>
 						<div className="fieldRow">
 							<label htmlFor="desc">Classroom Description</label>
-							<textarea name="desc" id="desc" cols="30" rows="10"></textarea>
+							<textarea ref="description" name="desc" id="desc" cols="30" rows="10"></textarea>
 						</div>
 						<button className="success">Create Classroom</button>
-						<button className="error">Cancel</button>
 					</form>
 				</div>
 				<div className="content">

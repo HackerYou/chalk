@@ -1,6 +1,15 @@
 import config from './config.jsx';
 
 export default {
+	getCourses(){
+		return $.ajax({
+			url: `${config.getApiUrl()}/course`,
+			method: 'GET',
+			headers: {
+				'x-access-token': config.getToken()
+			}
+		});
+	},
 	getTemplates(){
 		return $.ajax({
 			url: `${config.getApiUrl()}/course/template`,
@@ -21,6 +30,17 @@ export default {
 			data: JSON.stringify(course)
 		});
 	},
+	createCourse(data){
+		return $.ajax({
+			url: `${config.getApiUrl()}/course`,
+			method: 'POST', 
+			headers: {
+				'x-access-token': config.getToken(),
+				'Content-Type' : 'application/json'
+			},
+			data: JSON.stringify(data)
+		});
+	},
 	deleteCourse(id){
 		return $.ajax({
 			url: `${config.getApiUrl()}/course/${id}`,
@@ -33,6 +53,15 @@ export default {
 	getTemplateById(id){
 		return $.ajax({
 			url: `${config.getApiUrl()}/course/template/${id}`,
+			method: 'GET',
+			headers: {
+				'x-access-token': config.getToken()
+			}
+		});
+	},
+	getCourseById(id){
+		return $.ajax({
+			url: `${config.getApiUrl()}/course/${id}`,
 			method: 'GET',
 			headers: {
 				'x-access-token': config.getToken()
@@ -57,6 +86,17 @@ export default {
 			headers: {
 				'x-access-token': config.getToken()
 			}
+		});
+	},
+	updateCourse(courseId, data){
+		return $.ajax({
+			url: `${config.getApiUrl()}/course/${courseId}`,
+			method: 'PUT', 
+			headers: {
+				'x-access-token': config.getToken(),
+				'Content-Type': 'application/json'
+			},
+			data: JSON.stringify(data)
 		});
 	},
 	addLessonToSection(sectionId, lessonId){
