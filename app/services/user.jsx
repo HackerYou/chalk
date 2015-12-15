@@ -51,7 +51,7 @@ export default {
 	},
 	updateUser(model) {
 		let id = model._id;
-		delete model._id;
+		// delete model._id;
 		return $.ajax({
 			url: `${config.getApiUrl()}/user/${id}`,
 			method: 'PUT',
