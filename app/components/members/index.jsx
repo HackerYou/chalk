@@ -23,12 +23,21 @@ export default React.createClass({
 							<p><strong>{this.state.members[index].firstName + ' ' + this.state.members[index].lastName}</strong></p>
 							<p>{this.state.members[index].email}</p>
 							<p>{this.state.members[index].courses.length} Classrooms</p>
-							<button onClick={this.deleteUser} id={this.state.members[index]._id}className="error">Remove User</button>
+							<label htmlFor={this.state.members[index]._id}>Instructor?</label>
+							<input onChange={this.setInstructor} type="checkbox" id={this.state.members[index]._id} data-index={index}/>
+							<button onClick={this.deleteUser} data-user={this.state.members[index]._id}className="error">Remove User</button>
 						</li>
+	},
+	setInstructor(e){
+		let index = e.target.dataset.index;
+		let model = this.state.members[index];
+		e.target.checked ? model.instructor = true : model.instructor = false;
+		console.log(model);
+		userData.updateUser(model).then(res=>{console.log(res)});
 	},
 	deleteUser(e){
 		e.preventDefault();
-		let id = e.target.id;
+		let id = e.target.dataset.user;
 		userData.deleteUser(id).then(res=>{
 			let removeIndex = (this.state.members).map((obj, index)=>{ 
 				//get index of the user ID
