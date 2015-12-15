@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link , History } from 'react-router';
 import AuthMixin from '../../services/authMixin.jsx';
+import userData from '../../services/user.jsx';
 
 export default React.createClass({
 	displayName: 'Members',
@@ -11,9 +12,10 @@ export default React.createClass({
 		}
 	},
 	componentWillMount(){
-		let data = require('../sample-data.js');
-		this.setState({
-			members: data.members
+		userData.getUsers().then(res=>{
+			this.setState({
+				members: res.user
+			})
 		});
 	},
 	renderMembers(key, index){
@@ -21,8 +23,37 @@ export default React.createClass({
 							<p><strong>{this.state.members[index].firstName + ' ' + this.state.members[index].lastName}</strong></p>
 							<p>{this.state.members[index].email}</p>
 							<p>{this.state.members[index].courses.length} Classrooms</p>
-							<p>Remove User? <i className="chalk-remove red"></i></p>
+							<button onClick={this.deleteUser} id={this.state.members[index]._id}className="error">Remove User</button>
 						</li>
+	},
+	deleteUser(e){
+		e.preventDefault();
+		let id = e.target.id;
+		userData.deleteUser(id).then(res=>{
+			let removeIndex = (this.state.members).map((obj, index)=>{ 
+				//get index of the user ID
+				return obj._id;
+			}).indexOf(id);
+
+			//remove user from state
+			this.state.members.splice(removeIndex, 1);
+
+			this.setState({
+				members: this.state.members
+			});
+		});
+	},
+	addUser(e){
+		e.preventDefault();
+		let userEmail = this.refs.users.value;
+		userData.addUser(userEmail).then(res=>{
+			(res.students).map((index)=>{
+				userData.getUser(index).then(res=>{
+					this.setState({members: this.state.members.concat(res.user)});
+				});
+			});
+		});
+		React.findDOMNode(this.refs.users).value = "";
 	},
 	render() {
 		return (
@@ -37,6 +68,14 @@ export default React.createClass({
 					<form action="">
 						<label htmlFor="search" className="inline largeLabel">Search by name or email</label>
 						<input type="text" id="search"/>
+					</form>
+				</section>
+				<section className="full card detailsForm">
+					<form onSubmit={this.addUser} action="">
+						<label htmlFor="add" className="inline largeLabel">Add by email</label>
+						<small>Seperate emails by comma</small>
+						<input ref="users" type="text" id="add" placeholder="enter emails"/>
+						<button onClick={this.addUser} className="success">Add User</button>
 					</form>
 				</section>
 				<div className="container card memberWrap">
