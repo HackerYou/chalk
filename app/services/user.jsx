@@ -9,12 +9,43 @@ export default {
 	storeUser(user) {
 		user = user;
 	},
+	addUser(email){
+		return $.ajax({
+			url: `${config.getApiUrl()}/user`,
+			method: 'POST',
+			headers: {
+				'x-access-token': config.getToken(),
+				'Content-Type': 'application/json'
+			},
+			data: JSON.stringify({
+				'emails': email
+			})
+		});
+	},
+	getUsers(){
+		return $.ajax({
+			url: `${config.getApiUrl()}/user`,
+			method: 'GET',
+			headers: {
+				'x-access-token': config.getToken()
+			}
+		});
+	},
 	getUser(id) {
 		return $.ajax({
 			url: `${config.getApiUrl()}/user/${id}`,
 			method: 'GET',
 			headers: {
 				'x-access-token' : config.getToken()
+			}
+		});
+	},
+	deleteUser(id){
+		return $.ajax({
+			url: `${config.getApiUrl()}/user/${id}`,
+			method: 'DELETE',
+			headers: {
+				'x-access-token': config.getToken()
 			}
 		});
 	},

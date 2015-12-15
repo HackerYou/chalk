@@ -98,8 +98,8 @@ export default React.createClass({
 							</Link>
 						</div>
 						<div className="card topicRow">
-							<textarea onKeyDown={TabMixin.keyHandler} value={this.state.topic.body} ref="body" name="" id="body" onChange={this.handleChange} cols="140" rows="30">
-														</textarea>
+							<textarea className="markdown" onKeyDown={TabMixin.keyHandler} value={this.state.topic.body} ref="body" name="" id="body" onChange={this.handleChange} cols="140" rows="30">
+							</textarea>
 							<h3>Media</h3>
 
 							<Dropzone onDrop={this.onDrop} className="dropZone">
