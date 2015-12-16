@@ -50,6 +50,19 @@ export default {
 			}
 		});
 	},
+	addUserToCourse(courseId, emails){
+		return $.ajax({
+			url: `${config.getApiUrl()}/course/${courseId}/user`,
+			method: 'POST',
+			headers: {
+				'x-access-token': config.getToken(),
+				'Content-Type': 'application/json'
+			},
+			data: JSON.stringify({
+				'emails': emails
+			}) 
+		});
+	},
 	getTemplateById(id){
 		return $.ajax({
 			url: `${config.getApiUrl()}/course/template/${id}`,

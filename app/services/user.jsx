@@ -1,13 +1,14 @@
 import config from './config.jsx';
 
-let user = {};
+let _user = {};
 
 export default {
 	getStoredUser() {
-		return user;
+		return _user;
 	},
 	storeUser(user) {
-		user = user;
+		console.log(user);
+		_user = user;
 	},
 	addUser(email){
 		return $.ajax({
@@ -28,6 +29,18 @@ export default {
 			method: 'GET',
 			headers: {
 				'x-access-token': config.getToken()
+			}
+		});
+	},
+	getInstructors(){
+		return $.ajax({
+			url: `${config.getApiUrl()}/user`,
+			method: 'GET',
+			headers: {
+				'x-access-token': config.getToken()
+			},
+			data: {
+				'instructor': true
 			}
 		});
 	},

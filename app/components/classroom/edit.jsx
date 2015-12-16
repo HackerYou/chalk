@@ -7,14 +7,15 @@ import AuthMixin from '../../services/authMixin.jsx';
 import coursesData from '../../services/courses.jsx';
 
 export default React.createClass({
-	displayName: 'EditCourse',
+	displayName: 'EditClassroom',
 	mixins: [AuthMixin,History],
 	getInitialState(){
 		return{
 			course: {},
 			sections: [],
 			isModalOpen: false, 
-			topics: []
+			topics: [],
+			members: []
 		}
 	},
 	openModal(){
@@ -30,7 +31,8 @@ export default React.createClass({
 		coursesData.getCourseById(id).then(res=>{
 			this.setState({
 				course: res.course,
-				sections: res.course.sections
+				sections: res.course.sections,
+				members: res.course.students
 			});
 		});
 	},
@@ -75,6 +77,20 @@ export default React.createClass({
 			this.history.pushState(null,`/classroom/manage`);
 		});
 	},
+	addUser(e){
+		e.preventDefault();
+		let courseId = this.props.params.courseId;
+		let emails = this.refs.students.value;
+		coursesData.addUserToCourse(courseId, emails).then(res=>{
+			let updatedCourse = res.course;
+			this.setState({
+				course: updatedCourse
+			});
+		});
+	},
+	renderMembers(obj, index){
+		return <li key={index}>{this.state.members[index]} Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+	},
 	render() {
 		let lessons = this.state.course.lessons;
 		return (
@@ -113,7 +129,7 @@ export default React.createClass({
 						<section className="sideCard">
 							<div className="card">
 								<h3>Members</h3>
-								<p><i className="chalk-users"></i>{this.state.course.students} members of the classroom</p>
+								<p><i className="chalk-users"></i>{this.state.members.length} members of the classroom</p>
 								<button onClick={this.openModal} className="success">Manage classroom members</button>
 							</div>
 						</section>
@@ -122,38 +138,19 @@ export default React.createClass({
 							<h2>Add Members</h2>
 							<div className="membersModalWrap">
 								<div className="memberModalColumn memberModalForm">
-									<form action="">
+									<form onSubmit={this.addUser} action="">
 										<label htmlFor="search">Search By Name</label>
 										<input type="text" placeholder="Name" id="search"/>
 										<label htmlFor="email">Add by email<br /> <small>Separate emails by comma</small></label>
 										
-										<input type="text" id="email" placeholder="enter emails"/>
+										<input ref="students"  type="text" id="email" placeholder="enter emails"/>
 										<button className="success">Send Email</button>
 									</form>
 								</div>
 								<div className="memberModalColumn memberModalManage">
 									<h3>Classroom Members</h3>
 									<ul className="membersModalList">
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										{(this.state.members).map(this.renderMembers)}
 									</ul>
 								</div>
 							</div>
