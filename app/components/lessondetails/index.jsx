@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import userDate from  '../../services/user.jsx';
 
 export default React.createClass({
 	displayName: 'LessonDetails',
@@ -9,9 +10,21 @@ export default React.createClass({
 		}
 	},
 	starLesson() {
-		this.setState({
-			star: !this.state.star
-		});
+		if(this.state.star) {
+			userData.favoriteLesson(this.props.courseId,this.drops.details._id).then((res) => {
+				this.setState({
+					star: !this.state.star
+				});
+			});
+		}
+		else {
+			userData.unFavoriteLesson(this.props.courseId,this.drops.details._id).then((res) => {
+				this.setState({
+					star: !this.state.star
+				});
+			});
+		}
+		//Favorite or remove fav
 	},
 	render() {
 		return (
@@ -24,7 +37,7 @@ export default React.createClass({
 						<Link to={`/lesson/${this.props.details._id}/${this.props.classroomId}`}>view</Link> |
 						<Link to={`/lesson/${this.props.details._id}/${this.props.classroomId}/edit`}>edit</Link>
 					</span>
-					<i className={this.state.star ? 'star' : 'unstar'} onClick={this.starLesson}>Star</i>
+					<i className={this.state.star ? 'chalk-star redLight' : 'chalk-star'} onClick={this.starLesson}></i>
 				</div>
 			</li>
 		)
