@@ -2,17 +2,22 @@ import React from 'react';
 import { Link, History } from 'react-router';
 import Course from '../course/index.jsx';
 import AuthMixin from '../../services/authMixin.jsx';
+import config from '../../services/config.jsx';
 import coursesData from '../../services/courses.jsx';
+import userData from '../../services/user.jsx';
 
 export default React.createClass({
 	displayName: 'Dashboard',
 	mixins: [AuthMixin,History],
 	getInitialState(){
 		return{
-			courses: []
+			courses: [],
+			user: {}
 		}
 	},
 	componentWillMount(){
+		
+
 		coursesData.getCourses().then(res=>{
 			let courses = (res.course).filter((obj)=>{
 				return obj.template === false;
@@ -21,6 +26,14 @@ export default React.createClass({
 				courses: courses
 			});
 		});
+	},
+	componentDidMount(){
+		let user = userData.getUser(config.getUserId()).then(res=>{
+			this.setState({
+				user: res.user
+			});
+		});
+		
 	},
 	renderCourses(key, index){
 		return <Course key={index} index={index} details={this.state.courses[index]} />
