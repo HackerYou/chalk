@@ -98,7 +98,7 @@ export default React.createClass({
 							</Link>
 						</div>
 						<div className="card topicRow">
-							<textarea className="markdown" onKeyDown={TabMixin.keyHandler} value={this.state.topic.body} ref="body" name="" id="body" onChange={this.handleChange} cols="140" rows="30">
+							<textarea className="markdown" onKeyDown={TabMixin.keyHandler} value={this.state.topic.body} ref="body" name="" id="body" onChange={this.handleChange}>
 							</textarea>
 							<h3>Media</h3>
 

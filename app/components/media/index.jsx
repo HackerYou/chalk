@@ -44,8 +44,8 @@ export default React.createClass({
 				<div className="container">
 					<header className="topContent">
 						<Link to="dashboard" className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
-						<h1>Media</h1>
 					</header>
+					<h1>Media</h1>
 				</div>
 				<section className="full card detailsForm">
 					<form action="">
