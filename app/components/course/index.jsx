@@ -29,7 +29,11 @@ export default React.createClass({
 			<div to="/classroom" className="classCard">
 				<article className="card ">
 					<h3>{this.props.details.title}</h3>
+<<<<<<< HEAD
 					<p>Instructor: {this.state.instructor.firstName + " " + this.state.instructor.lastName}</p>
+=======
+					<h4>Instructor: {this.props.details.instructor}</h4>
+>>>>>>> ffa726a97acca8914c77339d035c36a17bf306d2
 					<footer className="classCardMeta">
 						<p className="red"><strong>{this.props.details.term}</strong></p>
 						<button id={this.props.details._id} onClick={this.goToClass} className="primary">View Class</button>

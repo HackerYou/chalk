@@ -109,7 +109,7 @@ export default React.createClass({
 								<ul>
 									<form className="new-lesson">
 										<h3>Add new section</h3>
-										<input ref="section" type="text" placeholder="topic section title"/>
+										<input ref="section" type="text" placeholder="Title of Topic Group"/>
 										<button onClick={this.createSection}className="success">Create</button>
 									</form>
 								</ul>

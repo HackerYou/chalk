@@ -8,7 +8,8 @@ header.mainHeader {
 		justify-content: space-between;
 		align-items: center;
 		padding: 5rem 3.9rem 3.3rem 260px;
-		img.topLogo {
+		.topLogo {
+			display: inline-block;
 			position: absolute;
 			width: 195px;
 			top: -25px;
