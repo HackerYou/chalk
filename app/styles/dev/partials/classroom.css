@@ -65,11 +65,12 @@ li.lessonRow {
 		color: $black;
 	}
 	.lessonInfo {
-		lost-column: 8/12;
+		lost-column: 7/12;
 	}
 	.lessonMeta {
-		lost-column: 2/12;
+		lost-column: 3/12;
 		lost-flex-container: row;
+		align-items: center;
 		justify-content: flex-end;
 		color: $grey;
 		span {

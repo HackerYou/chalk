@@ -52,7 +52,7 @@ export default React.createClass({
 		this.setState({topics: uniqueTopics});
 	},
 	renderLessons(key, index){
-		return <LessonDetails key={index} index={index} details={this.state.course.lessons[index]} />
+		return <LessonDetails key={index} index={index} courseId={this.state.course._id} details={this.state.course.lessons[index]} />
 	},
 	renderTopics(key, index){
 		return <li key={index}>{this.state.topics[index]}</li>;
