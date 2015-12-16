@@ -23,8 +23,10 @@ export default React.createClass({
 							<p><strong>{this.state.members[index].firstName + ' ' + this.state.members[index].lastName}</strong></p>
 							<p>{this.state.members[index].email}</p>
 							<p>{this.state.members[index].courses.length} Classrooms</p>
-							<label htmlFor={this.state.members[index]._id}>Instructor?</label>
-							<input onChange={this.setInstructor} type="checkbox" checked={this.state.members[index].instructor}id={this.state.members[index]._id} data-index={index}/>
+							<div className="inputBlock">
+								<label htmlFor={this.state.members[index]._id}>Instructor?</label>
+								<input onChange={this.setInstructor} type="checkbox" checked={this.state.members[index].instructor}id={this.state.members[index]._id} data-index={index}/>
+							</div>
 							<button onClick={this.deleteUser} data-user={this.state.members[index]._id}className="error">Remove User</button>
 						</li>
 	},
@@ -76,8 +78,8 @@ export default React.createClass({
 				<div className="container">
 					<header className="topContent">
 						<Link to="dashboard" className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
-						<h1>Manage Members</h1>
 					</header>
+					<h1>Manage Members</h1>
 				</div>
 				<section className="full card detailsForm">
 					<form action="">
@@ -86,10 +88,12 @@ export default React.createClass({
 					</form>
 				</section>
 				<section className="full card detailsForm">
-					<form onSubmit={this.addUser} action="">
+					<form onSubmit={this.addUser} action="" className="addMembersForm">
 						<label htmlFor="add" className="inline largeLabel">Add by email</label>
-						<small>Seperate emails by comma</small>
-						<input ref="users" type="text" id="add" placeholder="enter emails"/>
+						<div className="inlineRow">
+							<input ref="users" type="text" id="add" placeholder="enter emails"/>
+							<small>Seperate emails by comma</small>
+						</div>
 						<button onClick={this.addUser} className="success">Add User</button>
 					</form>
 				</section>
