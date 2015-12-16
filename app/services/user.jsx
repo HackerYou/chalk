@@ -84,6 +84,26 @@ export default {
 				'Content-Type': 'application/json'
 			}
 		});
+	},
+	favoriteLesson(courseId,lessonId) {
+		return $.ajax({
+			url: `${config.getApiUrl()}/v1/user/course/${courseId}/lesson/${lessonId}/favorite`,
+			method: 'POST',
+			headers: {
+				'x-access-token' : config.getToken(),
+				'Content-Type': 'application/json'
+			}
+		});
+	},
+	unFavoriteLesson(courseId,lessonId) {
+		return $.ajax({
+			url: `${config.getApiUrl()}/v1/user/course/${courseId}/lesson/${lessonId}/favorite`,
+			method: 'DELETE',
+			headers: {
+				'x-access-token' : config.getToken(),
+				'Content-Type': 'application/json'
+			}
+		});
 	}
 };
 
