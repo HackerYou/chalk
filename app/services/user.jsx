@@ -71,6 +71,12 @@ export default {
 				'Content-Type': 'application/json'
 			}
 		});
+	},
+	favoriteLesson(courseId,lessonId) {
+
+	},
+	unFavoriteLesson(courseId,lessonId) {
+
 	}
 };
 

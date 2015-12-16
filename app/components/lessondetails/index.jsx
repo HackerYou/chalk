@@ -3,6 +3,16 @@ import { Link } from 'react-router';
 
 export default React.createClass({
 	displayName: 'LessonDetails',
+	getInitialState() {
+		return {
+			star: false
+		}
+	},
+	starLesson() {
+		this.setState({
+			star: !this.state.star
+		});
+	},
 	render() {
 		return (
 			<li className="lessonRow">
@@ -14,6 +24,7 @@ export default React.createClass({
 						<Link to={`/lesson/${this.props.details._id}/${this.props.classroomId}`}>view</Link> |
 						<Link to={`/lesson/${this.props.details._id}/${this.props.classroomId}/edit`}>edit</Link>
 					</span>
+					<i className={this.state.star ? 'star' : 'unstar'} onClick={this.starLesson}>Star</i>
 				</div>
 			</li>
 		)
