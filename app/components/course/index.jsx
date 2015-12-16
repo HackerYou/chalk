@@ -13,7 +13,7 @@ export default React.createClass({
 			<div to="/classroom" className="classCard">
 				<article className="card ">
 					<h3>{this.props.details.title}</h3>
-					<p>Instructor: {this.props.details.instructor}</p>
+					<h4>Instructor: {this.props.details.instructor}</h4>
 					<footer className="classCardMeta">
 						<p className="red"><strong>{this.props.details.term}</strong></p>
 						<button id={this.props.details._id} onClick={this.goToClass} className="primary">View Class</button>

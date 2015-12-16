@@ -13,9 +13,8 @@ export default React.createClass({
 		return (
 			<header className="mainHeader">
 				<div className="innerWrap card">
-					<Link to="dashboard" className="linkBtn"><img src="/images/logo-hackeryou.svg" alt="HackerYou Logo" className="topLogo" /></Link>
+					<Link to="dashboard" className="linkBtn topLogo"><img src="/images/logo-hackeryou.svg" alt="HackerYou Logo" /></Link>
 					<h3>Hello, {this.props.user.firstName} {this.props.user.lastName}</h3>
-
 					<p className="signOut"><a href="#" className="strong" onClick={this.logOut}><i className="chalk-log-out"></i>Log out of {this.props.user.email}</a></p>
 				</div>
 			</header>
