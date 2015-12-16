@@ -1,6 +1,7 @@
 import React from 'react';
 import {  Link,  History } from 'react-router';
 import AuthMixin from '../../services/authMixin.jsx';
+import userData from '../../services/user.jsx';
 
 export default React.createClass({
 	displayName: 'Instructors',
@@ -11,12 +12,10 @@ export default React.createClass({
 		}
 	},
 	componentWillMount(){
-		let data = require('../sample-data.js');
-		let instructor = (data.members).filter((val)=>{
-			return val.instructor === true;
-		});
-		this.setState({
-			instructors: instructor
+		userData.getInstructors().then(res=>{
+			this.setState({
+				instructors: res.user
+			});
 		});
 	},
 	renderInstructors(key, index){
