@@ -5,12 +5,15 @@ import Modal from '../modal/index.jsx';
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import AuthMixin from '../../services/authMixin.jsx';
 import coursesData from '../../services/courses.jsx';
+import userData from '../../services/user.jsx';
+import config from '../../services/config.jsx';
 
 export default React.createClass({
 	displayName: 'EditClassroom',
 	mixins: [AuthMixin,History],
 	getInitialState(){
 		return{
+			user: {},
 			course: {},
 			sections: [],
 			isModalOpen: false, 
@@ -27,6 +30,11 @@ export default React.createClass({
 		document.body.className = '';
 	},
 	componentWillMount(){
+		userData.getUser(config.getUserId()).then(res=>{
+			this.setState({
+				user: res.user
+			})
+		});
 		let id = this.props.params.courseId;
 		coursesData.getCourseById(id).then(res=>{
 			this.setState({
@@ -59,15 +67,18 @@ export default React.createClass({
 		this.history.pushState(null,`lesson/${classroomId}/${sectionId}/new`);
 	}, 
 	renderSections(key, index){
+		let isAdmin = this.state.user.admin;
+		let newLesson = <li className="new-lessonRow">
+							<button id={this.state.sections[index]._id} onClick={this.createLesson}className="success">Create</button>
+							<p className="lessonTitle">Create new lesson</p>
+						</li>;
+
 		return <li key={index} className="lessonGroup">
 				<h3>{this.state.sections[index].title}</h3>
 				<div className="card">
 					<ol>
 						{(this.state.sections[index].lessons).map(this.renderLessons)}
-						<li className="new-lessonRow">
-							<button id={this.state.sections[index]._id} onClick={this.createLesson}className="success">Create</button>
-							<p className="lessonTitle">Create new lesson</p>
-						</li>
+						{isAdmin ? newLesson : null}
 					</ol>
 				</div>
 				</li>
@@ -92,19 +103,21 @@ export default React.createClass({
 		return <li key={index}>{this.state.members[index]} Lastname email@email.com goes here <i className="chalk-remove"></i></li>
 	},
 	render() {
-		let lessons = this.state.course.lessons;
-		return (
-			<div className="container full">
-				<Link to='/dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
-				<button className="error" onClick={this.deleteTemplate}><i className="chalk-remove"></i>delete course</button>
-				<header className="topContent">
-					<h1>{this.state.course.title}</h1>
-					<p className="title">Drag and drop to reorganize lessons</p>
-				</header>
-				<section className="lessonsWrap">
-					<ol className="lessonColumn">
-						{(this.state.sections).map(this.renderSections)}
-						<li>
+		// let lessons = this.state.course.lessons;
+		let isAdmin = this.state.user.admin;
+		let isInstructor = this.state.user.instructor;
+
+		let deleteButton = <button className="error" onClick={this.deleteTemplate}><i className="chalk-remove"></i>delete course</button>;
+		
+		let members = <section className="sideCard">
+							<div className="card">
+								<h3>Members</h3>
+								<p><i className="chalk-users"></i>{this.state.members.length} members of the classroom</p>
+								<button onClick={this.openModal} className="success">Manage classroom members</button>
+							</div>
+						</section>;
+
+		let addSection = <li>
 							<article className="lessonNew">
 								<ul>
 									<form className="new-lesson">
@@ -114,7 +127,21 @@ export default React.createClass({
 									</form>
 								</ul>
 							</article>
-						</li>
+						</li>;
+
+		return (
+			<div className="container full">
+				<Link to='/dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
+				<Link to={`/classroom/${this.props.params.courseId}`} className="linkBtn"><button className="success"><i className="chalk-save"></i>save changes</button></Link>
+				{isAdmin ? deleteButton : null}
+				<header className="topContent">
+					<h1>{this.state.course.title}</h1>
+					<p className="title">Drag and drop to reorganize lessons</p>
+				</header>
+				<section className="lessonsWrap">
+					<ol className="lessonColumn">
+						{(this.state.sections).map(this.renderSections)}
+						{isAdmin ? addSection : null}
 					</ol>
 					<aside className="lessonMeta">
 						<section className="sideCard">
@@ -126,13 +153,7 @@ export default React.createClass({
 								<button className="primary">Show Starred Lessons</button>
 							</div>
 						</section>
-						<section className="sideCard">
-							<div className="card">
-								<h3>Members</h3>
-								<p><i className="chalk-users"></i>{this.state.members.length} members of the classroom</p>
-								<button onClick={this.openModal} className="success">Manage classroom members</button>
-							</div>
-						</section>
+						{isAdmin ||isInstructor ? members : null}
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<i className="chalk-close" onClick={this.closeModal}></i>
 							<h2>Add Members</h2>

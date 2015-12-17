@@ -22,7 +22,7 @@ export default React.createClass({
 	},
 	goToClass(e){
 		e.preventDefault();
-		this.history.pushState(null, `/classroom/${e.target.id}/edit`);
+		this.history.pushState(null, `/classroom/${e.target.id}`);
 	},
 	render() {
 		return (

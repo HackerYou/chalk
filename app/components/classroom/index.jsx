@@ -5,16 +5,20 @@ import Modal from '../modal/index.jsx';
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import AuthMixin from '../../services/authMixin.jsx';
 import coursesData from '../../services/courses.jsx';
+import userData from '../../services/user.jsx';
+import config from '../../services/config.jsx';
 
 export default React.createClass({
 	displayName: 'Classroom',
 	mixins: [AuthMixin,History],
 	getInitialState(){
 		return{
+			user: {},
 			course: {},
-			lessons: [],
+			sections: [],
 			isModalOpen: false, 
-			topics: []
+			topics: [],
+			members: []
 		}
 	},
 	openModal(){
@@ -26,133 +30,124 @@ export default React.createClass({
 		document.body.className = '';
 	},
 	componentWillMount(){
-		let id = this.props.params.courseId;
-		console.log(id)
-		coursesData.getCourseById(id).then(res=>{
-			console.log(res.course);
+		userData.getUser(config.getUserId()).then(res=>{
 			this.setState({
-				course: res.course
+				user: res.user
+			})
+		});
+		let id = this.props.params.courseId;
+		coursesData.getCourseById(id).then(res=>{
+			this.setState({
+				course: res.course,
+				sections: res.course.sections,
+				members: res.course.students
 			});
 		});
-		let data = require('../sample-data.js');
-		this.setState({
-			course: data.course,
-			lessons: data.course.lessons
-		});
-	},
-	componentDidMount(){
-		let topics = Object.keys(this.state.lessons).map((key) => {
-			return this.state.lessons[key].category;
-		});
-		let uniqueTopics = topics.reduce((a,b) => {
-			if (a.indexOf(b) < 0) a.push(b);
-			return a;
-		}, []);
-
-		this.setState({topics: uniqueTopics});
 	},
 	renderLessons(key, index){
-		return <LessonDetails key={index} index={index} courseId={this.state.course._id} details={this.state.course.lessons[index]} />
+		return <LessonDetails key={index} index={index} details={key} classroomId={this.props.params.courseId} canEdit={this.state.user.admin || this.state.user.instructor} />
 	},
 	renderTopics(key, index){
-		return <li key={index}>{this.state.topics[index]}</li>;
+		return <li key={index}>{this.state.sections[index].title}</li>;
+	},
+	createSection(e){
+		e.preventDefault();
+		coursesData.addSectionToCourse(this.props.params.templateId, {
+			title: this.refs.section.value
+		}).then(res=>{
+			this.setState({
+				course: res.course,
+				sections: res.course.sections
+			});
+		});	
+	},
+	createLesson(e){
+		let classroomId = this.props.params.courseId;
+		let sectionId = e.target.id;
+		this.history.pushState(null,`lesson/${classroomId}/${sectionId}/new`);
+	}, 
+	renderSections(key, index){
+		return <li key={index} className="lessonGroup">
+				<h3>{this.state.sections[index].title}</h3>
+				<div className="card">
+					<ol>
+						{(this.state.sections[index].lessons).map(this.renderLessons)}
+					</ol>
+				</div>
+				</li>
+	},
+	editCourse(e){
+		e.preventDefault();
+		this.history.pushState(null, `/classroom/${this.props.params.courseId}/edit`);
+	},
+	addUser(e){
+		e.preventDefault();
+		let courseId = this.props.params.courseId;
+		let emails = this.refs.students.value;
+		coursesData.addUserToCourse(courseId, emails).then(res=>{
+			let updatedCourse = res.course;
+			this.setState({
+				course: updatedCourse
+			});
+		});
+	},
+	renderMembers(obj, index){
+		return <li key={index}>{this.state.members[index]} Lastname email@email.com goes here <i className="chalk-remove"></i></li>
 	},
 	render() {
-		let links;
-		if (location.pathname == '/classroom'){
-			links = <div className="headerLinks"><Link className="linkBtn" to='classroom/edit'><button className="success"><i className="chalk-edit"></i>edit classroom</button></Link>
-				<Link className="linkBtn" to='dashboard'><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link></div>;
-		} else {
-			links = null;
-		}
-		let lessons = this.state.course.lessons;
+		// let lessons = this.state.course.lessons;
+		let isAdmin = this.state.user.admin;
+		let isInstructor = this.state.user.instructor;
+		let editButton = <button className="success" onClick={this.editCourse}><i className="chalk-remove"></i>edit course</button>;
+		
+		let members = <section className="sideCard">
+							<div className="card">
+								<h3>Members</h3>
+								<p><i className="chalk-users"></i>{this.state.members.length} members of the classroom</p>
+								<button onClick={this.openModal} className="success">Manage classroom members</button>
+							</div>
+						</section>;
 		return (
 			<div className="container full">
+				<Link to='/dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
+				{isAdmin ? editButton : null}
 				<header className="topContent">
-					{links}
 					<h1>{this.state.course.title}</h1>
 					<p className="title">Drag and drop to reorganize lessons</p>
 				</header>
 				<section className="lessonsWrap">
 					<ol className="lessonColumn">
-						<li className="lessonGroup">
-							<h3>Topic Section Title</h3>
-							<div className="card">	
-								<ol>
-									{(this.state.lessons).map(this.renderLessons)}
-									<li className="new-lessonRow">
-										<Link to="lesson/new" className="linkBtn"><button className="success">Create</button></Link>
-										<p className="lessonTitle">Create new lesson</p>
-									</li>
-								</ol>
-							</div>
-						</li>
-						<li>
-							<article className="lessonNew">
-								<ul>
-									<li className="new-lesson">
-										<h3>Create new lesson</h3>
-										<p>Plan lesson and choose new topics</p>
-										<Link to="lesson/new" className="linkBtn"><button className="success">Create</button></Link>
-									</li>
-								</ul>
-							</article>
-						</li>
+						{(this.state.sections).map(this.renderSections)}
 					</ol>
 					<aside className="lessonMeta">
 						<section className="sideCard">
 							<h3>Course Topics</h3>
 							<div className="card topicLegend">
 								<ul className="topicList">
-									{this.state.topics.map(this.renderTopics)}
+									{(this.state.sections).map(this.renderTopics)}
 								</ul>
 								<button className="primary">Show Starred Lessons</button>
 							</div>
 						</section>
-						<section className="sideCard">
-							<div className="card">
-								<h3>Members</h3>
-								<p><i className="chalk-users"></i>{this.state.course.students} members of the classroom</p>
-								<button onClick={this.openModal} className="success">Manage classroom members</button>
-							</div>
-						</section>
+						{isAdmin ||isInstructor ? members : null}
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<i className="chalk-close" onClick={this.closeModal}></i>
 							<h2>Add Members</h2>
 							<div className="membersModalWrap">
 								<div className="memberModalColumn memberModalForm">
-									<form action="">
+									<form onSubmit={this.addUser} action="">
 										<label htmlFor="search">Search By Name</label>
 										<input type="text" placeholder="Name" id="search"/>
 										<label htmlFor="email">Add by email<br /> <small>Separate emails by comma</small></label>
 										
-										<input type="text" id="email" placeholder="enter emails"/>
+										<input ref="students"  type="text" id="email" placeholder="enter emails"/>
 										<button className="success">Send Email</button>
 									</form>
 								</div>
 								<div className="memberModalColumn memberModalManage">
 									<h3>Classroom Members</h3>
 									<ul className="membersModalList">
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
-										<li>Firstname Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+										{(this.state.members).map(this.renderMembers)}
 									</ul>
 								</div>
 							</div>
