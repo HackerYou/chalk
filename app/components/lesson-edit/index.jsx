@@ -117,7 +117,7 @@ export default React.createClass({
 	render() {
 		return (
 			<div>
-				<Link className="linkBtn" to={`/course-templates/${this.props.params.classroomId}/edit`}><button className="primary"><i className="chalk-home"></i>back to classroom</button></Link>
+				<Link className="linkBtn" to={`/classroom/${this.props.params.classroomId}/edit`}><button className="primary"><i className="chalk-home"></i>back to classroom</button></Link>
 				<form action="" className="card">
 					<label htmlFor="lessonName">Lesson Name</label>
 					<input onChange={this.handleChange} type="text" placeholder="enter lesson name here" value={this.state.lesson.title} id="title"/>

@@ -132,6 +132,7 @@ export default React.createClass({
 		return (
 			<div className="container full">
 				<Link to='/dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
+				<Link to={`/classroom/${this.props.params.courseId}`} className="linkBtn"><button className="success"><i className="chalk-save"></i>save changes</button></Link>
 				{isAdmin ? deleteButton : null}
 				<header className="topContent">
 					<h1>{this.state.course.title}</h1>

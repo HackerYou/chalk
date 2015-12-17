@@ -45,7 +45,7 @@ export default React.createClass({
 		});
 	},
 	renderLessons(key, index){
-		return <LessonDetails key={index} index={index} details={key} classroomId={this.props.params.templateId} />
+		return <LessonDetails key={index} index={index} details={key} classroomId={this.props.params.courseId} canEdit={this.state.user.admin || this.state.user.instructor} />
 	},
 	renderTopics(key, index){
 		return <li key={index}>{this.state.sections[index].title}</li>;
