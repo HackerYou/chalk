@@ -6,6 +6,7 @@ import AuthMixin from '../../services/authMixin.jsx';
 import lessonData from '../../services/lesson.jsx';
 import userData from '../../services/user.jsx';
 import config from '../../services/config.jsx';
+import coursesData from '../../services/courses.jsx';
 
 
 
@@ -17,7 +18,8 @@ export default React.createClass({
 			user: {},
 			lesson: {},
 			topic: [],
-			isModalOpen: false
+			isModalOpen: false,
+			isTemplate: false
 		}
 	},
 	componentWillMount(){
@@ -26,6 +28,13 @@ export default React.createClass({
 				user: res.user
 			});
 		});
+
+		coursesData.getCourseById(this.props.params.classroomId).then(res=>{
+			this.setState({
+				isTemplate: res.course.template
+			});
+		});
+
 		let lessonId = this.props.params.lessonId;
 		lessonData.getLessonById(lessonId).then(res=>{
 			this.setState({
@@ -50,11 +59,15 @@ export default React.createClass({
 		let isInstructor = this.state.user.instructor;
 
 		let editButton = <Link className="linkBtn" to={`/lesson/${this.props.params.lessonId}/${this.props.params.classroomId}/edit`}><button className="success"><i className="chalk-edit"></i>edit lesson</button></Link>;
+
+		let templateLink = `/course-templates/${this.props.params.classroomId}/edit`;
+		let classroomLink = `/classroom/${this.props.params.classroomId}`
+
 		return (
 		<div className="full">
 				<header className="topContent container">
 				<div className="headerLinks">
-					<Link className="linkBtn" to={`/classroom/${this.props.params.classroomId}`}><button className="primary"><i className="chalk-home"></i>back to classroom</button></Link>
+					<Link className="linkBtn" to={this.state.isTemplate ? templateLink : classroomLink}><button className="primary"><i className="chalk-home"></i>{this.state.isTemplate ? 'back to template' : 'back to classroom'}</button></Link>
 					{isAdmin || isInstructor ? editButton : null}
 				</div>
 				<h1>{this.state.lesson.title}</h1>
@@ -63,7 +76,7 @@ export default React.createClass({
 					{(this.state.topic).map(this.renderTopics)}
 				</section>
 				<div className="container">
-					<Link className="linkBtn" to={`/classroom/${this.props.params.classroomId}`}><button className="primary"><i className="chalk-home"></i>back to classroom</button></Link>
+						<Link className="linkBtn" to={this.state.isTemplate ? templateLink : classroomLink}><button className="primary"><i className="chalk-home"></i>{this.state.isTemplate ? 'back to template' : 'back to classroom'}</button></Link>
 					{isAdmin || isInstructor ? editButton : null}
 
 				</div>

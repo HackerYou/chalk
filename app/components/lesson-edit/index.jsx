@@ -5,6 +5,7 @@ import Modal from '../modal/index.jsx';
 import lessonData from '../../services/lesson.jsx';
 import topicsData from '../../services/topic.jsx';
 import Markdown from 'react-remarkable';
+import coursesData from '../../services/courses.jsx';
 
 export default React.createClass({
 	displayName: 'EditLesson',
@@ -17,7 +18,8 @@ export default React.createClass({
 			topics: [],
 			selectedTopics:[],
 			selectValue: 'all',
-			uniqueTopics: []		}
+			uniqueTopics: [],
+			isTemplate: false		}
 	},
 	componentWillMount(){
 		lessonData.getLessonById(this.props.params.lessonId).then(res => {
@@ -26,6 +28,13 @@ export default React.createClass({
 				lessonTopics: res.lesson.topics
 			});
 		});
+
+		coursesData.getCourseById(this.props.params.classroomId).then(res=>{
+			this.setState({
+				isTemplate: res.course.template
+			});
+		});
+
 		topicsData.getTopics().then(res=>{
 			this.setState({
 				topics: res.topic
@@ -117,7 +126,7 @@ export default React.createClass({
 	render() {
 		return (
 			<div>
-				<Link className="linkBtn" to={`/classroom/${this.props.params.classroomId}/edit`}><button className="primary"><i className="chalk-home"></i>back to classroom</button></Link>
+				<Link className="linkBtn" to={this.state.isTemplate? `/course-templates/${this.props.params.classroomId}/edit` : `/classroom/${this.props.params.classroomId}/edit`}><button className="primary"><i className="chalk-home"></i>{this.state.isTemplate ? 'back to template' : 'back to classroom'}</button></Link>
 				<form action="" className="card">
 					<label htmlFor="lessonName">Lesson Name</label>
 					<input onChange={this.handleChange} type="text" placeholder="enter lesson name here" value={this.state.lesson.title} id="title"/>

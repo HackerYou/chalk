@@ -36,7 +36,7 @@ export default React.createClass({
 				<div className="lessonMeta">
 					<span>
 						<Link to={`/lesson/${this.props.details._id}/${this.props.classroomId}`}>view</Link>|
-						{this.props.canEdit ? editLink : null}
+						{this.props.canEdit || this.props.isTemplate ? editLink : null}
 					</span>
 					<i className={this.state.star ? 'chalk-star redLight' : 'chalk-star'} onClick={this.starLesson}></i>
 				</div>
