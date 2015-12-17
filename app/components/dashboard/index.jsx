@@ -16,32 +16,36 @@ export default React.createClass({
 		}
 	},
 	componentWillMount(){
-		
-
-		coursesData.getCourses().then(res=>{
-			let courses = (res.course).filter((obj)=>{
-				return obj.template === false;
-			});
-			this.setState({
-				courses: courses
-			});
-		});
-	},
-	componentDidMount(){
 		let user = userData.getUser(config.getUserId()).then(res=>{
-			this.setState({
-				user: res.user
-			});
-		});
-		
+			let isAdmin = res.user.admin;
+			console.log(isAdmin)
+			if (isAdmin) {
+				this.setState({
+					user: res.user
+				});
+				coursesData.getCourses().then(res=>{
+					let courses = (res.course).filter((obj)=>{
+						return obj.template === false;
+					});
+					this.setState({
+						courses: courses
+					});
+				});
+			} else {
+				this.setState({
+					user: res.user,
+					courses: res.user.courses
+				});
+				
+			}
+		});	
 	},
 	renderCourses(key, index){
 		return <Course key={index} index={index} details={this.state.courses[index]} />
 	},
 	render() {
-		return (
-			<div className="container full">
-				<header className="intro">
+		let isAdmin = this.state.user.admin;
+		let adminPanel = <header className="intro">
 					<h2>What would you like to do?</h2>
 					<div className='buttons'>
 						<Link className="linkBtn" to='/classroom/manage'><button className="primary">Classrooms</button></Link>
@@ -51,7 +55,10 @@ export default React.createClass({
 						<Link className="linkBtn" to='media'><button className="primary">Media</button></Link>
 						<Link className="linkBtn" to='members'><button className="primary">Members</button></Link>
 					</div>
-				</header>
+				</header>;
+		return (
+			<div className="container full">
+				{isAdmin ? adminPanel : null}
 				<div className="content">
 				<h1>Your Classrooms</h1>
 					<section className="dashWrap">

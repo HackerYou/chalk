@@ -133,6 +133,7 @@ ReactDom.render(
 		<Route path='/' component={App}>
 			<Route path='/dashboard' component={Dashboard}/>
 			<Route path='/classroom/manage' component={ManageClassrooms}/>
+			<Route path='/classroom/:courseId' component={Classroom}/>
 			<Route path='/classroom/:courseId/edit' component={EditClassroom} />
 			<Route path='/lesson/:lessonId/:classroomId' component={Lesson} />
 			<Route path='/lesson/:lessonId/:classroomId/edit' component={EditLesson}/>

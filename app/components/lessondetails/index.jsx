@@ -27,6 +27,7 @@ export default React.createClass({
 		//Favorite or remove fav
 	},
 	render() {
+		let editLink = <Link to={`/lesson/${this.props.details._id}/${this.props.classroomId}/edit`}>edit</Link>;
 		return (
 			<li className="lessonRow">
 				<Link to={`/lesson/${this.props.details._id}`} className="lessonInfo">
@@ -34,8 +35,8 @@ export default React.createClass({
 				</Link>
 				<div className="lessonMeta">
 					<span>
-						<Link to={`/lesson/${this.props.details._id}/${this.props.classroomId}`}>view</Link> |
-						<Link to={`/lesson/${this.props.details._id}/${this.props.classroomId}/edit`}>edit</Link>
+						<Link to={`/lesson/${this.props.details._id}/${this.props.classroomId}`}>view</Link>|
+						{this.props.canEdit || this.props.isTemplate ? editLink : null}
 					</span>
 					<i className={this.state.star ? 'chalk-star redLight' : 'chalk-star'} onClick={this.starLesson}></i>
 				</div>
