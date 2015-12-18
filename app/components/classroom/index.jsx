@@ -12,6 +12,7 @@ export default React.createClass({
 	displayName: 'Classroom',
 	mixins: [AuthMixin,History],
 	getInitialState(){
+		document.body.className = '';
 		return{
 			user: {},
 			course: {},
@@ -19,7 +20,8 @@ export default React.createClass({
 			isModalOpen: false, 
 			topics: [],
 			members: [],
-			originalCourse: {}
+			favorites: {},
+			showFavs: false,
 		}
 	},
 	openModal(){
@@ -50,7 +52,7 @@ export default React.createClass({
 		let userFavs = this.state.user.favorites;
 		let courseId = this.props.params.courseId;
 		let star = false;
-		if(userFavs[courseId]) {
+		if(userFavs && userFavs[courseId]) {
 			star = userFavs[courseId].lessons.filter((lesson) => {
 				return lesson._id === key._id
 			}).length > 0 ? true : false; 
@@ -108,24 +110,18 @@ export default React.createClass({
 	},
 	showFavs() {
 
-		let orgCourse = this.state.course;
-		let favs = this.state.user.favorites[orgCourse._id].lessons;
-
-		let fav = this.state.course.sections.filter((section) => {
-			section.lessons = section.lessons.filter((lesson) => {
-				let newLesson = favs.filter((favLesson) => {
-					return lesson._id === favLesson._id
-				});
-				if(newLesson.length > 0) {
-					return newLesson;
-				}
+		if(!this.state.showFavs) {
+			document.body.className = 'show-favs';
+			this.setState({
+				showFavs: true
 			});
-			return section;
-		});
-		this.setState({
-			course: fav,
-			originalCourse: this.state.course
-		});
+		}
+		else {
+			document.body.className = '';
+			this.setState({
+				showFavs: false
+			});
+		}
 
 	},
 	render() {

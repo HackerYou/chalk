@@ -23,3 +23,19 @@ input.nameInput {
 		margin: 0;
 	}
 }	
+
+.show-favs {
+	.lessonRow {
+		display: none;
+	}
+	.lessonRow.fav {
+		display: flex;
+	}
+}
+
+
+
+
+
+
+
