@@ -74,7 +74,7 @@ let App = React.createClass({
 		e.preventDefault();
 		if(this.refs.password.value === this.refs.confirm.value) {
 			let model = this.state.user;
-			console.log(this.refs.password.value);
+
 			model.firstName = this.refs.firstName.value;
 			model.lastName = this.refs.lastName.value;
 			model.password = this.refs.password.value;

@@ -63,6 +63,15 @@ export default {
 			}) 
 		});
 	},
+	removeUserFromCourse(courseId, userId){
+		return $.ajax({
+			url: `${config.getApiUrl()}/course/${courseId}/user/${userId}`,
+			method: 'DELETE',
+			headers: {
+				'x-access-token': config.getToken()
+			}
+		});
+	},
 	getTemplateById(id){
 		return $.ajax({
 			url: `${config.getApiUrl()}/course/template/${id}`,

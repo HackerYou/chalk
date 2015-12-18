@@ -123,10 +123,14 @@ export default React.createClass({
 		let classroomId = this.props.params.classroomId;
 		this.history.pushState(null,`course-templates/${classroomId}/edit`);
 	},
+	deleteLesson(e){
+		e.preventDefault();
+	},
 	render() {
 		return (
 			<div>
 				<Link className="linkBtn" to={this.state.isTemplate? `/course-templates/${this.props.params.classroomId}/edit` : `/classroom/${this.props.params.classroomId}/edit`}><button className="primary"><i className="chalk-home"></i>{this.state.isTemplate ? 'back to template' : 'back to classroom'}</button></Link>
+				<button onClick={this.deleteLesson} className="error">Delete Lesson</button>
 				<form action="" className="card">
 					<label htmlFor="lessonName">Lesson Name</label>
 					<input onChange={this.handleChange} type="text" placeholder="enter lesson name here" value={this.state.lesson.title} id="title"/>

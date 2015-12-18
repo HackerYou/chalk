@@ -27,6 +27,10 @@ export default React.createClass({
 								<label htmlFor={this.state.members[index]._id}>Instructor?</label>
 								<input onChange={this.setInstructor} type="checkbox" checked={this.state.members[index].instructor}id={this.state.members[index]._id} data-index={index}/>
 							</div>
+							<div className="inputBlock">
+								<label htmlFor={this.state.members[index]._id+'0'}>Admin?</label>
+								<input onChange={this.setAdmin} type="checkbox" checked={this.state.members[index].admin}id={this.state.members[index]._id+'0'} data-index={index}/>
+							</div>
 							<button onClick={this.deleteUser} data-user={this.state.members[index]._id}className="error">Remove User</button>
 						</li>
 	},
@@ -42,6 +46,21 @@ export default React.createClass({
 				members: newArray
 			})
 		});
+	},
+	setAdmin(e){
+		let index = e.target.dataset.index;
+		let model = this.state.members[index];
+		console.log(index, model)
+		e.target.checked ? model.admin = true : model.admin = false;
+		userData.updateUser(model).then(res=>{
+			// console.log(res.user)
+			let newArray = this.state.members;
+			newArray[index] = res.user;
+			this.setState({
+				members: newArray
+			})
+		});
+		console.log(this.state.members);
 	},
 	deleteUser(e){
 		e.preventDefault();
