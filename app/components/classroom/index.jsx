@@ -17,8 +17,9 @@ export default React.createClass({
 			course: {},
 			sections: [],
 			isModalOpen: false, 
-			topics: [], 
-			members: []
+			topics: [],
+			members: [],
+			originalCourse: {}
 		}
 	},
 	openModal(){
@@ -45,7 +46,16 @@ export default React.createClass({
 		});
 	},
 	renderLessons(key, index){
-		return <LessonDetails key={index} index={index} details={key} classroomId={this.props.params.courseId} canEdit={this.state.user.admin || this.state.user.instructor} />
+		//Loop favorites
+		let userFavs = this.state.user.favorites;
+		let courseId = this.props.params.courseId;
+		let star = false;
+		if(userFavs[courseId]) {
+			star = userFavs[courseId].lessons.filter((lesson) => {
+				return lesson._id === key._id
+			}).length > 0 ? true : false; 
+		}
+		return <LessonDetails key={index} index={index} details={key} classroomId={this.props.params.courseId} star={star} canEdit={this.state.user.admin || this.state.user.instructor} />
 	},
 	renderTopics(key, index){
 		return <li key={index}>{this.state.sections[index].title}</li>;
@@ -67,14 +77,14 @@ export default React.createClass({
 		this.history.pushState(null,`lesson/${classroomId}/${sectionId}/new`);
 	}, 
 	renderSections(key, index){
-		return <li key={index} className="lessonGroup">
+		return (<li key={index} className="lessonGroup">
 				<h3>{this.state.sections[index].title}</h3>
 				<div className="card">
 					<ol>
 						{(this.state.sections[index].lessons).map(this.renderLessons)}
 					</ol>
 				</div>
-				</li>
+			</li>);
 	},
 	editCourse(e){
 		e.preventDefault();
@@ -87,12 +97,36 @@ export default React.createClass({
 		e.preventDefault();
 		let users = this.refs.students.value;
 		coursesData.addUserToCourse(this.props.params.courseId, users).then(res=>{
-			console.log(res);
 			let students = res.course.students
 			this.setState({
 				members: students
 			});
 		});
+	},
+	renderMembers(obj, index){
+		return <li key={index}>{this.state.members[index]} Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+	},
+	showFavs() {
+
+		let orgCourse = this.state.course;
+		let favs = this.state.user.favorites[orgCourse._id].lessons;
+
+		let fav = this.state.course.sections.filter((section) => {
+			section.lessons = section.lessons.filter((lesson) => {
+				let newLesson = favs.filter((favLesson) => {
+					return lesson._id === favLesson._id
+				});
+				if(newLesson.length > 0) {
+					return newLesson;
+				}
+			});
+			return section;
+		});
+		this.setState({
+			course: fav,
+			originalCourse: this.state.course
+		});
+
 	},
 	render() {
 		// let lessons = this.state.course.lessons;
@@ -100,13 +134,13 @@ export default React.createClass({
 		let isInstructor = this.state.user.instructor;
 		let editButton = <button className="success" onClick={this.editCourse}><i className="chalk-remove"></i>edit course</button>;
 		
-		let members = <section className="sideCard">
-							<div className="card">
-								<h3>Members</h3>
-								<p><i className="chalk-users"></i>{this.state.members.length} members of the classroom</p>
-								<button onClick={this.openModal} className="success">Manage classroom members</button>
-							</div>
-						</section>;
+		let members = (<section className="sideCard">
+						<div className="card">
+							<h3>Members</h3>
+							<p><i className="chalk-users"></i>{this.state.members.length} members of the classroom</p>
+							<button onClick={this.openModal} className="success">Manage classroom members</button>
+						</div>
+					</section>);
 		return (
 			<div className="container full">
 				<Link to='/dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
@@ -126,7 +160,7 @@ export default React.createClass({
 								<ul className="topicList">
 									{(this.state.sections).map(this.renderTopics)}
 								</ul>
-								<button className="primary">Show Starred Lessons</button>
+								<button className="primary" onClick={this.showFavs}>Show Starred Lessons</button>
 							</div>
 						</section>
 						{isAdmin ||isInstructor ? members : null}
