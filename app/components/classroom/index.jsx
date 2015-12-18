@@ -54,7 +54,6 @@ export default React.createClass({
 			star = userFavs[courseId].lessons.filter((lesson) => {
 				return lesson._id === key._id
 			}).length > 0 ? true : false; 
-			console.log(star);
 		}
 		return <LessonDetails key={index} index={index} details={key} classroomId={this.props.params.courseId} star={star} canEdit={this.state.user.admin || this.state.user.instructor} />
 	},
@@ -98,7 +97,6 @@ export default React.createClass({
 		e.preventDefault();
 		let users = this.refs.students.value;
 		coursesData.addUserToCourse(this.props.params.courseId, users).then(res=>{
-			console.log(res);
 			let students = res.course.students
 			this.setState({
 				members: students
