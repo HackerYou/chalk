@@ -17,7 +17,7 @@ export default React.createClass({
 			course: {},
 			sections: [],
 			isModalOpen: false, 
-			topics: [],
+			topics: [], 
 			members: []
 		}
 	},
@@ -80,19 +80,19 @@ export default React.createClass({
 		e.preventDefault();
 		this.history.pushState(null, `/classroom/${this.props.params.courseId}/edit`);
 	},
+	renderMembers(obj, index){
+		return <li key={index}>{this.state.members[index].firstName +" "+ this.state.members[index].lastName +" - "+ this.state.members[index].email} <i className="chalk-remove"></i></li>
+	},
 	addUser(e){
 		e.preventDefault();
-		let courseId = this.props.params.courseId;
-		let emails = this.refs.students.value;
-		coursesData.addUserToCourse(courseId, emails).then(res=>{
-			let updatedCourse = res.course;
+		let users = this.refs.students.value;
+		coursesData.addUserToCourse(this.props.params.courseId, users).then(res=>{
+			console.log(res);
+			let students = res.course.students
 			this.setState({
-				course: updatedCourse
+				members: students
 			});
 		});
-	},
-	renderMembers(obj, index){
-		return <li key={index}>{this.state.members[index]} Lastname email@email.com goes here <i className="chalk-remove"></i></li>
 	},
 	render() {
 		// let lessons = this.state.course.lessons;
@@ -152,7 +152,7 @@ export default React.createClass({
 								</div>
 							</div>
 							<div className="modalBtns">
-								<button className="primary">Save Members</button>
+								<button onClick={this.closeModal} className="primary">Save Members</button>
 								<button onClick={this.closeModal}>Cancel</button>
 							</div>
 						</Modal>
