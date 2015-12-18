@@ -17,14 +17,9 @@ export default React.createClass({
 			course: {},
 			sections: [],
 			isModalOpen: false, 
-<<<<<<< HEAD
 			topics: [],
 			members: [],
 			originalCourse: {}
-=======
-			topics: [], 
-			members: []
->>>>>>> 677cf0c24579bf1a0ff6246991ae044af55f9fd7
 		}
 	},
 	openModal(){
