@@ -18,7 +18,6 @@ export default React.createClass({
 	componentWillMount(){
 		let user = userData.getUser(config.getUserId()).then(res=>{
 			let isAdmin = res.user.admin;
-			console.log(isAdmin)
 			if (isAdmin) {
 				this.setState({
 					user: res.user
