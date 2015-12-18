@@ -51,6 +51,15 @@ export default {
 				'x-access-token' : config.getToken()
 			}
 		});
+	},
+	deleteLesson(lessonId){
+		return $.ajax({
+			url: `${config.getApiUrl()}/lesson/${lessonId}`,
+			method: 'DELETE',
+			headers: {
+				'x-access-token': config.getToken()
+			}
+		});
 	}
 
 }

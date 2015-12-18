@@ -19,7 +19,8 @@ export default React.createClass({
 			selectedTopics:[],
 			selectValue: 'all',
 			uniqueTopics: [],
-			isTemplate: false		}
+			isTemplate: false		
+		}
 	},
 	componentWillMount(){
 		lessonData.getLessonById(this.props.params.lessonId).then(res => {
@@ -118,13 +119,26 @@ export default React.createClass({
 		//update title of lesson
 		lessonData.updateLesson(this.props.params.lessonId, {
 			title: this.state.lesson.title
-		}).then(res=>{console.log(res)});
+		});
 		// send user back to the classroom they were editing
 		let classroomId = this.props.params.classroomId;
-		this.history.pushState(null,`course-templates/${classroomId}/edit`);
+		if (this.state.isTemplate) {
+			this.history.pushState(null,`course-templates/${classroomId}/edit`);
+		} else {
+			this.history.pushState(null,`classroom/${classroomId}/edit`);
+		}
 	},
 	deleteLesson(e){
 		e.preventDefault();
+		lessonData.deleteLesson(this.props.params.lessonId).then(res=>{
+			let classroomId = this.props.params.classroomId;
+			if (this.state.isTemplate) {
+			this.history.pushState(null,`course-templates/${classroomId}/edit`);
+		} else {
+			this.history.pushState(null,`classroom/${classroomId}/edit`);
+		}
+		});
+		
 	},
 	render() {
 		return (

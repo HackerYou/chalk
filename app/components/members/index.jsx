@@ -60,7 +60,6 @@ export default React.createClass({
 				members: newArray
 			})
 		});
-		console.log(this.state.members);
 	},
 	deleteUser(e){
 		e.preventDefault();
