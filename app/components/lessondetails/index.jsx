@@ -28,7 +28,7 @@ export default React.createClass({
 	render() {
 		let editLink = <Link to={`/lesson/${this.props.details._id}/${this.props.classroomId}/edit`}>edit</Link>;
 		return (
-			<li className="lessonRow">
+			<li className={this.state.star || this.props.star ? 'lessonRow fav' : 'lessonRow'}>
 				<Link to={`/lesson/${this.props.details._id}`} className="lessonInfo">
 					<p className="lessonTitle">{this.props.details.title}</p>
 				</Link>
