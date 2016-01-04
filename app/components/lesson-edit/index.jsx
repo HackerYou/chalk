@@ -19,7 +19,8 @@ export default React.createClass({
 			selectedTopics:[],
 			selectValue: 'all',
 			uniqueTopics: [],
-			isTemplate: false		}
+			isTemplate: false		
+		}
 	},
 	componentWillMount(){
 		lessonData.getLessonById(this.props.params.lessonId).then(res => {
@@ -102,7 +103,7 @@ export default React.createClass({
 	displayTopics(key, index){
 		return <div key={index} className='lessonTopic'>
 						<h3>{this.state.lessonTopics[index].title}</h3>
-						<Markdown>{this.state.lessonTopics[index].body}</Markdown>
+						<Markdown options={{'html':true}}>{this.state.lessonTopics[index].body}</Markdown>
 						<button data-id={this.state.lessonTopics[index]._id} onClick={this.deleteTopic.bind(this, index)}className="error">Delete Topic</button>
 						</div>
 	},
@@ -118,10 +119,26 @@ export default React.createClass({
 		//update title of lesson
 		lessonData.updateLesson(this.props.params.lessonId, {
 			title: this.state.lesson.title
-		}).then(res=>{console.log(res)});
+		});
 		// send user back to the classroom they were editing
 		let classroomId = this.props.params.classroomId;
-		this.history.pushState(null,`course-templates/${classroomId}/edit`);
+		if (this.state.isTemplate) {
+			this.history.pushState(null,`course-templates/${classroomId}/edit`);
+		} else {
+			this.history.pushState(null,`classroom/${classroomId}/edit`);
+		}
+	},
+	deleteLesson(e){
+		e.preventDefault();
+		lessonData.deleteLesson(this.props.params.lessonId).then(res=>{
+			let classroomId = this.props.params.classroomId;
+			if (this.state.isTemplate) {
+			this.history.pushState(null,`course-templates/${classroomId}/edit`);
+		} else {
+			this.history.pushState(null,`classroom/${classroomId}/edit`);
+		}
+		});
+		
 	},
 	render() {
 		return (
@@ -138,7 +155,6 @@ export default React.createClass({
 						</div>
 					</form>
 				</div>
-
 				<div className="lessonView card">
 						<h2>{this.state.lesson.title}</h2>
 						<div>{(this.state.lessonTopics).map(this.displayTopics)}}</div>
