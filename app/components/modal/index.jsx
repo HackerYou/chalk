@@ -14,9 +14,7 @@ export default React.createClass({
 			return (
 				<ReactCSSTransitionGroup transitionName={this.props.transitionName} transitionEnterTimeout={200} transitionLeaveTimeout={200}>
 					<div className="modal">
-						<div className="modalBody card">
-							{this.props.children}
-						</div>
+						{this.props.children}
 					</div>
 				</ReactCSSTransitionGroup>
 				)

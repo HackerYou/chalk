@@ -149,9 +149,24 @@ select {
   }
 }
 
+.inlineFieldRow {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 15px;
+	.fieldGroup {
+		width: 50%;
+		input {
+			width: 100%;
+		}
+	}
+	.fieldGroup:not(:first-child) {
+		width: calc(50% - 10px);
+		margin-left: 10px;
+	}
+}
+
 .markdown{
   /*font-family: 'Inconsolata', monospace,serif;*/
   line-height: 1.7;
   min-height: 800px;
 }
-

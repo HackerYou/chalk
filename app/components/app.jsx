@@ -83,7 +83,7 @@ let App = React.createClass({
 					user: res.user,
 					isModalOpen: false
 				});
-			});	
+			});
 		}
 		else {
 			this.setState({
@@ -92,7 +92,7 @@ let App = React.createClass({
 		}
 	},
 	render() {
-		var header; 
+		var header;
 		if (location.pathname == '/'){
 			header = null;
 		} else{
@@ -105,21 +105,35 @@ let App = React.createClass({
 					{this.props.children || <Login />}
 				</section>
 				<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
-					<h2>Welcome to HackerYou!</h2>
-					<form action="" onSubmit={this.updateUser}>
-						<h3>Tell us a bit about yourself!</h3>
-						<label htmlFor="firstName">First Name</label>
-						<input type="text" placeholder="First Name" ref="firstName" id="firstName"/>
-						<label htmlFor="lastName">Last Name</label>
-						<input type="text" placeholder="Last Name" ref="lastName" id="lastName" />
-						<h3>Create New Password</h3>
-						{this.state.sign_up_error}
-						<label htmlFor="password">New Password</label>
-						<input type="password" placeholder="New Password" ref="password"id="password"/>
-						<label htmlFor="confirm">Confirm Password</label>
-						<input type="password" placeholder="Confirm Password" ref="confirm" id="confirm" />
-						<button>Let's Go!</button>	
-					</form>					
+					<div className="modalBody--small card loginModal">
+						<h2>Welcome to HackerYou!</h2>
+						<form action="" onSubmit={this.updateUser}>
+							<h3>Tell us a bit about yourself!</h3>
+							<div className="inlineFieldRow">
+								<div className="fieldGroup">
+									<label htmlFor="firstName">First Name</label>
+									<input type="text" placeholder="First Name" ref="firstName" id="firstName"/>
+								</div>
+								<div className="fieldGroup">
+									<label htmlFor="lastName">Last Name</label>
+									<input type="text" placeholder="Last Name" ref="lastName" id="lastName" />
+								</div>
+							</div>
+							<h4>Create New Password</h4>
+							{this.state.sign_up_error}
+							<div className="inlineFieldRow">
+								<div className="fieldGroup">
+									<label htmlFor="password">New Password</label>
+									<input type="password" placeholder="New Password" ref="password"id="password"/>
+								</div>
+								<div className="fieldGroup">
+									<label htmlFor="confirm">Confirm Password</label>
+									<input type="password" placeholder="Confirm Password" ref="confirm" id="confirm" />
+								</div>
+							</div>
+							<button className="button primary">Let's Go!</button>
+						</form>
+					</div>
 				</Modal>
 				<Footer />
 			</div>
@@ -150,5 +164,3 @@ ReactDom.render(
 		</Route>
 	</Router>)
 	, document.getElementById('app'));
-
-
