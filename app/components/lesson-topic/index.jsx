@@ -9,7 +9,7 @@ export default React.createClass({
 		return (
 			<div className="lessonTopic">
 				<h3>{this.props.details.title}</h3>
-				<Markdown>{(this.props.details.body)}</Markdown>
+				<Markdown options={{'html':true}}>{(this.props.details.body)}</Markdown>
 			</div>
 		)
 	}
