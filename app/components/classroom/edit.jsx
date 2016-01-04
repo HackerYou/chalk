@@ -155,29 +155,32 @@ export default React.createClass({
 						</section>
 						{isAdmin ||isInstructor ? members : null}
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
-							<i className="chalk-close" onClick={this.closeModal}></i>
-							<h2>Add Members</h2>
-							<div className="membersModalWrap">
-								<div className="memberModalColumn memberModalForm">
-									<form onSubmit={this.addUser} action="">
-										<label htmlFor="search">Search By Name</label>
-										<input type="text" placeholder="Name" id="search"/>
-										<label htmlFor="email">Add by email<br /> <small>Separate emails by comma</small></label>
+							<div className="modalBody card">
+								<i className="chalk-close" onClick={this.closeModal}></i>
+								<i className="chalk-close" onClick={this.closeModal}></i>
+								<h2>Add Members</h2>
+								<div className="membersModalWrap">
+									<div className="memberModalColumn memberModalForm">
+										<form onSubmit={this.addUser} action="">
+											<label htmlFor="search">Search By Name</label>
+											<input type="text" placeholder="Name" id="search"/>
+											<label htmlFor="email">Add by email<br /> <small>Separate emails by comma</small></label>
 
-										<input ref="students"  type="text" id="email" placeholder="enter emails"/>
-										<button className="success">Send Email</button>
-									</form>
+											<input ref="students"  type="text" id="email" placeholder="enter emails"/>
+											<button className="success">Send Email</button>
+										</form>
+									</div>
+									<div className="memberModalColumn memberModalManage">
+										<h3>Classroom Members</h3>
+										<ul className="membersModalList">
+											{(this.state.members).map(this.renderMembers)}
+										</ul>
+									</div>
 								</div>
-								<div className="memberModalColumn memberModalManage">
-									<h3>Classroom Members</h3>
-									<ul className="membersModalList">
-										{(this.state.members).map(this.renderMembers)}
-									</ul>
+								<div className="modalBtns">
+									<button className="primary">Save Members</button>
+									<button onClick={this.closeModal}>Cancel</button>
 								</div>
-							</div>
-							<div className="modalBtns">
-								<button className="primary">Save Members</button>
-								<button onClick={this.closeModal}>Cancel</button>
 							</div>
 						</Modal>
 					</aside>

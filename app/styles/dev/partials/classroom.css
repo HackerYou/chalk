@@ -32,8 +32,11 @@ section.lessonsWrap {
 				}
 			}
 		}
-		li:last-child:before {
+		li.new-lessonRow:before {
 			content: '';
+		}
+		li:last-child{
+			border-bottom: 0;
 		}
 	}
 }
@@ -75,6 +78,7 @@ li.lessonRow {
 		color: $grey;
 		span {
 			display: none;
+			margin-right: 10px;
 		}
 		a {
 			display: inline-block;

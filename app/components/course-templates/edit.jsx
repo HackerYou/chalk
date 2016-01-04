@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link , History} from 'react-router';
 import LessonDetails from '../lessondetails/index.jsx';
-import Modal from '../modal/index.jsx'; 
+import Modal from '../modal/index.jsx';
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import AuthMixin from '../../services/authMixin.jsx';
 import coursesData from '../../services/courses.jsx';
@@ -13,7 +13,7 @@ export default React.createClass({
 		return{
 			course: {},
 			sections: [],
-			isModalOpen: false, 
+			isModalOpen: false,
 			topics: []
 		}
 	},
@@ -48,7 +48,7 @@ export default React.createClass({
 				course: res.course,
 				sections: res.course.sections
 			});
-		});	
+		});
 	},
 	createLesson(e){
 		let classroomId = this.props.params.templateId;
@@ -130,6 +130,7 @@ export default React.createClass({
 							</div>
 						</section>
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
+							<div className="modalBody card">
 							<i className="chalk-close" onClick={this.closeModal}></i>
 							<h2>Add Members</h2>
 							<div className="membersModalWrap">
@@ -138,7 +139,7 @@ export default React.createClass({
 										<label htmlFor="search">Search By Name</label>
 										<input type="text" placeholder="Name" id="search"/>
 										<label htmlFor="email">Add by email<br /> <small>Separate emails by comma</small></label>
-										
+
 										<input type="text" id="email" placeholder="enter emails"/>
 										<button className="success">Send Email</button>
 									</form>
@@ -173,6 +174,7 @@ export default React.createClass({
 								<button className="primary">Save Members</button>
 								<button onClick={this.closeModal}>Cancel</button>
 							</div>
+						</div>
 						</Modal>
 					</aside>
 				</section>
