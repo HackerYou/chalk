@@ -103,7 +103,7 @@ export default React.createClass({
 	displayTopics(key, index){
 		return <div key={index} className='lessonTopic'>
 						<h3>{this.state.lessonTopics[index].title}</h3>
-						<Markdown>{this.state.lessonTopics[index].body}</Markdown>
+						<Markdown options={{'html':true}}>{this.state.lessonTopics[index].body}</Markdown>
 						<button data-id={this.state.lessonTopics[index]._id} onClick={this.deleteTopic.bind(this, index)}className="error">Delete Topic</button>
 						</div>
 	},
@@ -142,17 +142,6 @@ export default React.createClass({
 	},
 	render() {
 		return (
-<<<<<<< HEAD
-			<div>
-				<Link className="linkBtn" to={this.state.isTemplate? `/course-templates/${this.props.params.classroomId}/edit` : `/classroom/${this.props.params.classroomId}/edit`}><button className="primary"><i className="chalk-home"></i>{this.state.isTemplate ? 'back to template' : 'back to classroom'}</button></Link>
-				<button onClick={this.deleteLesson} className="error">Delete Lesson</button>
-				<form action="" className="card">
-					<label htmlFor="lessonName">Lesson Name</label>
-					<input onChange={this.handleChange} type="text" placeholder="enter lesson name here" value={this.state.lesson.title} id="title"/>
-					<button className="success" onClick={this.saveLesson}><i className="chalk-save"></i>Save Lesson</button>
-				</form>
-				<div className="card">
-=======
 			<div className="full">
 				<header className="container">
 					<Link className="linkBtn" to={this.state.isTemplate? `/course-templates/${this.props.params.classroomId}/edit` : `/classroom/${this.props.params.classroomId}/edit`}><button className="primary"><i className="chalk-home"></i>{this.state.isTemplate ? 'back to template' : 'back to classroom'}</button></Link>
@@ -166,9 +155,7 @@ export default React.createClass({
 						</div>
 					</form>
 				</div>
-
 				<div className="lessonView card">
->>>>>>> 1fba895149eec9c24ce965b43d85818539dfb73e
 						<h2>{this.state.lesson.title}</h2>
 						<div>{(this.state.lessonTopics).map(this.displayTopics)}}</div>
 						<div onClick={this.openModal}><h3><i className="chalk-add"></i>Add Topic</h3></div>
