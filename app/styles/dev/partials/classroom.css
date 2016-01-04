@@ -35,11 +35,12 @@ section.lessonsWrap {
 		li.new-lessonRow:before {
 			content: '';
 		}
-		li:last-child{
+		li:last-child {
 			border-bottom: 0;
 		}
 	}
 }
+
 
 	ol.lessonColumn .card {
 	padding: 10px 20px;

@@ -25,6 +25,15 @@ input.nameInput {
 }
 
 .show-favs {
+	.lessonGroup {
+		display: none;
+	}
+	.lessonGroup.favsGroup {
+		display: block;
+	}
+}
+
+.favsGroup {
 	.lessonRow {
 		display: none;
 	}
@@ -32,6 +41,7 @@ input.nameInput {
 		display: flex;
 	}
 }
+
 
 .lessonFormHeader {
 

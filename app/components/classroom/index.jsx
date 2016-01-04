@@ -51,7 +51,6 @@ export default React.createClass({
 		//Loop favorites
 		let userFavs = this.state.user.favorites;
 		let courseId = this.props.params.courseId;
-		// console.log(this.state.user.favorites[courseId].lessons);
 		let star = false;
 		if(userFavs && userFavs[courseId]) {
 			star = userFavs[courseId].lessons.filter((lesson) => {
@@ -82,7 +81,7 @@ export default React.createClass({
 	renderSections(key, index){
 		return (<li key={index} className="lessonGroup">
 				<h3>{this.state.sections[index].title}</h3>
-				<div className="card">
+				<div className="card lessonCard">
 					<ol className="lessonSection">
 						{(this.state.sections[index].lessons).map(this.renderLessons)}
 					</ol>
@@ -112,12 +111,14 @@ export default React.createClass({
 	showFavs() {
 		if(!this.state.showFavs) {
 			document.body.className = 'show-favs';
+			document.querySelector('.lessonGroup').className ="favsGroup lessonGroup";
 			this.setState({
 				showFavs: true
 			});
 		}
 		else {
 			document.body.className = '';
+			document.querySelector('.lessonGroup').className ="lessonGroup";
 			this.setState({
 				showFavs: false
 			});
