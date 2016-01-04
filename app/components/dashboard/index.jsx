@@ -59,7 +59,7 @@ export default React.createClass({
 					</div>
 				</header>;
 		var displayClass;
-		if (this.state.courses.length > 0) {
+		if (this.state.courses.length < 0) {
 			displayClass = this.renderEmpty()
 		} else {
 			displayClass = (this.state.courses).map(this.renderCourses)
