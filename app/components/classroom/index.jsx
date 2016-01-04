@@ -103,10 +103,22 @@ export default React.createClass({
 			this.setState({
 				members: students
 			});
+			console.log(this.state.members)
+		});
+
+	},
+	removeUser(e){
+		e.preventDefault();
+		let userId = e.target.id;
+		coursesData.removeUserFromCourse(this.props.params.courseId, userId).then(res=>{
+			let students = res.course.students
+			this.setState({
+				members: students
+			});
 		});
 	},
 	renderMembers(obj, index){
-		return <li key={index}>{this.state.members[index]} Lastname email@email.com goes here <i className="chalk-remove"></i></li>
+		return <li key={index}>{this.state.members[index].firstName +" "+ this.state.members[index].lastName +" - "+ this.state.members[index].email} <i id={this.state.members[index]._id} onClick={this.removeUser} className="chalk-remove"></i></li>
 	},
 	showFavs() {
 		if(!this.state.showFavs) {
