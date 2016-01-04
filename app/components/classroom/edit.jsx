@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link , History} from 'react-router';
 import LessonDetails from '../lessondetails/index.jsx';
-import Modal from '../modal/index.jsx'; 
+import Modal from '../modal/index.jsx';
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import AuthMixin from '../../services/authMixin.jsx';
 import coursesData from '../../services/courses.jsx';
@@ -16,7 +16,7 @@ export default React.createClass({
 			user: {},
 			course: {},
 			sections: [],
-			isModalOpen: false, 
+			isModalOpen: false,
 			topics: [],
 			members: []
 		}
@@ -59,13 +59,13 @@ export default React.createClass({
 				course: res.course,
 				sections: res.course.sections
 			});
-		});	
+		});
 	},
 	createLesson(e){
 		let classroomId = this.props.params.courseId;
 		let sectionId = e.target.id;
 		this.history.pushState(null,`lesson/${classroomId}/${sectionId}/new`);
-	}, 
+	},
 	renderSections(key, index){
 		let isAdmin = this.state.user.admin;
 		let newLesson = <li className="new-lessonRow">
@@ -108,7 +108,7 @@ export default React.createClass({
 		let isInstructor = this.state.user.instructor;
 
 		let deleteButton = <button className="error" onClick={this.deleteTemplate}><i className="chalk-remove"></i>delete course</button>;
-		
+
 		let members = <section className="sideCard">
 							<div className="card">
 								<h3>Members</h3>
@@ -163,7 +163,7 @@ export default React.createClass({
 										<label htmlFor="search">Search By Name</label>
 										<input type="text" placeholder="Name" id="search"/>
 										<label htmlFor="email">Add by email<br /> <small>Separate emails by comma</small></label>
-										
+
 										<input ref="students"  type="text" id="email" placeholder="enter emails"/>
 										<button className="success">Send Email</button>
 									</form>

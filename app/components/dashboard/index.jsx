@@ -35,12 +35,15 @@ export default React.createClass({
 					user: res.user,
 					courses: res.user.courses
 				});
-				
+
 			}
-		});	
+		});
 	},
 	renderCourses(key, index){
 		return <Course key={index} index={index} details={this.state.courses[index]} />
+	},
+	renderEmpty() {
+		return <p className="emptyState">You're not the member of any classrooms</p>
 	},
 	render() {
 		let isAdmin = this.state.user.admin;
@@ -55,13 +58,19 @@ export default React.createClass({
 						<Link className="linkBtn" to='members'><button className="primary">Members</button></Link>
 					</div>
 				</header>;
+		var displayClass;
+		if (this.state.courses.length > 0) {
+			displayClass = this.renderEmpty()
+		} else {
+			displayClass = (this.state.courses).map(this.renderCourses)
+		}
 		return (
 			<div className="container full">
 				{isAdmin ? adminPanel : null}
 				<div className="content">
 				<h1>Your Classrooms</h1>
 					<section className="dashWrap">
-					 {(this.state.courses).map(this.renderCourses)}
+						{displayClass}
 					</section>
 				</div>
 			</div>

@@ -193,6 +193,15 @@ p.muted {
   color: $grey;
 }
 
+p.emptyState {
+	width: 100%;
+	text-align: center;
+	color: $grey;
+	font-size: 2rem;
+	font-weight: 700;
+	font-family: $mediumFont;
+}
+
 ul, ol {
   font-size: 1.7rem;
 }
