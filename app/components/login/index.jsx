@@ -1,12 +1,12 @@
 import React from 'react';
 import Dashboard from '../dashboard/index.jsx';
-import { Link , History } from 'react-router';
+import { Link, History } from 'react-router';
 import Footer from '../footer/index.jsx';
 import auth from '../../services/authentication.jsx';
 import userData from '../../services/user.jsx';
 
 export default React.createClass({
-	displayName: 'Login',
+  displayName: 'Login',
 	mixins: [History],
 	getInitialState() {
 		return {
@@ -56,7 +56,7 @@ export default React.createClass({
 						<label htmlFor="email" className="inline">email</label>
 						<input type="text" ref="email" placeholder="Your Email"/>
 					</div>
-					<div className="fieldGroup">
+					<div className="fieldGroup--login">
 						<label htmlFor="password" className="inline">password</label>
 						<input type="password" ref="password" placeholder="Password"/>
 					</div>

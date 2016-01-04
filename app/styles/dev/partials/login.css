@@ -20,7 +20,7 @@
 	}
 }
 
-.fieldGroup {
+.fieldGroup--login {
 	position: relative;
 	margin-bottom: 1rem;
 	input[type="text"], input[type="password"] {

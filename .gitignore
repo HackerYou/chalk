@@ -1,3 +1,4 @@
 node_modules
 app/components/app.js
 app/styles/style.css
+.jshintrc
