@@ -56,7 +56,7 @@ export default React.createClass({
 						<label htmlFor="email" className="inline">email</label>
 						<input type="text" ref="email" placeholder="Your Email"/>
 					</div>
-					<div className="fieldGroup--login">
+					<div className="fieldGroup">
 						<label htmlFor="password" className="inline">password</label>
 						<input type="password" ref="password" placeholder="Password"/>
 					</div>
