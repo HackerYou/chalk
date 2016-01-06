@@ -6,6 +6,7 @@ import lessonData from '../../services/lesson.jsx';
 import topicsData from '../../services/topic.jsx';
 import Markdown from 'react-remarkable';
 import coursesData from '../../services/courses.jsx';
+import hljs from 'highlight.js';
 
 export default React.createClass({
 	displayName: 'EditLesson',
@@ -101,10 +102,23 @@ export default React.createClass({
 		});
 	},
 	displayTopics(key, index){
+		let hl = function (str, lang) {
+	    if (lang && hljs.getLanguage(lang)) {
+	      try {
+	        return hljs.highlight(lang, str).value;
+	      } catch (err) {}
+	    }
+	    try {
+	      return hljs.highlightAuto(str).value;
+	    } catch (err) {}
+	    return ''; // use external default escaping
+	  };
 		return <div key={index} className='lessonTopic'>
-						<h2 className="lessonTitle">{this.state.lessonTopics[index].title}</h2>
-						<Markdown options={{'html':true}}>{this.state.lessonTopics[index].body}</Markdown>
-						<button data-id={this.state.lessonTopics[index]._id} onClick={this.deleteTopic.bind(this, index)}className="error">Delete Topic</button>
+							<div className="deleteTopicBlock">
+								<p data-id={this.state.lessonTopics[index]._id} onClick={this.deleteTopic.bind(this, index)} className="deleteTopic"><i className="chalk-remove "></i>Remove {this.state.lessonTopics[index].title} from lesson</p>
+							</div>
+							<h2 className="lessonTitle">{this.state.lessonTopics[index].title}</h2>
+							<Markdown options={{'html':true, highlight: hl}}>{this.state.lessonTopics[index].body}</Markdown>
 						</div>
 	},
 	handleChange(e){
@@ -160,9 +174,9 @@ export default React.createClass({
 						<h2 className="lessonTitle">{this.state.lesson.title}</h2>
 					</div>
 				</div>
-				<div className="lessonView card">
-						<div>{(this.state.lessonTopics).map(this.displayTopics)}}</div>
-						<div onClick={this.openModal}><h3><i className="chalk-add"></i>Add Topic</h3></div>
+				<div className="lessonEditView card">
+						<div>{(this.state.lessonTopics).map(this.displayTopics)}</div>
+						<div onClick={this.openModal} className="topicAddBlock"><h3><i className="chalk-add"></i>Add Topic</h3></div>
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<div className="modalBody--small card">
 							<i className="chalk-close" onClick={this.closeModal}></i>

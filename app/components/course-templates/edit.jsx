@@ -57,9 +57,9 @@ export default React.createClass({
 	},
 	deleteSection(e){
 		// console.log(e.target.className);
-		coursesData.removeSectionFromCourse(this.props.params.templateId, e.target.className).then(res=>{
+		coursesData.removeSectionFromCourse(this.props.params.templateId, e.target.id).then(res=>{
 			let newSections = (this.state.sections).filter((obj)=>{
-				return obj._id !== e.target.className;
+				return obj._id !== e.target.id;
 			});
 			this.setState({
 				sections: newSections
@@ -70,7 +70,7 @@ export default React.createClass({
 	renderSections(key, index){
 		return <li key={index} className="lessonGroup">
 				<h3>{this.state.sections[index].title}</h3>
-				<button onClick={this.deleteSection} className={this.state.sections[index]._id}>delete section</button>
+				<button onClick={this.deleteSection} id={this.state.sections[index]._id} className="btn error sectionDelete">delete section</button>
 				<div className="card">
 					<ol>
 						{(this.state.sections[index].lessons).map(this.renderLessons)}

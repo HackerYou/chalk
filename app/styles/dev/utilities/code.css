@@ -1,10 +1,10 @@
 code {
-	/*background: $codeGrey;*/
-	/*border: 1px solid $grey;*/
-	border-radius: 2px;
+	background: #231F20;
+	font-size: 12px;
 	font-size: 1.2rem;
-	color: #61665B;
-	padding: 5px;
+	padding: 3px 7px 5px;
+	color: #ccc;
+	border-radius: 2px;
 }
 
 pre > code {
