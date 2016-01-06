@@ -15,10 +15,11 @@ export default React.createClass({
 		return {
 			topic: [],
 			files: [],
-			copied: false, 
-			category: 'HTML & CSS'
+			copied: false,
+			category: 'HTML & CSS',
+			saved: false
 		}
-	}, 
+	},
 	componentWillMount(){
 		topicData.getTopicById(this.props.params.topicId).then(data => {
 			this.setState({
@@ -28,7 +29,7 @@ export default React.createClass({
 	},
 	onDrop(files){
 		media.uploadFile(files).then(res => {
-			this.setState({files: this.state.files.concat(res.media)});	
+			this.setState({files: this.state.files.concat(res.media)});
 		});
 
 	},
@@ -41,8 +42,12 @@ export default React.createClass({
 			body : this.refs.body.value,
 			"time": this.refs.time.value
 		}).then(res => {
-			this.history.pushState(null,`/topics`);
+			this.setState({saved: true});
 		});
+		// .then(res => {
+		// 	this.history.pushState(null,`/topics`);
+		// 	this.setState
+		// });
 	},
 	deleteTopic(e){
 		e.preventDefault();
@@ -56,8 +61,11 @@ export default React.createClass({
 		this.setState({
 			topic: stateObj
 		});
-	},	
+	},
 	render() {
+		let savedText = (
+			<p><small>Saved</small></p>
+		);
 		return (
 			<div>
 				<div className="container">
@@ -94,6 +102,7 @@ export default React.createClass({
 							<Link className="linkBtn" to="topics">
 								<button className="error">Cancel</button>
 							</Link>
+							{this.state.saved ? savedText : null}
 						</div>
 						<div className="card topicRow">
 							<textarea className="markdown" onKeyDown={TabMixin.keyHandler} value={this.state.topic.body} ref="body" name="" id="body" onChange={this.handleChange}>
@@ -103,12 +112,12 @@ export default React.createClass({
 							<Dropzone onDrop={this.onDrop} className="dropZone">
 								<p>Drag and drop files here or click to select files to upload</p>
 							</Dropzone>
-							<ul className="uploadedFiles">{this.state.files.map((file, index) => 
+							<ul className="uploadedFiles">{this.state.files.map((file, index) =>
 								<li key={index} className="mediaRow">
 									<p className="mediaIcon"><i className="chalk-doc"></i>{file.name}</p>
 									<div className="mediaLink">
 										<input type="text" defaultValue={file.path}/>
-										<CopyToClipboard text={file.name} onCopy={() => this.setState({copied: true})}>
+										<CopyToClipboard text={file.path} onCopy={() => this.setState({copied: true})}>
 											<button className="success mediaCopy"><i className="chalk-copy"></i></button>
 										</CopyToClipboard>
 									</div>
