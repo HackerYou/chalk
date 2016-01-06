@@ -11,8 +11,10 @@ export default React.createClass({
 	render(){
 		return (
 			<article className="card topicCard" onClick={this.editTopic}>
-				<h3>{this.props.details.title}</h3>
-				<p className="red">{this.props.details.category}</p>
+				<section className="topicDetails">
+					<h4>{this.props.details.title}</h4>
+					<p className="red">{this.props.details.category}</p>
+				</section>
 				<footer className="classCardMeta">
 					<button className="primary">View/Edit</button>
 				</footer>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link , History } from 'react-router';
 import Topic from '../topic/index.jsx';
+import NewTopic from '../topic/new.jsx';
 import AuthMixin from '../../services/authMixin.jsx';
 import topicData from '../../services/topic.jsx';
 
@@ -9,9 +10,9 @@ export default React.createClass({
 	mixins: [AuthMixin, History],
 	getInitialState(){
 		return {
-			topics: [] 
+			topics: []
 		}
-	}, 
+	},
 	componentWillMount(){
 		topicData.getTopics().then(res => {
 			console.log(res.topic)
@@ -28,17 +29,15 @@ export default React.createClass({
 					<header className="topContent">
 					<Link className="linkBtn" to="dashboard"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
 					</header>
-					<h1>Manage Topics</h1>
-					<header className="topContent">
-					<Link className="linkBtn" to="/topic/new"><button className="success"><i className="chalk-edit"></i>Create New Topic</button></Link>
-					</header>
+					<h1>Topics</h1>
 				</div>
-				<section className="full card detailsForm topicsForm">
+				<NewTopic />
+				<section className="full card topicsForm">
 					<form action="">
 						<div className="fieldRow">
 							<label className="inline largeLabel" htmlFor="search">Search</label>
 							<input type="search" placeholder="Search for a topic"/>
-							<label htmlFor="category" className="inline largeLabel">Category</label>
+							<label htmlFor="category" className="inline largeLabel">Filter by category</label>
 							<select name="category" id="category">
 								<option value="html">HTML</option>
 								<option value="css">CSS</option>

@@ -17,7 +17,7 @@ kbd {
 
 pre {
 	background: $codeGrey;
-	border: 1px solid $grey;
+	border: 1px solid $greyLight;
 	font-size: 1.3rem;
 	color: $grey;
 	padding: 9px;
