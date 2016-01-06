@@ -28,8 +28,7 @@ export default React.createClass({
 	},
 	onDrop(files){
 		media.uploadFile(files).then(res => {
-			console.log(files)
-			this.setState({files: this.state.files.concat(res.media)});	
+			this.setState({files: this.state.files.concat(files)});	
 		});
 
 	},
@@ -52,7 +51,6 @@ export default React.createClass({
 		});
 	},
 	handleChange(e){
-		console.log(e.target.id +"="+e.target.value)
 		let stateObj = this.state.topic;
 		stateObj[e.target.id] = e.target.value;
 		this.setState({
@@ -110,7 +108,7 @@ export default React.createClass({
 									<p className="mediaIcon"><i className="chalk-doc"></i>{file.name}</p>
 									<div className="mediaLink">
 										<input type="text" defaultValue={file.path}/>
-										<CopyToClipboard text={file.path} onCopy={() => this.setState({copied: true})}>
+										<CopyToClipboard text={file.name} onCopy={() => this.setState({copied: true})}>
 											<button className="success mediaCopy"><i className="chalk-copy"></i></button>
 										</CopyToClipboard>
 									</div>
