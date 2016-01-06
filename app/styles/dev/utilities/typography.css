@@ -291,3 +291,35 @@ i[class^="chalk-"] {
 .chalk-star:before {
   content: "\e914";
 }
+
+
+.lessonTopic {
+	h1, h2, h3, h4, h5, h6 {
+	  line-height: 1.43;
+	  margin-top: 1.3em;
+	  margin-bottom: 0.8em;
+		padding-bottom: 0.8rem;
+	 	border-bottom: 1px solid rgba(0,0,0,.125);
+	}
+	h2.lessonTitle {
+		margin-top: 0;
+		margin-bottom: 0;
+		border-bottom: 0;
+	}
+	h2 ~ div span h3 {
+		margin-top: 1.5rem;
+	}
+	p {
+		color: #333;
+		line-height: 1.7;
+		margin: 1rem 0 2rem;
+
+	font-family: $regularFont;
+	font-weight: 400;
+		letter-spacing: 0.01rem;
+	}
+	pre {
+		margin-bottom: 2rem;
+	}
+
+}

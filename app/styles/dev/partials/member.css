@@ -1,5 +1,5 @@
 .memberWrap {
-	padding: 20px 25px 20px 25px;
+	padding: 10px 25px 10px 25px;
 }
 
 ul.memberList {
@@ -9,7 +9,7 @@ ul.memberList {
 	li {
 		lost-flex-container: row;
 		padding: 25px 0;
-		align-items: baseline;
+		align-items: center;
 		border-bottom: 1px solid $border;
 		p {
 			margin: 0;
@@ -21,10 +21,19 @@ ul.memberList {
 			border-bottom: 0;
 		}
 		.inputBlock {
-			lost-flex-container: row;
+			/*lost-flex-container: row;*/
 			align-items: baseline;
+			.fieldRow {
+				margin-bottom: 0;
+				lost-flex-container: row;
+				align-items: center;
+				input {
+					height: 1.5rem;
+				}
+			}
 			label {
 				margin-right: 10px;
+				margin-bottom: 0;
 			}
 		}
 	}

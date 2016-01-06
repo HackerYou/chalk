@@ -19,7 +19,7 @@ export default React.createClass({
 			selectedTopics:[],
 			selectValue: 'all',
 			uniqueTopics: [],
-			isTemplate: false		
+			isTemplate: false
 		}
 	},
 	componentWillMount(){
@@ -102,7 +102,7 @@ export default React.createClass({
 	},
 	displayTopics(key, index){
 		return <div key={index} className='lessonTopic'>
-						<h3>{this.state.lessonTopics[index].title}</h3>
+						<h2 className="lessonTitle">{this.state.lessonTopics[index].title}</h2>
 						<Markdown options={{'html':true}}>{this.state.lessonTopics[index].body}</Markdown>
 						<button data-id={this.state.lessonTopics[index]._id} onClick={this.deleteTopic.bind(this, index)}className="error">Delete Topic</button>
 						</div>
@@ -138,7 +138,7 @@ export default React.createClass({
 			this.history.pushState(null,`classroom/${classroomId}/edit`);
 		}
 		});
-		
+
 	},
 	render() {
 		return (
@@ -155,8 +155,12 @@ export default React.createClass({
 						</div>
 					</form>
 				</div>
+				<div className="container">
+					<div className="lessonTopic">
+						<h2 className="lessonTitle">{this.state.lesson.title}</h2>
+					</div>
+				</div>
 				<div className="lessonView card">
-						<h2>{this.state.lesson.title}</h2>
 						<div>{(this.state.lessonTopics).map(this.displayTopics)}}</div>
 						<div onClick={this.openModal}><h3><i className="chalk-add"></i>Add Topic</h3></div>
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>

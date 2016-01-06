@@ -23,15 +23,19 @@ export default React.createClass({
 							<p><strong>{this.state.members[index].firstName + ' ' + this.state.members[index].lastName}</strong></p>
 							<p>{this.state.members[index].email}</p>
 							<p>{this.state.members[index].courses.length} Classrooms</p>
+
 							<div className="inputBlock">
-								<label htmlFor={this.state.members[index]._id}>Instructor?</label>
-								<input onChange={this.setInstructor} type="checkbox" checked={this.state.members[index].instructor}id={this.state.members[index]._id} data-index={index}/>
+								<div className=" fieldRow">
+									<label htmlFor={this.state.members[index]._id}>Instructor?</label>
+									<input onChange={this.setInstructor} type="checkbox" checked={this.state.members[index].instructor}id={this.state.members[index]._id} data-index={index}/>
+								</div>
+								<div className="fieldRow">
+									<label htmlFor={this.state.members[index]._id+'0'}>Admin?</label>
+									<input onChange={this.setAdmin} type="checkbox" checked={this.state.members[index].admin}id={this.state.members[index]._id+'0'} data-index={index}/>
+								</div>
 							</div>
-							<div className="inputBlock">
-								<label htmlFor={this.state.members[index]._id+'0'}>Admin?</label>
-								<input onChange={this.setAdmin} type="checkbox" checked={this.state.members[index].admin}id={this.state.members[index]._id+'0'} data-index={index}/>
-							</div>
-							<button onClick={this.deleteUser} data-user={this.state.members[index]._id}className="error">Remove User</button>
+							<p>Remove User? <i className="chalk-remove red" onClick={this.deleteUser} data-user={this.state.members[index]._id}></i></p>
+							
 						</li>
 	},
 	setInstructor(e){
@@ -65,7 +69,7 @@ export default React.createClass({
 		e.preventDefault();
 		let id = e.target.dataset.user;
 		userData.deleteUser(id).then(res=>{
-			let removeIndex = (this.state.members).map((obj, index)=>{ 
+			let removeIndex = (this.state.members).map((obj, index)=>{
 				//get index of the user ID
 				return obj._id;
 			}).indexOf(id);
@@ -100,12 +104,6 @@ export default React.createClass({
 					<h1>Manage Members</h1>
 				</div>
 				<section className="full card detailsForm">
-					<form action="">
-						<label htmlFor="search" className="inline largeLabel">Search by name or email</label>
-						<input type="text" id="search"/>
-					</form>
-				</section>
-				<section className="full card detailsForm">
 					<form onSubmit={this.addUser} action="" className="addMembersForm">
 						<label htmlFor="add" className="inline largeLabel">Add by email</label>
 						<div className="inlineRow">
@@ -113,6 +111,12 @@ export default React.createClass({
 							<small>Seperate emails by comma</small>
 						</div>
 						<button onClick={this.addUser} className="success">Add User</button>
+					</form>
+				</section>
+				<section className="full card detailsForm">
+					<form action="">
+						<label htmlFor="search" className="inline largeLabel">Search by name or email</label>
+						<input type="text" id="search"/>
 					</form>
 				</section>
 				<div className="container card memberWrap">
