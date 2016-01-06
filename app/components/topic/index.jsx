@@ -15,9 +15,6 @@ export default React.createClass({
 					<h4>{this.props.details.title}</h4>
 					<p className="red">{this.props.details.category}</p>
 				</section>
-				<footer className="classCardMeta">
-					<button className="primary">View/Edit</button>
-				</footer>
 			</article>
 		)
 	}

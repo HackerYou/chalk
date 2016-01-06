@@ -32,12 +32,14 @@ export default React.createClass({
 					<h1>Topics</h1>
 				</div>
 				<NewTopic />
+
 				<section className="full card topicsForm">
+
 					<form action="">
 						<div className="fieldRow">
-							<label className="inline largeLabel" htmlFor="search">Search</label>
+							<label className="inline" htmlFor="search">Search by name</label>
 							<input type="search" placeholder="Search for a topic"/>
-							<label htmlFor="category" className="inline largeLabel">Filter by category</label>
+							<label htmlFor="category" className="inline">Filter by category</label>
 							<select name="category" id="category">
 								<option value="html">HTML</option>
 								<option value="css">CSS</option>

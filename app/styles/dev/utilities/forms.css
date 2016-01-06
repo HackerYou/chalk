@@ -23,6 +23,18 @@ label {
   }
 }
 
+.datepicker__input-container {
+	display: inline-block;
+  /*margin-bottom: 1.7rem;*/
+	.datepicker__input {
+		border-radius: 0;
+		padding: 1.7rem 1.3rem;
+	  min-width: 27rem;
+	  font-size: 1.5rem;
+	}
+}
+
+
 input[type=text],
 input[type=date],
 input[type=datetime],
