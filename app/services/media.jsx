@@ -28,7 +28,10 @@ export default {
 			method: 'POST',
 			data: data,
 			processData: false,
-			contentType: false
+			contentType: false,
+			headers: {
+				'x-access-token' : config.getToken()
+			}
 		});
 	}
 };
