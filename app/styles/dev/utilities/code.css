@@ -1,10 +1,14 @@
 code {
-	background: $codeGrey;
-	border: 1px solid $grey;
+	/*background: $codeGrey;*/
+	/*border: 1px solid $grey;*/
 	border-radius: 2px;
 	font-size: 1.2rem;
 	color: #61665B;
 	padding: 5px;
+}
+
+pre > code {
+	font-size: 1.4rem;
 }
 
 kbd {
@@ -16,11 +20,10 @@ kbd {
 }
 
 pre {
-	background: $codeGrey;
-	border: 1px solid $greyLight;
-	font-size: 1.3rem;
+	/*background: #23241f;*/
+	font-size: 1.5rem;
 	color: $grey;
-	padding: 9px;
+	padding: 10px;
 	line-height: 1.5;
 	border-radius: 2px;
 	margin: 0;

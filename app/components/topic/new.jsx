@@ -20,7 +20,7 @@ export default React.createClass({
 				<section className="full card detailsForm topicsForm">
 				<form action="" onSubmit={this.createTopic}>
 					<div className="fieldRow">
-						<label htmlFor="name" className="inline largeLabel">Create New Topic</label>
+						<label htmlFor="name" className="inline largeLabel">Create new topic</label>
 						<input type="text" placeholder="Topic Name" ref="name" />
 						<button className="success">Create Topic</button>
 					</div>

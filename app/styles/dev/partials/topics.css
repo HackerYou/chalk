@@ -1,19 +1,20 @@
 section.topicsWrap {
-	margin-bottom: 5rem;
+	padding-top: 3rem;
+	lost-flex-container: row;
 	.topicCard {
+		lost-waffle: 1/3;
 		cursor: pointer;
 		lost-flex-container: row;
-		justify-content: space-between;
 		align-items: center;
-		margin: 10px 0;
-		padding: 15px 35px 15px 35px;
-		section.topicDetails {
-			width: 50%;
-		}
+		margin: 0;
+		padding: 25px;
+		transition: all 0.2s;
 		h4, p {
 			margin-bottom: 0;
 		}
-
+		&:hover {
+			box-shadow: 0 3px 7px 0 rgba(0,0,0,.05)
+		}
 		footer.classCardMeta {
 
 		}
