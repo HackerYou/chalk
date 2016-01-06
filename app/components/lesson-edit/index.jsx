@@ -73,7 +73,6 @@ export default React.createClass({
 	},
 	renderTopics(key, index){
 		return <option key={index} value={this.state.selectedTopics[index]._id}>{this.state.selectedTopics[index].title}</option>
-
 	},
 	renderTopicCategories(key, index){
 		return <option key={index} value={this.state.uniqueTopics[index]}>{this.state.uniqueTopics[index]}</option>
@@ -101,6 +100,9 @@ export default React.createClass({
 			this.setState({lessonTopics: updatedLessons});
 		});
 	},
+	editTopic(index){
+		this.history.pushState(null,`/topic/${index}/edit`);
+	},
 	displayTopics(key, index){
 		let hl = function (str, lang) {
 	    if (lang && hljs.getLanguage(lang)) {
@@ -115,7 +117,8 @@ export default React.createClass({
 	  };
 		return <div key={index} className='lessonTopic'>
 							<div className="deleteTopicBlock">
-								<p data-id={this.state.lessonTopics[index]._id} onClick={this.deleteTopic.bind(this, index)} className="deleteTopic"><i className="chalk-remove "></i>Remove {this.state.lessonTopics[index].title} from lesson</p>
+								<p data-id={this.state.lessonTopics[index]._id} onClick={this.deleteTopic.bind(this, index)} className="deleteTopic"><i className="chalk-remove "></i>Remove {this.state.lessonTopics[index].title}</p>
+								<p data-id={this.state.lessonTopics[index]._id} onClick={this.editTopic.bind(this, this.state.lessonTopics[index]._id)} className="editTopic"><i className="chalk-edit "></i>Edit {this.state.lessonTopics[index].title}</p>
 							</div>
 							<h2 className="lessonTitle">{this.state.lessonTopics[index].title}</h2>
 							<Markdown options={{'html':true, highlight: hl}}>{this.state.lessonTopics[index].body}</Markdown>
