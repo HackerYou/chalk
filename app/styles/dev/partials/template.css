@@ -17,3 +17,7 @@ section.templateWrap {
 		}
 	}
 }
+
+button.sectionDelete {
+	margin-bottom: 2rem;
+}
