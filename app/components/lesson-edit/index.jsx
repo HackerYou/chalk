@@ -133,10 +133,10 @@ export default React.createClass({
 		lessonData.deleteLesson(this.props.params.lessonId).then(res=>{
 			let classroomId = this.props.params.classroomId;
 			if (this.state.isTemplate) {
-			this.history.pushState(null,`course-templates/${classroomId}/edit`);
-		} else {
-			this.history.pushState(null,`classroom/${classroomId}/edit`);
-		}
+				this.history.pushState(null,`course-templates/${classroomId}/edit`);
+			} else {
+				this.history.pushState(null,`classroom/${classroomId}/edit`);
+			}
 		});
 
 	},
