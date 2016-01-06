@@ -28,7 +28,7 @@ export default React.createClass({
 	},
 	onDrop(files){
 		media.uploadFile(files).then(res => {
-			this.setState({files: this.state.files.concat(files)});	
+			this.setState({files: this.state.files.concat(res.media)});	
 		});
 
 	},
