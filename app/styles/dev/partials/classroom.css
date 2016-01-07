@@ -124,6 +124,11 @@ aside.lessonMeta {
 		font-weight: 700;
 		font-family: $headerFont;
 		border-bottom: 1px solid $border;
+		a {
+			text-decoration: none;
+			border: none;
+			color: $black;
+		}
 		li.active {
 			color: $red;
 			position: relative;

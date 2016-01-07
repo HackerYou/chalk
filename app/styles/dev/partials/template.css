@@ -18,6 +18,17 @@ section.templateWrap {
 	}
 }
 
-button.sectionDelete {
-	margin-bottom: 2rem;
+.lessonGroupTop {
+	lost-flex-container: row;
+	align-items: center;
+	margin-bottom: 1rem;
+	h3 {
+		margin-bottom: 0;
+		max-width: 70%;
+	}
+	p.deleteSection {
+		font-size: 1.3rem;
+		margin: 0 0 0 1rem;
+		cursor: pointer;
+	}
 }
