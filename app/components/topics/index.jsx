@@ -28,6 +28,7 @@ export default React.createClass({
 				<div className="container">
 					<header className="topContent">
 					<Link className="linkBtn" to="dashboard"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
+					<Link className="linkBtn" to='course-templates'><button className="primary">Course Templates</button></Link>
 					</header>
 					<h1>Topics</h1>
 				</div>
