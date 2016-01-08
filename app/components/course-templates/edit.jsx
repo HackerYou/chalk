@@ -97,7 +97,6 @@ export default React.createClass({
 				<button className="error" onClick={this.deleteTemplate}><i className="chalk-remove"></i>delete template</button>
 				<header className="topContent">
 					<h1>{this.state.course.title}</h1>
-
 				</header>
 				<section className="lessonsWrap">
 					<ol className="lessonColumn">

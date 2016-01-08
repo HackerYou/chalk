@@ -172,6 +172,7 @@ a:enter {
 
 .red { color: $red; }
 .green { color: $green; }
+.blue {color: $blue; }
 .grey { color: $grey; }
 .redLight { color: $redLight;}
 

@@ -17,6 +17,7 @@ body {
 @import 'utilities/buttons.css';
 @import 'utilities/forms.css';
 @import 'utilities/highlight.css';
+@import 'utilities/notifications.css';
 @import 'styleGuide.css';
 
 .wrapper {
