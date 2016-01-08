@@ -97,6 +97,11 @@ li.new-lessonRow {
 	lost-flex-container: row;
 	align-items: center;
 	/*padding: 25px 10px;*/
+	p {
+		cursor: pointer;
+		font-size: 1.4rem;
+		font-family: $baseFont;
+	}
 }
 
 article.lessonNew {

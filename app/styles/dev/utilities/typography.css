@@ -131,7 +131,7 @@ strong {
 em {
   font-family: $regularFont;
   font-weight: 400;
-  font-style: normal;
+  /*font-style: normal;*/
   letter-spacing: 0;
 }
 
@@ -294,6 +294,12 @@ i[class^="chalk-"] {
 
 
 .lessonTopic {
+	font-size: 1.7rem;
+  line-height: 1.5;
+  letter-spacing: 0.05rem;
+	font-family: $regularFont;
+	font-weight: 400;
+  margin: 0 0 1.7rem 0;
 	h1, h2, h3, h4, h5, h6 {
 	  line-height: 1.43;
 	  margin-top: 1.3em;
@@ -320,5 +326,9 @@ i[class^="chalk-"] {
 	pre {
 		margin-bottom: 2rem;
 	}
-	
+
+	img {
+		max-width: 100%;
+	}
+
 }

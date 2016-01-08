@@ -78,8 +78,7 @@ export default React.createClass({
 					<ol>
 						{(this.state.sections[index].lessons).map(this.renderLessons)}
 						<li className="new-lessonRow">
-							<button id={this.state.sections[index]._id} onClick={this.createLesson}className="success">Create</button>
-							<p className="lessonTitle">Create new lesson</p>
+							<p onClick={this.createLesson} id={this.state.sections[index]._id} className="lessonTitle">+ Add new lesson</p>
 						</li>
 					</ol>
 				</div>

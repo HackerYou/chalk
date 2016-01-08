@@ -209,6 +209,7 @@ export default React.createClass({
 						</div>
 						</Modal>
 					</div>
+					<button className="success" onClick={this.saveLesson}><i className="chalk-save"></i>Save Lesson</button>
 				</div>
 		)
 	}

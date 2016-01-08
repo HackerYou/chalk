@@ -57,7 +57,7 @@
   color: #cc99cc;
 }
 
-.hljs, code[class^="language-"] {
+.hljs, pre > code[class^="language-"] {
   display: block;
   overflow-x: auto;
   background: black;
