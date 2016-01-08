@@ -1,14 +1,24 @@
 section.topicsWrap {
-	padding-top: 3rem;
+	padding-top: 2rem;
 	lost-flex-container: row;
+	justify-content: center;
 	.topicCard {
-		lost-waffle: 1/3 3 1rem;
+		/*lost-masonry-column: 1/3;*/
+		/*lost-waffle: 1/4 4 1rem;*/
+		margin: 0 1.5rem 1.5rem 0;
+		/*lost-column: 210;*/
 		cursor: pointer;
 		lost-flex-container: row;
 		align-items: center;
-		margin: 0;
 		padding: 25px;
 		transition: all 0.2s;
+		text-align: center;
+		h4 {
+			font-size: 2rem;
+		}
+		p {
+			font-size: 1.3rem;
+		}
 		h4, p {
 			margin-bottom: 0;
 		}

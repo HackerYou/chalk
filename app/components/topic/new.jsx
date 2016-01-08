@@ -15,9 +15,15 @@ export default React.createClass({
 		});
 	},
 	render(){
+		let card;
+		if (this.props.card === 'card') {
+			card = "full detailsForm topicsForm card";
+		} else {
+			card = "full detailsForm topicsForm";
+		}
 		return (
 			<div>
-				<section className="full card detailsForm topicsForm">
+				<section className={card}>
 				<form action="" onSubmit={this.createTopic}>
 					<div className="fieldRow">
 						<label htmlFor="name" className="inline largeLabel">Create new topic</label>

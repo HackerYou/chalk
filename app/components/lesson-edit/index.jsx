@@ -7,6 +7,7 @@ import topicsData from '../../services/topic.jsx';
 import Markdown from 'react-remarkable';
 import coursesData from '../../services/courses.jsx';
 import hljs from 'highlight.js';
+import NewTopic from '../topic/new.jsx';
 
 export default React.createClass({
 	displayName: 'EditLesson',
@@ -180,6 +181,7 @@ export default React.createClass({
 				<div className="lessonEditView card">
 						<div>{(this.state.lessonTopics).map(this.displayTopics)}</div>
 						<div onClick={this.openModal} className="topicAddBlock"><h3><i className="chalk-add"></i>Add Topic</h3></div>
+						<NewTopic />
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<div className="modalBody--small card">
 							<i className="chalk-close" onClick={this.closeModal}></i>
@@ -209,6 +211,7 @@ export default React.createClass({
 						</div>
 						</Modal>
 					</div>
+					<button className="success" onClick={this.saveLesson}><i className="chalk-save"></i>Save Lesson</button>
 				</div>
 		)
 	}

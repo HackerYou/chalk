@@ -108,3 +108,11 @@ p.editTopic {
 		margin-bottom: 0;
 	}
 }
+
+.topicAddBlock:only-child {
+	margin-top: 20px;
+}
+
+.lessonEditView div:nth-last-child(-n+4):first-child ~ div.topicAddBlock {
+	margin-top: 35px;
+}

@@ -78,8 +78,7 @@ export default React.createClass({
 					<ol>
 						{(this.state.sections[index].lessons).map(this.renderLessons)}
 						<li className="new-lessonRow">
-							<button id={this.state.sections[index]._id} onClick={this.createLesson}className="success">Create</button>
-							<p className="lessonTitle">Create new lesson</p>
+							<p onClick={this.createLesson} id={this.state.sections[index]._id} className="lessonTitle">+ Add new lesson</p>
 						</li>
 					</ol>
 				</div>
@@ -98,7 +97,6 @@ export default React.createClass({
 				<button className="error" onClick={this.deleteTemplate}><i className="chalk-remove"></i>delete template</button>
 				<header className="topContent">
 					<h1>{this.state.course.title}</h1>
-
 				</header>
 				<section className="lessonsWrap">
 					<ol className="lessonColumn">
