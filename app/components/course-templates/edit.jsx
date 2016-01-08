@@ -94,7 +94,6 @@ export default React.createClass({
 		return (
 			<div className="container full">
 				<Link to='/dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
-				<button className="error" onClick={this.deleteTemplate}><i className="chalk-remove"></i>delete template</button>
 				<header className="topContent">
 					<h1>{this.state.course.title}</h1>
 				</header>
@@ -130,6 +129,7 @@ export default React.createClass({
 								<button onClick={this.openModal} className="success">Manage classroom members</button>
 							</div>
 						</section>
+						<button className="error" onClick={this.deleteTemplate}><i className="chalk-remove"></i>delete template</button>
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<div className="modalBody card">
 							<i className="chalk-close" onClick={this.closeModal}></i>

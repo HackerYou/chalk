@@ -331,5 +331,17 @@ i[class^="chalk-"] {
 	img {
 		max-width: 100%;
 	}
-
+	table {
+		border: 1px solid $border;
+		thead {
+			background: $border;
+			border-bottom: 1px solid $border;
+		}
+		td {
+			text-align: center;
+			min-width: 5rem;
+			padding: 5px;
+			border-right: 1px solid $border;
+		}
+	}
 }
