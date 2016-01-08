@@ -31,7 +31,7 @@ export default React.createClass({
 					</header>
 					<h1>Topics</h1>
 				</div>
-				<NewTopic />
+				<NewTopic card="card"/>
 
 				<section className="full card topicsForm">
 
