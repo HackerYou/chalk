@@ -44,11 +44,14 @@ export default React.createClass({
 								<option value="html">HTML</option>
 								<option value="css">CSS</option>
 								<option value="javascript">JavaScript</option>
+								<option value="wordpress">WordPress</option>
+								<option value="git">Git</option>
+								<option value="command_line">Command Line</option>
 							</select>
 						</div>
 					</form>
 				</section>
-				<section className="container topicsWrap">
+				<section className="topicsWrap" >
 					{(this.state.topics).map(this.renderTopics)}
 				</section>
 			</div>

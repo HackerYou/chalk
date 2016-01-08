@@ -96,7 +96,8 @@ export default React.createClass({
 							<div className="fieldRow">
 								<label htmlFor="category" className="inline">Category</label>
 								<select name="category" id="category" onChange={this.handleChange}ref="category" value={this.state.topic.category}>
-									<option value="html&css">HTML & CSS</option>
+									<option value="html">HTML</option>
+									<option value="css">CSS</option>
 									<option value="javascript">JavaScript</option>
 									<option value="git">Git</option>
 									<option value="wordpress">WordPress</option>
