@@ -10,14 +10,11 @@ section.topicsWrap {
 		cursor: pointer;
 		lost-flex-container: row;
 		align-items: center;
-		padding: 10px 15px;
+		padding: 1.3rem 1.8rem 1rem;
 		transition: all 0.2s;
 		text-align: center;
 		h4 {
-			font-size: 1.8rem;
-		}
-		p {
-			font-size: 1.3rem;
+			margin-top: 0;
 		}
 		h4, p {
 			margin-bottom: 0;
@@ -31,8 +28,12 @@ section.topicsWrap {
 .topicsForm {
 	padding: 25px 45px 10px;
 	margin-bottom: 2rem;
+}
+
+.searchTopics {
+	padding: 2rem;
 	.fieldRow {
-		margin-bottom: 10px;
+		margin-bottom: 0;
 	}
 }
 

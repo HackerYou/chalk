@@ -1,6 +1,6 @@
 footer.mainFooter {
 	margin: 10rem 0;
-	padding: 3rem 3.9rem 2.5rem;
+	padding: 1.5rem 3.9rem 1.5rem;
 	ul {
 		list-style: none;
 		padding: 0;
@@ -15,5 +15,3 @@ footer.mainFooter {
 		}
 	}
 }
-
-

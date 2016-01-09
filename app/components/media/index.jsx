@@ -72,6 +72,7 @@ export default React.createClass({
 					<h1>Media</h1>
 				</div>
 				<section className="full card detailsForm">
+					<h2>Search by file name</h2>
 					<form action="">
 						<label htmlFor="search" className="inline largeLabel">Search</label>
 						<input type="search"/>

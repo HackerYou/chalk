@@ -167,7 +167,7 @@ export default React.createClass({
 				<div className="full card detailsForm">
 					<form action="">
 						<div className="fieldRow">
-							<label htmlFor="lessonName" className="inline largeLabel">Lesson Name</label>
+							<label htmlFor="lessonName" className="inline largeLabel">Topic Name</label>
 							<input onChange={this.handleChange} type="text" placeholder="enter lesson name here" value={this.state.lesson.title} id="title"/>
 							<button className="success" onClick={this.saveLesson}><i className="chalk-save"></i>Save Lesson</button>
 						</div>

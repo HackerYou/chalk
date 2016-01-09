@@ -55,46 +55,51 @@ $regularFont: 'Nimbus Sans', "Helvetica Neue", Helvetica, Arial, "Lucida Grande"
 $mediumFont: 'Nimbus Sans Medium', "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 
 html {
-  font-size: 62.5%
+  font-size: 62.5%;
 }
 
 body {
   font-family: $baseFont;
+	color: #333;
 }
 
 h1, h2, h3, h4 {
   font-family: $headerFont;
-  margin: 0 0 1.7rem 0;
+  /*margin: 0 0 1.7rem 0;*/
   font-weight: 700;
+	line-height: 1.1;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 2rem 0;
 }
 
 h1 {
-  font-size: 7.594rem;
-  line-height: 1.2;
+  font-size: 4rem;
 }
 
 h2 {
-  font-size: 5.063rem;
-  line-height: 1.2;
+  font-size: 3rem;
 }
 
 h3 {
-  font-size: 3rem;
-  line-height: 1.2;
+  font-size: 2.4rem;
+  /*line-height: 1.2;*/
 }
 
 
 h4 {
-  font-size: 2.25rem;
-  line-height: 1.2;
+  font-size: 1.8rem;
+  /*line-height: 1.2;*/
 }
 
 p {
-  font-size: 1.7rem;
-  line-height: 1.5;
-  letter-spacing: 0.05rem;
-  margin: 0 0 1.7rem 0;
-  font-weight: 300;
+  font-size: 1.5rem;
+  line-height: 1.7;
+  margin: 0 0 1.5rem 0;
+	font-family: $regularFont;
+	font-weight: 400;
+	letter-spacing: 0.01rem;
 }
 
 p.title {
@@ -136,7 +141,7 @@ em {
 }
 
 small {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   line-height: 1.2;
   font-family: $regularFont;
   font-weight: 400;
@@ -204,7 +209,7 @@ p.emptyState {
 }
 
 ul, ol {
-  font-size: 1.7rem;
+	font-size: 1.5rem;
 }
 
 ul li, ol li {
@@ -295,30 +300,24 @@ i[class^="chalk-"] {
 
 
 .lessonTopic {
-	font-size: 1.7rem;
-  line-height: 1.5;
-  letter-spacing: 0.05rem;
+	font-size: 1.5rem;
+  /*line-height: 1.5;*/
+  /*letter-spacing: 0.05rem;*/
 	font-family: $regularFont;
 	font-weight: 400;
   margin: 0 0 1.7rem 0;
 	h1, h2, h3, h4, h5, h6 {
-	  line-height: 1.43;
-	  margin-top: 1.3em;
-	  margin-bottom: 0.8em;
-		padding-bottom: 0.8rem;
-	 	border-bottom: 1px solid rgba(0,0,0,.125);
+
+
+	 	/*border-bottom: 1px solid rgba(0,0,0,.125);*/
 	}
-	h2.lessonTitle {
-		margin-top: 5rem;
-		margin-bottom: 0;
-		border-bottom: 0;
-	}
+
 	h2 ~ div span h3 {
 		margin-top: 1.5rem;
 	}
-	p, ul {
+	ul {
 		color: #333;
-		line-height: 1.7;
+		/*line-height: 1.7;*/
 		margin: 1rem 0 2rem;
 		font-family: $regularFont;
 		font-weight: 400;

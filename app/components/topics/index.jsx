@@ -34,7 +34,7 @@ export default React.createClass({
 				</div>
 				<NewTopic card="card"/>
 
-				<section className="full card topicsForm">
+				<section className="full card topicsForm searchTopics">
 
 					<form action="">
 						<div className="fieldRow">
