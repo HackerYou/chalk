@@ -1,23 +1,26 @@
 header.mainHeader {
-	padding: 25px 0;
-	margin-bottom: 5rem;
+	padding: 40px 0;
+	margin-bottom: 3rem;
 	.innerWrap {
 		position: relative;
 		padding-left: ;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 5rem 3.9rem 3.3rem 260px;
+		padding: 2.4rem 3.9rem 2.4rem 240px;
 		.topLogo {
 			display: inline-block;
 			position: absolute;
-			width: 195px;
-			top: -25px;
+			width: 170px;
+			top: -27px;
 			left: 4.5rem;
 		}
-		p.signOut a {
-			color: $black;
-			border: 0;
+		p.signOut {
+			margin: 0;
+			a {
+				color: $black;
+				border: 0;
+			}
 		}
 	}
 }
