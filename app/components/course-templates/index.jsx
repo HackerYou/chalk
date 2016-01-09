@@ -45,9 +45,8 @@ export default React.createClass({
 				</div>
 				<section className="full card detailsForm">
 					<form action="" onSubmit={this.createTemplate}>
-						<h2>Create New Template</h2>
 						<div className="fieldRow">
-							<label htmlFor="enddate" className="inline largeLabel">Template Name</label>
+							<label htmlFor="enddate" className="inline largeLabel">Create new Template</label>
 							<input type="text" ref="title" placeholder="eg. Intro To Web Development"/>
 							<button className="success">Save Template</button>
 							<Link to="dashboard" className="linkBtn"><button className="error">Cancel</button></Link>

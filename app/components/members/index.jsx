@@ -35,7 +35,7 @@ export default React.createClass({
 								</div>
 							</div>
 							<p>Remove User? <i className="chalk-remove red" onClick={this.deleteUser} data-user={this.state.members[index]._id}></i></p>
-							
+
 						</li>
 	},
 	setInstructor(e){
@@ -105,18 +105,20 @@ export default React.createClass({
 				</div>
 				<section className="full card detailsForm">
 					<form onSubmit={this.addUser} action="" className="addMembersForm">
-						<label htmlFor="add" className="inline largeLabel">Add by email</label>
-						<div className="inlineRow">
-							<input ref="users" type="text" id="add" placeholder="enter emails"/>
-							<small>Seperate emails by comma</small>
+						<div className="fieldRow">
+							<label htmlFor="add" className="inline largeLabel">Add by email</label>
+							<div className="inlineRow">
+								<input ref="users" type="text" id="add" placeholder="enter emails"/>
+								<small>Seperate emails by comma</small>
+							</div>
+							<button onClick={this.addUser} className="success">Add User</button>
 						</div>
-						<button onClick={this.addUser} className="success">Add User</button>
 					</form>
-				</section>
-				<section className="full card detailsForm">
 					<form action="">
+						<div className="fieldRow">
 						<label htmlFor="search" className="inline largeLabel">Search by name or email</label>
 						<input type="text" id="search"/>
+						</div>
 					</form>
 				</section>
 				<div className="container card memberWrap">

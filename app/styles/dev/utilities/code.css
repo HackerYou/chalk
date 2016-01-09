@@ -2,17 +2,17 @@ code, kbd {
 	background: $border;
 	font-size: 12px;
 	font-size: 1.2rem;
-	padding: 3px 7px 5px;
+	padding: 3px 7px 3px;
 	color: $blackLight;
 	border-radius: 2px;
 	border: 1px solid $greyLight;
 	margin: 0 0.3rem;
 	position: relative;
-	top: -2px;
+	top: -1	px;
 }
 
 pre > code {
-	font-size: 1.4rem;
+	font-size: 1.2rem;
 }
 
 pre {
