@@ -17,6 +17,7 @@ body {
 @import 'utilities/buttons.css';
 @import 'utilities/forms.css';
 @import 'utilities/highlight.css';
+@import 'utilities/notifications.css';
 @import 'styleGuide.css';
 
 .wrapper {
@@ -47,7 +48,7 @@ header.intro {
 }
 
 header.topContent {
-	margin-bottom: 10px;
+	margin-bottom: 3rem;
 	margin-top: 10px;
 	.headerLinks {
 		margin-bottom: 40px;
@@ -55,8 +56,12 @@ header.topContent {
 }
 
 section.detailsForm, .detailsForm {
-	padding: 35px 45px 15px;
+	padding: 1rem 4rem 1rem 4rem;
 	margin: 30px 0 50px;
+}
+
+section.detailsForm > form .fieldRow, .detailsForm > form .fieldRow {
+	margin-top: 3rem;
 }
 
 

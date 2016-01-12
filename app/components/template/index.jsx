@@ -12,7 +12,7 @@ export default React.createClass({
 		return (
 			<div className="classCard">
 				<article className="card">
-					<h3>{this.props.details.title}</h3>
+					<h2>{this.props.details.title}</h2>
 					<footer className="classCardMeta">
 					<button onClick={this.editTemplate} className="primary">View/Edit</button>
 					</footer>

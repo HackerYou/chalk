@@ -3,3 +3,4 @@ app/components/app.js
 app/styles/style.css
 .jshintrc
 app/.DS_Store
+**/.DS_Store

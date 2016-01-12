@@ -15,29 +15,36 @@
 .mediaRow {
 	lost-flex-container: row;
 	justify-content: space-between;
-	padding: 25px 0;
+	padding: 25px;
+	align-items: center;
 	.mediaIcon {
-		lost-column: 1/4;
+		lost-column: 1/3;
 		display: flex;
 		align-items: center;
 		margin: 0;
 		i {
-			font-size: 3.5rem;
-			margin-right: 1rem;
+			font-size: 2.5rem;
+			margin-right: 1.5rem;
+		}
+		span {
+			font-size: 1.6rem;
+			line-height: 1.2;
 		}
 	}
 	input[type=text] {
-		margin: 0 10px 0 0;
-		border-radius: 5px;
-		border: 2px solid $greyLight;
+		margin: 0;
+		/*border-radius: 5px;*/
+		border: 1px solid $greyLight;
 		padding: 1rem;
 	}
 	.mediaCopy {
-		padding: 0.7rem 0.6rem 0.7rem 1rem;
+		padding: 0.6rem 0.6rem 0.7rem 1rem;
 		font-size: 2rem;
-		border-radius: 5px;
+		/*border-radius: 5px;*/
+		box-shadow: none;
 	}
 	.error {
-		padding: 0.7rem 2rem 0.7rem 2rem;
+		cursor: pointer;
+		margin-bottom: 0;
 	}
 }

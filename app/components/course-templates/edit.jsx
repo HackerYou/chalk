@@ -37,7 +37,8 @@ export default React.createClass({
 		return <LessonDetails key={index} index={index} details={key} classroomId={this.props.params.templateId} isTemplate={this.state.course.template} />
 	},
 	renderTopics(key, index){
-		return <li key={index}>{this.state.sections[index].title}</li>;
+		let link = '#' + this.state.sections[index]._id
+		return <li key={index}><a href={link}>{this.state.sections[index].title}</a></li>;
 	},
 	createSection(e){
 		e.preventDefault();
@@ -68,15 +69,16 @@ export default React.createClass({
 		});
 	},
 	renderSections(key, index){
-		return <li key={index} className="lessonGroup">
-				<h3>{this.state.sections[index].title}</h3>
-				<button onClick={this.deleteSection} id={this.state.sections[index]._id} className="btn error sectionDelete">delete section</button>
+		return <li key={index} className="lessonGroup" id={this.state.sections[index]._id}>
+				<header className="lessonGroupTop">
+					<h3>{this.state.sections[index].title}</h3>
+					<p onClick={this.deleteSection} id={this.state.sections[index]._id} className="deleteSection"><i className="chalk-remove red"></i>Remove Section</p>
+				</header>
 				<div className="card">
 					<ol>
 						{(this.state.sections[index].lessons).map(this.renderLessons)}
 						<li className="new-lessonRow">
-							<button id={this.state.sections[index]._id} onClick={this.createLesson}className="success">Create</button>
-							<p className="lessonTitle">Create new lesson</p>
+							<p onClick={this.createLesson} id={this.state.sections[index]._id} className="lessonTitle">+ Add new lesson</p>
 						</li>
 					</ol>
 				</div>
@@ -92,10 +94,8 @@ export default React.createClass({
 		return (
 			<div className="container full">
 				<Link to='/dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
-				<button className="error" onClick={this.deleteTemplate}><i className="chalk-remove"></i>delete template</button>
 				<header className="topContent">
 					<h1>{this.state.course.title}</h1>
-					<p className="title">Drag and drop to reorganize lessons</p>
 				</header>
 				<section className="lessonsWrap">
 					<ol className="lessonColumn">
@@ -129,6 +129,7 @@ export default React.createClass({
 								<button onClick={this.openModal} className="success">Manage classroom members</button>
 							</div>
 						</section>
+						<button className="error" onClick={this.deleteTemplate}><i className="chalk-remove"></i>delete template</button>
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<div className="modalBody card">
 							<i className="chalk-close" onClick={this.closeModal}></i>

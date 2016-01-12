@@ -97,6 +97,11 @@ li.new-lessonRow {
 	lost-flex-container: row;
 	align-items: center;
 	/*padding: 25px 10px;*/
+	p {
+		cursor: pointer;
+		font-size: 1.4rem;
+		font-family: $baseFont;
+	}
 }
 
 article.lessonNew {
@@ -124,6 +129,11 @@ aside.lessonMeta {
 		font-weight: 700;
 		font-family: $headerFont;
 		border-bottom: 1px solid $border;
+		a {
+			text-decoration: none;
+			border: none;
+			color: $black;
+		}
 		li.active {
 			color: $red;
 			position: relative;

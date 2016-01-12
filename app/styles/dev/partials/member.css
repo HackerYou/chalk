@@ -40,21 +40,19 @@ ul.memberList {
 }
 
 form.addMembersForm {
-	lost-flex-container: row;
-	justify-content: flex-start;
-	align-items: center;
+
 	padding-bottom: 20px;
-	& > * {
-		margin-right: 20px;
-	}
+
 	.inlineRow {
 		position: relative;
+		display: inline-block;
 		input {
-			margin: 0;
+			/*margin: 0;*/
+
 		}
 		small {
 			position: absolute;
-			bottom: -14px;
+			bottom: -21px;
 			left: 0;
 		}
 	}

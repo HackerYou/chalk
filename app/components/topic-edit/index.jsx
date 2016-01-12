@@ -7,8 +7,10 @@ import AuthMixin from '../../services/authMixin.jsx';
 import topicData from '../../services/topic.jsx';
 import TabMixin from '../../services/tabMixin.jsx';
 import media from '../../services/media.jsx';
+import NotificationSystem from 'react-notification-system';
 
 export default React.createClass({
+	_notificationSystem: null,
 	displayName: 'EditTopics',
 	mixins:[AuthMixin,History, TabMixin],
 	getInitialState(){
@@ -16,9 +18,11 @@ export default React.createClass({
 			topic: [],
 			files: [],
 			copied: false,
-			category: 'HTML & CSS',
-			saved: false
+			category: 'HTML & CSS'
 		}
+	},
+	componentDidMount() {
+		this._notificationSystem = this.refs.notificationSystem;
 	},
 	componentWillMount(){
 		topicData.getTopicById(this.props.params.topicId).then(data => {
@@ -31,8 +35,15 @@ export default React.createClass({
 		media.uploadFile(files).then(res => {
 			this.setState({files: this.state.files.concat(res.media)});
 		});
-
 	},
+	_successNotification: function() {
+    this._notificationSystem.addNotification({
+      message: 'Saved Successfully',
+      level: 'success',
+			dismissible: false,
+			title: 'Topic'
+    });
+  },
 	editTopic(e) {
 		e.preventDefault();
 		topicData.updateTopic( this.state.topic._id, {
@@ -42,7 +53,7 @@ export default React.createClass({
 			body : this.refs.body.value,
 			"time": this.refs.time.value
 		}).then(res => {
-			this.setState({saved: true});
+			this._successNotification();
 		});
 		// .then(res => {
 		// 	this.history.pushState(null,`/topics`);
@@ -68,6 +79,7 @@ export default React.createClass({
 		);
 		return (
 			<div>
+				<NotificationSystem ref="notificationSystem" style={false}/>
 				<div className="container">
 					<header className="topContent">
 						<Link className="linkBtn" to="/topics"><button className="primary"><i className="chalk-home"></i>back to topics</button></Link>
@@ -84,7 +96,8 @@ export default React.createClass({
 							<div className="fieldRow">
 								<label htmlFor="category" className="inline">Category</label>
 								<select name="category" id="category" onChange={this.handleChange}ref="category" value={this.state.topic.category}>
-									<option value="html&css">HTML & CSS</option>
+									<option value="html">HTML</option>
+									<option value="css">CSS</option>
 									<option value="javascript">JavaScript</option>
 									<option value="git">Git</option>
 									<option value="wordpress">WordPress</option>
@@ -102,7 +115,6 @@ export default React.createClass({
 							<Link className="linkBtn" to="topics">
 								<button className="error">Cancel</button>
 							</Link>
-							{this.state.saved ? savedText : null}
 						</div>
 						<div className="card topicRow">
 							<textarea className="markdown" onKeyDown={TabMixin.keyHandler} value={this.state.topic.body} ref="body" name="" id="body" onChange={this.handleChange}>
@@ -117,11 +129,10 @@ export default React.createClass({
 									<p className="mediaIcon"><i className="chalk-doc"></i>{file.name}</p>
 									<div className="mediaLink">
 										<input type="text" defaultValue={file.path}/>
-										<CopyToClipboard text={file.path} onCopy={() => this.setState({copied: true})}>
+										<CopyToClipboard text={file.path} onCopy={() => {this.setState({copied: true}); }}>
 											<button className="success mediaCopy"><i className="chalk-copy"></i></button>
 										</CopyToClipboard>
 									</div>
-									<button className="error">Delete File</button>
 								</li>
 							)}</ul>
 							<button className="success">Save Topic</button>

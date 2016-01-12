@@ -1,22 +1,26 @@
 section.topicsWrap {
-	padding-top: 3rem;
+	padding-top: 2rem;
 	lost-flex-container: row;
+	justify-content: center;
 	.topicCard {
-		lost-waffle: 1/3 3 1rem;
+		/*lost-masonry-column: 1/3;*/
+		/*lost-waffle: 1/4 4 1rem;*/
+		margin: 0 1.5rem 1.5rem 0;
+		/*lost-column: 210;*/
 		cursor: pointer;
 		lost-flex-container: row;
 		align-items: center;
-		margin: 0;
-		padding: 25px;
+		padding: 1.3rem 1.8rem 1rem;
 		transition: all 0.2s;
+		text-align: center;
+		h4 {
+			margin-top: 0;
+		}
 		h4, p {
 			margin-bottom: 0;
 		}
 		&:hover {
 			box-shadow: 0 3px 7px 0 rgba(0,0,0,.05)
-		}
-		footer.classCardMeta {
-
 		}
 	}
 }
@@ -24,8 +28,12 @@ section.topicsWrap {
 .topicsForm {
 	padding: 25px 45px 10px;
 	margin-bottom: 2rem;
+}
+
+.searchTopics {
+	padding: 2rem;
 	.fieldRow {
-		margin-bottom: 10px;
+		margin-bottom: 0;
 	}
 }
 

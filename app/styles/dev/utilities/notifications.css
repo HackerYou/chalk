@@ -1,0 +1,48 @@
+.notifications-tr {
+	position: fixed;
+	width: 100%;
+	z-index: 9998;
+	top: 0;
+	left: 0;
+}
+
+.notification {
+	width: 100%;
+	position: relative;
+	display: block;
+	color: white;
+	text-align: center;
+	border-radius: 2px;
+	box-sizing: border-box;
+	transition: 0.3s ease-in-out;
+	padding: 10px;
+	font-size: 13px;
+	left: 0px;
+}
+
+.notification-success {
+	background-color: $green;
+}
+
+.notification-error {
+	background-color: $red;
+}
+
+h4.notification-title {
+padding: 0;
+margin-bottom: 0;
+color: white;
+}
+
+.notification-message {
+	margin: 0;
+	padding: 0;
+}
+
+.notification-visible {
+	opacity: 1;
+}
+
+.notification-hidden {
+opacity: 0;
+}

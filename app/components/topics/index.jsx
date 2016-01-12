@@ -28,12 +28,13 @@ export default React.createClass({
 				<div className="container">
 					<header className="topContent">
 					<Link className="linkBtn" to="dashboard"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
+					<Link className="linkBtn" to='course-templates'><button className="primary">Course Templates</button></Link>
 					</header>
 					<h1>Topics</h1>
 				</div>
-				<NewTopic />
+				<NewTopic card="card"/>
 
-				<section className="full card topicsForm">
+				<section className="full card topicsForm searchTopics">
 
 					<form action="">
 						<div className="fieldRow">
@@ -44,11 +45,14 @@ export default React.createClass({
 								<option value="html">HTML</option>
 								<option value="css">CSS</option>
 								<option value="javascript">JavaScript</option>
+								<option value="wordpress">WordPress</option>
+								<option value="git">Git</option>
+								<option value="command_line">Command Line</option>
 							</select>
 						</div>
 					</form>
 				</section>
-				<section className="container topicsWrap">
+				<section className="topicsWrap" >
 					{(this.state.topics).map(this.renderTopics)}
 				</section>
 			</div>
