@@ -33,6 +33,10 @@ let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 function userName(context) {
 	if(auth.authenticated() === 'true' && Object.keys(context.state.user).length === 0) {
 		userData.getUser(config.getUserId()).then(data => {
+			if(data.error) {
+				auth.logOut();
+				context.context.history.pushState(null,'/');
+			}
 			userData.storeUser(data.user);
 			context.setState({
 				user: data.user
@@ -42,6 +46,8 @@ function userName(context) {
 					isModalOpen: true
 				});
 			}
+		}, err => {
+			auth.logOut();
 		});
 	}
 };

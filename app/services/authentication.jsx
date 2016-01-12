@@ -31,7 +31,6 @@ export default {
 					});
 				}	
 				else {
-					this.logOut();
 					reject(res);
 				}
 			});
