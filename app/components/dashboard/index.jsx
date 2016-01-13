@@ -5,6 +5,7 @@ import AuthMixin from '../../services/authMixin.jsx';
 import config from '../../services/config.jsx';
 import coursesData from '../../services/courses.jsx';
 import userData from '../../services/user.jsx';
+import auth from '../../services/authentication.jsx';
 
 export default React.createClass({
 	displayName: 'Dashboard',
