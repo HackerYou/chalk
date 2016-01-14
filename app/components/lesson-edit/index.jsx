@@ -170,6 +170,7 @@ export default React.createClass({
 							<label htmlFor="lessonName" className="inline largeLabel">Topic Name</label>
 							<input onChange={this.handleChange} type="text" placeholder="enter lesson name here" value={this.state.lesson.title} id="title"/>
 							<button className="success" onClick={this.saveLesson}><i className="chalk-save"></i>Save Lesson</button>
+							<button onClick={this.deleteLesson}className="error"><i className="chalk-remove"></i>Delete Lesson</button>
 						</div>
 					</form>
 				</div>
