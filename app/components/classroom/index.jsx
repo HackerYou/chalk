@@ -142,6 +142,7 @@ export default React.createClass({
 		let isAdmin = this.state.user.admin;
 		let isInstructor = this.state.user.instructor;
 		let editButton = <button className="success" onClick={this.editCourse}><i className="chalk-remove"></i>edit course</button>;
+		let dragAndDrop = <p className="title">Drag and drop to reorganize lessons</p>
 		let displayMembers;
 		if (this.state.members.length <= 0) {
 			displayMembers = <p className="emptyState">No members yet!</p>
@@ -165,7 +166,7 @@ export default React.createClass({
 				{isAdmin ? editButton : null}
 				<header className="topContent">
 					<h1>{this.state.course.title}</h1>
-					<p className="title">Drag and drop to reorganize lessons</p>
+					{isAdmin ? dragAndDrop : null}
 				</header>
 				<section className="lessonsWrap">
 					<ol className="lessonColumn">
