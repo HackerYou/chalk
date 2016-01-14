@@ -8,6 +8,7 @@ import topicData from '../../services/topic.jsx';
 export default React.createClass({
 	displayName: 'Topics',
 	mixins: [AuthMixin, History],
+	originalTopics: [],
 	getInitialState(){
 		return {
 			topics: []
@@ -15,9 +16,42 @@ export default React.createClass({
 	},
 	componentWillMount(){
 		topicData.getTopics().then(res => {
-			console.log(res.topic)
+			this.originalTopics = res.topic;
+
 			this.setState({topics: res.topic});
 		});
+	},
+	filterTopics(event) {
+		let selectedEvent = event.target.value;
+		let topics = this.state.topics;
+		let originalTopics = this.originalTopics;
+		if(selectedEvent === 'all') {
+			this.setState({
+				topics: originalTopics
+			});
+		}
+		else {
+			this.setState({
+				topics: originalTopics.filter(topic => topic.category === selectedEvent)
+			});
+		}
+
+	},
+	searchTopics(event) {
+		event.preventDefault();
+		let searchTopic = new RegExp(this.refs.searchQuery.value,'ig');
+		let originalTopics = this.originalTopics;
+		if(searchTopic === '') {
+			this.setState({
+				topics: originalTopics
+			});
+		}
+		else {
+			this.setState({
+				topics: originalTopics.filter(topic => topic.title.match(searchTopic))
+			});
+		}
+
 	},
 	renderTopics(key, index){
 		return <Topic key={index} index={index} details={this.state.topics[index]} />
@@ -36,18 +70,18 @@ export default React.createClass({
 
 				<section className="full card topicsForm searchTopics">
 
-					<form action="">
+					<form action="" onSubmit={this.searchTopics}>
 						<div className="fieldRow">
 							<label className="inline" htmlFor="search">Search by name</label>
-							<input type="search" placeholder="Search for a topic"/>
+							<input type="search" placeholder="Search for a topic" ref="searchQuery"/>
 							<label htmlFor="category" className="inline">Filter by category</label>
-							<select name="category" id="category">
+							<select name="category" id="category" onChange={this.filterTopics}>
+								<option value="all">All</option>
 								<option value="html">HTML</option>
 								<option value="css">CSS</option>
 								<option value="javascript">JavaScript</option>
 								<option value="wordpress">WordPress</option>
-								<option value="git">Git</option>
-								<option value="command_line">Command Line</option>
+								<option value="tools">Tools</option>
 							</select>
 						</div>
 					</form>
