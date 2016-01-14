@@ -37,13 +37,13 @@ export default React.createClass({
 		});
 	},
 	_successNotification: function() {
-    this._notificationSystem.addNotification({
-      message: 'Saved Successfully',
-      level: 'success',
+		this._notificationSystem.addNotification({
+			message: 'Saved Successfully',
+			level: 'success',
 			dismissible: false,
 			title: 'Topic'
-    });
-  },
+		});
+	},
 	editTopic(e) {
 		e.preventDefault();
 		topicData.updateTopic( this.state.topic._id, {
@@ -51,14 +51,10 @@ export default React.createClass({
 			category: this.refs.category.value,
 			description: this.refs.description.value,
 			body : this.refs.body.value,
-			"time": this.refs.time.value
+			time: this.refs.time.value
 		}).then(res => {
 			this._successNotification();
 		});
-		// .then(res => {
-		// 	this.history.pushState(null,`/topics`);
-		// 	this.setState
-		// });
 	},
 	deleteTopic(e){
 		e.preventDefault();
@@ -102,7 +98,6 @@ export default React.createClass({
 									<option value="git">Git</option>
 									<option value="wordpress">WordPress</option>
 									<option value="tools">Tools</option>
-									<option value="workflow">Workflow</option>
 								</select>
 								<label htmlFor="time" className="inline">Time</label>
 								<input id="time" onChange={this.handleChange} value={this.state.topic.time} ref="time" type="text" placeholder="enter a number in minutes"/>
