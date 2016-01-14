@@ -107,15 +107,15 @@ export default React.createClass({
 	displayTopics(key, index){
 		let hl = function (str, lang) {
 	    if (lang && hljs.getLanguage(lang)) {
-	      try {
-	        return hljs.highlight(lang, str).value;
-	      } catch (err) {}
+			try {
+				return hljs.highlight(lang, str).value;
+			} catch (err) {}
 	    }
 	    try {
-	      return hljs.highlightAuto(str).value;
+			return hljs.highlightAuto(str).value;
 	    } catch (err) {}
-	    return ''; // use external default escaping
-	  };
+	    	return ''; // use external default escaping
+	  	};
 		return <div key={index} className='lessonTopic'>
 							<div className="deleteTopicBlock">
 								<p data-id={this.state.lessonTopics[index]._id} onClick={this.deleteTopic.bind(this, index)} className="deleteTopic"><i className="chalk-remove "></i>Remove {this.state.lessonTopics[index].title}</p>
@@ -195,14 +195,22 @@ export default React.createClass({
 										<div className="fieldGroup">
 											<label htmlFor="">Category</label>
 											<select onChange={this.getValue} name="category" id="">
-												<option value="all">view all</option>
-												{(this.state.uniqueTopics).map(this.renderTopicCategories)}
+												<option value="all">ALL</option>
+												<option value="html">HTML</option>
+												<option value="css">CSS</option>
+												<option value="javascript">JavaScript</option>
+												<option value="git">Git</option>
+												<option value="wordpress">WordPress</option>
+												<option value="tools">Tools</option>
 											</select>
 										</div>
 										<div className="fieldGroup">
 											<label htmlFor="">Topic</label>
 											<select ref="selectedTopic" name="topics" id="">
-												{(this.state.selectedTopics).map(this.renderTopics)}
+												{(this.state.selectedTopics.sort((a,b) => {
+
+													return a.title.toLowerCase().charCodeAt(0) - b.title.toLowerCase().charCodeAt(0)
+												})).map(this.renderTopics)}
 											</select>
 										</div>
 									</div>
