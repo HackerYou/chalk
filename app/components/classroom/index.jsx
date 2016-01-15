@@ -168,7 +168,7 @@ export default React.createClass({
 					<h1>{this.state.course.title}</h1>
 					{isAdmin ? dragAndDrop : null}
 				</header>
-				<section className="lessonsWrap">
+				<section className="lessonsWrap clearfix">
 					<ol className="lessonColumn">
 						{(this.state.sections).map(this.renderSections)}
 					</ol>
@@ -179,10 +179,10 @@ export default React.createClass({
 								<ul className="topicList">
 									{(this.state.sections).map(this.renderTopics)}
 								</ul>
-								<button className="primary" onClick={this.showFavs}>Show Starred Lessons</button>
+								<button className="primary" onClick={this.showFavs}>{this.state.showFavs ? 'show All Lessons' : 'show Starred Lessons'}</button>
 							</div>
 						</section>
-						{isAdmin ||isInstructor ? members : null}
+						{isAdmin || isInstructor ? members : null}
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<div className="modalBody card">
 								<i className="chalk-close" onClick={this.closeModal}></i>
