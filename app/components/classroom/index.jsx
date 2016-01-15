@@ -7,6 +7,8 @@ import AuthMixin from '../../services/authMixin.jsx';
 import coursesData from '../../services/courses.jsx';
 import userData from '../../services/user.jsx';
 import config from '../../services/config.jsx';
+import Sticky from '../../services/sticky.js';
+// let Sticky = require('react-sticky');
 
 export default React.createClass({
 	displayName: 'Classroom',
@@ -22,6 +24,7 @@ export default React.createClass({
 			members: [],
 			favorites: {},
 			showFavs: false,
+			pageHeight: 0
 		}
 	},
 	openModal(){
@@ -44,6 +47,12 @@ export default React.createClass({
 				course: res.course,
 				sections: res.course.sections,
 				members: res.course.students
+			});
+			let body = document.body,
+	    		html = document.documentElement;
+			let docheight = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight ) - 738;
+			this.setState({
+				pageHeight: docheight
 			});
 		});
 	},
@@ -171,21 +180,22 @@ export default React.createClass({
 					<h1>{this.state.course.title}</h1>
 					{isAdmin ? dragAndDrop : null}
 				</header>
-				<section className="lessonsWrap">
+				<section className="lessonsWrap clearfix">
 					<ol className="lessonColumn">
 						{(this.state.sections).map(this.renderSections)}
 					</ol>
-					<aside className="lessonMeta">
+					<Sticky className="lessonMeta" stickyClass="supersticky" stickyStyle={{}} topOffset={100} bottomOffset={this.state.pageHeight}>
+					<aside>
 						<section className="sideCard">
 							<h3>Course Topics</h3>
 							<div className="card topicLegend">
 								<ul className="topicList">
 									{(this.state.sections).map(this.renderTopics)}
 								</ul>
-								<button className="primary" onClick={this.showFavs}>Show Starred Lessons</button>
+								<button className="primary" onClick={this.showFavs}>{this.state.showFavs ? 'show All Lessons' : 'show Starred Lessons'}</button>
 							</div>
 						</section>
-						{isAdmin ||isInstructor ? members : null}
+						{isAdmin || isInstructor ? members : null}
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<div className="modalBody card">
 								<i className="chalk-close" onClick={this.closeModal}></i>
@@ -215,6 +225,7 @@ export default React.createClass({
 							</div>
 						</Modal>
 					</aside>
+					</Sticky>
 				</section>
 			</div>
 		)

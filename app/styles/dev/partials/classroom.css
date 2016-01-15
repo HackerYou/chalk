@@ -3,6 +3,7 @@ section.lessonsWrap {
 	margin-bottom: 5rem;
 	.lessonColumn {
 		lost-column: 8/12;
+		/*float: left;*/
 	}
 	ol {
 		counter-reset: num;
@@ -110,15 +111,29 @@ article.lessonNew {
 	box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.12);
 }
 
-aside.lessonMeta {
+.lessonMeta {
 	lost-column: 4/12;
 	lost-flex-container: column;
 	.sideCard {
 		lost-row: 1/3;
 		.card {
 			padding: 20px;
+			button {
+				width: 100%;
+			}
 		}
 	}
+	button.error {
+		margin-right: 0;
+	}
+}
+
+.supersticky {
+	position: fixed;
+	top: 0;
+	min-width: 307px;
+	width: auto;
+	margin-bottom: 200px;
 }
 
 .topicLegend {
