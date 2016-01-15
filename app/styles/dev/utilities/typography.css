@@ -301,17 +301,12 @@ i[class^="chalk-"] {
 
 .lessonTopic {
 	font-size: 1.5rem;
-  /*line-height: 1.5;*/
-  /*letter-spacing: 0.05rem;*/
 	font-family: $regularFont;
 	font-weight: 400;
   margin: 0 0 1.7rem 0;
-	h1, h2, h3, h4, h5, h6 {
-
-
-	 	/*border-bottom: 1px solid rgba(0,0,0,.125);*/
-	}
-
+  h2 {
+    font-size: 4rem;
+  }
 	h2 ~ div span h3 {
 		margin-top: 1.5rem;
 	}
