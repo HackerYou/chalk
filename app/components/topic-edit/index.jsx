@@ -98,6 +98,8 @@ export default React.createClass({
 									<option value="git">Git</option>
 									<option value="wordpress">WordPress</option>
 									<option value="tools">Tools</option>
+									<option value="project">Project</option>
+									<option value="resource">Resource</option>
 								</select>
 								<label htmlFor="time" className="inline">Time</label>
 								<input id="time" onChange={this.handleChange} value={this.state.topic.time} ref="time" type="text" placeholder="enter a number in minutes"/>
