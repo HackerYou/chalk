@@ -111,7 +111,7 @@ article.lessonNew {
 	box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.12);
 }
 
-aside.lessonMeta {
+.lessonMeta {
 	lost-column: 4/12;
 	lost-flex-container: column;
 	.sideCard {
@@ -126,6 +126,14 @@ aside.lessonMeta {
 	button.error {
 		margin-right: 0;
 	}
+}
+
+.supersticky {
+	position: fixed;
+	top: 0;
+	min-width: 307px;
+	width: auto;
+	margin-bottom: 200px;
 }
 
 .topicLegend {
