@@ -11,7 +11,7 @@
 
 .modalBody {
 	width: 95%;
-	padding: 45px 45px 67px;
+	padding: 25px 45px 67px;
 	position: absolute;
 	left: 2.5%;
 	/*top: 2.5%;*/
@@ -26,7 +26,7 @@
 
 .modalBody--small {
 	width: 50%;
-	padding: 40px 60px 50px;
+	padding: 20px 60px 45px;
 	position: absolute;
 	left: 25%;
 	top: 25px;
@@ -129,14 +129,14 @@
 /*.lessonAddContent*/
 .modalBtns {
 	position: absolute;
-	bottom: 15px;
-	right: 15px;
+	bottom: 35px;
+	right: 35px;
 }
 
 /*MODAL STYLES*/
 
 .modal i{
-  font-size: 30px;
+  font-size: 22px;
   &:hover{
     cursor: pointer;
   }

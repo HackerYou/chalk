@@ -5,6 +5,7 @@ import Modal from '../modal/index.jsx';
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import AuthMixin from '../../services/authMixin.jsx';
 import coursesData from '../../services/courses.jsx';
+let Sticky = require('react-sticky');
 
 export default React.createClass({
 	displayName: 'EditTemplate',
@@ -112,7 +113,8 @@ export default React.createClass({
 							</article>
 						</li>
 					</ol>
-					<aside className="lessonMeta">
+					<Sticky className="lessonMeta" stickyClass="supersticky" stickyStyle={{}}>
+					<aside >
 						<section className="sideCard">
 							<h3>Course Topics</h3>
 							<div className="card topicLegend">
@@ -178,6 +180,7 @@ export default React.createClass({
 						</div>
 						</Modal>
 					</aside>
+					</Sticky>
 				</section>
 			</div>
 		)
