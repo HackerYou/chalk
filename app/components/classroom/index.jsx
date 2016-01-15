@@ -192,7 +192,7 @@ export default React.createClass({
 								<ul className="topicList">
 									{(this.state.sections).map(this.renderTopics)}
 								</ul>
-								<button className="primary" onClick={this.showFavs}>{this.state.showFavs ? 'show All Lessons' : 'show Starred Lessons'}</button>
+								<button className="primary" onClick={this.showFavs}>{this.state.showFavs ? 'show all Lessons' : 'show starred Lessons'}</button>
 							</div>
 						</section>
 						{isAdmin || isInstructor ? members : null}
