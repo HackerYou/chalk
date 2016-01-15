@@ -76,7 +76,7 @@ export default React.createClass({
 	createLesson(e){
 		let classroomId = this.props.params.courseId;
 		let sectionId = e.target.id;
-		this.history.pushState(null,`lesson/${classroomId}/${sectionId}/new`);
+		this.history.pushState(null,`/lesson/${classroomId}/${sectionId}/new`);
 	},
 	renderSections(key, index){
 		return (<li key={index} className="lessonGroup">
@@ -122,15 +122,18 @@ export default React.createClass({
 	},
 	showFavs() {
 		if(!this.state.showFavs) {
-			document.body.className = 'show-favs';
-			document.querySelector('.lessonGroup').className ="favsGroup lessonGroup";
+			document.body.classList.add('show-favs');
+			let els = document.querySelectorAll('.lessonGroup .fav');
+
+			for(let i = 0; i < els.length; i++) {
+				els[i].parentElement.parentElement.parentElement.classList.add('favsGroup');
+			}
 			this.setState({
 				showFavs: true
 			});
 		}
 		else {
-			document.body.className = '';
-			document.querySelector('.lessonGroup').className ="lessonGroup";
+			document.body.classList.remove('show-favs');
 			this.setState({
 				showFavs: false
 			});

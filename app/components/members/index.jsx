@@ -6,6 +6,7 @@ import userData from '../../services/user.jsx';
 export default React.createClass({
 	displayName: 'Members',
 	mixins: [AuthMixin,History],
+	originalMembers: [],
 	getInitialState(){
 		return {
 			members: []
@@ -13,30 +14,54 @@ export default React.createClass({
 	},
 	componentWillMount(){
 		userData.getUsers().then(res=>{
+			this.originalMembers = res.user;
 			this.setState({
 				members: res.user
 			})
 		});
 	},
+	searchMembers(event) {
+		event.preventDefault();
+		let searchQuery = new RegExp(this.refs.searchQuery.value,'ig');
+		let originalMembers = this.originalMembers;
+
+		if(searchQuery  === '') {
+			this.setState({
+				members: originalMembers
+			});
+		}
+		else {
+			this.setState({
+				members: originalMembers.filter(member => {
+					if(member.firstName) {
+						return member.firstName.match(searchQuery) 
+					}
+					else {
+						return false;
+					}
+				})
+			});
+		}
+	},
 	renderMembers(key, index){
 		return <li key={index}>
-							<p><strong>{this.state.members[index].firstName + ' ' + this.state.members[index].lastName}</strong></p>
-							<p>{this.state.members[index].email}</p>
-							<p>{this.state.members[index].courses.length} Classrooms</p>
+				<p><strong>{this.state.members[index].firstName + ' ' + this.state.members[index].lastName}</strong></p>
+				<p>{this.state.members[index].email}</p>
+				<p>{this.state.members[index].courses.length} Classrooms</p>
 
-							<div className="inputBlock">
-								<div className=" fieldRow">
-									<label htmlFor={this.state.members[index]._id}>Instructor?</label>
-									<input onChange={this.setInstructor} type="checkbox" checked={this.state.members[index].instructor}id={this.state.members[index]._id} data-index={index}/>
-								</div>
-								<div className="fieldRow">
-									<label htmlFor={this.state.members[index]._id+'0'}>Admin?</label>
-									<input onChange={this.setAdmin} type="checkbox" checked={this.state.members[index].admin}id={this.state.members[index]._id+'0'} data-index={index}/>
-								</div>
-							</div>
-							<p>Remove User? <i className="chalk-remove red" onClick={this.deleteUser} data-user={this.state.members[index]._id}></i></p>
+				<div className="inputBlock">
+					<div className=" fieldRow">
+						<label htmlFor={this.state.members[index]._id}>Instructor?</label>
+						<input onChange={this.setInstructor} type="checkbox" checked={this.state.members[index].instructor}id={this.state.members[index]._id} data-index={index}/>
+					</div>
+					<div className="fieldRow">
+						<label htmlFor={this.state.members[index]._id+'0'}>Admin?</label>
+						<input onChange={this.setAdmin} type="checkbox" checked={this.state.members[index].admin} id={this.state.members[index]._id+'0'} data-index={index}/>
+					</div>
+				</div>
+				<p>Remove User? <i className="chalk-remove red" onClick={this.deleteUser} data-user={this.state.members[index]._id}></i></p>
 
-						</li>
+			</li>
 	},
 	setInstructor(e){
 		let index = e.target.dataset.index;
@@ -114,10 +139,10 @@ export default React.createClass({
 							<button onClick={this.addUser} className="success">Add User</button>
 						</div>
 					</form>
-					<form action="">
+					<form action="" onSubmit={this.searchMembers}>
 						<div className="fieldRow">
 						<label htmlFor="search" className="inline largeLabel">Search by name or email</label>
-						<input type="text" id="search"/>
+						<input type="text" id="search" ref="searchQuery"/>
 						</div>
 					</form>
 				</section>
