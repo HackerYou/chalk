@@ -12,6 +12,11 @@ The live styleguide will be located at [http://localhost:3000/app/styleguide](ht
 
 All the production files for the base CSS are kept in `app/styles/dev`. Further component styles will exist within the `app/components/**componentname**/` folder.
 
+## Contributing
+
+If you would like to contribute to this project please create a fork and make a pull request.
+
+
 
 
 
