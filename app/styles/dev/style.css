@@ -86,3 +86,4 @@ section.detailsForm > form .fieldRow, .detailsForm > form .fieldRow {
 @import 'partials/media.css';
 @import 'partials/instructor.css';
 @import 'partials/member.css';
+@import 'partials/loading.css';

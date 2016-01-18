@@ -8,7 +8,7 @@ import coursesData from '../../services/courses.jsx';
 import userData from '../../services/user.jsx';
 import config from '../../services/config.jsx';
 import Sticky from '../../services/sticky.js';
-// let Sticky = require('react-sticky');
+import Loading from '../loading/index.jsx';
 
 export default React.createClass({
 	displayName: 'Classroom',
@@ -24,7 +24,8 @@ export default React.createClass({
 			members: [],
 			favorites: {},
 			showFavs: false,
-			pageHeight: 0
+			pageHeight: 0,
+			loading: true
 		}
 	},
 	openModal(){
@@ -46,10 +47,11 @@ export default React.createClass({
 			this.setState({
 				course: res.course,
 				sections: res.course.sections,
-				members: res.course.students
+				members: res.course.students,
+				loading: false
 			});
 			let body = document.body,
-	    		html = document.documentElement;
+				html = document.documentElement;
 			let docheight = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight ) - 738;
 			this.setState({
 				pageHeight: docheight
@@ -112,7 +114,6 @@ export default React.createClass({
 			this.setState({
 				members: students
 			});
-			console.log(this.state.members)
 		});
 
 	},
@@ -180,6 +181,7 @@ export default React.createClass({
 					<h1>{this.state.course.title}</h1>
 					{isAdmin ? dragAndDrop : null}
 				</header>
+				<Loading loading={this.state.loading} />
 				<section className="lessonsWrap clearfix">
 					<ol className="lessonColumn">
 						{(this.state.sections).map(this.renderSections)}
