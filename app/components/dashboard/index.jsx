@@ -5,6 +5,7 @@ import AuthMixin from '../../services/authMixin.jsx';
 import config from '../../services/config.jsx';
 import coursesData from '../../services/courses.jsx';
 import userData from '../../services/user.jsx';
+import Loading from '../loading/index.jsx';
 
 export default React.createClass({
 	displayName: 'Dashboard',
@@ -12,7 +13,8 @@ export default React.createClass({
 	getInitialState(){
 		return{
 			courses: [],
-			user: {}
+			user: {},
+			loading: true
 		}
 	},
 	componentWillMount(){
@@ -27,15 +29,16 @@ export default React.createClass({
 						return obj.template === false;
 					});
 					this.setState({
-						courses: courses
+						courses: courses,
+						loading: false
 					});
 				});
 			} else {
 				this.setState({
 					user: res.user,
-					courses: res.user.courses
+					courses: res.user.courses,
+					loading: false
 				});
-
 			}
 		});
 	},
@@ -68,6 +71,7 @@ export default React.createClass({
 			<div className="container full">
 				{isAdmin ? adminPanel : null}
 				<div className="content">
+				<Loading loading={this.state.loading} />
 				<h1>Your Classrooms</h1>
 					<section className="dashWrap">
 						{displayClass}

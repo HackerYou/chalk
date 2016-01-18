@@ -4,6 +4,7 @@ import Topic from '../topic/index.jsx';
 import NewTopic from '../topic/new.jsx';
 import AuthMixin from '../../services/authMixin.jsx';
 import topicData from '../../services/topic.jsx';
+import Loading from '../loading/index.jsx';
 
 export default React.createClass({
 	displayName: 'Topics',
@@ -11,14 +12,18 @@ export default React.createClass({
 	originalTopics: [],
 	getInitialState(){
 		return {
-			topics: []
+			topics: [],
+			loading: true
 		}
 	},
 	componentWillMount(){
 		topicData.getTopics().then(res => {
 			this.originalTopics = res.topic;
 
-			this.setState({topics: res.topic});
+			this.setState({
+				topics: res.topic,
+				loading: false
+			});
 		});
 	},
 	filterTopics(event) {
@@ -86,6 +91,7 @@ export default React.createClass({
 						</div>
 					</form>
 				</section>
+				<Loading loading={this.state.loading}/>
 				<section className="topicsWrap" >
 					{(this.state.topics).map(this.renderTopics)}
 				</section>

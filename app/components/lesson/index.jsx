@@ -7,6 +7,7 @@ import lessonData from '../../services/lesson.jsx';
 import userData from '../../services/user.jsx';
 import config from '../../services/config.jsx';
 import coursesData from '../../services/courses.jsx';
+import Loading from '../loading/index.jsx';
 
 
 
@@ -19,7 +20,8 @@ export default React.createClass({
 			lesson: {},
 			topic: [],
 			isModalOpen: false,
-			isTemplate: false
+			isTemplate: false,
+			loading: true
 		}
 	},
 	componentWillMount(){
@@ -39,7 +41,8 @@ export default React.createClass({
 		lessonData.getLessonById(lessonId).then(res=>{
 			this.setState({
 				lesson: res.lesson,
-				topic: res.lesson.topics
+				topic: res.lesson.topics,
+				loading: false
 			});
 		});
 	},
@@ -73,6 +76,7 @@ export default React.createClass({
 				<h1>{this.state.lesson.title}</h1>
 				</header>
 				<section className="lessonView card">
+					<Loading loading={this.state.loading} />
 					{(this.state.topic).map(this.renderTopics)}
 				</section>
 				<div className="container">
