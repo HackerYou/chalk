@@ -219,8 +219,7 @@ export default React.createClass({
 									</div>
 								</div>
 								<div className="modalBtns">
-									<button onClick={this.closeModal} className="primary">Save Members</button>
-									<button onClick={this.closeModal}>Cancel</button>
+									<button onClick={this.closeModal} className="error">Done</button>
 								</div>
 							</div>
 						</Modal>
