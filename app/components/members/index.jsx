@@ -79,7 +79,6 @@ export default React.createClass({
 	setAdmin(e){
 		let index = e.target.dataset.index;
 		let model = this.state.members[index];
-		console.log(index, model)
 		e.target.checked ? model.admin = true : model.admin = false;
 		userData.updateUser(model).then(res=>{
 			// console.log(res.user)

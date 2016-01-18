@@ -18,13 +18,29 @@ export default React.createClass({
 			});
 		});
 	},
+    removeUser(event) {
+        let userId = event.target.dataset.user;
+        userData.deleteUser(userId).then((res) => {
+            let removeIndex = (this.state.instructors).map((obj, index)=>{
+                //get index of the user ID
+                return obj._id;
+            }).indexOf(userId);
+
+            //remove user from state
+            this.state.instructors.splice(removeIndex, 1);
+
+            this.setState({
+                members: this.state.instructors
+            });
+        });
+    },
 	renderInstructors(key, index){
 		return <li key={index}>
-							<p><strong>{this.state.instructors[index].firstName + ' ' + this.state.instructors[index].lastName}</strong></p>
-							<p>{this.state.instructors[index].email}</p>
-							<p>{this.state.instructors[index].courses.length} Classrooms</p>
-							<p>Remove User? <i className="chalk-remove red"></i></p>
-						</li>
+					<p><strong>{this.state.instructors[index].firstName + ' ' + this.state.instructors[index].lastName}</strong></p>
+					<p>{this.state.instructors[index].email}</p>
+					<p>{this.state.instructors[index].courses.length} Classrooms</p>
+					<p>Remove User? <i className="chalk-remove red" onClick={this.removeUser} data-user={this.state.instructors[index]._id}></i></p>
+				</li>
 	},
 	render() {
 		return (
