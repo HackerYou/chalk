@@ -42,7 +42,8 @@ export default React.createClass({
 		userData.lostPassword(this.refs.email.value).then(res => {
 			if(res.status === 'success') {
 				this.setState({
-					passwordMessage: res.message
+					passwordMessage: res.message,
+					lostPassword: false
 				});
 			}
 		});
@@ -52,6 +53,7 @@ export default React.createClass({
 		if(this.state.lostPassword !== true) {
 			form = (
 				<div>
+					<p>{this.state.passwordMessage}</p>
 					<div className="fieldGroup">
 						<label htmlFor="email" className="inline">email</label>
 						<input type="text" ref="email" placeholder="Your Email"/>
