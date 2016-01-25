@@ -158,7 +158,7 @@ let App = React.createClass({
 
 
 ReactDom.render(
-	(<Router history={createBrowserHistory()}>
+	(<Router history={createBrowserHistory()} onUpdate={() => window.scrollTo(0, 0)}>
 		<Route path='/' component={App}>
 			<Route path='/dashboard' component={Dashboard}/>
 			<Route path='/classroom/manage' component={ManageClassrooms}/>
