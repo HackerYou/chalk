@@ -24,6 +24,7 @@ export default React.createClass({
 		e.preventDefault();
 		auth.login(this.refs.email.value,this.refs.password.value).then((res) => {
 			if(res.success) {
+				this.props.updateUserState();
 				this.history.pushState(null ,'/dashboard');
 			}
 		}, (err) => {

@@ -31,17 +31,24 @@ let createBrowserHistory = require('history/lib/createBrowserHistory');
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 function userName(context) {
-	if(auth.authenticated() === 'true' && Object.keys(context.state.user).length === 0) {
+	if(auth.authenticated() === 'true') {
+
 		userData.getUser(config.getUserId()).then(data => {
 			if(data.error) {
 				auth.logOut();
 				context.context.history.pushState(null,'/');
+				context.setState({
+					sign_up_error: 'Error'
+				});
 			}
+
 			userData.storeUser(data.user);
+
 			context.setState({
 				user: data.user
 			});
-			if(context.state.user.first_sign_up === true) {
+
+			if(data.user && data.user.first_sign_up === true) {
 				context.setState({
 					isModalOpen: true
 				});
@@ -58,15 +65,14 @@ let App = React.createClass({
 	displayName: 'App',
 	mixins: [History],
 	componentDidMount() {
-		userName(this);
+		this.updateUserState();
 	},
 	componentWillReceiveProps(){
-		userName(this);
+		this.updateUserState()
 	},
 	getInitialState(){
 		return{
 			user: {},
-			announcement: {},
 			isModalOpen: false,
 			sign_up_error: ''
 		}
@@ -75,6 +81,9 @@ let App = React.createClass({
 		this.setState({
 			user: {}
 		});
+	},
+	updateUserState() {
+		userName(this);
 	},
 	updateUser(e) {
 		e.preventDefault();
@@ -102,13 +111,13 @@ let App = React.createClass({
 		if (location.pathname == '/'){
 			header = null;
 		} else{
-			header = <Headline user={this.state.user} history={this.props.history} clearUser={this.clearUser}/>;
+			header = <Headline history={this.props.history} clearUser={this.clearUser}/>;
 		}
 		return (
 			<div className="wrapper">
 				{header}
 				<section className="mainContent" >
-					{this.props.children || <Login />}
+					{this.props.children || <Login updateUserState={this.updateUserState} />}
 				</section>
 				<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 					<div className="modalBody--small card loginModal">
@@ -149,7 +158,7 @@ let App = React.createClass({
 
 
 ReactDom.render(
-	(<Router history={createBrowserHistory()}>
+	(<Router history={createBrowserHistory()} onUpdate={() => window.scrollTo(0, 0)}>
 		<Route path='/' component={App}>
 			<Route path='/dashboard' component={Dashboard}/>
 			<Route path='/classroom/manage' component={ManageClassrooms}/>

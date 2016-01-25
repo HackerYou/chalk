@@ -7,7 +7,6 @@ export default {
 		return _user;
 	},
 	storeUser(user) {
-		// console.log(user);
 		_user = user;
 	},
 	addUser(email){
