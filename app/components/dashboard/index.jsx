@@ -6,6 +6,7 @@ import config from '../../services/config.jsx';
 import coursesData from '../../services/courses.jsx';
 import userData from '../../services/user.jsx';
 import Loading from '../loading/index.jsx';
+import auth from '../../services/authentication.jsx';
 
 export default React.createClass({
 	displayName: 'Dashboard',
@@ -18,7 +19,12 @@ export default React.createClass({
 		}
 	},
 	componentWillMount(){
-		let user = userData.getUser(config.getUserId()).then(res=>{
+		let user = userData.getUser(config.getUserId()).then(res => {
+			if(res.error) {
+				auth.logOut();
+				this.props.history.pushState(null,'/');
+				return;
+			}
 			let isAdmin = res.user.admin;
 			if (isAdmin) {
 				this.setState({
