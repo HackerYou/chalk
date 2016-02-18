@@ -21,8 +21,8 @@ input.nameInput {
 	margin-top: 50px;
 	transition: all 0.2s;
 	&:hover {
-		border: 2px dashed color($border lightness(80%));
-		color: color($black lightness(40%));
+		border: 2px dashed lighten($border, 80%);
+		color: lighten($black, 40%);
 	}
 	h3 {
 		margin: 0;

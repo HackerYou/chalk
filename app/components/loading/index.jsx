@@ -4,11 +4,14 @@ export default React.createClass({
 	render() {
 		return (
 			<div className={!this.props.loading ? 'chalk-loader hide' : 'chalk-loader'}>
-				<span className="loader"></span> 
-				<span className="loader"></span> 
-				<span className="loader"></span> 
-				<span className="loader"></span> 
-				<span className="loader"></span> 
+				<div className="loader-container">
+					<h2>Loading</h2>
+					<span className="loader"></span> 
+					<span className="loader"></span> 
+					<span className="loader"></span> 
+					<span className="loader"></span> 
+					<span className="loader"></span> 
+				</div>
 			</div>
 		);
 	}

@@ -71,7 +71,8 @@ export default React.createClass({
 		return <LessonDetails key={index} index={index} details={key} classroomId={this.props.params.courseId} star={star} canEdit={this.state.user.admin || this.state.user.instructor} />
 	},
 	renderTopics(key, index){
-		return <li key={index}>{this.state.sections[index].title}</li>;
+		let link = '#' + this.state.sections[index].title.replace(/ /g, "_").toLowerCase();
+		return <li key={index}><a href={link}>{this.state.sections[index].title}</a></li>;
 	},
 	createSection(e){
 		e.preventDefault();
@@ -90,7 +91,8 @@ export default React.createClass({
 		this.history.pushState(null,`/lesson/${classroomId}/${sectionId}/new`);
 	},
 	renderSections(key, index){
-		return (<li key={index} className="lessonGroup">
+		let title = this.state.sections[index].title.replace(/ /g, "_").toLowerCase();
+		return (<li key={index} className="lessonGroup" id={title}>
 				<h3>{this.state.sections[index].title}</h3>
 				<div className="card lessonCard">
 					<ol className="lessonSection">
@@ -194,7 +196,7 @@ export default React.createClass({
 								<ul className="topicList">
 									{(this.state.sections).map(this.renderTopics)}
 								</ul>
-								<button className="primary" onClick={this.showFavs}>{this.state.showFavs ? 'show all Lessons' : 'show starred Lessons'}</button>
+								<button className="primary" onClick={this.showFavs}>{this.state.showFavs ? 'show all lessons' : 'show starred lessons'}</button>
 							</div>
 						</section>
 						{isAdmin || isInstructor ? members : null}
