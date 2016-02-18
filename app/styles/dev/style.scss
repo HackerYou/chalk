@@ -1,5 +1,5 @@
 @import 'setup';
-@import 'utilities/brand.css';
+@import 'utilities/brand';
 
 @lost gutter 3.3rem;
 @lost flexbox flex;
@@ -12,15 +12,15 @@ body {
   background-color: #ECEDEB;
 }
 
+@import 'utilities/typography';
+@import 'utilities/code';
+@import 'utilities/tools';
+@import 'utilities/buttons';
+@import 'utilities/forms';
+@import 'utilities/highlight';
+@import 'utilities/notifications';
 
-@import 'utilities/typography.css';
-@import 'utilities/code.css';
-@import 'utilities/buttons.css';
-@import 'utilities/forms.css';
-@import 'utilities/highlight.css';
-@import 'utilities/notifications.css';
-@import 'styleGuide.css';
-
+@import 'styleGuide';
 
 .wrapper {
   max-width: 1080px;
@@ -75,3 +75,18 @@ section.detailsForm > form .fieldRow, .detailsForm > form .fieldRow {
 		padding-top: 30px;
 	}
 }
+
+@import 'partials/modal';
+@import 'partials/header';
+@import 'partials/footer';
+@import 'partials/login';
+@import 'partials/dashboard';
+@import 'partials/classroom';
+@import 'partials/lessons';
+@import 'partials/template';
+@import 'partials/topics';
+@import 'partials/media';
+@import 'partials/instructor';
+@import 'partials/member';
+@import 'partials/loading';
+

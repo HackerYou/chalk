@@ -3,12 +3,23 @@
 	transition: all 0.5s;
 	visibility: visible;
 	opacity: 1;
-	position: absolute; 
+	position: fixed;
+	background: rgba(0,0,0,0.5);
 	left: 0;
+	top: 0;
+	bottom: 0;
 	right: 0;
+	transition: all 0.5s;
+	display: flex;
+	flex-flow: row wrap;
 	&.hide {
 		opacity: 0;
 		visibility: hidden;
+	}
+	.loader-container {
+		margin: auto;
+		padding: 2rem 5rem 4rem;
+		@extend .card;
 	}
 	.loader {
 		display: inline-block;

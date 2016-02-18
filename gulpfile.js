@@ -1,4 +1,6 @@
-var gulp = require('gulp'),
+'use strict';
+
+const gulp = require('gulp'),
 		browserify = require('browserify'),
 		source = require('vinyl-source-stream'),
 		buffer = require('vinyl-buffer'),
@@ -6,11 +8,11 @@ var gulp = require('gulp'),
 		browserSync = require('browser-sync'),
 		reload = browserSync.reload,
 		$ = require('gulp-load-plugins')(),
+		scss = require("postcss-scss"),
 		historyApiFallback = require('connect-history-api-fallback');
 
-
 // Define paths
-var paths = {
+const paths = {
 	srcCSS: './app/styles/dev/',
 	distCSS: './app/styles/',
 	srcGuideJS : './app/styleguide/scripts/' ,
@@ -23,31 +25,43 @@ var paths = {
 	jsx: 'app/components/app.jsx'
 }
 
+const lint = [
+	// require('stylelint')(),
+	require('postcss-reporter')({ clearMessages: true, throwError: true })
+];
+
 // Setup PostCSS Plugins
-var processors = [
-	require('postcss-sassy-mixins')(), // https://github.com/andyjansson/postcss-sassy-mixins
+const postcss = [
+	require('postcss-unique-selectors')(),
+	require('postcss-discard-duplicates')(),
 	require('precss')(),
-	require('postcss-pseudo-class-enter')(), //https://github.com/jonathantneal/postcss-pseudo-class-enter
-	require('postcss-position')(), // https://github.com/seaneking/postcss-position
+	require('postcss-pseudo-class-enter')(),
+	require('postcss-position')(),
 	require('pixrem')(),
-	require('css-mqpacker')(), // https://github.com/hail2u/node-css-mqpacker
-	require('postcss-size')(), // https://github.com/postcss/postcss-size
-	require('postcss-quantity-queries')(), // https://github.com/pascalduez/postcss-quantity-queries
-	require('lost')(), // https://github.com/corysimmons/lost/wiki/Installation
-	require('postcss-color-function')(), // https://github.com/postcss/postcss-color-function
-	require('autoprefixer')({ browsers: ['last 5 versions', '> 10%'] }), // https://github.com/postcss/autoprefixer-core
-	require('postcss-reporter')() // https://github.com/postcss/postcss-reporter
+	require('css-mqpacker')(),
+	require('postcss-size')(),
+	require('postcss-quantity-queries')(),
+	require('lost')(),
+	require('postcss-color-function')(),
+	require('autoprefixer')({ browsers: ['last 5 versions', '> 10%'] }),
+	require('cssnano')(),
+	require('postcss-reporter')({ clearMessages: true})
 ];
 
 gulp.task('styles', () => {
-	return gulp.src(paths.srcCSS + 'style.css')
+	return gulp.src(paths.srcCSS + 'style.scss')
 		.pipe($.plumber({
-		  errorHandler: $.notify.onError("Error: <%= error.message %>")
+			errorHandler: $.notify.onError({
+				title: "Style Error",
+				message: "<%= error.message %>"
+			})	
 		}))
 		.pipe($.sourcemaps.init())
-		.pipe($.postcss(processors))
+		// .pipe($.postcss(lint, { syntax: scss }))
+		.pipe($.sass().on('error', $.sass.logError))
+		.pipe($.postcss(postcss))
 		.pipe($.minifyCss())
-    .pipe($.sourcemaps.write())
+    .pipe($.sourcemaps.write('.'))
 		.pipe(gulp.dest(paths.distCSS))
 		.pipe(reload({stream:true}));
 });
@@ -100,10 +114,15 @@ gulp.task('bs-guide', function () {
 gulp.task('js', function() {
 	browserify(paths.jsx)
 		.transform(babelify,{presets: ["es2015", "react"]})
-		.bundle().on('error', function(err) {
-			console.log("Error:",err.message);
-		})
-		.pipe(source('app.js'))
+		.bundle().on('error', $.notify.onError({
+      title: "JSX Error",
+      message: "<%= error.message %>"
+    }))
+		.pipe(source('app.min.js'))
+    .pipe(buffer())
+    .pipe($.sourcemaps.init({loadMaps: true}))
+    .pipe($.uglify())
+    .pipe($.sourcemaps.write('.'))
 		.pipe(gulp.dest('app/components'));
 });
 
@@ -118,10 +137,10 @@ gulp.task('bs-client', function () {
  
 gulp.task('build', ['js','styles']);
 
-gulp.task('default', ['js','bs-client'], () => {
+gulp.task('default', ['styles', 'js','bs-client'], () => {
 	gulp.watch('app/**/*.jsx',['js']);
 	gulp.watch('app/components/app.js', reload);
-	gulp.watch(paths.srcCSS + '**/*.css', ['styles']);
+	gulp.watch(paths.srcCSS + '**/*.scss', ['styles']);
 });
 
 gulp.task('guide', ['styles', 'guidetemplate', 'guidescripts', 'bs-guide','guidewatch']);
