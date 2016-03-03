@@ -55,7 +55,7 @@ export default React.createClass({
 	openModal(){
 		this.setState({isModalOpen: true});
 	},
-	closeModal(){
+	closeModal(e){
 		this.setState({isModalOpen: false});
 	},
 	getValue(e){
@@ -78,14 +78,13 @@ export default React.createClass({
 		return <option key={index} value={this.state.uniqueTopics[index]}>{this.state.uniqueTopics[index]}</option>
 	},
 	addTopic(e){
-		e.preventDefault();
+		// e.preventDefault();
 		let topicId = this.refs.selectedTopic.value;
 		let addTopic = lessonData.addTopicToLesson(this.props.params.lessonId, topicId, {
 			'topics': topicId
 		});
 
 		let getTopic = topicsData.getTopicById(topicId);
-
 		$.when(addTopic, getTopic).then((addRes, getRes)=>{
 			this.closeModal();
 			let updatedTopics = this.state.lessonTopics.slice();
@@ -184,7 +183,7 @@ export default React.createClass({
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<div className="modalBody--small card">
 							<i className="chalk-close" onClick={this.closeModal}></i>
-							<form onSubmit={this.addTopic} action="">
+							<form onSubmit={e => e.preventDefault()}>
 								<h2>Add Topic</h2>
 								<h3>Search By Topic Name</h3>
 								<input type="text" placeholder='eg. Floats'/>
@@ -214,8 +213,8 @@ export default React.createClass({
 											</select>
 										</div>
 									</div>
-								<button className="success">Save Content</button>
-								<button onClick={this.closeModal} className="error">Cancel</button>
+								<div onClick={this.addTopic} className="button success">Save Content</div>
+								<div onClick={this.closeModal} className="button error">Cancel</div>
 							</form>
 						</div>
 						</Modal>
