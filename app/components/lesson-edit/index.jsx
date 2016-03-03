@@ -85,7 +85,6 @@ export default React.createClass({
 		});
 
 		let getTopic = topicsData.getTopicById(topicId);
-		console.log('running')
 		$.when(addTopic, getTopic).then((addRes, getRes)=>{
 			this.closeModal();
 			let updatedTopics = this.state.lessonTopics.slice();
