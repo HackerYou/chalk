@@ -1,6 +1,10 @@
 node_modules
 app/components/app.js
+app/components/app.min.js
+app/components/app.min.js.map
 app/styles/style.css
+app/styles/style.css.map
 .jshintrc
 app/.DS_Store
 **/.DS_Store
+
