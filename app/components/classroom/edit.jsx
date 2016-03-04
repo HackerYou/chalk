@@ -53,7 +53,7 @@ export default React.createClass({
 	},
 	createSection(e){
 		e.preventDefault();
-		coursesData.addSectionToCourse(this.props.params.templateId, {
+		coursesData.addSectionToCourse(this.props.params.courseId, {
 			title: this.refs.section.value
 		}).then(res=>{
 			this.setState({
