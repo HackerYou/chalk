@@ -65,7 +65,7 @@ export default React.createClass({
 
 		let templateLink = `/course-templates/${this.props.params.classroomId}/edit`;
 		let classroomLink = `/classroom/${this.props.params.classroomId}`
-
+		
 		return (
 		<div className="full">
 				<header className="topContent container">
@@ -82,7 +82,6 @@ export default React.createClass({
 				<div className="container">
 						<Link className="linkBtn" to={this.state.isTemplate ? templateLink : classroomLink}><button className="primary"><i className="chalk-home"></i>{this.state.isTemplate ? 'back to template' : 'back to classroom'}</button></Link>
 					{isAdmin || isInstructor ? editButton : null}
-
 				</div>
 			</div>
 

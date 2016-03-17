@@ -45,7 +45,7 @@ export default React.createClass({
 		});
 	},
 	renderLessons(key, index){
-		return <LessonDetails key={index} index={index} details={key} classroomId={this.props.params.templateId} courseId={this.state.course._id} />
+		return <LessonDetails draggable="true" key={index} index={index} details={key} classroomId={this.props.params.templateId} courseId={this.state.course._id} />
 	},
 	renderTopics(key, index){
 		let link = '#' + this.state.sections[index].title.replace(/ /g, "_").toLowerCase();
