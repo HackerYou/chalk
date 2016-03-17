@@ -1,18 +1,15 @@
 @mixin bp($point) {
   @if $point == xl { // 1050px
-    @media (max-width: 65.625rem) { @content; }
+    @media (max-width: 105rem) { @content; }
   }
   @else if $point == lg { // 900px
-    @media (max-width: 56.25rem) { @content; }
+    @media (max-width: 90rem) { @content; }
   }
   @else if $point == md { // 768px
+    @media (max-width: 76.8rem) { @content; }
+  }
+  @else if $point == sm { // 480px
     @media (max-width: 48rem) { @content; }
-  }
-  @else if $point == sm { // 600px
-    @media (max-width: 37.5rem) { @content; }
-  }
-  @else if $point == xs { // 400px
-    @media (max-width: 25rem) { @content; }
   }
 }
 

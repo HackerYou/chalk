@@ -87,6 +87,7 @@ export default React.createClass({
 								<option value="javascript">JavaScript</option>
 								<option value="wordpress">WordPress</option>
 								<option value="tools">Tools</option>
+								<option value="seo">SEO</option>
 							</select>
 						</div>
 					</form>
