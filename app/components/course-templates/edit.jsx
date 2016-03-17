@@ -57,11 +57,11 @@ export default React.createClass({
 		let sectionId = e.target.id;
 		this.history.pushState(null,`lesson/${classroomId}/${sectionId}/new`);
 	},
-	deleteSection(e){
+	deleteSection(sectionId,e){
 		// console.log(e.target.className);
-		coursesData.removeSectionFromCourse(this.props.params.templateId, e.target.id).then(res=>{
+		coursesData.removeSectionFromCourse(this.props.params.templateId, sectionId).then(res=>{
 			let newSections = (this.state.sections).filter((obj)=>{
-				return obj._id !== e.target.id;
+				return obj._id !== sectionId;
 			});
 			this.setState({
 				sections: newSections
@@ -73,7 +73,7 @@ export default React.createClass({
 		return <li key={index} className="lessonGroup" id={this.state.sections[index]._id}>
 				<header className="lessonGroupTop">
 					<h3>{this.state.sections[index].title}</h3>
-					<p onClick={this.deleteSection} id={this.state.sections[index]._id} className="deleteSection"><i className="chalk-remove red"></i>Remove Section</p>
+					<p onClick={this.deleteSection.bind(this,this.state.sections[index]._id)} className="deleteSection"><i className="chalk-remove red"></i>Remove Section</p>
 				</header>
 				<div className="card">
 					<ol>
