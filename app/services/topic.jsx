@@ -32,13 +32,14 @@ export default {
 			}
 		});
 	},
-	getTopics(){
+	getTopics(data){
 		return $.ajax({
 			url: `${config.getApiUrl()}/topic/`,
 			method: 'GET',
 			headers: {
 				'x-access-token' : config.getToken(),
-			}
+			},
+			data: data
 		});
 	},
 	deleteTopic(id){
