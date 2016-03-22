@@ -13,6 +13,7 @@ import Loading from '../loading/index.jsx';
 export default React.createClass({
 	displayName: 'Classroom',
 	mixins: [AuthMixin,History],
+	originalMembers: [],
 	getInitialState(){
 		document.body.className = '';
 		return{
@@ -44,6 +45,8 @@ export default React.createClass({
 		});
 		let id = this.props.params.courseId;
 		coursesData.getCourseById(id).then(res=>{
+			this.originalMembers = res.course.students;
+
 			this.setState({
 				course: res.course,
 				sections: res.course.sections,
@@ -152,6 +155,29 @@ export default React.createClass({
 		}
 
 	},
+	searchUsers(e){
+		e.preventDefault();
+		let searchQuery = this.refs.searchQuery.value;
+		let allMembers = this.originalMembers;
+
+		if (searchQuery === ''){
+			this.setState({
+				members: allMembers
+			});
+		} else {
+			searchQuery = new RegExp(this.refs.searchQuery.value,'ig');
+			let matchedMembers = allMembers.filter((members) => {
+				if (members.firstName !== undefined){
+					return members.firstName.match(searchQuery)
+				}
+			});	
+			this.setState({
+				members: matchedMembers
+			});
+
+
+		}
+	},
 	render() {
 		// let lessons = this.state.course.lessons;
 		let isAdmin = this.state.user.admin;
@@ -207,9 +233,11 @@ export default React.createClass({
 								<div className="membersModalWrap">
 
 									<div className="memberModalColumn memberModalForm">
+										<form onSubmit={this.searchUsers}>
+											<label htmlFor="search">Search By First Name</label>
+											<input type="text" placeholder="Name" id="search" ref="searchQuery"/>
+										</form>
 										<form onSubmit={this.addUser} action="">
-											<label htmlFor="search">Search By Name</label>
-											<input type="text" placeholder="Name" id="search"/>
 											<label htmlFor="email">Add by email<br /> <small>Separate emails by comma</small></label>
 
 											<input ref="students"  type="text" id="email" placeholder="enter emails"/>
