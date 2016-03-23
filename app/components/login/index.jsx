@@ -33,10 +33,9 @@ export default React.createClass({
 			});
 		});
 	},
-	lostPassword() {
-		this.setState({
-			lostPassword: true
-		});
+	lostPasswordToggle() {
+		let val = this.state.lostPassword ? false : true;
+		this.setState({ lostPassword: val });
 	},
 	sendResetEmail(e) {
 		e.preventDefault();
@@ -51,6 +50,7 @@ export default React.createClass({
 	},
 	render() {
 		let form;
+		let error = (<p className="red">{this.state.error}</p>)
 		if(this.state.lostPassword !== true) {
 			form = (
 				<div>
@@ -64,24 +64,29 @@ export default React.createClass({
 						<input type="password" ref="password" placeholder="Password"/>
 					</div>
 					<div className="fieldGroup">
-						<input type="submit" className="button primary" value="Sign In" onClick={this.login} />
+						<input type="submit" className="button primary" value="sign in" onClick={this.login} />
 					</div>
-					<p className="red">{this.state.error}</p>
-					<p><a href="#" onClick={this.lostPassword}>Lost your password?</a></p>
+					<div className="fieldGroup">
+						{this.state.error ? error : null}
+						<p><a href="#" onClick={this.lostPasswordToggle}>lost your password?</a></p>
+					</div>
 				</div>
 			);
 		}
 		else {
 			form = (
 				<div>
-					<h3>Reset password</h3>
+					<h3>reset your password</h3>
 					{this.passwordMessage}
 					<div className="fieldGroup">
 						<label htmlFor="email" className="inline">email</label>
 						<input type="text" ref="email" placeholder="Your Email"/>
 					</div>
 					<div className="fieldGroup">
-						<input type="submit" className="button primary" value="Reset Password" onClick={this.sendResetEmail}/>
+						<input type="submit" className="button primary" value="reset password" onClick={this.sendResetEmail}/>
+					</div>
+					<div className="fieldGroup">
+						<p><a href="#" onClick={this.lostPasswordToggle}>Back to login</a></p>
 					</div>
 				</div>
 			)

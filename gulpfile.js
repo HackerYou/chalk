@@ -139,7 +139,7 @@ gulp.task('build', ['js','styles']);
 
 gulp.task('default', ['styles', 'js','bs-client'], () => {
 	gulp.watch('app/**/*.jsx',['js']);
-	gulp.watch('app/components/app.js', reload);
+	gulp.watch('app/components/app.min.js', reload);
 	gulp.watch(paths.srcCSS + '**/*.scss', ['styles']);
 });
 
