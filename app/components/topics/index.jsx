@@ -72,37 +72,28 @@ export default React.createClass({
 	prevPage(e){
 		e.preventDefault();
 		let prevPage = this.state.page - 1;
-		if (prevPage === 0) {
-			return;
-		} else {
-			let pageOffset = (prevPage-1)*25;
+		let pageOffset = (prevPage-1)*25;
 			topicData.getTopics({limit: 25, offset: pageOffset}).then(res=>{
 				this.setState({
 					topics: res.topic,
 					page: prevPage
 				});
 			});	
-		}
 	},
 	nextPage(e){
 		e.preventDefault();
 		let nextPage = this.state.page + 1;
-
-		if (nextPage > this.state.totalPages){
-			return;
-		} else {
-			let pageOffset = this.state.page*25;
+		let pageOffset = this.state.page*25;
 			topicData.getTopics({limit: 25, offset: pageOffset}).then(res=>{
 				this.setState({
 					topics: res.topic,
 					page: nextPage
 				});
 			});
-			
-		}
-
 	},
 	render() {
+		let pageOne = (this.state.page === 1 ? true : false);
+		let lastPage = (this.state.page === this.state.totalPages ? true : false);
 		return (
 			<div className="topics">
 				<div className="container">
@@ -135,8 +126,8 @@ export default React.createClass({
 				</section>
 				<Loading loading={this.state.loading}/>
 				<div className="pages">
-					<button className="primary" onClick={this.prevPage}>Previous Topics</button>
-					<button className="primary" onClick={this.nextPage}>Next Topics</button>
+					<button className="primary" disabled={pageOne} onClick={this.prevPage}>Previous Topics</button>
+					<button className="primary" disabled={lastPage} onClick={this.nextPage}>Next Topics</button>
 				</div>
 				<section className="topicsWrap" >
 					{(this.state.topics).map(this.renderTopics)}
