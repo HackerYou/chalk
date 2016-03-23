@@ -71,7 +71,7 @@ input[type="submit"] {
 }
 
 
-button.small {
+button.small, .button.small {
   display: inline-block;
   font-family: $regularFont;
   font-weight: 400;

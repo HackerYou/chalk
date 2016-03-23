@@ -10,21 +10,23 @@ export default React.createClass({
 		this.props.clearUser();
 		this.props.history.pushState(null,'/');
 	},
+	userDisplay() {
+		
+	},
 	render() {
-		let user = {
-			firstName: '',
-			lastName: '',
-			email: ''
-		};
-		if(userData.getStoredUser()) {
-			user = userData.getStoredUser();
+		let user = userData.getStoredUser();
+		let userInfo;
+		if (Object.keys(user).length === 0) {
+			userInfo = <h3>Loading</h3>;
+		} else {
+			userInfo = <div className="userInfo"><h3>Hello, {user.firstName} {user.lastName}</h3><p className="signOut"><a href="#" className="strong" onClick={this.logOut}><i className="chalk-log-out"></i>Log out of {user.email}</a></p></div>;
 		}
 		return (
+			
 			<header className="mainHeader">
 				<div className="innerWrap card">
 					<Link to="/dashboard" className="linkBtn topLogo"><img src="/images/logo-hackeryou.svg" alt="HackerYou Logo" /></Link>
-					<h3>Hello, {user.firstName} {user.lastName}</h3>
-					<p className="signOut"><a href="#" className="strong" onClick={this.logOut}><i className="chalk-log-out"></i>Log out of {user.email}</a></p>
+					{userInfo}
 				</div>
 			</header>
 		)

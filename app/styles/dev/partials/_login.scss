@@ -4,16 +4,24 @@
 	text-align: center;
 	position: relative;
 	padding: 140px 10px 30px;
+	@include bp(md) {
+		padding: 50px 0;
+		margin: 1rem 0 5rem;
+	}
 	.loginLogo {
-		height: 200px;
 		position: absolute;
+		height: 200px;
 		left: calc(50% - 100px);
 		top: -70px;
+		@include bp(md) {
+			height: 100px;
+			position: static;
+		}
 	}
 	form {
 		max-width: 36rem;
 		margin: 0 auto;
-		.button {
+		input[type=submit] {
 			width: 100%;
 			margin: 0;
 		}
@@ -31,4 +39,8 @@
 		top: 25%;
 		left: -7rem;
 	}
+}
+
+.fieldGroup:last-of-type {
+	margin-top: 15px;
 }
