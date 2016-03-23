@@ -1,16 +1,31 @@
 footer.mainFooter {
 	margin: 10rem 0;
 	padding: 1.5rem 3.9rem 1.5rem;
+	@include bp(md) {
+		margin: 5rem 0 2.5rem;
+		padding: 1rem 2.5rem;
+	}
 	ul {
 		list-style: none;
 		padding: 0;
-		a {
-			color: $red;
-			font-family: $headerFont;
-			font-weight: 700;
-			border: 0;
-			i {
-				color: $black;
+		display: flex;
+		flex-flow: column wrap;
+		@include bp(md) {
+			display: none;
+		}
+		li {
+			@include bp(md) {
+				width: 50%;
+				margin-top: 1rem;
+			}
+			a {
+				color: $red;
+				font-family: $headerFont;
+				font-weight: 700;
+				border: 0;
+				i {
+					color: $black;
+				}
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 @import 'setup';
 @import 'utilities/brand';
+@import 'utilities/tools';
 
 @lost gutter 3.3rem;
 @lost flexbox flex;
@@ -14,7 +15,6 @@ body {
 
 @import 'utilities/typography';
 @import 'utilities/code';
-@import 'utilities/tools';
 @import 'utilities/buttons';
 @import 'utilities/forms';
 @import 'utilities/highlight';
@@ -25,6 +25,9 @@ body {
 .wrapper {
   max-width: 1080px;
   margin: 0 auto;
+  @include bp(md) {
+  	padding: 0 1rem;
+  }
 }
 
 .card {

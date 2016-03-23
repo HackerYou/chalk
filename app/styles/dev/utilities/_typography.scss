@@ -59,6 +59,7 @@ html {
 }
 
 body {
+  font-size: 1.5rem;
   font-family: $baseFont;
 	color: #333;
 }
@@ -176,10 +177,20 @@ a:enter {
 
 
 .red { color: $red; }
+.redLight { color: $redLight; }
+.redDark { color: $redDark; }
 .green { color: $green; }
+.greenLight { color: $greenLight; }
+.greenDark { color: $greenDark; }
 .blue {color: $blue; }
+.blueLight {color: $blueLight; }
+.blueDark {color: $blueDark; }
 .grey { color: $grey; }
-.redLight { color: $redLight;}
+.greyLight { color: $greyLight; }
+.greyDark { color: $greyDark; }
+.black { color: $black; }
+.blackLight { color: $blackLight; }
+.blackDark { color: $blackDark; }
 
 p.error {
   font-weight: 700;
