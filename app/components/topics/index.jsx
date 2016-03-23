@@ -13,16 +13,24 @@ export default React.createClass({
 	getInitialState(){
 		return {
 			topics: [],
-			loading: true
+			loading: true,
+			topicCount: 0,
+			page: 1, 
+			totalPages: 0
 		}
 	},
 	componentWillMount(){
-		topicData.getTopics().then(res => {
+		topicData.getTopics({limit:25}).then(res => {
 			this.originalTopics = res.topic;
+
+			let totalPag = Math.ceil(res.totalCount/25);
+
 
 			this.setState({
 				topics: res.topic,
-				loading: false
+				loading: false,
+				topicCount: res.totalCount,
+				totalPages: totalPag
 			});
 		});
 	},
@@ -61,7 +69,31 @@ export default React.createClass({
 	renderTopics(key, index){
 		return <Topic key={index} index={index} details={this.state.topics[index]} />
 	},
+	prevPage(e){
+		e.preventDefault();
+		let prevPage = this.state.page - 1;
+		let pageOffset = (prevPage-1)*25;
+			topicData.getTopics({limit: 25, offset: pageOffset}).then(res=>{
+				this.setState({
+					topics: res.topic,
+					page: prevPage
+				});
+			});	
+	},
+	nextPage(e){
+		e.preventDefault();
+		let nextPage = this.state.page + 1;
+		let pageOffset = this.state.page*25;
+			topicData.getTopics({limit: 25, offset: pageOffset}).then(res=>{
+				this.setState({
+					topics: res.topic,
+					page: nextPage
+				});
+			});
+	},
 	render() {
+		let pageOne = (this.state.page === 1 ? true : false);
+		let lastPage = (this.state.page === this.state.totalPages ? true : false);
 		return (
 			<div className="topics">
 				<div className="container">
@@ -93,6 +125,10 @@ export default React.createClass({
 					</form>
 				</section>
 				<Loading loading={this.state.loading}/>
+				<div className="pages">
+					<button className="primary" disabled={pageOne} onClick={this.prevPage}>Previous Topics</button>
+					<button className="primary" disabled={lastPage} onClick={this.nextPage}>Next Topics</button>
+				</div>
 				<section className="topicsWrap" >
 					{(this.state.topics).map(this.renderTopics)}
 				</section>
