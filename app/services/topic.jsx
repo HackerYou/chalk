@@ -50,5 +50,17 @@ export default {
 				'x-access-token' : config.getToken()
 			}
 		});
+	},
+	searchTopics(query){
+		return $.ajax({
+			url: `${config.getApiUrl()}/topic/search`,
+			method: 'GET',
+			headers: {
+				'x-access-token' : config.getToken()
+			},
+			data: {
+				term: query
+			}
+		});
 	}
 };

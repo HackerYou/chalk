@@ -52,19 +52,21 @@ export default React.createClass({
 	},
 	searchTopics(event) {
 		event.preventDefault();
-		let searchTopic = new RegExp(this.refs.searchQuery.value,'ig');
+		let searchQuery = this.refs.searchQuery.value;
 		let originalTopics = this.originalTopics;
-		if(searchTopic === '') {
+		if(searchQuery === '') {
 			this.setState({
 				topics: originalTopics
 			});
 		}
 		else {
-			this.setState({
-				topics: originalTopics.filter(topic => topic.title.match(searchTopic))
+			topicData.searchTopics(searchQuery).then(res=>{
+				this.setState({
+					topics: res.topics
+				});
+			
 			});
 		}
-
 	},
 	renderTopics(key, index){
 		return <Topic key={index} index={index} details={this.state.topics[index]} />
