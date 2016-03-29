@@ -1,6 +1,9 @@
 .lessonView {
 	padding: 40px 50px 50px;
 	margin-bottom: 50px;
+	@include bp(sm) {
+		padding: 20px 20px 40px;
+	}
 }
 
 .lessonEditView {

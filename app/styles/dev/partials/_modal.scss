@@ -7,6 +7,11 @@
 	position: fixed 0;
 	z-index: 9999;
 	overflow: scroll;
+	display: flex;
+	flex-flow: row wrap;
+	@include bp(sm) {
+		padding: 20px;
+	}
 }
 
 .modalBody {
@@ -25,11 +30,21 @@
 }
 
 .modalBody--small {
-	width: 50%;
+	margin: auto;
+	max-width: 900px;
 	padding: 20px 60px 45px;
-	position: absolute;
-	left: 25%;
-	top: 25px;
+	// position: absolute;
+	// left: calc(50% - 400px);
+	// top: 25px;
+	@include bp(sm) {
+		padding: 20px;
+		width: 100%;
+	}
+	.inlineFieldRow .fieldGroup {
+		@include bp(sm) {
+			width: 100%;
+		}
+	}
 	i.chalk-close {
 		position: absolute;
 		top: 10px;

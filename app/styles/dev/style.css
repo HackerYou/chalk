@@ -52,6 +52,9 @@ header.intro {
 header.topContent {
 	margin-bottom: 3rem;
 	margin-top: 10px;
+	@include bp(sm) {
+		margin-bottom: 1rem;
+	}
 	.headerLinks {
 		margin-bottom: 40px;
 	}
