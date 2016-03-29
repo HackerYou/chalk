@@ -73,7 +73,7 @@ let App = React.createClass({
 	getInitialState(){
 		return{
 			user: {},
-			isModalOpen: false,
+			isModalOpen:false,
 			sign_up_error: ''
 		}
 	},

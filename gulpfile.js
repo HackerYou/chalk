@@ -38,7 +38,6 @@ const postcss = [
 	require('postcss-pseudo-class-enter')(),
 	require('postcss-position')(),
 	require('pixrem')(),
-	require('css-mqpacker')(),
 	require('postcss-size')(),
 	require('postcss-quantity-queries')(),
 	require('lost')(),

@@ -1,9 +1,9 @@
 header.mainHeader {
 	padding: 40px 0;
 	margin-bottom: 3rem;
-	@include bp(md) {
-		padding: 1rem 0;
-		margin-bottom: 0;
+	@include bp(sm) {
+		padding: 2rem 0;
+		margin-bottom: 1.5rem;
 	}
 	.innerWrap {
 		position: relative;
@@ -11,7 +11,7 @@ header.mainHeader {
 		justify-content: space-between;
 		align-items: center;
 		padding: 2.4rem 3.9rem 2.4rem 240px;
-		@include bp(md) {
+		@include bp(sm) {
 			padding: 1rem 2rem 1rem 1rem;
 			justify-content: flex-start;
 		}
@@ -21,7 +21,7 @@ header.mainHeader {
 			flex-flow: row wrap;
 			width: 100%;
 			justify-content: space-between;
-			@include bp(sm) {
+			@include bp(md) {
 				flex-direction: column;
 				justify-content: flex-start;
 				align-items: flex-end;
@@ -34,21 +34,25 @@ header.mainHeader {
 			top: -27px;
 			left: 4.5rem;
 		  line-height: 0;
-			@include bp(md) {
-				width: 100px;
-				position: static;
-				margin-right: 1.5rem;
-			}
+		  @include bp(md) {
+		  	width: 130px;
+		  	top: -15px;
+		  }
+		  @include bp(sm) {
+		  	width: 85px;
+		  	left: 12px;
+		  	top: -10px;
+		  }
 		}
 		h3 {
-			@include bp(sm) {
+			@include bp(md) {
 				margin: 0;
 				font-size: 2rem;
 			}
 		}
 		p.signOut {
 			margin: 0;
-			@include bp(md) {
+			@include bp(sm) {
 				font-size: 1.4rem;
 			}
 			a {

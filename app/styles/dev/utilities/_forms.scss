@@ -163,8 +163,11 @@ select {
 
 .inlineFieldRow {
 	display: flex;
-	flex-wrap: wrap;
+	flex-flow: row wrap;
 	margin-bottom: 15px;
+  @include bp(sm) {
+    flex-direction: column;
+  }
 	.fieldGroup {
 		width: 50%;
 		input {
@@ -177,6 +180,10 @@ select {
 	.fieldGroup:not(:first-child) {
 		width: calc(50% - 10px);
 		margin-left: 10px;
+    @include bp(sm) {
+      width: 50%;
+      margin-left: 0;
+    }
 	}
 }
 

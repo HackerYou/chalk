@@ -22,17 +22,19 @@ export default React.createClass({
 	},
 	goToClass(e){
 		e.preventDefault();
-		this.history.pushState(null, `/classroom/${e.target.id}`);
+		if (e.target.dataset.classid !== undefined) {
+			this.history.pushState(null, `/classroom/${e.target.dataset.classid}`);
+		}
 	},
 	render() {
 		return (
 			<div to="/classroom" className="classCard">
-				<article className="card ">
+				<article className="card" onClick={this.goToClass} data-classid={this.props.details._id}>
 					<h3>{this.props.details.title}</h3>
 					<h4>Instructor: {this.state.instructor.firstName + " " + this.state.instructor.lastName}</h4>
 					<footer className="classCardMeta">
 						<p className="red"><strong>{this.props.details.term}</strong></p>
-						<button id={this.props.details._id} onClick={this.goToClass} className="primary">View Class</button>
+						<button data-classid={this.props.details._id} onClick={this.goToClass} className="primary">View Class</button>
 					</footer>
 				</article>
 			</div>
