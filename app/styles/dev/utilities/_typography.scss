@@ -101,6 +101,10 @@ p {
 	font-family: $regularFont;
 	font-weight: 400;
 	letter-spacing: 0.01rem;
+	@include bp(sm) {
+		font-size: 1.7rem;
+	  line-height: 1.7;
+	}
 }
 
 p.title {

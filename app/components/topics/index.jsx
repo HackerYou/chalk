@@ -15,7 +15,7 @@ export default React.createClass({
 			topics: [],
 			loading: true,
 			topicCount: 0,
-			page: 1, 
+			page: 1,
 			totalPages: 0
 		}
 	},
@@ -64,7 +64,7 @@ export default React.createClass({
 				this.setState({
 					topics: res.topics
 				});
-			
+
 			});
 		}
 	},
@@ -80,7 +80,7 @@ export default React.createClass({
 					topics: res.topic,
 					page: prevPage
 				});
-			});	
+			});
 	},
 	nextPage(e){
 		e.preventDefault();
@@ -110,7 +110,7 @@ export default React.createClass({
 				<section className="full card topicsForm searchTopics">
 
 					<form action="" onSubmit={this.searchTopics}>
-						<div className="fieldRow">
+						<div className="inlineFieldRow">
 							<label className="inline" htmlFor="search">Search by name</label>
 							<input type="search" placeholder="Search for a topic" ref="searchQuery"/>
 							<label htmlFor="category" className="inline">Filter by category</label>

@@ -49,6 +49,7 @@ input[type=time],
 input[type=url],
 input[type=week] {
   /*height: 2.25rem;*/
+	box-sizing: border-box;
   -webkit-appearance: none;
   appearance: none;
   border: 0;
@@ -65,6 +66,10 @@ input[type=week] {
   font-weight: 400;
   position: relative;
   top: 0px;
+	@include bp(sm) {
+		min-width: auto;
+		width: 100%;
+	}
   &:active, &:focus {
     outline: 0;
     border-bottom: 2px solid $blue;
@@ -112,6 +117,11 @@ label {
     text-align: right;
     position: relative;
     top: -5px;
+		@include bp(md) {
+			font-size: 1.7rem;
+			width: 100%;
+			text-align: left;
+		}
   }
 }
 
@@ -165,7 +175,7 @@ select {
 	display: flex;
 	flex-flow: row wrap;
 	margin-bottom: 15px;
-  @include bp(sm) {
+  @include bp(md) {
     flex-direction: column;
   }
 	.fieldGroup {
