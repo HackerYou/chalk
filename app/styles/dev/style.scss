@@ -66,10 +66,21 @@ header.topContent {
 section.detailsForm, .detailsForm {
 	padding: 1rem 4rem 1rem 4rem;
 	margin: 30px 0 50px;
+	@include bp(md) {
+		padding: 2rem 2rem 1rem;
+	}
 }
 
 section.detailsForm > form .fieldRow, .detailsForm > form .fieldRow {
 	margin-top: 3rem;
+	@include bp(md) {
+		margin-top: 1rem;
+	}
+	input[type=text] {
+		@include bp(sm) {
+			margin: 1rem 0;
+		}
+	}
 }
 
 
@@ -95,4 +106,3 @@ section.detailsForm > form .fieldRow, .detailsForm > form .fieldRow {
 @import 'partials/instructor';
 @import 'partials/member';
 @import 'partials/loading';
-

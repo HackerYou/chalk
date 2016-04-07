@@ -185,6 +185,8 @@ export default React.createClass({
 		let editButton = <button className="success" onClick={this.editCourse}><i className="chalk-remove"></i>edit course</button>;
 		let dragAndDrop = <p className="title">Drag and drop to reorganize lessons</p>
 		let displayMembers;
+		let favList = document.querySelectorAll('.lessonGroup .fav');
+		let displayFavButton= <button className="primary" onClick={this.showFavs}>{this.state.showFavs ? 'show all lessons' : 'show starred lessons'}</button>
 		if (this.state.members.length <= 0) {
 			displayMembers = <p className="emptyState">No members yet!</p>
 		} else {
@@ -194,13 +196,13 @@ export default React.createClass({
 				</ul>
 			)
 		}
-		let members = (<section className="sideCard">
+		let members = (
 						<div className="card">
 							<h3>Members</h3>
 							<p><i className="chalk-users"></i>{this.state.members.length} members of the classroom</p>
 							<button onClick={this.openModal} className="success">Manage classroom members</button>
 						</div>
-					</section>);
+					);
 		return (
 			<div className="container full">
 				<Link to='/dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
@@ -208,6 +210,8 @@ export default React.createClass({
 				<header className="topContent">
 					<h1>{this.state.course.title}</h1>
 					{isAdmin ? dragAndDrop : null}
+				{/* This needs redux baddddd - https://github.com/HackerYou/chalk/issues/129 */}
+					{favList.length > 0 ? displayFavButton : null}
 				</header>
 				<Loading loading={this.state.loading} />
 				<section className="lessonsWrap clearfix">
@@ -217,15 +221,14 @@ export default React.createClass({
 					<Sticky className="lessonMeta" stickyClass="supersticky" stickyStyle={{}} topOffset={100} bottomOffset={this.state.pageHeight}>
 					<aside>
 						<section className="sideCard">
-							<h3>Course Topics</h3>
 							<div className="card topicLegend">
+								<h3>Course Topics</h3>
 								<ul className="topicList">
 									{(this.state.sections).map(this.renderTopics)}
 								</ul>
-								<button className="primary" onClick={this.showFavs}>{this.state.showFavs ? 'show all lessons' : 'show starred lessons'}</button>
 							</div>
+							{isAdmin || isInstructor ? members : null}
 						</section>
-						{isAdmin || isInstructor ? members : null}
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<div className="modalBody card">
 								<i className="chalk-close" onClick={this.closeModal}></i>

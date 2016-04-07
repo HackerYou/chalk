@@ -16,16 +16,31 @@ ul.instructorList {
 		}
 		& > *:first-child {
 			lost-column: 1.3/4;
+			@include bp(sm) {
+				lost-column: 1/3;
+				font-size: 1.3rem;
+			}
 		}
 		& > *:nth-of-type(2) {
 			lost-column: 1/4;
+			@include bp(sm) {
+				lost-column: 1/3;
+				font-size: 1.4rem;
+			}
 		}
 		& > *:nth-of-type(3) {
 			lost-column: 0.7/4;
+			@include bp(sm) {
+				display: none;
+			}
 		}
 		& > *:last-child {
 			lost-column: 1/4;
 			text-align: right;
+			@include bp(sm) {
+				lost-column: 1/3;
+				span { display: none;}
+			}
 		}
 		&:last-child {
 			border-bottom: 0;
