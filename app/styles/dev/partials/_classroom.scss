@@ -86,6 +86,9 @@ li.lessonRow {
 		@include bp(sm) {
 			lost-column: 1/6;
 		}
+		@include bp(xs) {
+			lost-column: 1.5/5;
+		}
 	}
 	&:hover > .lessonMeta span {
 		display: inline-block;
@@ -99,6 +102,9 @@ li.lessonRow {
 		lost-column: 7/12;
 		@include bp(sm) {
 			lost-column: 5/6;
+		}
+		@include bp(xs) {
+			lost-column: 3.5/5;
 		}
 	}
 	.lessonMeta {

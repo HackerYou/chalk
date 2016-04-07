@@ -28,6 +28,9 @@ body {
   @include bp(md) {
   	padding: 0 1rem;
   }
+	@include bp(sm) {
+		padding: 0 0.7rem;
+	}
 }
 
 .card {
@@ -57,6 +60,9 @@ header.topContent {
 	margin-top: 10px;
 	@include bp(sm) {
 		margin-bottom: 1rem;
+	}
+	@include bp(xs) {
+		h1 { font-size: 3rem; }
 	}
 	.headerLinks {
 		margin-bottom: 40px;

@@ -18,6 +18,9 @@ section.dashWrap {
 			width: 100%;
 			lost-waffle: 1/1;
 		}
+		@include bp(xs) {
+			max-width: auto;
+		}
 		article {
 			padding: 1.4rem 1.5rem 2rem 2rem;
 			@include bp(md) {
@@ -56,4 +59,3 @@ header.intro {
 		}
 	}
 }
-

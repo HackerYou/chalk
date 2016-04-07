@@ -4,6 +4,9 @@
 	@include bp(sm) {
 		padding: 20px 20px 40px;
 	}
+	@include bp(xs) {
+		padding: 15px;
+	}
 }
 
 .lessonEditView {
