@@ -66,6 +66,10 @@ form.addMembersForm {
 			position: absolute;
 			bottom: -21px;
 			left: 0;
+			@include bp(sm) {
+				bottom: 5px;
+				position: relative;
+			}
 		}
 	}
 }

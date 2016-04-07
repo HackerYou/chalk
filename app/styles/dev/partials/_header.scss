@@ -43,17 +43,28 @@ header.mainHeader {
 		  	left: 12px;
 		  	top: -10px;
 		  }
+			@include bp(xs) {
+				width: 40px;
+				left: 10px;
+				top: 8px;
+			}
 		}
 		h3 {
 			@include bp(md) {
 				margin: 0;
 				font-size: 2rem;
 			}
+			@include bp(xs) {
+				font-size: 1.5rem;
+			}
 		}
 		p.signOut {
 			margin: 0;
 			@include bp(sm) {
 				font-size: 1.4rem;
+			}
+			@include bp(xs) {
+				font-size: 1.2rem;
 			}
 			a {
 				color: $black;

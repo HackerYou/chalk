@@ -11,6 +11,9 @@
   @else if $point == sm { // 480px
     @media (max-width: 480px) { @content; }
   }
+	@else if $point == xs { // 320px
+    @media (max-width: 320px) { @content; }
+  }
 }
 
 @mixin cf {
