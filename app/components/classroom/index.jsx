@@ -71,7 +71,7 @@ export default React.createClass({
 				return lesson._id === key._id
 			}).length > 0 ? true : false;
 		}
-		return <LessonDetails key={index} index={index} details={key} classroomId={this.props.params.courseId} star={star} canEdit={this.state.user.admin || this.state.user.instructor} />
+		return <LessonDetails key={index} index={index} details={key} classroomId={this.props.params.courseId} star={star} />
 	},
 	renderTopics(key, index){
 		let link = '#' + this.state.sections[index].title.replace(/ /g, "_").toLowerCase();
@@ -182,7 +182,6 @@ export default React.createClass({
 		// let lessons = this.state.course.lessons;
 		let isAdmin = this.state.user.admin;
 		let isInstructor = this.state.user.instructor;
-		let editButton = <button className="success" onClick={this.editCourse}><i className="chalk-remove"></i>edit course</button>;
 		let dragAndDrop = <p className="title">Drag and drop to reorganize lessons</p>
 		let displayMembers;
 		let favList = document.querySelectorAll('.lessonGroup .fav');
@@ -206,11 +205,8 @@ export default React.createClass({
 		return (
 			<div className="container full">
 				<Link to='/dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
-				{isAdmin ? editButton : null}
 				<header className="topContent">
 					<h1>{this.state.course.title}</h1>
-					{isAdmin ? dragAndDrop : null}
-				{/* This needs redux baddddd - https://github.com/HackerYou/chalk/issues/129 */}
 					{favList.length > 0 ? displayFavButton : null}
 				</header>
 				<Loading loading={this.state.loading} />
@@ -241,7 +237,7 @@ export default React.createClass({
 											<input type="text" placeholder="Name" id="search" ref="searchQuery"/>
 										</form>
 										<form onSubmit={this.addUser} action="">
-											<label htmlFor="email">Add by email<br /> <small>Separate emails by comma</small></label>
+											<label htmlFor="email">Add member<br /> <small>Separate emails by comma</small></label>
 
 											<input ref="students"  type="text" id="email" placeholder="enter emails"/>
 											<button className="success">Send Email</button>
