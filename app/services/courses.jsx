@@ -110,6 +110,24 @@ export default {
 			}
 		});
 	},
+	getSection(sectionId){
+		return $.ajax({
+			url: `${config.getApiUrl()}/course/section/${sectionId}`,
+			method: 'GET', 
+			headers: {
+				'x-access-token': config.getToken()
+			}
+		});
+	},
+	updateSection(sectionId){
+		return $.ajax({
+					url: `${config.getApiUrl()}/course/section/${sectionId}`,
+					method: 'PUT', 
+					headers: {
+						'x-access-token': config.getToken()
+					}
+				});
+	},
 	updateCourse(courseId, data){
 		return $.ajax({
 			url: `${config.getApiUrl()}/course/${courseId}`,
