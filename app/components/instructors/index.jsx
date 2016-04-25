@@ -2,44 +2,48 @@ import React from 'react';
 import {  Link,  History } from 'react-router';
 import AuthMixin from '../../services/authMixin.jsx';
 import userData from '../../services/user.jsx';
+import searchMixin from '../../services/mixins/searchMember.js';
 
 export default React.createClass({
 	displayName: 'Instructors',
-	mixins: [AuthMixin, History],
+	mixins: [AuthMixin, History, searchMixin],
+	originalMembers: [],
 	getInitialState(){
 		return {
-			instructors: []
+			members: []
 		}
 	},
 	componentWillMount(){
 		userData.getInstructors().then(res=>{
+			console.log(res);
+			this.originalMembers = res.user;
 			this.setState({
-				instructors: res.user
+				members: res.user
 			});
 		});
 	},
     removeUser(event) {
         let userId = event.target.dataset.user;
         userData.deleteUser(userId).then((res) => {
-            let removeIndex = (this.state.instructors).map((obj, index)=>{
+            let removeIndex = (this.state.members).map((obj, index)=>{
                 //get index of the user ID
                 return obj._id;
             }).indexOf(userId);
 
             //remove user from state
-            this.state.instructors.splice(removeIndex, 1);
+            this.state.members.splice(removeIndex, 1);
 
             this.setState({
-                members: this.state.instructors
+                members: this.state.members
             });
         });
     },
 	renderInstructors(key, index){
 		return <li key={index}>
-					<p><strong>{this.state.instructors[index].firstName + ' ' + this.state.instructors[index].lastName}</strong></p>
-					<p>{this.state.instructors[index].email}</p>
-					<p>{this.state.instructors[index].courses.length} Classrooms</p>
-					<p>Remove User? <i className="chalk-remove red" onClick={this.removeUser} data-user={this.state.instructors[index]._id}></i></p>
+					<p><strong>{this.state.members[index].firstName + ' ' + this.state.members[index].lastName}</strong></p>
+					<p>{this.state.members[index].email}</p>
+					<p>{this.state.members[index].courses.length} Classrooms</p>
+					<p>Remove User? <i className="chalk-remove red" onClick={this.removeUser} data-user={this.state.members[index]._id}></i></p>
 				</li>
 	},
 	render() {
@@ -52,19 +56,20 @@ export default React.createClass({
 					<h1>Manage Instructors</h1>
 				</div>
 				<section className="full card detailsForm">
-					<form action="">
+					<form action="" onSubmit={this.searchMembers}>
 						<h2>Add a new instructor</h2>
 						<div className="fieldRow">
 							<label htmlFor="name">Search by name</label>
-							<input type="text"/>
-							<button className="success">Save Instructors</button>
-							<button className="primary">Create Classroom</button>
+							<input type="text" ref="searchQuery"/>
+							<button className="primary">Search</button>
+							{/*<button className="success">Save Instructors</button>*/}
+							{/*<button className="primary">Create Classroom</button>*/}
 						</div>
 					</form>
 				</section>
 				<div className="container card instructorWrap">
 					<ul className="instructorList">
-						{this.state.instructors.map(this.renderInstructors)}
+						{this.state.members.map(this.renderInstructors)}
 					</ul>
 				</div>
 			</div>
