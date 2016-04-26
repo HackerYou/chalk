@@ -2,10 +2,11 @@ import React from 'react';
 import { Link , History } from 'react-router';
 import AuthMixin from '../../services/authMixin.jsx';
 import userData from '../../services/user.jsx';
+import searchMembers from '../../services/mixins/searchMember.js';
 
 export default React.createClass({
 	displayName: 'Members',
-	mixins: [AuthMixin,History],
+	mixins: [AuthMixin,History,searchMembers],
 	originalMembers: [],
 	getInitialState(){
 		return {
@@ -19,29 +20,6 @@ export default React.createClass({
 				members: res.user
 			})
 		});
-	},
-	searchMembers(event) {
-		event.preventDefault();
-		let searchQuery = new RegExp(this.refs.searchQuery.value,'ig');
-		let originalMembers = this.originalMembers;
-
-		if(searchQuery  === '') {
-			this.setState({
-				members: originalMembers
-			});
-		}
-		else {
-			this.setState({
-				members: originalMembers.filter(member => {
-					if(member.firstName) {
-						return member.firstName.match(searchQuery) 
-					}
-					else {
-						return false;
-					}
-				})
-			});
-		}
 	},
 	renderMembers(key, index){
 		return <li key={index}>
@@ -140,8 +118,9 @@ export default React.createClass({
 					</form>
 					<form action="" onSubmit={this.searchMembers}>
 						<div className="fieldRow">
-						<label htmlFor="search" className="inline largeLabel">Search by name or email</label>
-						<input type="text" id="search" ref="searchQuery"/>
+							<label htmlFor="search" className="inline largeLabel">Search by name:</label>
+							<input type="text" id="search" ref="searchQuery"/>
+							<button className="primary">Search</button>
 						</div>
 					</form>
 				</section>
