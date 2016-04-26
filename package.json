@@ -75,8 +75,6 @@
     "react-addons-create-fragment": "^0.14.2",
     "react-copy-to-clipboard": "^3.0.4",
     "react-datepicker": "^0.17.0",
-    "react-dnd": "^2.1.4",
-    "react-dnd-html5-backend": "^2.1.2",
     "react-dom": "^0.14.2",
     "react-dropzone": "^3.0.0",
     "react-remarkable": "^1.1.1",

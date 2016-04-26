@@ -119,13 +119,15 @@ export default {
 			}
 		});
 	},
-	updateSection(sectionId){
+	updateSection(sectionId, data){
 		return $.ajax({
 					url: `${config.getApiUrl()}/course/section/${sectionId}`,
 					method: 'PUT', 
 					headers: {
-						'x-access-token': config.getToken()
-					}
+						'x-access-token': config.getToken(),
+						'Content-Type': 'application/json'
+					},
+					data: JSON.stringify(data)
 				});
 	},
 	updateCourse(courseId, data){
