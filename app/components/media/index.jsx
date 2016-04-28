@@ -9,10 +9,11 @@ export default React.createClass({
 	_notificationSystem: null,
 	mixins: [AuthMixin,History],
 	displayName: 'media',
+	originalMedia: [],
 	getInitialState(){
 		return {
 			media: [],
-			copied: false
+			copied: false,
 		}
 	},
 	componentDidMount() {
@@ -20,6 +21,7 @@ export default React.createClass({
 	},
 	componentWillMount(){
 		media.getMedia().then(res=>{
+			this.originalMedia = res.media;
 			this.setState({media:res.media});
 		});
 	},
@@ -29,28 +31,28 @@ export default React.createClass({
 			updatedMedia.splice(i, 1);
 			this.setState({media: updatedMedia});
 			this._removeNotification();
-			});
+		});
 	},
 	_successNotification: function(event) {
 		// event.preventDefault;
-    this._notificationSystem.addNotification({
-      message: 'Copied Successfully',
-      level: 'success',
+		this._notificationSystem.addNotification({
+			message: 'Copied Successfully',
+			level: 'success',
 			dismissible: false,
 			title: 'Media'
-    });
-  },
+		});
+	},
 	_removeNotification: function(event) {
 		// event.preventDefault;
-    this._notificationSystem.addNotification({
-      message: 'Removed Successfully',
-      level: 'error',
+		this._notificationSystem.addNotification({
+			message: 'Removed Successfully',
+			level: 'error',
 			dismissible: false,
 			title: 'Media'
-    });
-  },
+		});
+	},
 	renderFiles(key, index){
-		return <li key={index} className="mediaRow">
+		return (<li key={index} className="mediaRow">
 					<p className="mediaIcon"><i className="chalk-doc"></i>{this.state.media[index].name}</p>
 						<div className="mediaLink">
 							<input type="text" defaultValue={this.state.media[index].path}/>
@@ -60,6 +62,10 @@ export default React.createClass({
 						</div>
 					<p className="error" onClick={this.deleteFile.bind(this, index)}><i className="chalk-remove red"></i>Delete File</p>
 				</li>
+			);
+	},
+	searchFiles(e) {
+		e.preventDefault();
 	},
 	render() {
 		return (
@@ -73,9 +79,10 @@ export default React.createClass({
 				</div>
 				<section className="full card detailsForm">
 					<h2>Search by file name</h2>
-					<form action="">
+					<form action="" onSubmit={this.searchFiles}>
 						<label htmlFor="search" className="inline largeLabel">Search</label>
-						<input type="search"/>
+						<input type="search" ref="query"/>
+						<button className="primary">Search Media</button>
 					</form>
 				</section>
 				<div className="container card mediaWrap">
