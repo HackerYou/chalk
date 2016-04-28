@@ -58,8 +58,7 @@ export default React.createClass({
 	},
 	componentDidUpdate(){
 		// when drag and drop reordering occurs, update section
-		// console.log(this.state.lessonTopics, this.state.lesson.topics)
-		lessonData.updateLesson(this.props.params.lessonId, {}).then(res=>{console.log(res)});
+		lessonData.updateLesson(this.props.params.lessonId, {});
 	},
 
 	openModal(){
@@ -235,9 +234,9 @@ export default React.createClass({
 				<div className="container">
 					<div className="lessonTopic">
 						<h2 className="lessonTitle">{this.state.lesson.title}</h2>
+						<p className="title">Drag and drop to reorder topics</p>
 					</div>
 				</div>
-				<p className="title">Drag and drop to reorder topics</p>
 				<div className="lessonEditView card">
 						<div onDragOver={this.dragOver}>{(this.state.lessonTopics).map(this.displayTopics)}</div>
 						<div onClick={this.openModal} className="topicAddBlock"><h3><i className="chalk-add"></i>Add Topic</h3></div>

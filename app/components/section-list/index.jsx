@@ -27,9 +27,7 @@ export default React.createClass({
 	},
 	componentDidUpdate(){
 		// when drag and drop reordering occurs, update section
-		coursesData.updateSection(this.props.id, this.state.section).then(res=>{
-			console.log(res)
-		});
+		coursesData.updateSection(this.props.id, this.state.section);
 	},
 	dragStart(e){
 		this.dragged = e.currentTarget;
