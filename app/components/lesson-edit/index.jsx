@@ -8,6 +8,10 @@ import Markdown from 'react-remarkable';
 import coursesData from '../../services/courses.jsx';
 import hljs from 'highlight.js';
 
+let placeholder = document.createElement('div');
+placeholder.className = 'placeholder';
+placeholder.style.height = '44px';
+
 export default React.createClass({
 	displayName: 'EditLesson',
 	mixins: [History],
@@ -52,6 +56,12 @@ export default React.createClass({
 			this.setState({selectedTopics: this.state.topics});
 		});
 	},
+	componentDidUpdate(){
+		// when drag and drop reordering occurs, update section
+		// console.log(this.state.lessonTopics, this.state.lesson.topics)
+		lessonData.updateLesson(this.props.params.lessonId, {}).then(res=>{console.log(res)});
+	},
+
 	openModal(){
 		this.setState({isModalOpen: true});
 	},
@@ -102,6 +112,53 @@ export default React.createClass({
 	editTopic(index){
 		this.history.pushState(null,`/topic/${index}/edit`);
 	},
+	dragStart(e){
+		this.dragged = e.currentTarget;
+		e.dataTransfer.effectAllowed = 'move'
+		// Firefox requires calling dataTransfer.setData for the drag to work 
+		//(http://webcloud.se/sortable-list-component-react-js/)
+		e.dataTransfer.setData('text/html', e.currentTarget);
+	},
+	dragEnd(e){
+		this.dragged.style.display = 'block';
+		this.dragged.parentNode.removeChild(placeholder);
+		//update state
+		let topics = this.state.lessonTopics;
+		let prevIndex = Number(this.dragged.dataset.id);
+		let newIndex = Number(this.over.dataset.id);
+
+		if (prevIndex < newIndex) newIndex--;
+		if(this.nodePlacement == "after") newIndex++;
+
+		topics.splice(prevIndex, 0, topics.splice(newIndex, 1)[0]);
+		this.setState({
+			lessonTopics: topics
+		});
+	},
+	dragOver(e){
+		e.preventDefault;
+		this.dragged.style.display = 'none';
+		if(e.target.className == 'placeholder') return;
+
+			//get the parent div that is currently being dragged over 
+			this.over = e.target.closest('.lessonTopic');
+			//track relative positioning of mouse inside element being dragged over
+				
+			var pos = this.over.getBoundingClientRect();
+			var mousePos = e.clientY;
+			var relY = mousePos - pos.top;
+			var height = this.over.offsetHeight / 2;
+			let parent = e.target.closest('.lessonTopic').parentNode;
+
+			if (relY > height){
+				this.nodePlacement = 'after';
+				parent.insertBefore(placeholder, this.over.nextElementSibling);
+			} else if (relY < height){
+				this.nodePlacement = "before";
+				parent.insertBefore(placeholder, this.over);
+			} 
+			
+	},
 	displayTopics(key, index){
 		let hl = function (str, lang) {
 	    if (lang && hljs.getLanguage(lang)) {
@@ -114,13 +171,15 @@ export default React.createClass({
 	    } catch (err) {}
 	    	return ''; // use external default escaping
 	  	};
-		return <div key={index} className='lessonTopic'>
+		return <div key={index} className='lessonTopic' draggable="true" onDragEnd={this.dragEnd} onDragStart={this.dragStart} data-id={index} >
+							<details>
+							<summary className="lessonTitle">{this.state.lessonTopics[index].title}</summary>
 							<div className="deleteTopicBlock">
 								<p data-id={this.state.lessonTopics[index]._id} onClick={this.deleteTopic.bind(this, index)} className="deleteTopic"><i className="chalk-remove "></i>Remove {this.state.lessonTopics[index].title}</p>
 								<p data-id={this.state.lessonTopics[index]._id} onClick={this.editTopic.bind(this, this.state.lessonTopics[index]._id)} className="editTopic"><i className="chalk-edit "></i>Edit {this.state.lessonTopics[index].title}</p>
 							</div>
-							<h2 className="lessonTitle">{this.state.lessonTopics[index].title}</h2>
 							<Markdown options={{'html':true, highlight: hl}}>{this.state.lessonTopics[index].body}</Markdown>
+							</details>
 						</div>
 	},
 	handleChange(e){
@@ -134,7 +193,8 @@ export default React.createClass({
 		e.preventDefault();
 		//update title of lesson
 		lessonData.updateLesson(this.props.params.lessonId, {
-			title: this.state.lesson.title
+			title: this.state.lesson.title,
+			topics: this.state.lesson.topics
 		});
 		// send user back to the classroom they were editing
 		let classroomId = this.props.params.classroomId;
@@ -177,8 +237,9 @@ export default React.createClass({
 						<h2 className="lessonTitle">{this.state.lesson.title}</h2>
 					</div>
 				</div>
+				<p className="title">Drag and drop to reorder topics</p>
 				<div className="lessonEditView card">
-						<div>{(this.state.lessonTopics).map(this.displayTopics)}</div>
+						<div onDragOver={this.dragOver}>{(this.state.lessonTopics).map(this.displayTopics)}</div>
 						<div onClick={this.openModal} className="topicAddBlock"><h3><i className="chalk-add"></i>Add Topic</h3></div>
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<div className="modalBody--small card">

@@ -3,7 +3,6 @@ import AuthMixin from '../../services/authMixin.jsx';
 import { Link, History } from 'react-router';
 import coursesData from '../../services/courses.jsx';
 
-
 let placeholder = document.createElement('li');
 placeholder.className = 'placeholder';
 
@@ -28,7 +27,9 @@ export default React.createClass({
 	},
 	componentDidUpdate(){
 		// when drag and drop reordering occurs, update section
-		coursesData.updateSection(this.props.id, this.state.section);
+		coursesData.updateSection(this.props.id, this.state.section).then(res=>{
+			console.log(res)
+		});
 	},
 	dragStart(e){
 		this.dragged = e.currentTarget;
@@ -61,36 +62,34 @@ export default React.createClass({
 		e.preventDefault;
 		this.dragged.style.display = 'none';
 		if(e.target.className == 'placeholder') return;
-
 		if(e.target.hasAttribute("draggable")) {
 			this.over = e.target;
 			//track relative positioning of mouse inside element being dragged over
-			var relY = e.clientY - this.over.offsetTop;
+			var pos = this.over.getBoundingClientRect();
+			var mousePos = e.clientY;
+			var relY = mousePos - pos.top;
 			var height = this.over.offsetHeight / 2;
 			let parent = e.target.parentNode;
 
 			if (relY > height){
 				this.nodePlacement = 'after';
-				parent.insertBefore(placeholder, e.target.nextElementSibling);
+				parent.insertBefore(placeholder, this.over.nextElementSibling);
 			} else if (relY < height){
 				this.nodePlacement = "before";
-				parent.insertBefore(placeholder, e.target);
+				parent.insertBefore(placeholder, this.over);
 			} 
-
-
-
 			
 		}
 	},
 	renderLessons(key, index){
 		return <li key={index} index={index} data-id={index} className="lessonRow" draggable="true" onDragEnd={this.dragEnd} onDragStart={this.dragStart} >
-				<Link to={`/lesson/${this.state.section.lessons[index]._id}/${this.state.classroomId}`} className="lessonInfo">
+				<Link to={`/lesson/${this.state.section.lessons[index]._id}/${this.props.classroomId}`} className="lessonInfo">
 					<p className="lessonTitle">{this.state.section.lessons[index].title}</p>
 				</Link>
 				<div className="lessonMeta">
 					<span>
-						<Link to={`/lesson/${this.state.section.lessons[index]._id}/${this.state.classroomId}`}>view</Link>
-						<Link to={`/lesson/${this.state.section.lessons[index]._id}/${this.state.classroomId}/edit`}>|edit</Link>
+						<Link to={`/lesson/${this.state.section.lessons[index]._id}/${this.props.classroomId}`}>view</Link>
+						<Link to={`/lesson/${this.state.section.lessons[index]._id}/${this.props.classroomId}/edit`}>|edit</Link>
 					</span>
 				</div>
 		</li>
