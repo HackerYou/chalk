@@ -61,8 +61,6 @@ export default React.createClass({
 		let isAdmin = this.state.user.admin;
 		let isInstructor = this.state.user.instructor;
 
-		let editButton = <Link className="linkBtn" to={`/lesson/${this.props.params.lessonId}/${this.props.params.classroomId}/edit`}><button className="success"><i className="chalk-edit"></i>edit lesson</button></Link>;
-
 		let templateLink = `/course-templates/${this.props.params.classroomId}/edit`;
 		let classroomLink = `/classroom/${this.props.params.classroomId}`
 		
@@ -71,7 +69,6 @@ export default React.createClass({
 				<header className="topContent container">
 				<div className="headerLinks">
 					<Link className="linkBtn" to={this.state.isTemplate ? templateLink : classroomLink}><button className="primary"><i className="chalk-home"></i>{this.state.isTemplate ? 'back to template' : 'back to classroom'}</button></Link>
-					{isAdmin || isInstructor ? editButton : null}
 				</div>
 				<h1>{this.state.lesson.title}</h1>
 				</header>
@@ -81,7 +78,6 @@ export default React.createClass({
 				</section>
 				<div className="container">
 						<Link className="linkBtn" to={this.state.isTemplate ? templateLink : classroomLink}><button className="primary"><i className="chalk-home"></i>{this.state.isTemplate ? 'back to template' : 'back to classroom'}</button></Link>
-					{isAdmin || isInstructor ? editButton : null}
 				</div>
 			</div>
 

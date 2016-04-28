@@ -64,11 +64,15 @@ body {
 	color: #333;
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, summary {
   font-family: $headerFont;
   /*margin: 0 0 1.7rem 0;*/
   font-weight: 700;
 	line-height: 1.1;
+}
+
+summary{
+  outline: none;
 }
 
 h1, h2, h3, h4, h5 {
@@ -321,7 +325,8 @@ i[class^="chalk-"] {
 	font-family: $regularFont;
 	font-weight: 400;
   margin: 0 0 1.7rem 0;
-  h2 {
+  h2, 
+  summary {
     font-size: 4rem;
   }
 	h2 ~ div span h3 {
