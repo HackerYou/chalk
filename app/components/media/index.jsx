@@ -26,12 +26,15 @@ export default React.createClass({
 		});
 	},
 	deleteFile(i){
-		media.deleteFile(this.state.media[i].name).then(res=>{
-			let updatedMedia = this.state.media.slice();
-			updatedMedia.splice(i, 1);
-			this.setState({media: updatedMedia});
-			this._removeNotification();
-		});
+		let deleteConfirm = confirm('Are you sure you want to delete this file?');
+		if(deleteConfirm) {
+			media.deleteFile(this.state.media[i].name).then(res=>{
+				let updatedMedia = this.state.media.slice();
+				updatedMedia.splice(i, 1);
+				this.setState({media: updatedMedia});
+				this._removeNotification();
+			});
+		}
 	},
 	_successNotification: function(event) {
 		// event.preventDefault;
@@ -66,6 +69,20 @@ export default React.createClass({
 	},
 	searchFiles(e) {
 		e.preventDefault();
+		const query = this.refs.query.value;
+		if(query.length === 0) {
+			this.setState({
+				media: this.originalMedia
+			});
+		}
+		else {
+			media.searchFile(this.refs.query.value)
+				.then((res) => {
+					this.setState({
+						media: res.media
+					});
+				});
+		}
 	},
 	render() {
 		return (

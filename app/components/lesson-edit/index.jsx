@@ -102,11 +102,15 @@ export default React.createClass({
 		});
 	},
 	deleteTopic(index){
-		lessonData.deleteTopicFromLesson(this.props.params.lessonId, this.state.lessonTopics[index]._id).then(res=>{
-			let updatedLessons = this.state.lessonTopics.slice();
-			updatedLessons.splice(index, 1);
-			this.setState({lessonTopics: updatedLessons});
-		});
+		let deleteConfirm = confirm('Are you sure you want to delete this topic?');
+
+		if(deleteConfirm) {
+			lessonData.deleteTopicFromLesson(this.props.params.lessonId, this.state.lessonTopics[index]._id).then(res=>{
+				let updatedLessons = this.state.lessonTopics.slice();
+				updatedLessons.splice(index, 1);
+				this.setState({lessonTopics: updatedLessons});
+			});
+		}
 	},
 	editTopic(index){
 		this.history.pushState(null,`/topic/${index}/edit`);
@@ -205,14 +209,18 @@ export default React.createClass({
 	},
 	deleteLesson(e){
 		e.preventDefault();
-		lessonData.deleteLesson(this.props.params.lessonId).then(res=>{
-			let classroomId = this.props.params.classroomId;
-			if (this.state.isTemplate) {
-				this.history.pushState(null,`/course-templates/${classroomId}/edit`);
-			} else {
-				this.history.pushState(null,`/classroom/${classroomId}/edit`);
-			}
-		});
+		let deleteConfirm = confirm('Are you sure you want to delete this lesson?');
+
+		if(deleteConfirm) {
+			lessonData.deleteLesson(this.props.params.lessonId).then(res=>{
+				let classroomId = this.props.params.classroomId;
+				if (this.state.isTemplate) {
+					this.history.pushState(null,`/course-templates/${classroomId}/edit`);
+				} else {
+					this.history.pushState(null,`/classroom/${classroomId}/edit`);
+				}
+			});
+		}
 
 	},
 	render() {

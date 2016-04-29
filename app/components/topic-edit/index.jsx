@@ -58,9 +58,12 @@ export default React.createClass({
 	},
 	deleteTopic(e){
 		e.preventDefault();
-		topicData.deleteTopic(this.state.topic._id).then(res =>{
-			this.history.pushState(null, `/topics`);
-		});
+		let deleteConfirm = confirm('Are you sure you want to delete this topic?');
+		if(deleteConfirm) {
+			topicData.deleteTopic(this.state.topic._id).then(res =>{
+				this.history.pushState(null, `/topics`);
+			});
+		}
 	},
 	handleChange(e){
 		let stateObj = this.state.topic;

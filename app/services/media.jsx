@@ -20,6 +20,18 @@ export default {
 			}
 		});
 	},
+	searchFile(name) {
+		return $.ajax({
+			url: `${config.getApiUrl()}/media/search`,
+			method: 'GET',
+			data: {
+				name: name
+			},
+			headers: {
+				'x-access-token' : config.getToken()
+			}
+		});
+	},
 	uploadFile(file) {
 		let data = new FormData();
     	data.append( 'file', file[0] );
