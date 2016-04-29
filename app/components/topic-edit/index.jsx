@@ -36,12 +36,12 @@ export default React.createClass({
 			this.setState({files: this.state.files.concat(res.media)});
 		});
 	},
-	_successNotification: function() {
+	_successNotification: function(messageObj) {
 		this._notificationSystem.addNotification({
-			message: 'Saved Successfully',
+			message: messageObj.message,
 			level: 'success',
 			dismissible: false,
-			title: 'Topic'
+			title: messageObj.title
 		});
 	},
 	editTopic(e) {
@@ -53,7 +53,10 @@ export default React.createClass({
 			body : this.refs.body.value,
 			time: this.refs.time.value
 		}).then(res => {
-			this._successNotification();
+			this._successNotification({
+				title: 'Topic',
+				message: 'Saved Successfully'
+			});
 		});
 	},
 	deleteTopic(e){
@@ -71,6 +74,13 @@ export default React.createClass({
 		this.setState({
 			topic: stateObj
 		});
+	},
+	copy() {
+		this._successNotification({
+			title: 'Media',
+			message: 'Successfully copied'
+		});
+		this.setState({copied: true});
 	},
 	render() {
 		let savedText = (
@@ -130,8 +140,8 @@ export default React.createClass({
 									<p className="mediaIcon"><i className="chalk-doc"></i>{file.name}</p>
 									<div className="mediaLink">
 										<input type="text" defaultValue={file.path}/>
-										<CopyToClipboard text={file.path} onCopy={() => {this.setState({copied: true}); }}>
-											<button className="success mediaCopy"><i className="chalk-copy"></i></button>
+										<CopyToClipboard text={file.path} onCopy={this.copy}>
+											<div className="button success mediaCopy"><i className="chalk-copy"></i></div>
 										</CopyToClipboard>
 									</div>
 								</li>
