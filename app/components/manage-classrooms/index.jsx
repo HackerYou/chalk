@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import Course from '../course/index.jsx';
 import coursesData from '../../services/courses.jsx';
 import userData from '../../services/user.jsx';
+import NotificationSystem from 'react-notification-system';
 
 export default React.createClass({
 	displayName: 'ManageClassrooms',
@@ -16,6 +17,9 @@ export default React.createClass({
 			startDate: 0,
 			endDate: 0
 		}
+	},
+	componentDidMount() {
+		this._notificationSystem = this.refs.notificationSystem;
 	},
 	componentWillMount(){
 		coursesData.getTemplates().then(res=>{
@@ -58,6 +62,14 @@ export default React.createClass({
 			endDate: endDate
 		});
 	},
+	successNotification(messageObj) {
+		this._notificationSystem.addNotification({
+			message: messageObj.message,
+			level: 'success',
+			dismissible: false,
+			title: messageObj.title
+		});
+	},
 	createCourse(e){
 		e.preventDefault();
 		//create course
@@ -80,6 +92,10 @@ export default React.createClass({
 			coursesData.updateCourse(courseId, {
 				'sections': data
 			}).then(res=>{
+				this.successNotification({
+					title: 'Course',
+					message: 'Course Created!'
+				});
 				this.setState({courses: this.state.courses.concat(res.course)});
 			});
 		});
@@ -90,6 +106,7 @@ export default React.createClass({
 	render() {
 		return (
 			<div className="container">
+				<NotificationSystem ref="notificationSystem" style={false}/>
 				<header className="topContent">
 					<Link className="linkBtn" to='/dashboard'><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
 				</header>
