@@ -167,7 +167,7 @@ export default React.createClass({
 											<label htmlFor="email">Add by email<br /> <small>Separate emails by comma</small></label>
 
 											<input ref="students"  type="text" id="email" placeholder="enter emails"/>
-											<button className="success">Send Email</button>
+											<button className="success">Add Member</button>
 										</form>
 									</div>
 									<div className="memberModalColumn memberModalManage">

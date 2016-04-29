@@ -15,7 +15,7 @@ export default React.createClass({
 	},
 	componentWillMount(){
 		userData.getInstructors().then(res=>{
-			console.log(res);
+
 			this.originalMembers = res.user;
 			this.setState({
 				members: res.user
@@ -24,19 +24,22 @@ export default React.createClass({
 	},
     removeUser(event) {
         let userId = event.target.dataset.user;
-        userData.deleteUser(userId).then((res) => {
-            let removeIndex = (this.state.members).map((obj, index)=>{
-                //get index of the user ID
-                return obj._id;
-            }).indexOf(userId);
+        let deleteConfirm = confirm('Are you sure you want to delete this instructor?');
+        if(deleteConfirm) {
+	        userData.deleteUser(userId).then((res) => {
+	            let removeIndex = (this.state.members).map((obj, index)=>{
+	                //get index of the user ID
+	                return obj._id;
+	            }).indexOf(userId);
 
-            //remove user from state
-            this.state.members.splice(removeIndex, 1);
+	            //remove user from state
+	            this.state.members.splice(removeIndex, 1);
 
-            this.setState({
-                members: this.state.members
-            });
-        });
+	            this.setState({
+	                members: this.state.members
+	            });
+	        });
+        }
     },
 	renderInstructors(key, index){
 		return <li key={index}>
