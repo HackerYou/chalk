@@ -31,32 +31,37 @@ let createBrowserHistory = require('history/lib/createBrowserHistory');
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 function userName(context) {
-	if(auth.authenticated() === 'true') {
+	return new Promise((resolve, reject) => {
 
-		userData.getUser(config.getUserId()).then(data => {
-			if(data.error) {
+		if(auth.authenticated() === 'true') {
+
+			userData.getUser(config.getUserId()).then(data => {
+				if(data.error) {
+					auth.logOut();
+					context.context.history.pushState(null,'/');
+					context.setState({
+						sign_up_error: 'Error'
+					});
+				}
+
+				userData.storeUser(data.user);
+
+				context.setState({
+					user: data.user
+				});
+
+				if(data.user && data.user.first_sign_up === true) {
+					context.setState({
+						isModalOpen: true
+					});
+				}
+				resolve();
+			}, err => {
 				auth.logOut();
-				context.context.history.pushState(null,'/');
-				context.setState({
-					sign_up_error: 'Error'
-				});
-			}
-
-			userData.storeUser(data.user);
-
-			context.setState({
-				user: data.user
+				reject();
 			});
-
-			if(data.user && data.user.first_sign_up === true) {
-				context.setState({
-					isModalOpen: true
-				});
-			}
-		}, err => {
-			auth.logOut();
-		});
-	}
+		}
+	});
 };
 
 
@@ -68,7 +73,7 @@ let App = React.createClass({
 		this.updateUserState();
 	},
 	componentWillReceiveProps(){
-		this.updateUserState()
+		this.updateUserState();
 	},
 	getInitialState(){
 		return{
@@ -83,7 +88,7 @@ let App = React.createClass({
 		});
 	},
 	updateUserState() {
-		userName(this);
+		return userName(this);
 	},
 	updateUser(e) {
 		e.preventDefault();
