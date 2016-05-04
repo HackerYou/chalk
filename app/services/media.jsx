@@ -34,7 +34,7 @@ export default {
 	},
 	uploadFile(file) {
 		let data = new FormData();
-    	data.append( 'file', file[0] );
+    	data.append( 'file', file);
 		return $.ajax({
 			url: `${config.getApiUrl()}/media`,
 			method: 'POST',

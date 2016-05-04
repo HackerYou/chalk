@@ -4,6 +4,7 @@ import AuthMixin from '../../services/authMixin.jsx';
 import media from '../../services/media.jsx';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import NotificationSystem from 'react-notification-system';
+import Loading from '../loading/index.jsx';
 
 export default React.createClass({
 	_notificationSystem: null,
@@ -14,7 +15,8 @@ export default React.createClass({
 		return {
 			media: [],
 			copied: false,
-		}
+			loading: true
+		};
 	},
 	componentDidMount() {
 		this._notificationSystem = this.refs.notificationSystem;
@@ -22,16 +24,25 @@ export default React.createClass({
 	componentWillMount(){
 		media.getMedia().then(res=>{
 			this.originalMedia = res.media;
-			this.setState({media:res.media});
+			this.setState({
+				media:res.media,
+				loading: false
+			});
 		});
 	},
 	deleteFile(i){
 		let deleteConfirm = confirm('Are you sure you want to delete this file?');
 		if(deleteConfirm) {
+			this.setState({
+				loading: true
+			});
 			media.deleteFile(this.state.media[i].name).then(res=>{
 				let updatedMedia = this.state.media.slice();
 				updatedMedia.splice(i, 1);
-				this.setState({media: updatedMedia});
+				this.setState({
+					media: updatedMedia,
+					loading: false
+				});
 				this._removeNotification();
 			});
 		}
@@ -70,16 +81,21 @@ export default React.createClass({
 	searchFiles(e) {
 		e.preventDefault();
 		const query = this.refs.query.value;
+		this.setState({
+			loading: true
+		});
 		if(query.length === 0) {
 			this.setState({
-				media: this.originalMedia
+				media: this.originalMedia,
+				loading: false
 			});
 		}
 		else {
 			media.searchFile(this.refs.query.value)
 				.then((res) => {
 					this.setState({
-						media: res.media
+						media: res.media,
+						loading: false
 					});
 				});
 		}
@@ -107,7 +123,8 @@ export default React.createClass({
 						{this.state.media.map(this.renderFiles)}
 					</ul>
 				</div>
-			</div>
+				<Loading loading={this.state.loading} loadingText='Loading Files'
+ />			</div>
 		)
 	}
 });
