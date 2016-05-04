@@ -58,17 +58,23 @@ export default React.createClass({
 				}
 
 				files = files.map((file) => file.media);
-				
+
 				this.setState({
 					files: this.state.files.concat(...files),
 					loading: false
+				});
+			}, (err) => { 
+				this.__successNotification({
+					message: 'Failed to upload files',
+					title: 'Media',
+					level: 'error'
 				});
 			});
 	},
 	_successNotification: function(messageObj) {
 		this._notificationSystem.addNotification({
 			message: messageObj.message,
-			level: 'success',
+			level: messageObj.level === 'error' ? 'error' : 'success',
 			dismissible: false,
 			title: messageObj.title
 		});

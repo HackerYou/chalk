@@ -60,7 +60,7 @@ export default React.createClass({
 		// event.preventDefault;
 		this._notificationSystem.addNotification({
 			message: 'Removed Successfully',
-			level: 'error',
+			level: 'success',
 			dismissible: false,
 			title: 'Media'
 		});
@@ -69,7 +69,7 @@ export default React.createClass({
 		return (<li key={index} className="mediaRow">
 					<p className="mediaIcon"><i className="chalk-doc"></i>{this.state.media[index].name}</p>
 						<div className="mediaLink">
-							<input type="text" defaultValue={this.state.media[index].path}/>
+							<input type="text" value={this.state.media[index].path}/>
 							<CopyToClipboard text={this.state.media[index].path} onCopy={() => {this.setState({copied: true}); this._successNotification()}}>
 								<button className="success mediaCopy"><i className="chalk-copy"></i></button>
 							</CopyToClipboard>
