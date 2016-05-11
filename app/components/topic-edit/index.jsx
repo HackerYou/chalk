@@ -8,6 +8,7 @@ import topicData from '../../services/topic.jsx';
 import TabMixin from '../../services/tabMixin.jsx';
 import media from '../../services/media.jsx';
 import NotificationSystem from 'react-notification-system';
+import Loading from '../loading/index.jsx';
 
 export default React.createClass({
 	_notificationSystem: null,
@@ -17,6 +18,7 @@ export default React.createClass({
 		return {
 			topic: [],
 			files: [],
+			loading: false,
 			copied: false,
 			category: 'HTML & CSS'
 		}
@@ -32,14 +34,47 @@ export default React.createClass({
 		});
 	},
 	onDrop(files){
-		media.uploadFile(files).then(res => {
-			this.setState({files: this.state.files.concat(res.media)});
+		this.setState({
+			loading: true
 		});
+
+		files = files.map((file) => {
+			return media.uploadFile(file);
+		});
+
+
+		$.when(...files)
+			.then((...fileData) => {
+				let files = [];
+				// This lines deals with the fact that a single promise will return an array 
+				// like this [Object, 'Succes', Object], so we just grab the first Object
+				// since that is the data we want.
+
+				if(typeof fileData[1] === 'string' ) {
+					files = [fileData[0]];
+				}
+				else {
+					files = fileData.map((file) => file[0]);
+				}
+
+				files = files.map((file) => file.media);
+
+				this.setState({
+					files: this.state.files.concat(...files),
+					loading: false
+				});
+			}, (err) => { 
+				this.__successNotification({
+					message: 'Failed to upload files',
+					title: 'Media',
+					level: 'error'
+				});
+			});
 	},
 	_successNotification: function(messageObj) {
 		this._notificationSystem.addNotification({
 			message: messageObj.message,
-			level: 'success',
+			level: messageObj.level === 'error' ? 'error' : 'success',
 			dismissible: false,
 			title: messageObj.title
 		});
@@ -153,6 +188,7 @@ export default React.createClass({
 						</div>
 					</section>
 				</form>
+				<Loading loading={this.state.loading} loadingText='Uploading file' />
 			</div>
 			)
 }
