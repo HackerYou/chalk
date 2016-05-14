@@ -99,7 +99,7 @@ export default React.createClass({
 				<Link to='/dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
 				<header className="topContent">
 					<h1>{this.state.course.title} Template</h1>
-					<p className="title">Drag and drop to reorganize lessons</p>
+					<p className="title">Drag and drop to reorganize lessons (one at a time for now, multiple coming soon!)</p>
 				</header>
 				<section className="lessonsWrap">
 					<ol className="lessonColumn">

@@ -197,7 +197,9 @@ export default React.createClass({
 		//update title of lesson
 		lessonData.updateLesson(this.props.params.lessonId, {
 			title: this.state.lesson.title,
-			topics: this.state.lesson.topics
+			//Send the components lesson topics instead of the initial 
+			//this.state.lesson.topics, since they have not been updated.
+			topics: this.state.lessonTopics
 		});
 		// send user back to the classroom they were editing
 		let classroomId = this.props.params.classroomId;
@@ -242,7 +244,7 @@ export default React.createClass({
 				<div className="container">
 					<div className="lessonTopic">
 						<h2 className="lessonTitle">{this.state.lesson.title}</h2>
-						<p className="title">Drag and drop to reorder topics</p>
+						<p className="title">Drag and drop to reorder topics(One at the time for now, multiple rows coming soon!)</p>
 					</div>
 				</div>
 				<div className="lessonEditView card">
