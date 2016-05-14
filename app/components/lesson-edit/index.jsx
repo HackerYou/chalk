@@ -58,8 +58,6 @@ export default React.createClass({
 	},
 	componentDidUpdate(){
 		// when drag and drop reordering occurs, update section
-		console.log('Did UPDATE!!');
-		//Updates with empty object.
 		lessonData.updateLesson(this.props.params.lessonId, {});
 	},
 
