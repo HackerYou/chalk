@@ -70,19 +70,22 @@ export default React.createClass({
 	deleteUser(e){
 		e.preventDefault();
 		let id = e.target.dataset.user;
-		userData.deleteUser(id).then(res=>{
-			let removeIndex = (this.state.members).map((obj, index)=>{
-				//get index of the user ID
-				return obj._id;
-			}).indexOf(id);
+		let deleteConfirm = confirm('Are you sure you want to delete this user?');
+		if(deleteConfirm) {
+			userData.deleteUser(id).then(res=>{
+				let removeIndex = (this.state.members).map((obj, index)=>{
+					//get index of the user ID
+					return obj._id;
+				}).indexOf(id);
 
-			//remove user from state
-			this.state.members.splice(removeIndex, 1);
+				//remove user from state
+				this.state.members.splice(removeIndex, 1);
 
-			this.setState({
-				members: this.state.members
+				this.setState({
+					members: this.state.members
+				});
 			});
-		});
+		}
 	},
 	addUser(e){
 		e.preventDefault();

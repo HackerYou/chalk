@@ -55,15 +55,18 @@ export default React.createClass({
 		this.history.pushState(null,`lesson/${classroomId}/${sectionId}/new`);
 	},
 	deleteSection(sectionId,e){
-		coursesData.removeSectionFromCourse(this.props.params.templateId, sectionId).then(res=>{
-			let newSections = (this.state.sections).filter((obj)=>{
-				return obj._id !== sectionId;
-			});
-			this.setState({
-				sections: newSections
-			});
+		let deleteConfirm = confirm('Are you sure you want to delete this section');
+		if(deleteConfirm) {
+			coursesData.removeSectionFromCourse(this.props.params.templateId, sectionId).then(res=>{
+				let newSections = (this.state.sections).filter((obj)=>{
+					return obj._id !== sectionId;
+				});
+				this.setState({
+					sections: newSections
+				});
 
-		});
+			});
+		}
 	},
 	renderSections(key, index){
 		return <li key={index} className="lessonGroup" id={this.state.sections[index]._id}>
@@ -82,9 +85,12 @@ export default React.createClass({
 				</li>
 	},
 	deleteTemplate(){
-		coursesData.deleteCourse(this.props.params.templateId).then(res=>{
-			this.history.pushState(null,`course-templates`);
-		});
+		let deleteConfirm = confirm('Are you sure you want to delete this template?');
+		if(deleteConfirm) {
+			coursesData.deleteCourse(this.props.params.templateId).then(res=>{
+				this.history.pushState(null,`course-templates`);
+			});
+		}
 	},
 	render() {
 		let lessons = this.state.course.lessons;
@@ -93,7 +99,7 @@ export default React.createClass({
 				<Link to='/dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
 				<header className="topContent">
 					<h1>{this.state.course.title} Template</h1>
-					<p className="title">Drag and drop to reorganize lessons</p>
+					<p className="title">Drag and drop to reorganize lessons (one at a time for now, multiple coming soon!)</p>
 				</header>
 				<section className="lessonsWrap">
 					<ol className="lessonColumn">

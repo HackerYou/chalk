@@ -8,6 +8,7 @@ import topicData from '../../services/topic.jsx';
 import TabMixin from '../../services/tabMixin.jsx';
 import media from '../../services/media.jsx';
 import NotificationSystem from 'react-notification-system';
+import Loading from '../loading/index.jsx';
 
 export default React.createClass({
 	_notificationSystem: null,
@@ -17,6 +18,7 @@ export default React.createClass({
 		return {
 			topic: [],
 			files: [],
+			loading: false,
 			copied: false,
 			category: 'HTML & CSS'
 		}
@@ -32,16 +34,49 @@ export default React.createClass({
 		});
 	},
 	onDrop(files){
-		media.uploadFile(files).then(res => {
-			this.setState({files: this.state.files.concat(res.media)});
+		this.setState({
+			loading: true
 		});
+
+		files = files.map((file) => {
+			return media.uploadFile(file);
+		});
+
+
+		$.when(...files)
+			.then((...fileData) => {
+				let files = [];
+				// This lines deals with the fact that a single promise will return an array 
+				// like this [Object, 'Succes', Object], so we just grab the first Object
+				// since that is the data we want.
+
+				if(typeof fileData[1] === 'string' ) {
+					files = [fileData[0]];
+				}
+				else {
+					files = fileData.map((file) => file[0]);
+				}
+
+				files = files.map((file) => file.media);
+
+				this.setState({
+					files: this.state.files.concat(...files),
+					loading: false
+				});
+			}, (err) => { 
+				this.__successNotification({
+					message: 'Failed to upload files',
+					title: 'Media',
+					level: 'error'
+				});
+			});
 	},
-	_successNotification: function() {
+	_successNotification: function(messageObj) {
 		this._notificationSystem.addNotification({
-			message: 'Saved Successfully',
-			level: 'success',
+			message: messageObj.message,
+			level: messageObj.level === 'error' ? 'error' : 'success',
 			dismissible: false,
-			title: 'Topic'
+			title: messageObj.title
 		});
 	},
 	editTopic(e) {
@@ -53,14 +88,20 @@ export default React.createClass({
 			body : this.refs.body.value,
 			time: this.refs.time.value
 		}).then(res => {
-			this._successNotification();
+			this._successNotification({
+				title: 'Topic',
+				message: 'Saved Successfully'
+			});
 		});
 	},
 	deleteTopic(e){
 		e.preventDefault();
-		topicData.deleteTopic(this.state.topic._id).then(res =>{
-			this.history.pushState(null, `/topics`);
-		});
+		let deleteConfirm = confirm('Are you sure you want to delete this topic?');
+		if(deleteConfirm) {
+			topicData.deleteTopic(this.state.topic._id).then(res =>{
+				this.history.pushState(null, `/topics`);
+			});
+		}
 	},
 	handleChange(e){
 		let stateObj = this.state.topic;
@@ -68,6 +109,13 @@ export default React.createClass({
 		this.setState({
 			topic: stateObj
 		});
+	},
+	copy() {
+		this._successNotification({
+			title: 'Media',
+			message: 'Successfully copied'
+		});
+		this.setState({copied: true});
 	},
 	render() {
 		let savedText = (
@@ -100,6 +148,7 @@ export default React.createClass({
 									<option value="tools">Tools</option>
 									<option value="project">Project</option>
 									<option value="resource">Resource</option>
+									<option value="ux">UX</option>
 									<option value="seo">SEO</option>
 								</select>
 								<label htmlFor="time" className="inline">Time</label>
@@ -127,8 +176,8 @@ export default React.createClass({
 									<p className="mediaIcon"><i className="chalk-doc"></i>{file.name}</p>
 									<div className="mediaLink">
 										<input type="text" defaultValue={file.path}/>
-										<CopyToClipboard text={file.path} onCopy={() => {this.setState({copied: true}); }}>
-											<button className="success mediaCopy"><i className="chalk-copy"></i></button>
+										<CopyToClipboard text={file.path} onCopy={this.copy}>
+											<div className="button success mediaCopy"><i className="chalk-copy"></i></div>
 										</CopyToClipboard>
 									</div>
 								</li>
@@ -140,6 +189,7 @@ export default React.createClass({
 						</div>
 					</section>
 				</form>
+				<Loading loading={this.state.loading} loadingText='Uploading file' />
 			</div>
 			)
 }
