@@ -262,6 +262,7 @@ export default React.createClass({
 												<option value="project">Project</option>
 												<option value="resource">Resource</option>
 												<option value="seo">SEO</option>
+												<option value="ux">UX</option>
 											</select>
 										</div>
 										<div className="fieldGroup">
