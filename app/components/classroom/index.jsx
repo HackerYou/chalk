@@ -114,10 +114,14 @@ export default React.createClass({
 	addUser(e){
 		e.preventDefault();
 		let users = this.refs.students.value;
+		this.setState({
+			loading: true
+		});
 		coursesData.addUserToCourse(this.props.params.courseId, users).then(res=>{
 			let students = res.course.students
 			this.setState({
-				members: students
+				members: students,
+				loading: false
 			});
 		});
 

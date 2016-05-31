@@ -1,11 +1,11 @@
-.noScroll {
+ .noScroll {
 	overflow: hidden;
 }
 
 .modal {
 	background: rgba(0,0,0,0.5);
 	position: fixed 0;
-	z-index: 9999;
+	z-index: 1000;
 	overflow: scroll;
 	display: flex;
 	flex-flow: row wrap;
