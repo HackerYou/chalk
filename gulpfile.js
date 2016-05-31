@@ -43,7 +43,7 @@ const postcss = [
 	require('lost')(),
 	require('postcss-color-function')(),
 	require('autoprefixer')({ browsers: ['last 5 versions', '> 10%'] }),
-	require('cssnano')(),
+	// require('cssnano')(),
 	require('postcss-reporter')({ clearMessages: true})
 ];
 
