@@ -27,7 +27,7 @@ export default React.createClass({
 	},
 	render() {
 		return (
-			<li className={this.state.star || this.props.star ? 'lessonRow fav' : 'lessonRow'}>
+			<li className={this.state.star ? 'lessonRow fav' : 'lessonRow'}>
 				<Link to={`/lesson/${this.props.details._id}/${this.props.classroomId}`} className="lessonInfo">
 					<p className="lessonTitle">{this.props.details.title}</p>
 				</Link>
@@ -35,7 +35,7 @@ export default React.createClass({
 					<span>
 						<Link to={`/lesson/${this.props.details._id}/${this.props.classroomId}`}>view</Link>
 					</span>
-					<i className={this.state.star || this.props.star ? 'chalk-star redLight' : 'chalk-star'} onClick={this.starLesson}></i>
+					<i className={this.state.star ? 'chalk-star redLight' : 'chalk-star'} onClick={this.starLesson}></i>
 				</div>
 			</li>
 		)
