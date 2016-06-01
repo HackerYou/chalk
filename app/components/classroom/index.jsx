@@ -9,6 +9,7 @@ import userData from '../../services/user.jsx';
 import config from '../../services/config.jsx';
 import Sticky from '../../services/sticky.js';
 import Loading from '../loading/index.jsx';
+import validator from 'validator';
 
 export default React.createClass({
 	displayName: 'Classroom',
@@ -26,7 +27,8 @@ export default React.createClass({
 			favorites: {},
 			showFavs: false,
 			pageHeight: 0,
-			loading: true
+			loading: true,
+			memberError: ''
 		}
 	},
 	openModal(){
@@ -113,18 +115,37 @@ export default React.createClass({
 	},
 	addUser(e){
 		e.preventDefault();
-		let users = this.refs.students.value;
+		let users = this.refs.students.value.split(',');
+		//Remove that spaces
+		users = users.map(email => email.trim());
+		
 		this.setState({
 			loading: true
 		});
+		//collection any non emails
+		const notEmails = users.filter((email) => {
+			return !validator.isEmail(email);
+		});
+		//Validate emails
+		users = users.filter((email) => {
+			return validator.isEmail(email);
+		});	
+		//Send join them back as a string
+		users = users.join(',');
+		if(notEmails.length > 0) {
+			this.setState({
+				memberError: `There was an error adding these users: ${notEmails.join(',')}`
+			});
+		}
+
 		coursesData.addUserToCourse(this.props.params.courseId, users).then(res=>{
-			let students = res.course.students
+			let students = res.course.students;
+			this.refs.students.value = '';
 			this.setState({
 				members: students,
 				loading: false
 			});
 		});
-
 	},
 	removeUser(e){
 		e.preventDefault();
@@ -247,6 +268,7 @@ export default React.createClass({
 											<label htmlFor="email">Add member<br /> <small>Separate emails by comma</small></label>
 
 											<input ref="students"  type="text" id="email" placeholder="enter emails"/>
+											<p>{this.state.memberError}</p>
 											<button className="success">Add Member</button>
 										</form>
 									</div>
@@ -256,9 +278,9 @@ export default React.createClass({
 
 									</div>
 								</div>
-								<div className="modalBtns">
+								{/*<div className="modalBtns">
 									<button onClick={this.closeModal} className="error">Done</button>
-								</div>
+								</div>*/}
 							</div>
 						</Modal>
 					</aside>
