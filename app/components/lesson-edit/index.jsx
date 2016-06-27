@@ -24,7 +24,8 @@ export default React.createClass({
 			selectedTopics:[],
 			selectValue: 'all',
 			uniqueTopics: [],
-			isTemplate: false
+			isTemplate: false,
+			searchTopic: ''
 		}
 	},
 	componentWillMount(){
@@ -52,15 +53,16 @@ export default React.createClass({
 				if (a.indexOf(b) < 0) a.push(b);
 				return a;
 			}, []);
-			this.setState({uniqueTopics: uniqueTopics});
-			this.setState({selectedTopics: this.state.topics});
+			this.setState({
+				uniqueTopics: uniqueTopics,
+				selectedTopics: this.state.topics
+			});
 		});
 	},
 	componentDidUpdate(){
 		// when drag and drop reordering occurs, update section
 		lessonData.updateLesson(this.props.params.lessonId, {});
 	},
-
 	openModal(){
 		this.setState({isModalOpen: true});
 	},
@@ -78,7 +80,6 @@ export default React.createClass({
 		} else {
 			this.setState({selectedTopics: matches});
 		}
-
 	},
 	renderTopics(key, index){
 		return <option key={index} value={this.state.selectedTopics[index]._id}>{this.state.selectedTopics[index].title}</option>
@@ -175,15 +176,15 @@ export default React.createClass({
 	    	return ''; // use external default escaping
 	  	};
 		return <div key={index} className='lessonTopic' draggable="true" onDragEnd={this.dragEnd} onDragStart={this.dragStart} data-id={index} >
-							<details>
-							<summary className="lessonTitle">{this.state.lessonTopics[index].title}</summary>
-							<div className="deleteTopicBlock">
-								<p data-id={this.state.lessonTopics[index]._id} onClick={this.deleteTopic.bind(this, index)} className="deleteTopic"><i className="chalk-remove "></i>Remove {this.state.lessonTopics[index].title}</p>
-								<p data-id={this.state.lessonTopics[index]._id} onClick={this.editTopic.bind(this, this.state.lessonTopics[index]._id)} className="editTopic"><i className="chalk-edit "></i>Edit {this.state.lessonTopics[index].title}</p>
-							</div>
-							<Markdown options={{'html':true, highlight: hl}}>{this.state.lessonTopics[index].body}</Markdown>
-							</details>
-						</div>
+					<details>
+					<summary className="lessonTitle">{this.state.lessonTopics[index].title}</summary>
+					<div className="deleteTopicBlock">
+						<p data-id={this.state.lessonTopics[index]._id} onClick={this.deleteTopic.bind(this, index)} className="deleteTopic"><i className="chalk-remove "></i>Remove {this.state.lessonTopics[index].title}</p>
+						<p data-id={this.state.lessonTopics[index]._id} onClick={this.editTopic.bind(this, this.state.lessonTopics[index]._id)} className="editTopic"><i className="chalk-edit "></i>Edit {this.state.lessonTopics[index].title}</p>
+					</div>
+					<Markdown options={{'html':true, highlight: hl}}>{this.state.lessonTopics[index].body}</Markdown>
+					</details>
+				</div>
 	},
 	handleChange(e){
 		let stateObj = this.state.lesson;
@@ -223,7 +224,18 @@ export default React.createClass({
 				}
 			});
 		}
-
+	},
+	searchByTopicName(e) {
+		const searchValue = e.target.value;
+		const matches = (this.state.topics).filter((topic) => {
+			return topic.title.match(new RegExp(searchValue,'ig'));
+		});
+		
+		if(searchValue.length === 0) {
+			this.setState({selectedTopics: this.state.topics})
+		} else {
+			this.setState({selectedTopics: matches});
+		}
 	},
 	render() {
 		return (
@@ -256,7 +268,7 @@ export default React.createClass({
 							<form onSubmit={e => e.preventDefault()}>
 								<h2>Add Topic</h2>
 								<h3>Search By Topic Name</h3>
-								<input type="text" placeholder='eg. Floats'/>
+								<input type="text" placeholder='eg. Floats' onChange={this.searchByTopicName}/>
 								<h4>Filter by category</h4>
 									<div className="inlineFieldRow">
 										<div className="fieldGroup">
