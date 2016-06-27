@@ -57,16 +57,16 @@ export default React.createClass({
 	render() {
 		let isAdmin = this.state.user.admin;
 		let adminPanel = <header className="intro">
-					<h2>What would you like to do?</h2>
-					<div className='buttons'>
-						<Link className="linkBtn" to='/classroom/manage'><button className="primary">Classrooms</button></Link>
-						<Link className="linkBtn" to='topics'><button className="primary">Topics</button></Link>
-						<Link className="linkBtn" to='course-templates'><button className="primary">Course Templates</button></Link>
-						<Link className="linkBtn" to='instructors'><button className="primary">Instructors</button></Link>
-						<Link className="linkBtn" to='media'><button className="primary">Media</button></Link>
-						<Link className="linkBtn" to='members'><button className="primary">Members</button></Link>
-					</div>
-				</header>;
+			<h2>What would you like to do?</h2>
+			<div className='buttons'>
+				<Link className="linkBtn" to='/classroom/manage'><button className="primary">Classrooms</button></Link>
+				<Link className="linkBtn" to='topics'><button className="primary">Topics</button></Link>
+				<Link className="linkBtn" to='course-templates'><button className="primary">Course Templates</button></Link>
+				<Link className="linkBtn" to='instructors'><button className="primary">Instructors</button></Link>
+				<Link className="linkBtn" to='media'><button className="primary">Media</button></Link>
+				<Link className="linkBtn" to='members'><button className="primary">Members</button></Link>
+			</div>
+		</header>;
 		var displayClass;
 		if (this.state.courses.length < 0) {
 			displayClass = this.renderEmpty()

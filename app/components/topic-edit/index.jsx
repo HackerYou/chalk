@@ -117,6 +117,9 @@ export default React.createClass({
 		});
 		this.setState({copied: true});
 	},
+	goBack() {
+		this.history.goBack();
+	},
 	render() {
 		let savedText = (
 			<p><small>Saved</small></p>
@@ -126,7 +129,7 @@ export default React.createClass({
 				<NotificationSystem ref="notificationSystem" style={false}/>
 				<div className="container">
 					<header className="topContent">
-						<Link className="linkBtn" to="/topics"><button className="primary"><i className="chalk-home"></i>back to topics</button></Link>
+						<button className="primary" onClick={this.goBack}><i className="chalk-home"></i>Go Back</button>
 						<button onClick={this.deleteTopic} className="error"><i className="chalk-remove"></i>delete topic</button>
 					</header>
 				</div>
