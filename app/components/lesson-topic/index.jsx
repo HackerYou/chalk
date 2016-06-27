@@ -10,6 +10,21 @@ import {History} from 'react-router';
 export default React.createClass({
 	displayName: 'LessonTopic',
 	mixins: [History],
+	getInitialState() {
+		return {
+			user: {
+				admin: false
+			}
+		}
+	},
+	componentDidMount() {
+		userData.getUser(config.getUserId())
+			.then((data) => {
+				this.setState({
+					user: data.user
+				});
+			});
+	},
 	editLesson() {
 		this.history.pushState(null,`/topic/${this.props.details._id}/edit`);
 	},
@@ -26,8 +41,7 @@ export default React.createClass({
 			return ''; // use external default escaping
 		};
 		let showEdit = '';
-		let user = userData.getStoredUser();
-		if(user.admin) {
+		if(this.state.user.admin) {
 			showEdit = <i className="fa fa-pencil topic-edit" onClick={this.editLesson}></i>;
 		}
 		return (
