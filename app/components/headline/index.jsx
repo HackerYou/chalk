@@ -10,9 +10,6 @@ export default React.createClass({
 		this.props.clearUser();
 		this.props.history.pushState(null,'/');
 	},
-	userDisplay() {
-		
-	},
 	render() {
 		let user = userData.getStoredUser();
 		let userInfo;
@@ -22,7 +19,6 @@ export default React.createClass({
 			userInfo = <div className="userInfo"><h3>Hello, {user.firstName} {user.lastName}</h3><p className="signOut"><a href="#" className="strong" onClick={this.logOut}><i className="chalk-log-out"></i>Log out of {user.email}</a></p></div>;
 		}
 		return (
-			
 			<header className="mainHeader">
 				<div className="innerWrap card">
 					<Link to="/dashboard" className="linkBtn topLogo"><img src="/images/logo-hackeryou.svg" alt="HackerYou Logo" /></Link>

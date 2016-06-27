@@ -122,3 +122,14 @@ p.editTopic {
 .lessonEditView div:nth-last-child(-n+4):first-child ~ div.topicAddBlock {
 	margin-top: 35px;
 }
+
+.lessonTitle .topic-edit {
+	float: right;
+	opacity: 0.5;
+	font-size: 16px;
+	position: relative;
+	top: 13px;
+	&:hover {
+		cursor: pointer;
+	}
+}
