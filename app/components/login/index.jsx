@@ -12,7 +12,8 @@ export default React.createClass({
 		return {
 			error: '',
 			lostPassword: false,
-			passwordMessage: ''
+			passwordMessage: '',
+			resetEmail: ''
 		}
 	},
 	componentWillMount() {
@@ -49,6 +50,11 @@ export default React.createClass({
 			}
 		});
 	},
+	resetEmailChange(e) {
+		this.setState({
+			resetEmail: e.target.value
+		});
+	},
 	render() {
 		let form;
 		let error = (<p className="red">{this.state.error}</p>)
@@ -81,7 +87,7 @@ export default React.createClass({
 					{this.passwordMessage}
 					<div className="fieldGroup">
 						<label htmlFor="email" className="inline">email</label>
-						<input type="text" ref="email" placeholder="Your Email"/>
+						<input type="text" ref="email" placeholder="Your Email" value={this.state.resetEmail} onChange={this.resetEmailChange}/>
 					</div>
 					<div className="fieldGroup">
 						<input type="submit" className="button primary" value="reset password" onClick={this.sendResetEmail}/>
