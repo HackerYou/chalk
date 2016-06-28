@@ -3,6 +3,7 @@ import { Link , History} from 'react-router';
 import AuthMixin from '../../services/authMixin.jsx';
 import lessonData from '../../services/lesson.jsx';
 import coursesData from '../../services/courses.jsx';
+
 export default React.createClass({
 	displayName: 'New Lesson',
 	mixins:[AuthMixin,History],

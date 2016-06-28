@@ -133,3 +133,10 @@ p.editTopic {
 		cursor: pointer;
 	}
 }
+
+.lessonHeader {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
