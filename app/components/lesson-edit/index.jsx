@@ -7,6 +7,10 @@ import topicsData from '../../services/topic.jsx';
 import Markdown from 'react-remarkable';
 import coursesData from '../../services/courses.jsx';
 import hljs from 'highlight.js';
+import Exercise from '../exercise/index.jsx';
+import Dropzone from 'react-dropzone';
+import Media from '../../services/media.jsx';
+import Loading from '../loading/index.jsx';
 
 let placeholder = document.createElement('div');
 placeholder.className = 'placeholder';
@@ -18,6 +22,7 @@ export default React.createClass({
 	getInitialState(){
 		return {
 			isModalOpen: false,
+			isMediaModalOpen: false,
 			lesson: [],
 			lessonTopics: [],
 			topics: [],
@@ -25,7 +30,8 @@ export default React.createClass({
 			selectValue: 'all',
 			uniqueTopics: [],
 			isTemplate: false,
-			searchTopic: ''
+			searchTopic: '',
+			loading: false
 		}
 	},
 	componentWillMount(){
@@ -68,6 +74,16 @@ export default React.createClass({
 	},
 	closeModal(e){
 		this.setState({isModalOpen: false});
+	},
+	openMediaModal() {
+		this.setState({
+			isMediaModalOpen: true
+		});
+	},
+	closeMediaModal() {
+		this.setState({
+			isMediaModalOpen: false
+		});
 	},
 	getValue(e){
 		this.setState({selectValue: e.target.value});
@@ -237,7 +253,31 @@ export default React.createClass({
 			this.setState({selectedTopics: matches});
 		}
 	},
+	onDrop(file) {
+		this.setState({
+			loading: true
+		});
+		Media.uploadFile(file[0])
+			.then((data) => {
+				const fileName = data.media.path;
+				const newLesson = Object.assign({
+					exercise_link: fileName
+				}, this.state.lesson);
+				lessonData.updateLesson(this.state.lesson._id, newLesson)
+					.then((data) => {
+						this.setState({
+							lesson: data.lesson,
+							loading: false
+						});
+						this.closeMediaModal();
+					});
+			});
+	},
 	render() {
+		let exerciseLink = '';
+		if(this.state.lesson.exercise_link && this.state.lesson.exercise_link.length > 0) {
+			exerciseLink = <Exercise link={this.state.lesson.exercise_link} />
+		}
 		return (
 			<div className="full">
 				<header className="container">
@@ -255,7 +295,23 @@ export default React.createClass({
 				</div>
 				<div className="container">
 					<div className="lessonTopic">
-						<h2 className="lessonTitle">{this.state.lesson.title}</h2>
+						<div className="lessonHeader">
+							<h2 className="lessonTitle">{this.state.lesson.title}</h2>
+							<div>
+								<p><a href="#" onClick={this.openMediaModal}><i className="fa fa-cloud-upload"></i> Upload Exercise Files</a></p>
+								{exerciseLink}
+							</div>
+						</div>
+						<Modal isOpen={this.state.isMediaModalOpen} transitionName='modal-animation'>
+							<div className="modalBody--small card loginModal">
+								<i className="chalk-close" onClick={this.closeMediaModal}></i>
+								<h3>Upload an exercise file</h3>
+								<p>Please give it a good name, for example <code>pt-class8-exercises.zip</code>.</p>
+								<Dropzone onDrop={this.onDrop} className="dropZone">
+									<p>Drag and drop files here or click to select files to upload</p>
+								</Dropzone>
+							</div>
+						</Modal>
 						<p className="title">Drag and drop to reorder topics(One at the time for now, multiple rows coming soon!)</p>
 					</div>
 				</div>
@@ -304,6 +360,7 @@ export default React.createClass({
 						</Modal>
 					</div>
 					<button className="success" onClick={this.saveLesson}><i className="chalk-save"></i>Save Lesson</button>
+					<Loading loading={this.state.loading}/>
 				</div>
 		)
 	}
