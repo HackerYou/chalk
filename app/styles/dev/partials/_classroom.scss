@@ -1,6 +1,7 @@
 section.lessonsWrap {
 	lost-flex-container: row;
 	margin-bottom: 5rem;
+	position: relative;
 	@include bp(sm) {
 		margin-bottom: 0;
 	}
@@ -148,8 +149,8 @@ article.lessonNew {
 }
 
 .lessonMeta {
-	lost-column: 4/12;
-	lost-flex-container: column;
+	// lost-column: 4/12;
+	// lost-flex-container: column;
 	@include bp(sm) {
 		display: none;
 	}
@@ -168,13 +169,13 @@ article.lessonNew {
 	}
 }
 
-.supersticky {
-	position: fixed;
-	top: 0;
-	min-width: 307px;
-	width: auto;
-	margin-bottom: 200px;
-}
+// .supersticky {
+// 	position: fixed;
+// 	top: 0;
+// 	min-width: 307px;
+// 	width: auto;
+// 	margin-bottom: 200px;
+// }
 
 .topicLegend {
 	ul {
