@@ -44,6 +44,7 @@ export default {
 		});
 	},
 	getUser(id) {
+		console.log('Gettings that users', id)
 		return $.ajax({
 			url: `${config.getApiUrl()}/user/${id}`,
 			method: 'GET',

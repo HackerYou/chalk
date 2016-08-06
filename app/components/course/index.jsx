@@ -18,6 +18,8 @@ export default React.createClass({
 					lastName: res.user.lastName
 				}
 			});
+		},(err) => {
+			console.log(err);
 		});
 	},
 	goToClass(e){
