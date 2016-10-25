@@ -19,7 +19,7 @@ export default React.createClass({
 				}
 			});
 		},(err) => {
-			console.log(err);
+			console.error(err);
 		});
 	},
 	goToClass(e){
