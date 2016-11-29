@@ -25,6 +25,8 @@ import userData from '../services/user.jsx';
 import config from '../services/config.jsx';
 import auth from '../services/authentication.jsx';
 import Modal from './modal/index.jsx';
+import Questions from './questions/index.jsx';
+
 
 
 let createBrowserHistory = require('history/lib/createBrowserHistory');
@@ -181,6 +183,7 @@ ReactDom.render(
 			<Route path='/course-templates' component={CourseTemplates} />
 			<Route path='/course-templates/:templateId/edit' component={EditTemplate}/>
 			<Route path='/members' component={Members} />
+			<Route path='/questions' component={Questions}  />
 		</Route>
 	</Router>)
 	, document.getElementById('app'));
