@@ -1,0 +1,45 @@
+.accessibility {
+	box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.42);
+	padding: 2.5rem ;
+	margin: 75px 0 50px 0 ;
+	background-color: #ECEDEB;
+	line-height: 1.5;
+	position: relative;
+	border-radius: 0 2px 2px 2px;
+}
+
+.accessibility > * {
+	margin-bottom: 0;
+}
+
+.accessibility::before {
+	content: 'Accessibility';
+	height: 25px;
+	width: 95px;
+	border-radius: 2px 2px 0 0;
+	box-shadow: -1px 0 2px 0 rgba(0,0,0,0.32);
+	border-bottom: none;
+	z-index: 0;
+	background: $blue;
+	position: absolute;
+	top: -49px;
+	left: 0;
+	padding: 12px 20px;
+	font-size: 1.8rem;
+	font-family: "Nimbus Sans Semi-Bold","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+	color: white;
+}
+
+.accessibility::after {
+	content: ' ';
+	position: absolute;
+	top: 8px;
+	left: 55.5px;
+	width: 0;
+	height: 0;
+	margin-top: -8px;
+	pointer-events: none;
+	border: solid transparent;
+	border-width: 8px;
+	border-top-color: $blue;
+}
