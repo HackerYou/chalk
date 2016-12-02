@@ -1,0 +1,33 @@
+.questionCard {
+	width: 300px;
+	// background: #ECEDEB;
+	display: flex;
+	position: relative;
+	padding: 16px;
+	&--attr {
+		width: 60%;
+		margin: 0;
+	}
+	p {
+		margin-bottom: 0;
+	}
+	&:after {
+		position: absolute;
+		left: 92px;
+		top: 0;
+		content: "";
+		background: #ECEDEB;
+		width: 1px;
+		height: 100%;
+	}
+	ul {
+		height: 100%;
+		padding: 0;
+		width: 33%;
+		margin-left: 10px;
+		list-style: none;
+		li {
+			margin: 0;
+		}
+	}
+}
