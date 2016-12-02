@@ -74,10 +74,11 @@ export default React.createClass({
 		return (
 			<div>
 		 		<CodeMirror value={this.state.code} onChange={this.updateCode} options={options}/>
-				<select onChange={this.changeMode} value={this.state.mode}>
+				<select onChange={this.changeMode} value={this.state.mode} className="fieldRow">
 					<option value="markdown">Markdown</option>
 					<option value="javascript">JavaScript</option>
 				</select>
+				<input type="submit" value="validate" className="success"/>
 			</div>
 
 		)
@@ -90,6 +91,9 @@ export default React.createClass({
 		this.setState({
 			showType: chosenType
 		})
+
+		//if showType is equal MC then add class
+
 	},
 	getCategory(e) {
 		const chosenCategory = e.target.value;
@@ -118,6 +122,10 @@ export default React.createClass({
 		}).then(res => {
 			console.log("res",res);
 		});
+	},
+	validateCode(e) {
+		e.preventDefault();
+		console.log("sending");
 	},
 	render() {
 		return (
@@ -159,8 +167,8 @@ export default React.createClass({
 						</div>
 					</form>
 				</section>
-				<section className="full detailsForm topicsForm card">
-					<form onSubmit={this.addOption}>
+				<section className='full detailsForm topicsForm card'>
+					<form onSubmit={this.addOption} className={this.state.showType === 'multiple choice' ? 'showType' : 'hideType'}>
 						<div className="fieldRow">
 							<h3>Multiple Choice:</h3>
 							<label className="inline largeLabel">Label of your Question</label>
@@ -183,13 +191,14 @@ export default React.createClass({
 							})}
 						</div>
 					</form>
+					<form onSubmit={this.validateCode} className={this.state.showType === 'code' ? 'showType' : 'hideType'}>
+						<div className="fieldRow">
+							<h3>Code Based Question:</h3>
+							{this.renderCode()}
+						</div>
+					</form>
 				</section>
-				<section className="full detailsForm topicsForm card">
-					<div className="fieldRow">
-						<h3>Code Based Question:</h3>
-						{this.renderCode()}
-					</div>
-				</section>
+			
 				<section className="full detailsForm topicsForm card">
 					<form>
 						<div className="fieldRow">

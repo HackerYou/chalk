@@ -96,6 +96,14 @@ section.topicsWrap {
 	}
 }
 
+.hideType {
+	display: none;
+}
+
+.showType {
+	display: block;
+}
+
 .dropZone {
 	width: 100%;
 	border: 2px dashed $border;
