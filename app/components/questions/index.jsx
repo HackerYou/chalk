@@ -93,7 +93,6 @@ export default React.createClass({
 	},
 	getCategory(e) {
 		const chosenCategory = e.target.value;
-		// console.log("testing", chosenCategory);
 		this.setState({
 			showCategory: chosenCategory
 		})
@@ -110,13 +109,14 @@ export default React.createClass({
 		const title = this.questionTitle.value;
 		const body = this.question.value;
 
-		console.log("testing", body);
 		questionData.createQuestion({
 			title: title,
-			type: this.state.showType
+			type: this.state.showType,
+			body: body,
+			category: this.state.showCategory,
+			difficulty: this.state.showLevel
 		}).then(res => {
 			console.log("res",res);
-			// this.history.pushState(null,`/question`);
 		});
 	},
 	render() {
