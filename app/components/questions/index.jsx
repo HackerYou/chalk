@@ -35,7 +35,6 @@ export default React.createClass({
 
 	addOption(e) {
 		e.preventDefault();
-		debugger;
 		const setLabel = this.setLabel.value;
 		const setValue = this.setValue.value;
 		const answerArray = this.state.answerOption.slice();
@@ -110,6 +109,7 @@ export default React.createClass({
 	},
 	addQuestion(e) {
 		e.preventDefault();
+		console.log("submited!")
 		const title = this.questionTitle.value;
 		const body = this.question.value;
 
@@ -126,6 +126,10 @@ export default React.createClass({
 	validateCode(e) {
 		e.preventDefault();
 		console.log("sending");
+		//do some validating here
+	},
+	testing() {
+		console.log("hello");
 	},
 	render() {
 		return (
@@ -163,42 +167,42 @@ export default React.createClass({
 								<option value="multiple choice">Multiple Choice</option>
 								<option value="code">Code</option>
 							</select>
-							<input type="submit" value="Submit" className="success"/>
 						</div>
+						<div className="typeCard" onFocus={this.testing}>
+							<div className={this.state.showType === 'multiple choice' ? 'showType' : 'hideType'}>
+								<div className="fieldRow">
+									<h3>Multiple Choice:</h3>
+									<label className="inline largeLabel">Label of your Answers</label>
+									<input type="text" ref={ref => this.setLabel = ref}/>
+								</div>
+								<div className="fieldRow">
+									<label className="inline largeLabel">Set a value</label>
+									<input type="text" ref={ref => this.setValue = ref}/>
+									<button onClick={this.addOption} className="success">Add option</button>
+								</div>
+								<div className="fieldRow">
+									{this.state.answerOption.map((item, i) => {
+										console.log(item)
+										return (
+											<div key={i}>
+												<label>{item.answerLabel}</label>
+												<input className="inline" name="lala" type="radio" value={item.answerValue}/>
+											</div>
+										)
+									})}
+								</div>
+							</div>
+							<div className={this.state.showType === 'code' ? 'showType' : 'hideType'}>
+								<div className="fieldRow">
+									<h3>Code Based Question:</h3>
+									{this.renderCode()}
+								</div>
+							</div>
+						</div>
+						<input type="submit" value="Submit" className="success"/>
 					</form>
 				</section>
-				<section className='full detailsForm topicsForm card'>
-					<form onSubmit={this.addOption} className={this.state.showType === 'multiple choice' ? 'showType' : 'hideType'}>
-						<div className="fieldRow">
-							<h3>Multiple Choice:</h3>
-							<label className="inline largeLabel">Label of your Question</label>
-							<input type="text" ref={ref => this.setLabel = ref}/>
-						</div>
-						<div className="fieldRow">
-							<label className="inline largeLabel">Set a value</label>
-							<input type="text" ref={ref => this.setValue = ref}/>
-							<input type="submit" value="Add Option" className="success"/>
-						</div>
-						<div className="fieldRow">
-							{this.state.answerOption.map((item, i) => {
-								console.log(item)
-								return (
-									<div key={i}>
-										<label>{item.answerLabel}</label>
-										<input className="inline" type="radio" value={item.answerValue}/>
-									</div>
-								)
-							})}
-						</div>
-					</form>
-					<form onSubmit={this.validateCode} className={this.state.showType === 'code' ? 'showType' : 'hideType'}>
-						<div className="fieldRow">
-							<h3>Code Based Question:</h3>
-							{this.renderCode()}
-						</div>
-					</form>
-				</section>
-			
+				
 				<section className="full detailsForm topicsForm card">
 					<form>
 						<div className="fieldRow">
