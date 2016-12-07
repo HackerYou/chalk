@@ -11,6 +11,15 @@ let defaults = {
 	javascript: 'var component = {\n\tname: "react-codemirror",\n\tauthor: "Jed Watson",\n\trepo: "https://github.com/JedWatson/react-codemirror"\n};'
 };
 
+function findIndex(array,key,value) {
+	let index = 0;
+	for(let i = 0; i< array.length; i++) {
+		if(array[i][key] === value) {
+			index = i;
+		}
+	}
+	return index;
+}
 
 export default React.createClass({
 	displayName: 'Questions',
@@ -35,7 +44,6 @@ export default React.createClass({
 
 		questionData.getQuestion()
 			.then(data => {
-				// const questions = data.questions;
 				this.setState({
 					questions: data.questions
 				})
@@ -102,7 +110,7 @@ export default React.createClass({
 		questionData.deleteQuestion(questionId)
 			.then((res) => {
 				let questionsArray = Array.from(this.state.questions);
-				let questionsIndex = questionsArray.indexOf(questionId);
+				let questionsIndex = findIndex(questionsArray,"_id",questionId);
 				questionsArray.splice(questionsIndex,1);
 				this.setState({
 					questions: questionsArray
@@ -114,9 +122,7 @@ export default React.createClass({
 		this.setState({
 			showType: chosenType
 		})
-
 		//if showType is equal MC then add class
-
 	},
 	getCategory(e) {
 		const chosenCategory = e.target.value;
