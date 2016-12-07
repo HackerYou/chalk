@@ -7,7 +7,7 @@
 .questionCard {
 	width: calc(33.33% - 13.33px);
 	margin-right: 20px;
-	max-height: 120px;
+	min-height: 180px;
 	margin-top: 20px;
 	display: flex;
 	position: relative;
@@ -26,7 +26,7 @@
 	ul {
 		height: 100%;
 		padding: 0;
-		width: 33%;
+		width: 38%;
 		margin-left: 10px;
 		list-style: none;
 		position: relative;
@@ -34,5 +34,8 @@
 		li {
 			margin: 0;
 		}
+	}
+	button {
+		margin: 8px 0 0 0;
 	}
 }

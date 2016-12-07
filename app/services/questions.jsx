@@ -23,4 +23,24 @@ export default {
 			data: JSON.stringify(question)
 		});
 	},
+	getQuestionById(id) {
+		return $.ajax({
+			url: `${config.getApiUrl()}/questions/${id}`,
+			method: 'GET',
+			headers: {
+				'x-access-token' : config.getToken(),
+			}
+		});
+	},
+	deleteQuestion(id) {
+		return $.ajax({
+			url: `${config.getApiUrl().replace('v1','v2') }/questions/${id}`,
+			method: 'DELETE',
+			headers: {
+				'x-access-token' : config.getToken(),
+				'Content-Type' : 'application/json'
+			},
+			data: JSON.stringify()
+		});
+	}
 };

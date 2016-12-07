@@ -23,14 +23,23 @@ export default React.createClass({
 			readOnly: false,
 			showType: 'multiple choice',
 			showCategory: 'html',
-			showLevel: 'easy'
+			showLevel: 'easy',
+			questions: []
 		}
 	},
-	componentDidMount() {
+	componentWillMount() {
 		const currentType = this.state.showType;
 		const currentCategory = this.state.showCategory;
 		const currentLevel = this.state.showLevel;
 		console.log("curr",currentCategory)
+
+		questionData.getQuestion()
+			.then(data => {
+				// const questions = data.questions;
+				this.setState({
+					questions: data.questions
+				})
+			})
 	},
 
 	addOption(e) {
@@ -83,7 +92,22 @@ export default React.createClass({
 		)
 	},
 	renderCards(key, index) {
-		return <QuestionCards key={index} index={index}/>
+		console.log(this);
+		return this.state.questions.map((item,i) => {
+			return <QuestionCards key={`question-${i}`} question={item} removeCard={this.removeCard}/>
+		});
+	},
+	removeCard(e,questionId) {
+		e.preventDefault();
+		questionData.deleteQuestion(questionId)
+			.then((res) => {
+				let questionsArray = Array.from(this.state.questions);
+				let questionsIndex = questionsArray.indexOf(questionId);
+				questionsArray.splice(questionsIndex,1);
+				this.setState({
+					questions: questionsArray
+				});
+			});
 	},
 	getType(e) {
 		const chosenType = e.target.value;
@@ -121,6 +145,14 @@ export default React.createClass({
 			difficulty: this.state.showLevel
 		}).then(res => {
 			console.log("res",res);
+			const questionsArray = Array.from(this.state.questions);
+			questionsArray.push(res.question);
+
+			console.log("lala", questionsArray)
+
+			this.setState({
+				questions: questionsArray
+			})
 		});
 	},
 	validateCode(e) {
@@ -240,7 +272,9 @@ export default React.createClass({
 				</section>
 				<section>
 					<h3>All Questions:</h3>
-					{this.renderCards()}
+					<article className="questionCard__wrapper">
+						{this.renderCards()}
+					</article>
 				</section>
 			</div>
 		)

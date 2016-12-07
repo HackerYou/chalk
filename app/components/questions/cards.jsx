@@ -4,57 +4,18 @@ import AuthMixin from '../../services/authMixin.jsx';
 import userData from '../../services/user.jsx';
 import questionData from '../../services/questions.jsx';
 
-export default React.createClass({
-	displayName: 'QuestionCards',
-	mixins: [AuthMixin,History],
-	getInitialState() {
-		return {
-			questions: []
-		}
-	},
-	componentDidMount() {
-		questionData.getQuestion()
-			.then(data => {
-				// console.log("what is this", data)
-				const questionsArray = data.questions
-				const dataArray = []
-				questionsArray.map((item) => {
-					// console.log(item.body)
-					dataArray.push({
-						question: item.body,
-						category: item.category,
-						difficulty: item.difficulty,
-						type: item.type
-					})
-
-				})
-				this.setState({
-					questions: dataArray
-				})
-				// console.log("dataaaa", dataArray);
-			})
-	},
-	render() {
-		return (
-			<div className="questionCard__wrapper">
-				{this.state.questions.map((item, i) => {
-					if(item.question) {
-						console.log(item.question)
-						return (
-							<div key={i} className="inline card questionCard">
-								<ul className="questionCard--attr">
-									<li>{item.category}</li>
-									<li>{item.difficulty}</li>
-									<li>{item.type}</li>
-								</ul>
-								<div className="questionCard--attr">
-									<p>{item.question}</p>
-								</div>
-							</div>
-						)
-					}
-				})}
+export default function(props) {
+	return (
+		<div className="inline card questionCard">
+			<ul className="questionCard--attr">
+				<li>{props.question.category}</li>
+				<li>{props.question.difficulty}</li>
+				<li>{props.question.type}</li>
+				<button className="error" onClick={(e) => props.removeCard(e,props.question._id)}>Remove</button>
+			</ul>
+			<div className="questionCard--attr">
+				<p>{props.question.body}</p>
 			</div>
-		)
-	}
-});
+		</div>
+	)
+}
