@@ -34,21 +34,18 @@ export default React.createClass({
 			showCategory: 'html',
 			showLevel: 'easy',
 			questions: [],
-			realAnswer: ""
+			realAnswer: "",
+			showFiltered: false,
+			filteredQuestions: []
 		}
 	},
 	componentWillMount() {
-		const currentType = this.state.showType;
-		const currentCategory = this.state.showCategory;
-		const currentLevel = this.state.showLevel;
-		console.log("curr",currentCategory)
-
 		questionData.getQuestion()
 			.then(data => {
 				this.setState({
 					questions: data.questions
-				})
-			})
+				});
+			});
 	},
 
 	addOption(e) {
@@ -59,18 +56,19 @@ export default React.createClass({
 		const answerArray = this.state.answerOption.slice();
 
 		console.log("setq answer", setAnswer)
+		if(setLabel !== '' && setValue !== '') {
+			answerArray.push({
+				label: setLabel,
+				value: setValue,
+			})
 
-		answerArray.push({
-			answerLabel: setLabel,
-			answerValue: setValue,
-		})
+			this.setState({
+				answerOption: answerArray
+			})
 
-		this.setState({
-			answerOption: answerArray
-		})
-
-		this.setValue.value = "";
-		this.setLabel.value = ""
+			this.setValue.value = "";
+			this.setLabel.value = ""
+		}
 	},
 	//Handles Codemirror implementation
 	changeMode(e) {
@@ -90,9 +88,9 @@ export default React.createClass({
 	//Handles Codemirror implementation
 	renderCode() {
 		var options = {
-            lineNumbers: true,
-            mode: this.state.mode
-        };
+			lineNumbers: true,
+			mode: this.state.mode
+		};
 		return (
 			<div>
 		 		<CodeMirror value={this.state.code} onChange={this.updateCode} options={options}/>
@@ -102,14 +100,18 @@ export default React.createClass({
 				</select>
 				<input type="submit" value="validate" className="success"/>
 			</div>
-
 		)
 	},
 	renderCards(key, index) {
-		console.log(this);
-		return this.state.questions.map((item,i) => {
+		const cardRender = (item,i) => {
 			return <QuestionCards key={`question-${i}`} question={item} removeCard={this.removeCard}/>
-		});
+		};
+		if(this.state.showFiltered) {
+			return this.state.filteredQuestions.map(cardRender);
+		}
+		else {
+			return this.state.questions.map(cardRender);
+		}
 	},
 	removeCard(e,questionId) {
 		e.preventDefault();
@@ -132,33 +134,35 @@ export default React.createClass({
 	},
 	addQuestion(e) {
 		e.preventDefault();
-		console.log("submited!")
 		const title = this.questionTitle.value;
 		const body = this.question.value;
 		const multiAnswer = this.setAnswer.value;
-		console.log("hi", this.getCategory.value)
-
-		questionData.createQuestion({
-			title: title,
+		const question = {
+			title,
 			type: this.state.showType,
-			body: body,
+			body,
 			category: this.getCategory.value,
 			difficulty: this.getLevel.value,
-			multiChoice: this.state.answerOption,
-			multiAnswer: multiAnswer
-
-		}).then(res => {
-			console.log("res",res);
-			const questionsArray = Array.from(this.state.questions);
-			questionsArray.push(res.question);
-
-			console.log("lala", questionsArray)	
-
-			this.setState({
-				questions: questionsArray
-			})
-		});
-		this.setAnswer.value = "";
+		};
+		if(title !== '' && body !== '') {
+			if(this.state.showType === 'code') {
+				question.unitTest = this.state.code;
+			}
+			else {
+				Object.assign(question,{
+					multiChoice: this.state.answerOption,
+					multiAnswer
+				});
+			}
+			questionData.createQuestion(question).then(res => {
+				const questionsArray = Array.from(this.state.questions);
+				questionsArray.push(res.question);
+				this.setState({
+					questions: questionsArray
+				})
+			});
+			this.setAnswer.value = "";
+		}
 	},
 	validateCode(e) {
 		e.preventDefault();
@@ -170,12 +174,33 @@ export default React.createClass({
 		const category = this.searchCategory.value;
 		const type = this.searchType.value;
 		const difficulty = this.searchLevel.value;
-		const searchKey = this.searchKey.value;
-
-		console.log("cat", category)
-		console.log("cat", type)
-		console.log("cat", difficulty)
-		console.log("cat", searchKey)
+		// const searchKey = this.searchKey.value;
+		const compare = (filteredOption,key) =>  {
+			return (question) => {
+				return filteredOption === 'all' || question[key] === filteredOption;
+			}
+		}
+		const questions = this.state.questions
+			.filter(compare(category,'category'))
+			.filter(compare(type,'type'))
+			.filter(compare(difficulty,'difficulty'));
+			
+		if(category !== 'all' || type !== 'all' || difficulty !== 'all') {
+			this.setState({
+				showFiltered: true,
+				filteredQuestions: questions
+			});
+		}
+		else {
+			this.setState({
+				showFiltered: false
+			});
+		}
+	},
+	changeQuestionView() {
+		this.setState({
+			showType: this.getType.value
+		});
 	},
 	render() {
 		return (
@@ -209,7 +234,7 @@ export default React.createClass({
 								<option value="hard">Hard</option>
 							</select>
 							<label htmlFor="type" className="inline largeLabel">Type</label>
-							<select name="type" ref={ref => this.getType = ref} value={this.state.showType}>
+							<select name="type" ref={ref => this.getType = ref} defaultValue={this.state.showType} onChange={(e) => this.changeQuestionView() }>
 								<option value="multiple choice">Multiple Choice</option>
 								<option value="code">Code</option>
 							</select>
@@ -228,11 +253,10 @@ export default React.createClass({
 								</div>
 								<div className="fieldRow">
 									{this.state.answerOption.map((item, i) => {
-										console.log(item)
 										return (
 											<div key={i}>
-												<label>{item.answerLabel}</label>
-												<input className="inline" name="lala" type="radio" value={item.answerValue}/>
+												<label>{item.label}</label>
+												<input className="inline" name="lala" type="radio" value={item.value}/>
 											</div>
 										)
 									})}

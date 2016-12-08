@@ -117,12 +117,13 @@ gulp.task('js', function() {
       title: "JSX Error",
       message: "<%= error.message %>"
     }))
-		.pipe(source('app.min.js'))
+	.pipe(source('app.min.js'))
     .pipe(buffer())
     .pipe($.sourcemaps.init({loadMaps: true}))
     .pipe($.uglify())
     .pipe($.sourcemaps.write('.'))
-		.pipe(gulp.dest('app/components'));
+	.pipe(gulp.dest('app/components'))
+	.pipe(reload({stream:true}))
 });
 
 gulp.task('bs-client', function () {

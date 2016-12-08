@@ -1,8 +1,4 @@
 import React from 'react';
-import { Link , History} from 'react-router';
-import AuthMixin from '../../services/authMixin.jsx';
-import userData from '../../services/user.jsx';
-import questionData from '../../services/questions.jsx';
 
 export default function(props) {
 	return (
