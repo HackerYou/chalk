@@ -33,7 +33,8 @@ export default React.createClass({
 			showType: 'multiple choice',
 			showCategory: 'html',
 			showLevel: 'easy',
-			questions: []
+			questions: [],
+			realAnswer: ""
 		}
 	},
 	componentWillMount() {
@@ -52,19 +53,24 @@ export default React.createClass({
 
 	addOption(e) {
 		e.preventDefault();
-		const setLabel = this.setLabel.value;
-		const setValue = this.setValue.value;
+		let setLabel = this.setLabel.value;
+		let setValue = this.setValue.value;
+		const setAnswer = this.setAnswer.value;
 		const answerArray = this.state.answerOption.slice();
+
+		console.log("setq answer", setAnswer)
 
 		answerArray.push({
 			answerLabel: setLabel,
-			answerValue: setValue
+			answerValue: setValue,
 		})
 
 		this.setState({
 			answerOption: answerArray
 		})
-		
+
+		this.setValue.value = "";
+		this.setLabel.value = ""
 	},
 	//Handles Codemirror implementation
 	changeMode(e) {
@@ -124,50 +130,52 @@ export default React.createClass({
 		})
 		//if showType is equal MC then add class
 	},
-	getCategory(e) {
-		const chosenCategory = e.target.value;
-		this.setState({
-			showCategory: chosenCategory
-		})
-	},
-	getLevel(e) {
-		const chosenLevel = e.target.value;
-		console.log("testing", chosenLevel);
-		this.setState({
-			showLevel: chosenLevel
-		})
-	},
 	addQuestion(e) {
 		e.preventDefault();
 		console.log("submited!")
 		const title = this.questionTitle.value;
 		const body = this.question.value;
+		const multiAnswer = this.setAnswer.value;
+		console.log("hi", this.getCategory.value)
 
 		questionData.createQuestion({
 			title: title,
 			type: this.state.showType,
 			body: body,
-			category: this.state.showCategory,
-			difficulty: this.state.showLevel
+			category: this.getCategory.value,
+			difficulty: this.getLevel.value,
+			multiChoice: this.state.answerOption,
+			multiAnswer: multiAnswer
+
 		}).then(res => {
 			console.log("res",res);
 			const questionsArray = Array.from(this.state.questions);
 			questionsArray.push(res.question);
 
-			console.log("lala", questionsArray)
+			console.log("lala", questionsArray)	
 
 			this.setState({
 				questions: questionsArray
 			})
 		});
+		this.setAnswer.value = "";
 	},
 	validateCode(e) {
 		e.preventDefault();
 		console.log("sending");
 		//do some validating here
 	},
-	testing() {
-		console.log("hello");
+	filterSearch(e) {
+		e.preventDefault();
+		const category = this.searchCategory.value;
+		const type = this.searchType.value;
+		const difficulty = this.searchLevel.value;
+		const searchKey = this.searchKey.value;
+
+		console.log("cat", category)
+		console.log("cat", type)
+		console.log("cat", difficulty)
+		console.log("cat", searchKey)
 	},
 	render() {
 		return (
@@ -182,7 +190,7 @@ export default React.createClass({
 						</div>
 						<div className="fieldRow">
 							<label className="inline largeLabel">Category</label>
-							<select onChange={this.getCategory}>
+							<select ref={ref => this.getCategory = ref}>
 								<option value="html">HTML</option>
 								<option value="css">CSS</option>
 								<option value="javascript">JavaScript</option>
@@ -195,13 +203,13 @@ export default React.createClass({
 						</div>
 						<div className="fieldRow">
 							<label className="inline largeLabel">Level of Difficulty</label>
-							<select onChange={this.getLevel}>
+							<select ref={ref => this.getLevel = ref}>
 								<option value="easy">Easy</option>
 								<option value="medium">Medium</option>
 								<option value="hard">Hard</option>
 							</select>
 							<label htmlFor="type" className="inline largeLabel">Type</label>
-							<select name="type" onChange={this.getType} value={this.state.showType}>
+							<select name="type" ref={ref => this.getType = ref} value={this.state.showType}>
 								<option value="multiple choice">Multiple Choice</option>
 								<option value="code">Code</option>
 							</select>
@@ -229,6 +237,10 @@ export default React.createClass({
 										)
 									})}
 								</div>
+								<div className="fieldRow">
+									<label className="inline largeLabel">What is the answer?</label>
+									<input type="text" ref={ref => this.setAnswer = ref}/>
+								</div>
 							</div>
 							<div className={this.state.showType === 'code' ? 'showType' : 'hideType'}>
 								<div className="fieldRow">
@@ -242,37 +254,35 @@ export default React.createClass({
 				</section>
 				
 				<section className="full detailsForm topicsForm card">
-					<form>
+					<form onSubmit={this.filterSearch}>
 						<div className="fieldRow">
-							<h3>Filter Question:</h3>
+							<h3>Filter Search:</h3>
 							<label className="inline largeLabel">Category</label>
-							<select>
+							<select ref={ref => this.searchCategory = ref}>
+								<option value="all">All</option>
 								<option value="html">HTML</option>
 								<option value="css">CSS</option>
 								<option value="javascript">JavaScript</option>
 								<option value="javascript">React</option>
 							</select>
-							<label className="inline largeLabel">Title</label>
-							<select>
-								<option value="css">Flexbox</option>
-								<option value="javascript">Functions</option>
-								<option value="css">CSS Advanced Selectors</option>
-								<option value="javascript">React Components</option>
-							</select>
+							<label className="inline largeLabel">Search keyword</label>
+							<input type="text" ref={ref => this.searchKey = ref} />
 						</div>
 						<div className="fieldRow">
 							<label className="inline largeLabel">Level of Difficulty</label>
-							<select>
+							<select ref={ref => this.searchLevel = ref}>
+								<option value="all">All</option>
 								<option value="easy">Easy</option>
 								<option value="medium">Medium</option>
 								<option value="hard">Hard</option>
 							</select>
 							<label className="inline largeLabel">Type</label>
-							<select>
-								<option value="easy">Multiple Choice</option>
-								<option value="medium">Code</option>
+							<select ref={ref => this.searchType = ref}>
+								<option value="all">All</option>
+								<option value="multiple choice">Multiple Choice</option>
+								<option value="code">Code</option>
 							</select>
-							<input type="submit" value="Search" className="success"/>
+							<input type="submit" value="Search" className="primary"/>
 						</div>
 					</form>
 				</section>
