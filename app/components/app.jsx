@@ -26,6 +26,7 @@ import config from '../services/config.jsx';
 import auth from '../services/authentication.jsx';
 import Modal from './modal/index.jsx';
 import Questions from './questions/index.jsx';
+import CreateTest from './create-test/index.jsx';
 
 
 
@@ -170,6 +171,7 @@ ReactDom.render(
 			<Route path='/dashboard' component={Dashboard}/>
 			<Route path='/classroom/manage' component={ManageClassrooms}/>
 			<Route path='/classroom/:courseId' component={Classroom}/>
+			<Route path='/classroom/:courseId/create-test' component={CreateTest}  />
 			<Route path='/classroom/:courseId/edit' component={EditClassroom} />
 			<Route path='/lesson/:lessonId/:classroomId' component={Lesson} />
 			<Route path='/lesson/:lessonId/:classroomId/edit' component={EditLesson}/>

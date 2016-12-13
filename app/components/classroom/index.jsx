@@ -206,6 +206,9 @@ export default React.createClass({
 
 		}
 	},
+	openTest() {
+		console.log('open test');
+	},
 	render() {
 		// let lessons = this.state.course.lessons;
 		let isAdmin = this.state.user.admin;
@@ -230,6 +233,12 @@ export default React.createClass({
 							<button onClick={this.openModal} className="success">Manage classroom members</button>
 						</div>
 					);
+		let test = (
+			<div className="card cardAddTest">
+				<h3>Add Tests</h3>
+				<Link onClick={this.openTest} to={`/classroom/${this.props.params.courseId}/create-test`} className="primary">Add Test</Link>
+			</div>
+		);
 		return (
 			<div className="container full">
 				<Link to='/dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
@@ -251,7 +260,8 @@ export default React.createClass({
 									{(this.state.sections).map(this.renderTopics)}
 								</ul>
 							</div>
-							{isAdmin || isInstructor ? members : null}
+							{(isAdmin || isInstructor) ? members : null}
+							{(isAdmin || isInstructor) ? test : null}
 						</section>
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<div className="modalBody card">

@@ -4,7 +4,8 @@ import AuthMixin from '../../services/authMixin.jsx';
 import userData from '../../services/user.jsx';
 import questionData from '../../services/questions.jsx';
 import QuestionCards from '../questions/cards.jsx';
-let CodeMirror = require('react-codemirror');
+import CodeMirror from 'react-codemirror';
+import FilteredSearch from '../questions/filteredSearch.jsx';
 
 let defaults = {
 	markdown: '# Heading\n\nSome **bold** and _italic_ text\nBy [Jed Watson](https://github.com/JedWatson)',
@@ -31,12 +32,11 @@ export default React.createClass({
 			mode: 'markdown',
 			readOnly: false,
 			showType: 'multiple choice',
-			showCategory: 'html',
-			showLevel: 'easy',
 			questions: [],
 			realAnswer: "",
 			showFiltered: false,
-			filteredQuestions: []
+			filteredQuestions: [],
+			selectButton: 'false'
 		}
 	},
 	componentWillMount() {
@@ -104,7 +104,7 @@ export default React.createClass({
 	},
 	renderCards(key, index) {
 		const cardRender = (item,i) => {
-			return <QuestionCards key={`question-${i}`} question={item} removeCard={this.removeCard}/>
+			return <QuestionCards key={`question-${i}`} question={item} removeCard={this.removeCard} selectButton={this.state.selectButton}/>
 		};
 		if(this.state.showFiltered) {
 			return this.state.filteredQuestions.map(cardRender);
@@ -169,38 +169,14 @@ export default React.createClass({
 		console.log("sending");
 		//do some validating here
 	},
-	filterSearch(e) {
-		e.preventDefault();
-		const category = this.searchCategory.value;
-		const type = this.searchType.value;
-		const difficulty = this.searchLevel.value;
-		// const searchKey = this.searchKey.value;
-		const compare = (filteredOption,key) =>  {
-			return (question) => {
-				return filteredOption === 'all' || question[key] === filteredOption;
-			}
-		}
-		const questions = this.state.questions
-			.filter(compare(category,'category'))
-			.filter(compare(type,'type'))
-			.filter(compare(difficulty,'difficulty'));
-			
-		if(category !== 'all' || type !== 'all' || difficulty !== 'all') {
-			this.setState({
-				showFiltered: true,
-				filteredQuestions: questions
-			});
-		}
-		else {
-			this.setState({
-				showFiltered: false
-			});
-		}
-	},
+
 	changeQuestionView() {
 		this.setState({
 			showType: this.getType.value
 		});
+	},
+	showFiltered(options) {
+		this.setState(options);
 	},
 	render() {
 		return (
@@ -278,37 +254,7 @@ export default React.createClass({
 				</section>
 				
 				<section className="full detailsForm topicsForm card">
-					<form onSubmit={this.filterSearch}>
-						<div className="fieldRow">
-							<h3>Filter Search:</h3>
-							<label className="inline largeLabel">Category</label>
-							<select ref={ref => this.searchCategory = ref}>
-								<option value="all">All</option>
-								<option value="html">HTML</option>
-								<option value="css">CSS</option>
-								<option value="javascript">JavaScript</option>
-								<option value="javascript">React</option>
-							</select>
-							<label className="inline largeLabel">Search keyword</label>
-							<input type="text" ref={ref => this.searchKey = ref} />
-						</div>
-						<div className="fieldRow">
-							<label className="inline largeLabel">Level of Difficulty</label>
-							<select ref={ref => this.searchLevel = ref}>
-								<option value="all">All</option>
-								<option value="easy">Easy</option>
-								<option value="medium">Medium</option>
-								<option value="hard">Hard</option>
-							</select>
-							<label className="inline largeLabel">Type</label>
-							<select ref={ref => this.searchType = ref}>
-								<option value="all">All</option>
-								<option value="multiple choice">Multiple Choice</option>
-								<option value="code">Code</option>
-							</select>
-							<input type="submit" value="Search" className="primary"/>
-						</div>
-					</form>
+					<FilteredSearch questionState={this.state.questions} showFiltered={this.showFiltered}/>
 				</section>
 				<section>
 					<h3>All Questions:</h3>
