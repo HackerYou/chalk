@@ -10,6 +10,7 @@ import config from '../../services/config.jsx';
 import Sticky from '../../services/sticky.js';
 import Loading from '../loading/index.jsx';
 import validator from 'validator';
+import TestData from '../../services/tests.jsx';
 
 export default React.createClass({
 	displayName: 'Classroom',
@@ -208,6 +209,10 @@ export default React.createClass({
 	},
 	openTest() {
 		console.log('open test');
+		// TestData.createTest()
+		// 	.then((res) => {
+				
+		// 	})
 	},
 	render() {
 		// let lessons = this.state.course.lessons;

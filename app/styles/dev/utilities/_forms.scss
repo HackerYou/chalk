@@ -174,6 +174,24 @@ select {
   }
 }
 
+.fieldRowQuestion {
+  display: flex;
+  input {
+    margin-right: 15px;
+    margin-top: 5px;
+  }
+}
+
+.testForm {
+  background: #3e3739;
+  color: white;
+  .testTally {
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+  }
+}
+
 .inlineFieldRow {
 	display: flex;
 	flex-flow: row wrap;

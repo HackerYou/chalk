@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link , History} from 'react-router';
+import { Link, History} from 'react-router';
 import AuthMixin from '../../services/authMixin.jsx';
 import userData from '../../services/user.jsx';
 import questionData from '../../services/questions.jsx';
@@ -104,7 +104,7 @@ export default React.createClass({
 	},
 	renderCards(key, index) {
 		const cardRender = (item,i) => {
-			return <QuestionCards key={`question-${i}`} question={item} removeCard={this.removeCard} selectButton={this.state.selectButton}/>
+			return <QuestionCards key={`question-${i}`} question={item} removeCard={this.removeCard} selectButton={this.state.selectButton} showSelected="false"/>
 		};
 		if(this.state.showFiltered) {
 			return this.state.filteredQuestions.map(cardRender);
@@ -115,6 +115,7 @@ export default React.createClass({
 	},
 	removeCard(e,questionId) {
 		e.preventDefault();
+		console.log("hello",questionId)
 		questionData.deleteQuestion(questionId)
 			.then((res) => {
 				let questionsArray = Array.from(this.state.questions);
