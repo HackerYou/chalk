@@ -48,6 +48,9 @@ button, .button {
       border: 1px solid $red;
     }
   }
+  &.deactivated {
+    background: grey;
+  }
 }
 
 a.linkBtn {

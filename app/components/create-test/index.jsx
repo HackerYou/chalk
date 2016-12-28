@@ -30,7 +30,7 @@ export default React.createClass({
 			testId: "",
 			allQuestions: {},
 			numOfQuestions: "",
-			selectCard: false
+			selectedCard: false
 		}
 	},
 	componentWillMount(){
@@ -47,7 +47,7 @@ export default React.createClass({
 	renderCards(key, index) {
 		const cardRender = (item,i) => {
 			// console.log("item", item);
-			return <QuestionCards key={`question-${i}`} question={item} selectCard={this.selectCard} selectButton={this.state.selectButton} classId={this.props.params.courseId} showSelected="true"/>
+			return <QuestionCards key={`question-${i}`} question={item} isSelected={this.state.selectedCard} selectCard={this.selectCard} selectButton={this.state.selectButton} classId={this.props.params.courseId} showSelected="true"/>
 		};
 		if(this.state.showFiltered) {
 			return this.state.filteredQuestions.map(cardRender);
