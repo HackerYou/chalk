@@ -14,7 +14,7 @@ import ViewTest from '../create-test/view.jsx';
 import TestData from '../../services/tests.jsx';
 
 export default React.createClass({
-	displayName: 'CreateTest',
+	displayName: 'EditTest',
 	mixins: [AuthMixin,History],
 	getInitialState(){
 		return{
@@ -40,38 +40,24 @@ export default React.createClass({
 					questions: res.questions
 				})
 			})
+		TestData.getTest(this.props.params.testId)
+			.then(res => {
+				console.log("the test", res)
+				this.setState({
+					testTitle: res.test.title,
+					numOfQuestions: res.test.questions.length
+				})
+			});
+		//http://localhost:3000/edit-test/586d7f32336a5b3e3a36eaec
+		//GEt the test from the API based on this.params.testId
 	},
 	showFiltered(options) {
 		this.setState(options);
 	},
-	removeQuestion(e,Id) {
-		const testQuestions = this.state.testQuestions;
-		const index = testQuestions.indexOf(Id);
-
-		testQuestions.splice(index, 1)
-		this.setState({
-			testQuestions
-		})
-		// TestData.updateTest(this.state.testId, {
-		// 	questionId: selectedInfo
-		// })
-
-		TestData.removeQuestion(this.state.testId, {
-			questionId: Id
-		}).then(res => {
-			console.log("removed", res.test.questions)
-		})
-
-		// TestData.removeQuestion(questionId)
-		// 	.then(res => {
-		// 		console.log("res", res)
-		// 	})
-	},
 	renderCards(key, index) {
 		const cardRender = (item,i) => {
-			//checking to see if selectedId is INCLUDED in list of all questions
-			const isSelected = this.state.testQuestions.includes(item._id);
-			return <QuestionCards key={`question-${i}`} question={item} allQuestions={this.state.questions} selectCard={this.selectCard}  selectButton={this.state.selectButton} classId={this.props.params.courseId} showSelected={!isSelected} removeCard={this.removeQuestion}/>
+			// console.log("item", item);
+			return <QuestionCards key={`question-${i}`} question={item} isSelected={this.state.selectedCard} selectCard={this.selectCard} selectButton={this.state.selectButton} classId={this.props.params.courseId} showSelected="true"/>
 		};
 		if(this.state.showFiltered) {
 			return this.state.filteredQuestions.map(cardRender);
@@ -80,20 +66,20 @@ export default React.createClass({
 			return this.state.questions.map(cardRender);
 		}
 	},
-	//add questions
 	selectCard(e, selectedInfo) {
 		e.preventDefault();
 		const newArray = this.state.selectedQuestions.slice();
 		const questionArray = [];
 		const testQuestions = this.state.testQuestions;
 
-		testQuestions.push(selectedInfo._id);
+		testQuestions.push(selectedInfo);
+
+		console.log("selected", testQuestions)
 
 		TestData.updateTest(this.state.testId, {
 			questionId: selectedInfo
 		}).then(res => {
 			const questions = res.test.questions;
-			console.log('update', questions)
 			if(this.state.selectCard) {
 				this.setState({
 					selectCard: false
@@ -144,18 +130,11 @@ export default React.createClass({
 	render() {
 		return (
 			<div className="classCard">
-				<section className={this.state.testCreated === true ? 'cardHide' : 'full detailsForm card'}>
-					<form onSubmit={this.createNewTest}>
-						<label>What is the name of the test?</label>
-						<input type="text" ref={ref => this.testName = ref}/>
-						<input type="submit" />
-					</form>
-				</section>
-				<h2 className={this.state.testCreated === false ? 'cardHide' : null}>Test Created: {this.state.testTitle}</h2>
-				<section className={this.state.testCreated === false ? 'cardHide' : 'full detailsForm card'}>
+				<h2>Test Created: {this.state.testTitle}</h2>
+				<section className='full detailsForm card'>
 					<FilteredSearch questionState={this.state.questions} showFiltered={this.showFiltered}/>
 				</section>
-				<section className={this.state.testCreated === false ? 'cardHide' : 'full'}>
+				<section className='full'>
 					<h2>Create Your Test</h2>
 					<div className="full testForm">
 						<ul className="testTally">
@@ -169,7 +148,7 @@ export default React.createClass({
 						{this.renderCards()}
 					</article>
 					<br/>
-					<Link onClick={this.viewTest} to={`/classroom/${this.props.params.courseId}/view-test/${this.state.testId}`} className="primary">View Test</Link>
+					<Link onClick={this.viewTest} to={`/classroom/${this.props.params.courseId}/create-test/${this.state.testId}/view-test`} className="primary">View Test</Link>
 				</section>
 			</div>
 		)

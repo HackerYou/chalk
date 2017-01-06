@@ -18,6 +18,12 @@
 	&--attr {
 		width: 60%;
 		margin: 0;
+		position: relative;
+		.fa {
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
 	}
 	p {
 		margin-bottom: 0;

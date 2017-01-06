@@ -59,6 +59,7 @@ body {
 	lost-utility: clearfix;
 }
 
+
 header.intro {
 	border-bottom: 1px $greyLight solid;
 	padding-bottom: 5rem;
@@ -107,6 +108,10 @@ section.detailsForm > form .fieldRow, .detailsForm > form .fieldRow {
 		border-top: 1px solid $greyLight;
 		padding-top: 30px;
 	}
+}
+
+.cardHide {
+	display: none;
 }
 
 @import 'partials/modal';

@@ -6,6 +6,7 @@ import questionData from '../../services/questions.jsx';
 import QuestionCards from '../questions/cards.jsx';
 import CodeMirror from 'react-codemirror';
 import FilteredSearch from '../questions/filteredSearch.jsx';
+require('codemirror/mode/javascript/javascript');
 
 let defaults = {
 	markdown: '# Heading\n\nSome **bold** and _italic_ text\nBy [Jed Watson](https://github.com/JedWatson)',
@@ -89,7 +90,9 @@ export default React.createClass({
 	renderCode() {
 		var options = {
 			lineNumbers: true,
-			mode: this.state.mode
+			mode: this.state.mode,
+			theme: 'cobalt',
+			fixedGutter: true
 		};
 		return (
 			<div>

@@ -20,7 +20,9 @@ export default React.createClass({
 		document.body.className = '';
 		return{
 			user: {},
-			course: {},
+			course: {
+				tests: []
+			},
 			sections: [],
 			isModalOpen: false,
 			topics: [],
@@ -42,10 +44,12 @@ export default React.createClass({
 	},
 	componentWillMount(){
 		userData.getUser(config.getUserId()).then(res=>{
+			console.log("meow", res.user)
 			this.setState({
 				user: res.user
 			})
 		});
+			
 		let id = this.props.params.courseId;
 		coursesData.getCourseById(id).then(res=>{
 			this.originalMembers = res.course.students;
@@ -216,6 +220,7 @@ export default React.createClass({
 	},
 	render() {
 		// let lessons = this.state.course.lessons;
+		let tests = this.state.course.tests;
 		let isAdmin = this.state.user.admin;
 		let isInstructor = this.state.user.instructor;
 		let dragAndDrop = <p className="title">Drag and drop to reorganize lessons</p>
@@ -232,16 +237,38 @@ export default React.createClass({
 			)
 		}
 		let members = (
-						<div className="card">
-							<h3>Members</h3>
-							<p><i className="chalk-users"></i>{this.state.members.length} members of the classroom</p>
-							<button onClick={this.openModal} className="success">Manage classroom members</button>
-						</div>
-					);
+			<div className="card">
+				<h3>Members</h3>
+				<p><i className="chalk-users"></i>{this.state.members.length} members of the classroom</p>
+				<button onClick={this.openModal} className="success">Manage classroom members</button>
+			</div>
+		);
 		let test = (
 			<div className="card cardAddTest">
-				<h3>Add Tests</h3>
+				<h3>Add Tests</h3>	
+				{this.state.course.tests.map((test) => { 
+					return (<div>
+						<ul>
+							<li><Link to={`/classroom/${this.props.params.courseId}/view-test/${test._id}`}>{test.title} </Link></li>
+						</ul>
+						<Link to={`/edit-test/${test._id}`}><i className="fa fa-edit"></i></Link>
+					</div>)
+				})}
 				<Link onClick={this.openTest} to={`/classroom/${this.props.params.courseId}/create-test`} className="primary">Add Test</Link>
+			</div>
+		);
+
+		let takeTest = (
+			<div className="card cardAddTest">
+				<h3>Take Test</h3>
+				{tests.map((item, i) => {
+					// console.log("item", item)
+					return (
+						<ul>
+							<li><Link key={i} onClick={this.openTest} to={`/classroom/${this.props.params.courseId}/view-test/${item._id}`} className="primary">{item.title}</Link></li>
+						</ul>
+					)
+				})}
 			</div>
 		);
 		return (
@@ -265,8 +292,10 @@ export default React.createClass({
 									{(this.state.sections).map(this.renderTopics)}
 								</ul>
 							</div>
+
 							{(isAdmin || isInstructor) ? members : null}
 							{(isAdmin || isInstructor) ? test : null}
+							{(isAdmin === false && isInstructor === false ? takeTest : null)}
 						</section>
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<div className="modalBody card">
