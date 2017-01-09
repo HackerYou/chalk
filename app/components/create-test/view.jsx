@@ -28,7 +28,8 @@ export default React.createClass({
 			isStudent: false,
 			testInfo: {
 				test: {}
-			}
+			},
+			testSubmitted: false
 
 		}
 	},
@@ -127,6 +128,10 @@ export default React.createClass({
 				answer: this.state.answer[key]
 			})
 		}
+		console.log("submitted");
+		this.setState({
+			testSubmitted: true
+		})
 		TestData.addUser(this.props.params.testId)
 			.then(res => {
 				TestData.evaluateTest(userId, this.props.params.testId, answerArray)
@@ -194,8 +199,14 @@ export default React.createClass({
 	render() {
 		const testInfo = this.state.testInfo;
 		const isStudent = this.state.isStudent;
+		let testSubmitted = (
+			<h3>Test submitted!</h3>
+		)
 		let studentView = (
-			<a className='button' onClick={this.evaluate}>Submit Test</a>
+			<div>
+				<a className='button' onClick={this.evaluate}>Submit Test</a>
+				{this.state.testSubmitted === true ? testSubmitted : null}
+			</div>
 		);
 		let adminView = (
 			<Link className='button' to={`/edit-test/${this.state.testInfo.test._id}`}>Back</Link>

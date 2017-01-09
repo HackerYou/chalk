@@ -31,7 +31,8 @@ export default React.createClass({
 			showFavs: false,
 			pageHeight: 0,
 			loading: true,
-			memberError: ''
+			memberError: '',
+			testCompletion: false
 		}
 	},
 	openModal(){
@@ -207,16 +208,27 @@ export default React.createClass({
 			this.setState({
 				members: matchedMembers
 			});
-
-
 		}
 	},
 	openTest() {
 		console.log('open test');
-		// TestData.createTest()
-		// 	.then((res) => {
-				
-		// 	})
+	},
+	showProgress() {
+		//check if test_results length is equal 1
+		//if so apply className to first
+		const testRes = this.state.user.test_results.length;
+		return (
+			<div className="card cardAddTest">
+				<h3>Test Progress:</h3>
+				<ul className="testProgress">
+				{this.state.user.tests.map((test, i) => {
+					i = i + 1;
+					console.log("hi", i);
+					return <li className={testRes === i ? "fillCircle" : null} key={i}>{i}</li>
+				})}
+				</ul>
+			</div>
+		)
 	},
 	render() {
 		// let lessons = this.state.course.lessons;
@@ -249,7 +261,7 @@ export default React.createClass({
 				{this.state.course.tests.map((test) => { 
 					return (<div>
 						<ul>
-							<li><Link to={`/classroom/${this.props.params.courseId}/view-test/${test._id}`}>{test.title} </Link></li>
+							<li><Link to={`/classroom/${this.props.params.courseId}/view-test/${test._id}`}>{test.title}</Link></li>
 						</ul>
 						<Link to={`/edit-test/${test._id}`}><i className="fa fa-edit"></i></Link>
 					</div>)
@@ -286,6 +298,7 @@ export default React.createClass({
 					<Sticky className="lessonMeta" stickyClass="supersticky" stickyStyle={{}} topOffset={100} bottomOffset={this.state.pageHeight}>
 					<aside>
 						<section className="sideCard">
+							{isAdmin === false && isInstructor === false ? this.showProgress() : null}
 							<div className="card topicLegend">
 								<h3>Course Topics</h3>
 								<ul className="topicList">
