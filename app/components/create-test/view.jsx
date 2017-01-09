@@ -21,6 +21,7 @@ export default React.createClass({
 		return{
 			members: [],
 			questions: [],
+			assertions: {},
 			answer: {},
 			mode: 'javascript',
 			user: {},
@@ -28,6 +29,7 @@ export default React.createClass({
 			testInfo: {
 				test: {}
 			}
+
 		}
 	},
 	componentDidMount() {
@@ -75,6 +77,7 @@ export default React.createClass({
 		//getting the Id of the specific code question [questionId]
 		//and reassigning the value of newCode
 		ogAnswer[questionId] = userAnswer
+
 		this.setState({
 			answer: ogAnswer
 		})
@@ -87,9 +90,32 @@ export default React.createClass({
 		questionData.questionDryrun(questionId, this.state.answer[questionId])
 			.then(res => {
 				console.log("it worked", res);
+				console.log("answer", this.state.assertions[questionId] = res)
+				this.renderValidation(questionId)
+				
+				const ogAss = Object.assign({}, this.state.assertions);
+				ogAss[questionId] = res.results
+				console.log("ass", ogAss);
+
+				this.setState({
+					assertions: ogAss
+				})
 			})
 
+
 	}, 
+	renderValidation(questionId) {
+		if(this.state.assertions[questionId]) {
+			const status = this.state.assertions[questionId].success;
+				return (
+					<div className="validateScreen">
+						<ul>
+							<li>{status === true ? "Success: Code is valid!" : "Failed: Code is invalid"}</li>
+						</ul>
+					</div>
+				)
+		} 
+	},
 	evaluate() {
 		//grab all of the ANSWERS to the questions
 		//grab the userId and the answers
@@ -109,8 +135,6 @@ export default React.createClass({
 					})
 			})
 
-
-
 	},
 	renderCode(question) {
 	//Handles Codemirror implementation
@@ -121,13 +145,15 @@ export default React.createClass({
 			fixedGutter: true
 		};
 		return (
+
 			<div>
 		 		<CodeMirror value={this.state.answer[question._id]} onChange={(newCode) =>  this.updateAnswer(newCode,question._id)} options={options}/>
 				<select onChange={this.changeMode} value={this.state.mode} className="fieldRow">
 					<option value="markdown">Markdown</option>
 					<option value="javascript">JavaScript</option>
 				</select>
-				<input type="submit" value="validate" className="success" onClick={e => this.dryrun(e,question._id)}/>
+				<input type="submit" value="validate" className="success" onClick={e => this.dryrun(e,question._id)}/>		
+				{this.renderValidation(question._id)}
 			</div>
 		)
 	},
