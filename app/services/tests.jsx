@@ -23,6 +23,17 @@ export default {
 			data: JSON.stringify(data)
 		});
 	},
+	editTest(id, data) {
+		return $.ajax({
+			url: `${config.getApiUrl().replace('v1','v2') }/tests/${id}`,
+			method: 'PUT',
+			headers:{
+				'x-access-token': config.getToken(),
+				'Content-Type': 'application/json'
+			},
+			data: JSON.stringify(data)
+		});
+	},
 	addUser(id) {
 		return $.ajax({
 			url: `${config.getApiUrl().replace('v1','v2') }/tests/${id}/user`,

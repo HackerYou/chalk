@@ -7,6 +7,7 @@ import QuestionCards from '../questions/cards.jsx';
 import CodeMirror from 'react-codemirror';
 import FilteredSearch from '../questions/filteredSearch.jsx';
 require('codemirror/mode/javascript/javascript');
+import NotificationSystem from 'react-notification-system';
 
 let defaults = {
 	javascript: ''
@@ -23,6 +24,7 @@ function findIndex(array,key,value) {
 }
 
 export default React.createClass({
+	_notificationSystem: null,
 	displayName: 'Questions',
 	mixins: [AuthMixin,History],
 	getInitialState() {
@@ -48,6 +50,9 @@ export default React.createClass({
 			}
 		}
 	},
+	componentDidMount() {
+		this._notificationSystem = this.refs.notificationSystem;
+	},
 	componentWillMount() {
 		questionData.getQuestionById(this.props.params.questionId)
 			.then((res) => {
@@ -63,14 +68,18 @@ export default React.createClass({
 						unitTest: res.question.unitTest
 					}
 				})
-				if(this.updatedQuestion.type === 'multiple choice') {
-					mu
-				}
 			})
 		//get question by Id
 			
 	},
-
+	_successNotification: function(messageObj) {
+		this._notificationSystem.addNotification({
+			message: messageObj.message,
+			level: messageObj.level === 'error' ? 'error' : 'success',
+			dismissible: false,
+			title: messageObj.title
+		});
+	},
 	addOption(e) {
 		e.preventDefault();
 		let setLabel = this.setLabel.value;
@@ -179,7 +188,11 @@ export default React.createClass({
 		}
 		questionData.editQuestion(this.props.params.questionId, updatedQuestion)
 			.then(res => {
-				console.log("res", res)
+
+				this._successNotification({
+				title: 'Question',
+				message: 'Saved Successfully'
+			});
 		});
 
 		this.setAnswer.value = "";
@@ -211,7 +224,8 @@ export default React.createClass({
 	render() {
 		return (
 			<div className="classCard">
-				<h2>Questions</h2>
+				<NotificationSystem ref="notificationSystem" style={false}/>
+				<h2>Title of your question: {this.state.updatedQuestion.title}</h2>
 				<section className="full detailsForm topicsForm card">
 					<h3>Assign Attributes to your Question:</h3>
 					<form onSubmit={this.updateQuestion}>
@@ -280,6 +294,7 @@ export default React.createClass({
 							</div>
 						</div>
 						<input type="submit" value="Save" className="success"/>
+						<Link to={`/questions`}>Go back</Link>
 					</form>
 				</section>
 			</div>

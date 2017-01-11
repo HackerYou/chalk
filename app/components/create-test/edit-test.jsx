@@ -29,8 +29,11 @@ export default React.createClass({
 			selectedCard: false,
 			testQuestions: [],
 			testCreated: false,
-			testTitle: ""
-
+			testTitle: "",
+			courseId: "",
+			testInfo: {
+				title: ""
+			}
 		}
 	},
 	componentWillMount(){
@@ -42,12 +45,24 @@ export default React.createClass({
 			})
 		TestData.getTest(this.props.params.testId)
 			.then(res => {
-				console.log("the test", res)
+					console.log("item", res)
 				this.setState({
 					testTitle: res.test.title,
-					numOfQuestions: res.test.questions.length
+					numOfQuestions: res.test.questions.length,
+					courseId: res.test.course,
+					testInfo: {
+						title: res.test.title
+					},
+					testQuestions: (() => {
+						return res.test.questions.map(question =>  question._id);
+					})()
 				})
 			});
+
+		//update the test here	
+		TestData.editTest(this.props.params.testId, )
+
+
 		//http://localhost:3000/edit-test/586d7f32336a5b3e3a36eaec
 		//GEt the test from the API based on this.params.testId
 	},
@@ -56,8 +71,9 @@ export default React.createClass({
 	},
 	renderCards(key, index) {
 		const cardRender = (item,i) => {
-			// console.log("item", item);
-			return <QuestionCards key={`question-${i}`} question={item} isSelected={this.state.selectedCard} selectCard={this.selectCard} selectButton={this.state.selectButton} classId={this.props.params.courseId} showSelected="true"/>
+			//checka if any of the item's id's match the ones in the testQuestion array 
+			const isSelected = this.state.testQuestions.includes(item._id);
+			return <QuestionCards key={`question-${i}`} question={item} isSelected={this.state.selectedCard} selectCard={this.selectCard} selectButton={this.state.selectButton} classId={this.props.params.courseId} showSelected={!isSelected}/>
 		};
 		if(this.state.showFiltered) {
 			return this.state.filteredQuestions.map(cardRender);
@@ -99,6 +115,17 @@ export default React.createClass({
 		})
 
 	},
+	updateField(e) {
+		const target = e.target
+		console.log("lala", e.target);
+		const ogQ = Object.assign({}, this.state.testInfo);
+
+		ogQ[e.target.name] = e.target.value
+
+		this.setState({
+			testInfo: ogQ
+		})
+	},
 	viewTest() {
 		TestData.getTest(this.state.testId)
 		.then(res => {
@@ -131,6 +158,13 @@ export default React.createClass({
 		return (
 			<div className="classCard">
 				<h2>Test Created: {this.state.testTitle}</h2>
+				<section className={this.state.testCreated === true ? 'cardHide' : 'full detailsForm card'}>
+					<form onSubmit={this.createNewTest}>
+						<label>What is the name of the test?</label>
+						<input type="text" name="title" onChange={this.updateField} value={this.state.testInfo.title}/>
+						<input type="submit" />
+					</form>
+				</section>
 				<section className='full detailsForm card'>
 					<FilteredSearch questionState={this.state.questions} showFiltered={this.showFiltered}/>
 				</section>
@@ -148,7 +182,7 @@ export default React.createClass({
 						{this.renderCards()}
 					</article>
 					<br/>
-					<Link onClick={this.viewTest} to={`/classroom/${this.props.params.courseId}/create-test/${this.state.testId}/view-test`} className="primary">View Test</Link>
+					<Link onClick={this.viewTest} to={`/classroom/${this.state.courseId}/view-test/${this.props.params.testId}`} className="primary">View Test</Link>
 				</section>
 			</div>
 		)
