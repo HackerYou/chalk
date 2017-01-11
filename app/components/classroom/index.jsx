@@ -216,19 +216,24 @@ export default React.createClass({
 	showProgress() {
 		//check if test_results length is equal 1
 		//if so apply className to first
-		const testRes = this.state.user.test_results.length;
-		return (
-			<div className="card cardAddTest">
-				<h3>Test Progress:</h3>
-				<ul className="testProgress">
-				{this.state.user.tests.map((test, i) => {
-					i = i + 1;
-					console.log("hi", i);
-					return <li className={testRes === i ? "fillCircle" : null} key={i}>{i}</li>
-				})}
-				</ul>
-			</div>
-		)
+		if(this.state.user.test_results) {
+			const testRes = this.state.user.test_results.length;
+			return (
+				<div className="card cardAddTest">
+					<h3>Test Progress:</h3>
+					<ul className="testProgress">
+					{this.state.user.tests.map((test, i) => {
+						i = i + 1;
+						console.log("hi", i);
+						return <li className={testRes === i ? "fillCircle" : null} key={i}>{i}</li>
+					})}
+					</ul>
+				</div>
+			)
+		}
+		else {
+			return ''
+		}
 	},
 	render() {
 		// let lessons = this.state.course.lessons;
@@ -308,7 +313,11 @@ export default React.createClass({
 
 							{(isAdmin || isInstructor) ? members : null}
 							{(isAdmin || isInstructor) ? test : null}
-							{(isAdmin === false && isInstructor === false ? takeTest : null)}
+							{(() => {
+								if(this.state.course.tests.length > 0) {
+									return (isAdmin === false && isInstructor === false ? takeTest : null)
+								}
+							})()}
 						</section>
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<div className="modalBody card">
@@ -335,9 +344,6 @@ export default React.createClass({
 
 									</div>
 								</div>
-								{/*<div className="modalBtns">
-									<button onClick={this.closeModal} className="error">Done</button>
-								</div>*/}
 							</div>
 						</Modal>
 					</aside>
