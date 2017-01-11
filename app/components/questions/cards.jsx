@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link , History} from 'react-router';
 
 export default function(props) {
 
@@ -13,7 +14,10 @@ export default function(props) {
  		</li>
 	)
 	let edit = (
-			<i className="fa fa-pencil-square-o"></i>
+
+				<Link to={`/questions/${props.question._id}/edit-question`} onClick={(e) => props.editCard(e, props.question)}>
+					<i className="fa fa-pencil-square-o"></i>
+				</Link>
 	)
 	let showRemove = (
 		<li>

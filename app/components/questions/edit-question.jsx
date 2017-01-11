@@ -37,16 +37,33 @@ export default React.createClass({
 			realAnswer: "",
 			showFiltered: false,
 			filteredQuestions: [],
-			selectButton: 'false'
+			selectButton: 'false',
+			updatedQuestion: {
+				title: '',
+				body: '',
+				category: '',
+				difficulty: '',
+				type: '',
+				multiChoice: []
+			}
 		}
 	},
 	componentWillMount() {
-		questionData.getQuestion()
-			.then(data => {
+		questionData.getQuestionById(this.props.params.questionId)
+			.then((res) => {
 				this.setState({
-					questions: data.questions
-				});
-			});
+					updatedQuestion: {
+						title: res.question.title,
+						body: res.question.body,
+						category: res.question.category,
+						difficulty: res.question.difficulty,
+						type: res.question.type,
+						multiChoice: res.question.multiChoice
+					}
+				})
+			})
+		//get question by Id
+			
 	},
 
 	addOption(e) {
@@ -129,10 +146,7 @@ export default React.createClass({
 				});
 			});
 	},
-	editQuestion(e, questionId) {
-		console.log("edit", questionId)
-		return <Link to={`/questions/${questionId}/edit-question`}></Link>
-	},
+	
 	getType(e) {
 		const chosenType = e.target.value;
 		this.setState({
@@ -140,9 +154,9 @@ export default React.createClass({
 		})
 		//if showType is equal MC then add class
 	},
-	addQuestion(e) {
+	updateQuestion(e) {
 		e.preventDefault();
-		const title = this.questionTitle.value;
+		const title = this.state.updateQuestion.title;
 		const body = this.question.value;
 		const multiAnswer = this.setAnswer.value;
 		const question = {
@@ -162,12 +176,15 @@ export default React.createClass({
 					multiAnswer
 				});
 			}
-			questionData.createQuestion(question).then(res => {
-				const questionsArray = Array.from(this.state.questions);
-				questionsArray.push(res.question);
-				this.setState({
-					questions: questionsArray
-				})
+			questionData.editQuestion(this.props.params.questionId)
+				.then(res => {
+					console.log("res", res)
+					const questionsArray = Array.from(this.state.questions);
+					questionsArray.push(res.question);
+					console.log("questions array", questionsArray)
+					this.setState({
+						questions: questionsArray
+					})
 			});
 			this.setAnswer.value = "";
 		}
@@ -177,7 +194,6 @@ export default React.createClass({
 		console.log("sending");
 		//do some validating here
 	},
-
 	changeQuestionView() {
 		this.setState({
 			showType: this.getType.value
@@ -186,20 +202,34 @@ export default React.createClass({
 	showFiltered(options) {
 		this.setState(options);
 	},
+	updateField(e) {
+
+		console.log("hello", e.target)
+		//make a copy of the original state
+		const ogQ = Object.assign({},this.state.updatedQuestion);
+
+		ogQ[e.target.name] = e.target.value;
+		console.log("val", e.target.value);
+		console.log("lala", ogQ)
+		this.setState({
+			updatedQuestion: ogQ
+		})
+	},
 	render() {
+		console.log("sjdh", this.state.currQuestion)
 		return (
 			<div className="classCard">
 				<h2>Questions</h2>
 				<section className="full detailsForm topicsForm card">
 					<h3>Assign Attributes to your Question:</h3>
-					<form onSubmit={this.addQuestion}>
+					<form onSubmit={this.updateQuestion}>
 						<div className="fieldRow">
 							<label className="inline largeLabel">Title of your question:</label>
-							<input type="text" ref={ref => this.questionTitle = ref}/>
+							<input type="text" name="title" value={this.state.updatedQuestion.title} onChange={this.updateField}/>
 						</div>
 						<div className="fieldRow">
 							<label className="inline largeLabel">Category</label>
-							<select ref={ref => this.getCategory = ref}>
+							<select name="category" value={this.state.updatedQuestion.category} onChange={this.updateField}>
 								<option value="html">HTML</option>
 								<option value="css">CSS</option>
 								<option value="javascript">JavaScript</option>
@@ -208,17 +238,17 @@ export default React.createClass({
 						</div>
 						<div className="fieldRow">
 							<label className="inline largeLabel">What is the Question?</label>
-							<textarea className="inline largeLabel" ref={ref => this.question = ref} row="2" col="100"></textarea>
+							<textarea value={this.state.updatedQuestion.body} className="inline largeLabel" ref={ref => this.question = ref} row="2" col="100"></textarea>
 						</div>
 						<div className="fieldRow">
 							<label className="inline largeLabel">Level of Difficulty</label>
-							<select ref={ref => this.getLevel = ref}>
+							<select value={this.state.updatedQuestion.difficulty} ref={ref => this.getLevel = ref}>
 								<option value="easy">Easy</option>
 								<option value="medium">Medium</option>
 								<option value="hard">Hard</option>
 							</select>
 							<label htmlFor="type" className="inline largeLabel">Type</label>
-							<select name="type" ref={ref => this.getType = ref} defaultValue={this.state.showType} onChange={(e) => this.changeQuestionView() }>
+							<select name="type" value={this.state.updatedQuestion.type} ref={ref => this.getType = ref} defaultValue={this.state.showType} onChange={(e) => this.changeQuestionView() }>
 								<option value="multiple choice">Multiple Choice</option>
 								<option value="code">Code</option>
 							</select>
@@ -236,7 +266,7 @@ export default React.createClass({
 									<button onClick={this.addOption} className="success">Add option</button>
 								</div>
 								<div className="fieldRow">
-									{this.state.answerOption.map((item, i) => {
+									{this.state.updatedQuestion.multiChoice.map((item, i) => {
 										return (
 											<div key={i}>
 												<label>{item.label}</label>
@@ -257,18 +287,8 @@ export default React.createClass({
 								</div>
 							</div>
 						</div>
-						<input type="submit" value="Submit" className="success"/>
+						<input type="submit" value="Save" className="success"/>
 					</form>
-				</section>
-				
-				<section className="full detailsForm topicsForm card">
-					<FilteredSearch questionState={this.state.questions} showFiltered={this.showFiltered}/>
-				</section>
-				<section>
-					<h3>All Questions:</h3>
-					<article className="questionCard__wrapper">
-						{this.renderCards()}
-					</article>
 				</section>
 			</div>
 		)

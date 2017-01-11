@@ -29,7 +29,7 @@ import Questions from './questions/index.jsx';
 import CreateTest from './create-test/index.jsx';
 import ViewTest from './create-test/view.jsx';
 import EditTest from './create-test/edit-test.jsx';
-
+import EditQuestion from './questions/edit-question.jsx';
 
 let createBrowserHistory = require('history/lib/createBrowserHistory');
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
@@ -189,6 +189,7 @@ ReactDom.render(
 			<Route path='/course-templates/:templateId/edit' component={EditTemplate}/>
 			<Route path='/members' component={Members} />
 			<Route path='/questions' component={Questions}  />
+			<Route path='/questions/:questionId/edit-question' component={EditQuestion}  />
 		</Route>
 	</Router>)
 	, document.getElementById('app'));
