@@ -1,0 +1,26 @@
+.validateScreen {
+	background: black;
+	color: white;
+	padding: 20px;
+}
+
+.completed {
+	color: grey;
+}
+
+.testProgress {
+	display: flex;
+	padding: 0;
+	li {
+		// background: grey;
+		border: 2px solid grey;
+		margin: 0 10px;
+		padding: 11px 20px;
+		list-style-type: none;
+		border-radius: 50%;
+	}
+}
+.fillCircle {
+	background: grey;
+	color: white;
+}

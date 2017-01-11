@@ -48,6 +48,9 @@ button, .button {
       border: 1px solid $red;
     }
   }
+  &.deactivated {
+    background: grey;
+  }
 }
 
 a.linkBtn {
@@ -86,3 +89,11 @@ button.small, .button.small {
     background: $red;
   }
 }
+
+i.selectCard {
+  padding: 10px;
+  float: right;
+  border: 1px solid black;
+}
+
+

@@ -1,0 +1,47 @@
+
+.questionCard__wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+}
+.questionCard {
+	width: calc(33.33% - 13.33px);
+	margin-right: 20px;
+	min-height: 180px;
+	margin-top: 20px;
+	display: flex;
+	position: relative;
+	padding: 16px;
+	&:nth-of-type(3n + 3) {
+		margin-right: 0;
+	}
+	&--attr {
+		width: 60%;
+		margin: 0;
+		position: relative;
+		.fa {
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+	}
+	p {
+		margin-bottom: 0;
+		padding-left: 24px;
+	}
+	ul {
+		height: 100%;
+		padding: 0;
+		width: 38%;
+		margin-left: 10px;
+		list-style: none;
+		position: relative;
+		border-right: 1px solid #ECEDEB;
+		li {
+			margin: 0;
+		}
+	}
+	button {
+		margin: 8px 0 0 0;
+	}
+}

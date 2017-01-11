@@ -65,6 +65,7 @@ export default React.createClass({
 				<Link className="linkBtn" to='instructors'><button className="primary">Instructors</button></Link>
 				<Link className="linkBtn" to='media'><button className="primary">Media</button></Link>
 				<Link className="linkBtn" to='members'><button className="primary">Members</button></Link>
+				<Link className="linkBtn" to='questions'><button className="primary">Question</button></Link>
 			</div>
 		</header>;
 		var displayClass;

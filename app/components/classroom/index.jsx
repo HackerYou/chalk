@@ -10,6 +10,7 @@ import config from '../../services/config.jsx';
 import Sticky from '../../services/sticky.js';
 import Loading from '../loading/index.jsx';
 import validator from 'validator';
+import TestData from '../../services/tests.jsx';
 
 export default React.createClass({
 	displayName: 'Classroom',
@@ -19,7 +20,9 @@ export default React.createClass({
 		document.body.className = '';
 		return{
 			user: {},
-			course: {},
+			course: {
+				tests: []
+			},
 			sections: [],
 			isModalOpen: false,
 			topics: [],
@@ -28,7 +31,8 @@ export default React.createClass({
 			showFavs: false,
 			pageHeight: 0,
 			loading: true,
-			memberError: ''
+			memberError: '',
+			testCompletion: false
 		}
 	},
 	openModal(){
@@ -41,10 +45,12 @@ export default React.createClass({
 	},
 	componentWillMount(){
 		userData.getUser(config.getUserId()).then(res=>{
+			console.log("meow", res.user)
 			this.setState({
 				user: res.user
 			})
 		});
+			
 		let id = this.props.params.courseId;
 		coursesData.getCourseById(id).then(res=>{
 			this.originalMembers = res.course.students;
@@ -202,12 +208,31 @@ export default React.createClass({
 			this.setState({
 				members: matchedMembers
 			});
-
-
 		}
+	},
+	openTest() {
+		console.log('open test');
+	},
+	showProgress() {
+		//check if test_results length is equal 1
+		//if so apply className to first
+		const testRes = this.state.user.test_results.length;
+		return (
+			<div className="card cardAddTest">
+				<h3>Test Progress:</h3>
+				<ul className="testProgress">
+				{this.state.user.tests.map((test, i) => {
+					i = i + 1;
+					console.log("hi", i);
+					return <li className={testRes === i ? "fillCircle" : null} key={i}>{i}</li>
+				})}
+				</ul>
+			</div>
+		)
 	},
 	render() {
 		// let lessons = this.state.course.lessons;
+		let tests = this.state.course.tests;
 		let isAdmin = this.state.user.admin;
 		let isInstructor = this.state.user.instructor;
 		let dragAndDrop = <p className="title">Drag and drop to reorganize lessons</p>
@@ -224,12 +249,40 @@ export default React.createClass({
 			)
 		}
 		let members = (
-						<div className="card">
-							<h3>Members</h3>
-							<p><i className="chalk-users"></i>{this.state.members.length} members of the classroom</p>
-							<button onClick={this.openModal} className="success">Manage classroom members</button>
-						</div>
-					);
+			<div className="card">
+				<h3>Members</h3>
+				<p><i className="chalk-users"></i>{this.state.members.length} members of the classroom</p>
+				<button onClick={this.openModal} className="success">Manage classroom members</button>
+			</div>
+		);
+		let test = (
+			<div className="card cardAddTest">
+				<h3>Add Tests</h3>	
+				{this.state.course.tests.map((test) => { 
+					return (<div>
+						<ul>
+							<li><Link to={`/classroom/${this.props.params.courseId}/view-test/${test._id}`}>{test.title}</Link></li>
+						</ul>
+						<Link to={`/edit-test/${test._id}`}><i className="fa fa-edit"></i></Link>
+					</div>)
+				})}
+				<Link onClick={this.openTest} to={`/classroom/${this.props.params.courseId}/create-test`} className="primary">Add Test</Link>
+			</div>
+		);
+
+		let takeTest = (
+			<div className="card cardAddTest">
+				<h3>Take Test</h3>
+				{tests.map((item, i) => {
+					// console.log("item", item)
+					return (
+						<ul>
+							<li><Link key={i} onClick={this.openTest} to={`/classroom/${this.props.params.courseId}/view-test/${item._id}`} className="primary">{item.title}</Link></li>
+						</ul>
+					)
+				})}
+			</div>
+		);
 		return (
 			<div className="container full">
 				<Link to='/dashboard' className="linkBtn"><button className="primary"><i className="chalk-home"></i>back to dashboard</button></Link>
@@ -245,13 +298,17 @@ export default React.createClass({
 					<Sticky className="lessonMeta" stickyClass="supersticky" stickyStyle={{}} topOffset={100} bottomOffset={this.state.pageHeight}>
 					<aside>
 						<section className="sideCard">
+							{isAdmin === false && isInstructor === false ? this.showProgress() : null}
 							<div className="card topicLegend">
 								<h3>Course Topics</h3>
 								<ul className="topicList">
 									{(this.state.sections).map(this.renderTopics)}
 								</ul>
 							</div>
-							{isAdmin || isInstructor ? members : null}
+
+							{(isAdmin || isInstructor) ? members : null}
+							{(isAdmin || isInstructor) ? test : null}
+							{(isAdmin === false && isInstructor === false ? takeTest : null)}
 						</section>
 						<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
 							<div className="modalBody card">

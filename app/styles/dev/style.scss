@@ -38,6 +38,16 @@ body {
 	box-shadow: 0px 3px 7px 0px rgba(0,0,0,0.12);
 }
 
+.typeCard {
+	border: 2px solid #cccccc;
+	padding: 10px 35px;
+	margin-bottom: 26px;
+}
+
+.cardAddTest {
+	margin-top: 15px;
+}
+
 .container {
 	lost-utility: clearfix;
 	max-width: 990px;
@@ -48,6 +58,7 @@ body {
 	margin: 0 auto;
 	lost-utility: clearfix;
 }
+
 
 header.intro {
 	border-bottom: 1px $greyLight solid;
@@ -99,6 +110,10 @@ section.detailsForm > form .fieldRow, .detailsForm > form .fieldRow {
 	}
 }
 
+.cardHide {
+	display: none;
+}
+
 @import 'partials/modal';
 @import 'partials/header';
 @import 'partials/footer';
@@ -112,5 +127,7 @@ section.detailsForm > form .fieldRow, .detailsForm > form .fieldRow {
 @import 'partials/instructor';
 @import 'partials/member';
 @import 'partials/loading';
+@import 'partials/questions';
+@import 'partials/tests';
+@import 'partials/codemirror';
 @import 'partials/accessibility';
-
