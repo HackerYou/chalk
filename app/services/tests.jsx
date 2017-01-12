@@ -89,6 +89,14 @@ export default {
 				'x-access-token': config.getToken()
 			}
 		});
+	},
+	removeTest(id) {
+		return $.ajax({
+			url: `${config.getApiUrl().replace('v1','v2') }/tests/${id}`,
+			method: 'DELETE',
+			headers:{
+				'x-access-token': config.getToken()
+			}
+		});
 	}
-
 };

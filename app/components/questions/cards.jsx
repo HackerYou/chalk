@@ -26,8 +26,6 @@ export default function(props) {
 		</li>
 	)
 
-	//if the sh
-
 	return (
 		<div className="inline card questionCard">
 			<ul className="questionCard--attr">
