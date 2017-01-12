@@ -45,10 +45,9 @@ export default React.createClass({
 	},
 	componentWillMount(){
 		userData.getUser(config.getUserId()).then(res=>{
-			console.log("meow", res.user)
 			this.setState({
 				user: res.user
-			})
+			});
 		});
 			
 		let id = this.props.params.courseId;
@@ -210,8 +209,18 @@ export default React.createClass({
 			});
 		}
 	},
-	openTest() {
-		console.log('open test');
+	removeTest(e,testId) {
+		e.preventDefault();
+		TestData.removeTest(testId)
+			.then((res) => {
+				const course = Object.assign({},this.state.course);
+				course.tests = course.tests.filter((test) => {
+					return test._id !== testId
+				});
+				this.setState({
+					course
+				});
+			});
 	},
 	showProgress() {
 		//check if test_results length is equal 1
@@ -261,31 +270,38 @@ export default React.createClass({
 			</div>
 		);
 		let test = (
-			<div className="card cardAddTest">
+			<div className="card testCard">
 				<h3>Add Tests</h3>	
+				<ul>
 				{this.state.course.tests.map((test) => { 
-					return (<div>
-						<ul>
-							<li><Link to={`/classroom/${this.props.params.courseId}/view-test/${test._id}`}>{test.title}</Link></li>
-						</ul>
-						<Link to={`/edit-test/${test._id}`}><i className="fa fa-edit"></i></Link>
-					</div>)
+					return (
+					<li>
+						<Link className="testLink" to={`/classroom/${this.props.params.courseId}/view-test/${test._id}`}>{test.title}</Link>
+						<span className="testOptions">
+							<Link to={`/edit-test/${test._id}`}><i className="fa fa-edit"></i></Link>
+							<a href="#" onClick={(e) => this.removeTest(e,test._id)}><i className="fa fa-times"></i></a>
+						</span>
+					</li>
+					)
 				})}
-				<Link onClick={this.openTest} to={`/classroom/${this.props.params.courseId}/create-test`} className="primary">Add Test</Link>
+				</ul>
+				<Link to={`/classroom/${this.props.params.courseId}/create-test`} className="primary">Add Test</Link>
 			</div>
 		);
 
 		let takeTest = (
-			<div className="card cardAddTest">
+			<div className="card testCard">
 				<h3>Take Test</h3>
+				<ul>
 				{tests.map((item, i) => {
 					// console.log("item", item)
 					return (
-						<ul>
-							<li><Link key={i} onClick={this.openTest} to={`/classroom/${this.props.params.courseId}/view-test/${item._id}`} className="primary">{item.title}</Link></li>
-						</ul>
+						<li>
+							<Link key={i} className="testLink" to={`/classroom/${this.props.params.courseId}/view-test/${item._id}`} className="primary">{item.title}</Link>
+						</li>
 					)
 				})}
+				</ul>
 			</div>
 		);
 		return (
