@@ -25,7 +25,7 @@ export default {
 	},
 	editTest(id, data) {
 		return $.ajax({
-			url: `${config.getApiUrl().replace('v1','v2') }/tests/${id}`,
+			url: `${config.getApiUrl().replace('v1','v2')}/tests/${id}`,
 			method: 'PUT',
 			headers:{
 				'x-access-token': config.getToken(),

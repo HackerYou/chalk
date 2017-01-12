@@ -2,14 +2,6 @@ import React from 'react';
 import { Link , History} from 'react-router';
 
 export default function(props) {
-
- // 	let showDeactivated = (
- // 		<li>
-	// 		<button className="deactivated" onClick={(e) => props.selectCard(e, props.question)}>Select</button>
- // 		</li>
-	// )
-
-	console.log("prop", props.showSelected);
 	let showSelect = (
 		<li>
 			<button className="success" onClick={(e) => props.selectCard(e, props.question)}>Select</button>
@@ -25,6 +17,8 @@ export default function(props) {
 			<button className="error" onClick={(e) => props.removeCard(e,props.question._id)}>Remove</button>
 		</li>
 	)
+
+	//if the sh
 
 	return (
 		<div className="inline card questionCard">

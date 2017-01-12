@@ -23,13 +23,11 @@ export default React.createClass({
 			filteredQuestions: [],
 			selectButton: 'true',
 			selectedQuestions: [],
-			testId: "",
 			allQuestions: {},
 			numOfQuestions: "",
 			selectedCard: false,
 			testQuestions: [],
 			testCreated: false,
-			testTitle: "",
 			courseId: "",
 			testInfo: {
 				title: ""
@@ -49,9 +47,9 @@ export default React.createClass({
 				this.setState({
 					testTitle: res.test.title,
 					numOfQuestions: res.test.questions.length,
-					courseId: res.test.course,
 					testInfo: {
-						title: res.test.title
+						title: res.test.title,
+						courseId: res.test.course
 					},
 					testQuestions: (() => {
 						return res.test.questions.map(question =>  question._id);
@@ -73,7 +71,7 @@ export default React.createClass({
 		const cardRender = (item,i) => {
 			//checka if any of the item's id's match the ones in the testQuestion array 
 			const isSelected = this.state.testQuestions.includes(item._id);
-			return <QuestionCards key={`question-${i}`} question={item} isSelected={this.state.selectedCard} selectCard={this.selectCard} selectButton={this.state.selectButton} classId={this.props.params.courseId} showSelected={!isSelected}/>
+			return <QuestionCards key={`question-${i}`} question={item} isSelected={this.state.selectedCard} selectCard={this.selectCard} selectButton={this.state.selectButton} classId={this.props.params.courseId} showSelected={!isSelected} removeCard={this.removeQuestion}/>
 		};
 		if(this.state.showFiltered) {
 			return this.state.filteredQuestions.map(cardRender);
@@ -82,20 +80,34 @@ export default React.createClass({
 			return this.state.questions.map(cardRender);
 		}
 	},
+	removeQuestion(e,Id) {
+		const testQuestions = this.state.testQuestions;
+		const index = testQuestions.indexOf(Id);
+
+		testQuestions.splice(index, 1)
+		this.setState({
+			testQuestions
+		})
+
+		TestData.removeQuestion(this.props.params.testId, {
+			questionId: Id
+		}).then(res => {
+			console.log("removed", res.test.questions)
+		})
+	},
 	selectCard(e, selectedInfo) {
 		e.preventDefault();
 		const newArray = this.state.selectedQuestions.slice();
 		const questionArray = [];
 		const testQuestions = this.state.testQuestions;
 
-		testQuestions.push(selectedInfo);
+		testQuestions.push(selectedInfo._id);
 
-		console.log("selected", testQuestions)
-
-		TestData.updateTest(this.state.testId, {
+		TestData.updateTest(this.props.params.testId, {
 			questionId: selectedInfo
 		}).then(res => {
 			const questions = res.test.questions;
+			console.log('update', questions)
 			if(this.state.selectCard) {
 				this.setState({
 					selectCard: false
@@ -113,7 +125,6 @@ export default React.createClass({
 			})
 
 		})
-
 	},
 	updateField(e) {
 		const target = e.target
@@ -135,34 +146,31 @@ export default React.createClass({
 		//takes you to another view 
 		//view tests
 	},
-	createNewTest(e) {
+	updateTest(e) {
 		e.preventDefault();
-		const testName = this.testName.value;
 
-		TestData.createTest({
-			courseId: this.props.params.courseId,
-			data: {
-				title: testName
-			}
+		TestData.editTest(this.props.params.testId, {
+			title: this.state.testInfo.title
 		})
 		.then(res => {
-			this.setState({
-				testId: res.test._id,
-				testCreated: true,
-				testTitle: testName
-			})
+
+			// this.setState({
+			// 	testId: res.test._id,
+			// 	testCreated: true,
+			// 	testTitle: testName
+			// })
 
 		});
 	},
 	render() {
 		return (
 			<div className="classCard">
-				<h2>Test Created: {this.state.testTitle}</h2>
+				<h2>Test Created: {this.state.testInfo.title}</h2>
 				<section className={this.state.testCreated === true ? 'cardHide' : 'full detailsForm card'}>
-					<form onSubmit={this.createNewTest}>
+					<form onSubmit={this.updateTest}>
 						<label>What is the name of the test?</label>
 						<input type="text" name="title" onChange={this.updateField} value={this.state.testInfo.title}/>
-						<input type="submit" />
+						<input type="submit" value="Save"/>
 					</form>
 				</section>
 				<section className='full detailsForm card'>
@@ -182,7 +190,7 @@ export default React.createClass({
 						{this.renderCards()}
 					</article>
 					<br/>
-					<Link onClick={this.viewTest} to={`/classroom/${this.state.courseId}/view-test/${this.props.params.testId}`} className="primary">View Test</Link>
+					<Link onClick={this.viewTest} to={`/classroom/${this.state.testInfo.courseId}/view-test/${this.props.params.testId}`} className="primary">View Test</Link>
 				</section>
 			</div>
 		)

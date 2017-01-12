@@ -52,20 +52,12 @@ export default React.createClass({
 		this.setState({
 			testQuestions
 		})
-		// TestData.updateTest(this.state.testId, {
-		// 	questionId: selectedInfo
-		// })
 
 		TestData.removeQuestion(this.state.testId, {
 			questionId: Id
 		}).then(res => {
 			console.log("removed", res.test.questions)
 		})
-
-		// TestData.removeQuestion(questionId)
-		// 	.then(res => {
-		// 		console.log("res", res)
-		// 	})
 	},
 	renderCards(key, index) {
 		const cardRender = (item,i) => {
