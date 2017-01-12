@@ -14,18 +14,15 @@ export default function(props) {
  		</li>
 	)
 	let edit = (
-
-				<Link to={`/questions/${props.question._id}/edit-question`} onClick={(e) => props.editCard(e, props.question)}>
-					<i className="fa fa-pencil-square-o"></i>
-				</Link>
+		<Link to={`/questions/${props.question._id}/edit-question`} onClick={(e) => props.editCard(e, props.question)}>
+			<i className="fa fa-pencil-square-o"></i>
+		</Link>
 	)
 	let showRemove = (
 		<li>
 			<button className="error" onClick={(e) => props.removeCard(e,props.question._id)}>Remove</button>
 		</li>
 	)
-
-	//if the sh
 
 	return (
 		<div className="inline card questionCard">
