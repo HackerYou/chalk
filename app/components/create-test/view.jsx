@@ -37,8 +37,13 @@ export default React.createClass({
 		//this.props.params.testId
 		TestData.getTest(this.props.params.testId)
 			.then(res => {
-				// console.log("the test", res)
 				const questions = res.test.questions;
+				//handles shuffling
+				for (let i = questions.length; i; i--) {
+					let randomize = Math.floor(Math.random() * i);
+					[questions[i - 1], questions[randomize]] = [questions[randomize], questions[i - 1]];
+				}
+
 				this.setState({
 					testInfo: res,
 					questions
