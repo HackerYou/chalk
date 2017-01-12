@@ -60,7 +60,7 @@ export default React.createClass({
 			});
 
 		//update the test here	
-		TestData.editTest(this.props.params.testId, )
+		// TestData.editTest(this.props.params.testId, )
 
 
 		//http://localhost:3000/edit-test/586d7f32336a5b3e3a36eaec
