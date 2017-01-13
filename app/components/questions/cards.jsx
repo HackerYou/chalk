@@ -2,16 +2,10 @@ import React from 'react';
 import { Link , History} from 'react-router';
 
 export default function(props) {
-
 	let showSelect = (
 		<li>
 			<button className="success" onClick={(e) => props.selectCard(e, props.question)}>Select</button>
 		</li>
-	)
- 	let showDeactivated = (
- 		<li>
-			<button className="deactivated" onClick={(e) => props.selectCard(e, props.question)}>Select</button>
- 		</li>
 	)
 	let edit = (
 		<Link to={`/questions/${props.question._id}/edit-question`} onClick={(e) => props.editCard(e, props.question)}>
@@ -23,6 +17,8 @@ export default function(props) {
 			<button className="error" onClick={(e) => props.removeCard(e,props.question._id)}>Remove</button>
 		</li>
 	)
+
+	//if the sh
 
 	return (
 		<div className="inline card questionCard">

@@ -238,9 +238,9 @@ export default React.createClass({
 								<div className="fieldRow">
 									{this.state.answerOption.map((item, i) => {
 										return (
-											<div key={i}>
-												<label>{item.label}</label>
+											<div className="mc-options" key={i}>
 												<input className="inline" name="lala" type="radio" value={item.value}/>
+												<label>{item.label}</label>
 											</div>
 										)
 									})}
