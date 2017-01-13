@@ -79,8 +79,6 @@ export default React.createClass({
 		const questionArray = [];
 		const testQuestions = this.state.testQuestions;
 
-		testQuestions.push(selectedInfo._id);
-
 		TestData.updateTest(this.state.testId, {
 			questionId: selectedInfo
 		}).then(res => {

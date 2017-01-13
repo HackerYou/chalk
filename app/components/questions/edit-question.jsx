@@ -80,24 +80,35 @@ export default React.createClass({
 			title: messageObj.title
 		});
 	},
+	removeOption(id, index) {
+		//made a copy of updatedQuestion
+		const updatedObj = Object.assign({}, this.state.updatedQuestion);
+		//removed the item using index
+		updatedObj.multiChoice.splice(index, 1);
+
+		this.setState({
+			updatedQuestion: updatedObj
+		})
+	},
 	addOption(e) {
 		e.preventDefault();
 		let setLabel = this.setLabel.value;
 		let setValue = this.setValue.value;
 		const setAnswer = this.setAnswer.value;
-		const answerArray = this.state.answerOption.slice();
+		const answerArray = this.state.updatedQuestion.multiChoice.slice();
+		const updatedObj = Object.assign({}, this.state.updatedQuestion);
 
 		console.log("setq answer", setAnswer)
 		if(setLabel !== '' && setValue !== '') {
-			answerArray.push({
+			updatedObj.multiChoice.push({
 				label: setLabel,
 				value: setValue,
 			})
-
 			this.setState({
-				answerOption: answerArray
-			})
+				// answerOption: answerArray,
+				updatedQuestion: updatedObj
 
+			})
 			this.setValue.value = "";
 			this.setLabel.value = ""
 		}
@@ -173,6 +184,7 @@ export default React.createClass({
 		e.preventDefault();
 		const updatedQuestion = this.state.updatedQuestion;
 		console.log("update",updatedQuestion)
+
 		const title = this.state.updatedQuestion.title;
 		const body = this.state.updatedQuestion.body;
 		const multiAnswer = this.setAnswer.value;
@@ -182,7 +194,7 @@ export default React.createClass({
 		}
 		else {
 			Object.assign(updatedQuestion,{
-				multiChoice: this.state.answerOption,
+				multiChoice: this.state.updatedQuestion.multiChoice,
 				multiAnswer
 			});
 		}
@@ -271,20 +283,21 @@ export default React.createClass({
 									<input type="text" ref={ref => this.setValue = ref}/>
 									<button onClick={this.addOption} className="success">Add option</button>
 								</div>
-								<div className="fieldRow">
+								<div className="fieldRow mcOptions">
 								{this.state.updatedQuestion.multiChoice.map((item, i) => {
 										return (
-											<div key={i}>
-												<label>{item.label}</label>
+											<div className="mcOptions--duo" key={i}>
 												<input className="inline" name="lala" type="radio" value={item.value}/>
+												<label>{item.label}</label>
+												<i onClick={() => this.removeOption(item._id, i)} className="fa fa-times"></i>
 											</div>
 										)
 									})}
 								</div>
-								<div className="fieldRow">
-									<label className="inline largeLabel">What is the answer?</label>
-									<input type="text" ref={ref => this.setAnswer = ref}/>
-								</div>
+							</div>
+							<div className="fieldRow">
+								<label className="inline largeLabel">What is the answer?</label>
+								<input type="text" ref={ref => this.setAnswer = ref}/>
 							</div>
 							<div className={this.state.updatedQuestion.type === 'code' ? 'showType' : 'hideType'}>
 								<div className="fieldRow">
