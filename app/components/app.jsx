@@ -30,6 +30,8 @@ import CreateTest from './create-test/index.jsx';
 import ViewTest from './create-test/view.jsx';
 import EditTest from './create-test/edit-test.jsx';
 import EditQuestion from './questions/edit-question.jsx';
+import TestResults from './classroom/test-results.jsx';
+
 
 let createBrowserHistory = require('history/lib/createBrowserHistory');
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
@@ -174,6 +176,7 @@ ReactDom.render(
 			<Route path='/classroom/:courseId' component={Classroom}/>
 			<Route path='/classroom/:courseId/create-test' component={CreateTest} />
 			<Route path='/classroom/:courseId/view-test/:testId' component={ViewTest} />
+			<Route path='/classroom/:courseId/test-results' component={TestResults} />
 			<Route path='/edit-test/:testId' component={EditTest} />
 			<Route path='/classroom/:courseId/edit' component={EditClassroom} />
 			<Route path='/lesson/:lessonId/:classroomId' component={Lesson} />
