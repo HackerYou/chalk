@@ -8,10 +8,6 @@ import CodeMirror from 'react-codemirror';
 import FilteredSearch from '../questions/filteredSearch.jsx';
 require('codemirror/mode/javascript/javascript');
 
-let defaults = {
-	markdown: '# Heading\n\nSome **bold** and _italic_ text\nBy [Jed Watson](https://github.com/JedWatson)',
-	javascript: 'var component = {\n\tname: "react-codemirror",\n\tauthor: "Jed Watson",\n\trepo: "https://github.com/JedWatson/react-codemirror"\n};'
-};
 
 function findIndex(array,key,value) {
 	let index = 0;
@@ -29,15 +25,18 @@ export default React.createClass({
 	getInitialState() {
 		return {
 			answerOption: [],
-			code: defaults.markdown,
-			mode: 'markdown',
+			code: '',
+			testCode: '',
+			testMode: 'javascript',
 			readOnly: false,
-			showType: 'multiple choice',
+			showType: 'code',
 			questions: [],
 			realAnswer: "",
 			showFiltered: false,
 			filteredQuestions: [],
-			selectButton: 'false'
+			selectButton: 'false',
+			questionId: '',
+			assertions: []
 		}
 	},
 	componentWillMount() {
@@ -56,7 +55,6 @@ export default React.createClass({
 		const setAnswer = this.setAnswer.value;
 		const answerArray = this.state.answerOption.slice();
 
-		console.log("setq answer", setAnswer)
 		if(setLabel !== '' && setValue !== '') {
 			answerArray.push({
 				label: setLabel,
@@ -75,10 +73,8 @@ export default React.createClass({
 	changeMode(e) {
 		var mode = e.target.value;
 		this.setState({
-			mode: mode,
-			code: defaults[mode]
+			mode: mode
 		});
-
 	},
 	//Handles Codemirror implementation
 	updateCode(newCode) {
@@ -86,24 +82,67 @@ export default React.createClass({
 			code: newCode
 		})
 	},
+	testCode(newCode) {
+		this.setState({
+			testCode: newCode
+		});
+	},
 	//Handles Codemirror implementation
 	renderCode() {
 		var options = {
 			lineNumbers: true,
-			mode: this.state.mode,
+			mode: 'javascript',
 			theme: 'cobalt',
 			fixedGutter: true
 		};
 		return (
 			<div>
-		 		<CodeMirror value={this.state.code} onChange={this.updateCode} options={options}/>
-				<select onChange={this.changeMode} value={this.state.mode} className="fieldRow">
-					<option value="markdown">Markdown</option>
-					<option value="javascript">JavaScript</option>
-				</select>
-				<input type="submit" value="validate" className="success"/>
+				<section className="codeContainer">
+					<div className="codeArea">
+						<h4>Unit Test</h4>
+			 			<CodeMirror value={this.state.code} onChange={this.updateCode} options={options}/>
+					</div>
+					<div className="codeArea">
+						<h4>Test area (test that the unit test works)</h4>
+			 			<CodeMirror value={this.state.testCode} onChange={this.testCode} options={Object.assign(options,{mode: this.state.testMode})}/>
+						<select onChange={this.changeMode} value={this.state.testMode} className="fieldRow">
+							<option value="javascript">JavaScript</option>
+							<option value="html">HTML</option>
+						</select>
+					</div>
+				</section>
+				<section className="console">
+					<ul>
+						{this.state.assertions.map((results) => {
+							return results.assertionResults.map((assertion,i) => {
+								return <li key={`assertion-${i}`}>{assertion.status} - {assertion.title}</li>
+							});
+						})}
+					</ul>
+				</section>
+				{
+					(() => {
+						if(this.state.questionId !== '') {
+							return <input type="submit" value="validate" onClick={this.validateCode} className="success"/>
+						}
+						else {
+							return <p>Submit your question to be able to validate the code.</p>
+						}
+
+					})()
+					
+				}
 			</div>
 		)
+	},
+	validateCode(e) {
+		e.preventDefault();
+		questionData.questionDryrun(this.state.questionId,this.state.testCode)
+			.then((res) => {
+				this.setState({
+					assertions: res.results.testResults
+				});
+			});
 	},
 	renderCards(key, index) {
 		const cardRender = (item,i) => {
@@ -118,7 +157,6 @@ export default React.createClass({
 	},
 	removeCard(e,questionId) {
 		e.preventDefault();
-		console.log("hello",questionId)
 		questionData.deleteQuestion(questionId)
 			.then((res) => {
 				let questionsArray = Array.from(this.state.questions);
@@ -130,7 +168,6 @@ export default React.createClass({
 			});
 	},
 	editQuestion(e, questionId) {
-		console.log("edit", questionId)
 		return <Link to={`/questions/${questionId}/edit-question`}></Link>
 	},
 	getType(e) {
@@ -162,22 +199,29 @@ export default React.createClass({
 					multiAnswer
 				});
 			}
-			questionData.createQuestion(question).then(res => {
-				const questionsArray = Array.from(this.state.questions);
-				questionsArray.push(res.question);
-				this.setState({
-					questions: questionsArray
-				})
-			});
+			if(this.state.questionId === '') {
+				questionData.createQuestion(question).then(res => {
+					const questionsArray = Array.from(this.state.questions);
+					questionsArray.push(res.question);
+					this.setState({
+						questionId: res.question._id,
+						questions: questionsArray
+					});
+				});
+			}
+			else {
+				//update
+				questionData.editQuestion(this.state.questionId,question)
+					.then(() => {
+						console.log('Question updated');
+					});
+			}
 			this.setAnswer.value = "";
 		}
+		else {
+			alert("Make sure you add a title and body to the question!")
+		}
 	},
-	validateCode(e) {
-		e.preventDefault();
-		console.log("sending");
-		//do some validating here
-	},
-
 	changeQuestionView() {
 		this.setState({
 			showType: this.getType.value
@@ -192,7 +236,14 @@ export default React.createClass({
 				<h2>Questions</h2>
 				<section className="full detailsForm topicsForm card">
 					<h3>Assign Attributes to your Question:</h3>
-					<form onSubmit={this.addQuestion}>
+					<form onSubmit={(() => {
+						if(this.state.questionId === '') {
+							return this.addQuestion;
+						}
+						else {
+							return this.updateQuestion;
+						}
+					})()}>
 						<div className="fieldRow">
 							<label className="inline largeLabel">Title of your question:</label>
 							<input type="text" ref={ref => this.questionTitle = ref}/>
@@ -257,7 +308,15 @@ export default React.createClass({
 								</div>
 							</div>
 						</div>
-						<input type="submit" value="Submit" className="success"/>
+						<input type="submit" value={(() => {
+							if(this.state.questionId === '') {
+								return "Submit";
+							}
+							else {
+								return "Save"
+							}
+						})()}
+						className="success"/>
 					</form>
 				</section>
 				
