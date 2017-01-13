@@ -61,3 +61,19 @@
 	padding: 10px;
 	margin-bottom: 15px;
 }
+.mcOptions {
+	background: #efefed;
+	padding: 15px;
+	.mcOptions--duo {
+		display: flex;
+		align-items: center;
+		margin-bottom: 10px;
+		input {
+			margin-right: 10px;
+		}
+		label {
+			margin: 0;
+			font-size: 2rem;
+		}
+	}
+}

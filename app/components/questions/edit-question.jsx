@@ -7,10 +7,10 @@ import QuestionCards from '../questions/cards.jsx';
 import CodeMirror from 'react-codemirror';
 import FilteredSearch from '../questions/filteredSearch.jsx';
 require('codemirror/mode/javascript/javascript');
+import NotificationSystem from 'react-notification-system';
 
 let defaults = {
-	markdown: '# Heading\n\nSome **bold** and _italic_ text\nBy [Jed Watson](https://github.com/JedWatson)',
-	javascript: 'var component = {\n\tname: "react-codemirror",\n\tauthor: "Jed Watson",\n\trepo: "https://github.com/JedWatson/react-codemirror"\n};'
+	javascript: ''
 };
 
 function findIndex(array,key,value) {
@@ -24,12 +24,13 @@ function findIndex(array,key,value) {
 }
 
 export default React.createClass({
+	_notificationSystem: null,
 	displayName: 'Questions',
 	mixins: [AuthMixin,History],
 	getInitialState() {
 		return {
 			answerOption: [],
-			code: defaults.markdown,
+			code: defaults.javascript,
 			mode: 'markdown',
 			readOnly: false,
 			showType: 'multiple choice',
@@ -44,13 +45,18 @@ export default React.createClass({
 				category: '',
 				difficulty: '',
 				type: '',
-				multiChoice: []
+				multiChoice: [],
+				unitTest: ''
 			}
 		}
+	},
+	componentDidMount() {
+		this._notificationSystem = this.refs.notificationSystem;
 	},
 	componentWillMount() {
 		questionData.getQuestionById(this.props.params.questionId)
 			.then((res) => {
+				console.log("ress", res);
 				this.setState({
 					updatedQuestion: {
 						title: res.question.title,
@@ -58,53 +64,74 @@ export default React.createClass({
 						category: res.question.category,
 						difficulty: res.question.difficulty,
 						type: res.question.type,
-						multiChoice: res.question.multiChoice
+						multiChoice: res.question.multiChoice,
+						unitTest: res.question.unitTest
 					}
 				})
 			})
 		//get question by Id
 			
 	},
+	_successNotification: function(messageObj) {
+		this._notificationSystem.addNotification({
+			message: messageObj.message,
+			level: messageObj.level === 'error' ? 'error' : 'success',
+			dismissible: false,
+			title: messageObj.title
+		});
+	},
+	removeOption(id, index) {
+		//made a copy of updatedQuestion
+		const updatedObj = Object.assign({}, this.state.updatedQuestion);
+		//removed the item using index
+		updatedObj.multiChoice.splice(index, 1);
 
+		this.setState({
+			updatedQuestion: updatedObj
+		})
+	},
 	addOption(e) {
 		e.preventDefault();
 		let setLabel = this.setLabel.value;
 		let setValue = this.setValue.value;
 		const setAnswer = this.setAnswer.value;
-		const answerArray = this.state.answerOption.slice();
+		const answerArray = this.state.updatedQuestion.multiChoice.slice();
+		const updatedObj = Object.assign({}, this.state.updatedQuestion);
 
 		console.log("setq answer", setAnswer)
 		if(setLabel !== '' && setValue !== '') {
-			answerArray.push({
+			updatedObj.multiChoice.push({
 				label: setLabel,
 				value: setValue,
 			})
-
 			this.setState({
-				answerOption: answerArray
-			})
+				// answerOption: answerArray,
+				updatedQuestion: updatedObj
 
+			})
 			this.setValue.value = "";
 			this.setLabel.value = ""
 		}
 	},
-	//Handles Codemirror implementation
 	changeMode(e) {
+	//Handles Codemirror implementation
 		var mode = e.target.value;
+
 		this.setState({
-			mode: mode,
-			code: defaults[mode]
+			mode: mode
 		});
 
 	},
-	//Handles Codemirror implementation
 	updateCode(newCode) {
+	//Handles Codemirror implementation
 		this.setState({
-			code: newCode
+			updatedQuestion: {
+				unitTest: newCode
+			}
 		})
 	},
-	//Handles Codemirror implementation
 	renderCode() {
+	//Handles Codemirror implementation
 		var options = {
 			lineNumbers: true,
 			mode: this.state.mode,
@@ -113,9 +140,8 @@ export default React.createClass({
 		};
 		return (
 			<div>
-		 		<CodeMirror value={this.state.code} onChange={this.updateCode} options={options}/>
+		 		<CodeMirror value={this.state.updatedQuestion.unitTest} onChange={this.updateCode} options={options}/>
 				<select onChange={this.changeMode} value={this.state.mode} className="fieldRow">
-					<option value="markdown">Markdown</option>
 					<option value="javascript">JavaScript</option>
 				</select>
 				<input type="submit" value="validate" className="success"/>
@@ -156,38 +182,32 @@ export default React.createClass({
 	},
 	updateQuestion(e) {
 		e.preventDefault();
-		const title = this.state.updateQuestion.title;
-		const body = this.question.value;
+		const updatedQuestion = this.state.updatedQuestion;
+		console.log("update",updatedQuestion)
+
+		const title = this.state.updatedQuestion.title;
+		const body = this.state.updatedQuestion.body;
 		const multiAnswer = this.setAnswer.value;
-		const question = {
-			title,
-			type: this.state.showType,
-			body,
-			category: this.getCategory.value,
-			difficulty: this.getLevel.value,
-		};
-		if(title !== '' && body !== '') {
-			if(this.state.showType === 'code') {
-				question.unitTest = this.state.code;
-			}
-			else {
-				Object.assign(question,{
-					multiChoice: this.state.answerOption,
-					multiAnswer
-				});
-			}
-			questionData.editQuestion(this.props.params.questionId)
-				.then(res => {
-					console.log("res", res)
-					const questionsArray = Array.from(this.state.questions);
-					questionsArray.push(res.question);
-					console.log("questions array", questionsArray)
-					this.setState({
-						questions: questionsArray
-					})
-			});
-			this.setAnswer.value = "";
+
+		if(this.state.updatedQuestion.type === 'code') {
+			updatedQuestion.unitTest = this.state.code;
 		}
+		else {
+			Object.assign(updatedQuestion,{
+				multiChoice: this.state.updatedQuestion.multiChoice,
+				multiAnswer
+			});
+		}
+		questionData.editQuestion(this.props.params.questionId, updatedQuestion)
+			.then(res => {
+
+				this._successNotification({
+				title: 'Question',
+				message: 'Saved Successfully'
+			});
+		});
+
+		this.setAnswer.value = "";
 	},
 	validateCode(e) {
 		e.preventDefault();
@@ -203,23 +223,21 @@ export default React.createClass({
 		this.setState(options);
 	},
 	updateField(e) {
-
 		console.log("hello", e.target)
 		//make a copy of the original state
 		const ogQ = Object.assign({},this.state.updatedQuestion);
 
 		ogQ[e.target.name] = e.target.value;
-		console.log("val", e.target.value);
-		console.log("lala", ogQ)
+
 		this.setState({
 			updatedQuestion: ogQ
 		})
 	},
 	render() {
-		console.log("sjdh", this.state.currQuestion)
 		return (
 			<div className="classCard">
-				<h2>Questions</h2>
+				<NotificationSystem ref="notificationSystem" style={false}/>
+				<h2>Title of your question: {this.state.updatedQuestion.title}</h2>
 				<section className="full detailsForm topicsForm card">
 					<h3>Assign Attributes to your Question:</h3>
 					<form onSubmit={this.updateQuestion}>
@@ -238,23 +256,23 @@ export default React.createClass({
 						</div>
 						<div className="fieldRow">
 							<label className="inline largeLabel">What is the Question?</label>
-							<textarea value={this.state.updatedQuestion.body} className="inline largeLabel" ref={ref => this.question = ref} row="2" col="100"></textarea>
+							<textarea name="body" value={this.state.updatedQuestion.body} className="inline largeLabel" onChange={this.updateField}  row="2" col="100"></textarea>
 						</div>
 						<div className="fieldRow">
 							<label className="inline largeLabel">Level of Difficulty</label>
-							<select value={this.state.updatedQuestion.difficulty} ref={ref => this.getLevel = ref}>
+							<select name="difficulty" value={this.state.updatedQuestion.difficulty}>
 								<option value="easy">Easy</option>
 								<option value="medium">Medium</option>
 								<option value="hard">Hard</option>
 							</select>
 							<label htmlFor="type" className="inline largeLabel">Type</label>
-							<select name="type" value={this.state.updatedQuestion.type} ref={ref => this.getType = ref} defaultValue={this.state.showType} onChange={(e) => this.changeQuestionView() }>
+							<select name="type" value={this.state.updatedQuestion.type} onChange={this.updateField}>
 								<option value="multiple choice">Multiple Choice</option>
 								<option value="code">Code</option>
 							</select>
 						</div>
 						<div className="typeCard" onFocus={this.testing}>
-							<div className={this.state.showType === 'multiple choice' ? 'showType' : 'hideType'}>
+							<div className={this.state.updatedQuestion.type === 'multiple choice' ? 'showType' : 'hideType'}>
 								<div className="fieldRow">
 									<h3>Multiple Choice:</h3>
 									<label className="inline largeLabel">Label of your Answers</label>
@@ -265,22 +283,23 @@ export default React.createClass({
 									<input type="text" ref={ref => this.setValue = ref}/>
 									<button onClick={this.addOption} className="success">Add option</button>
 								</div>
-								<div className="fieldRow">
-									{this.state.updatedQuestion.multiChoice.map((item, i) => {
+								<div className="fieldRow mcOptions">
+								{this.state.updatedQuestion.multiChoice.map((item, i) => {
 										return (
-											<div key={i}>
-												<label>{item.label}</label>
+											<div className="mcOptions--duo" key={i}>
 												<input className="inline" name="lala" type="radio" value={item.value}/>
+												<label>{item.label}</label>
+												<i onClick={() => this.removeOption(item._id, i)} className="fa fa-times"></i>
 											</div>
 										)
 									})}
 								</div>
-								<div className="fieldRow">
-									<label className="inline largeLabel">What is the answer?</label>
-									<input type="text" ref={ref => this.setAnswer = ref}/>
-								</div>
 							</div>
-							<div className={this.state.showType === 'code' ? 'showType' : 'hideType'}>
+							<div className="fieldRow">
+								<label className="inline largeLabel">What is the answer?</label>
+								<input type="text" ref={ref => this.setAnswer = ref}/>
+							</div>
+							<div className={this.state.updatedQuestion.type === 'code' ? 'showType' : 'hideType'}>
 								<div className="fieldRow">
 									<h3>Code Based Question:</h3>
 									{this.renderCode()}
@@ -288,6 +307,7 @@ export default React.createClass({
 							</div>
 						</div>
 						<input type="submit" value="Save" className="success"/>
+						<Link to={`/questions`}>Go back</Link>
 					</form>
 				</section>
 			</div>
