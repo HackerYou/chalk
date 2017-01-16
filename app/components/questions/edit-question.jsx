@@ -9,10 +9,6 @@ import CodeArea from './codeArea.jsx';
 import NotificationSystem from 'react-notification-system';
 import Loading from '../loading/index.jsx';
 
-let defaults = {
-	javascript: ''
-};
-
 function findIndex(array,key,value) {
 	let index = 0;
 	for(let i = 0; i< array.length; i++) {
@@ -30,7 +26,7 @@ export default React.createClass({
 	getInitialState() {
 		return {
 			answerOption: [],
-			code: defaults.javascript,
+			code: '',
 			mode: 'markdown',
 			readOnly: false,
 			showType: 'code',
@@ -51,7 +47,8 @@ export default React.createClass({
 				unitTest: ''
 			},
 			assertions: [],
-			loading: false
+			loading: false,
+			assertionError: ''
 		}
 	},
 	componentDidMount() {
@@ -141,7 +138,7 @@ export default React.createClass({
 		var options = {
 			lineNumbers: true,
 			mode: this.state.mode,
-			theme: 'cobalt',
+			theme: 'material',
 			fixedGutter: true
 		};
 		return (
@@ -155,6 +152,8 @@ export default React.createClass({
 				testMode={this.state.testMode}
 				assertions={this.state.assertions}
 				validateCode={this.validateCode}
+				questionId={this.props.params.questionId}
+				assertionError={this.state.assertionError}
 			/>
 		)
 	},
@@ -185,8 +184,9 @@ export default React.createClass({
 						});
 				},(err) => {
 					this.setState({
-						loading: false
-					})
+						loading: false,
+						assertionError: err.error
+					});
 					this._successNotification({
 						message: err.error,
 						level:'error',
@@ -290,7 +290,7 @@ export default React.createClass({
 								<option value="html">HTML</option>
 								<option value="css">CSS</option>
 								<option value="javascript">JavaScript</option>
-								<option value="javascript">React</option>
+								<option value="react">React</option>
 							</select>
 						</div>
 						<div className="fieldRow">

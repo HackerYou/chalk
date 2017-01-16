@@ -6,7 +6,7 @@ export default function(props) {
 	const defaultOptions = {
 		lineNumbers: true,
 		mode: 'javascript',
-		theme: 'cobalt',
+		theme: 'material',
 		fixedGutter: true
 	}
 	return (
@@ -26,15 +26,36 @@ export default function(props) {
 				</div>
 			</section>
 			<section className="console">
-				<ul>
+				{(() => {
+						if(props.assertionError !== '') {
+							return (
+								<pre>
+									{props.assertionError}
+								</pre>
+							)
+						}
+				})()}
+				<ul> 
 					{props.assertions.map((results) => {
 						return results.assertionResults.map((assertion,i) => {
 							return <li key={`assertion-${i}`}>{assertion.status} - {assertion.title}</li>
 						});
 					})}
+
 				</ul>
 			</section>
-			<input type="submit" value="validate" onClick={props.validateCode} className="success"/>
+			{
+				(() => {
+					if(props.questionId !== '') {
+						return <input type="submit" value="validate" onClick={props.validateCode} className="success"/>
+					}
+					else {
+						return <p>Submit your question to be able to validate the code.</p>
+					}
+
+				})()
+				
+			}
 		</div>
 	)
 }

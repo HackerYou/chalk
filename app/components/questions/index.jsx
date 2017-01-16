@@ -3,10 +3,12 @@ import { Link, History} from 'react-router';
 import AuthMixin from '../../services/authMixin.jsx';
 import userData from '../../services/user.jsx';
 import questionData from '../../services/questions.jsx';
-import QuestionCards from '../questions/cards.jsx';
+import QuestionCards from './cards.jsx';
 import CodeMirror from 'react-codemirror';
-import FilteredSearch from '../questions/filteredSearch.jsx';
+import FilteredSearch from './filteredSearch.jsx';
+import CodeArea from './codeArea.jsx';
 require('codemirror/mode/javascript/javascript');
+import Loading from '../loading/index.jsx';
 
 
 function findIndex(array,key,value) {
@@ -36,7 +38,9 @@ export default React.createClass({
 			filteredQuestions: [],
 			selectButton: 'false',
 			questionId: '',
-			assertions: []
+			assertions: [],
+			assertionError: '',
+			loading: false
 		}
 	},
 	componentWillMount() {
@@ -82,7 +86,7 @@ export default React.createClass({
 			code: newCode
 		})
 	},
-	testCode(newCode) {
+	updateTestCode(newCode) {
 		this.setState({
 			testCode: newCode
 		});
@@ -96,51 +100,37 @@ export default React.createClass({
 			fixedGutter: true
 		};
 		return (
-			<div>
-				<section className="codeContainer">
-					<div className="codeArea">
-						<h4>Unit Test</h4>
-			 			<CodeMirror value={this.state.code} onChange={this.updateCode} options={options}/>
-					</div>
-					<div className="codeArea">
-						<h4>Test area (test that the unit test works)</h4>
-			 			<CodeMirror value={this.state.testCode} onChange={this.testCode} options={Object.assign(options,{mode: this.state.testMode})}/>
-						<select onChange={this.changeMode} value={this.state.testMode} className="fieldRow">
-							<option value="javascript">JavaScript</option>
-							<option value="html">HTML</option>
-						</select>
-					</div>
-				</section>
-				<section className="console">
-					<ul>
-						{this.state.assertions.map((results) => {
-							return results.assertionResults.map((assertion,i) => {
-								return <li key={`assertion-${i}`}>{assertion.status} - {assertion.title}</li>
-							});
-						})}
-					</ul>
-				</section>
-				{
-					(() => {
-						if(this.state.questionId !== '') {
-							return <input type="submit" value="validate" onClick={this.validateCode} className="success"/>
-						}
-						else {
-							return <p>Submit your question to be able to validate the code.</p>
-						}
-
-					})()
-					
-				}
-			</div>
+			<CodeArea 
+				code={this.state.unitTest}
+				updateCode={this.updateCode}
+				testCode={this.state.testCode}
+				updateTestCode={this.updateTestCode}
+				testMode={this.state.testMode}
+				changeMode={this.changeMode}
+				testMode={this.state.testMode}
+				assertions={this.state.assertions}
+				validateCode={this.validateCode}
+				questionId={this.state.questionId}
+				assertionError={this.state.assertionError}
+			/>
 		)
 	},
 	validateCode(e) {
 		e.preventDefault();
+		this.setState({
+			loading: true
+		});
 		questionData.questionDryrun(this.state.questionId,this.state.testCode)
 			.then((res) => {
 				this.setState({
-					assertions: res.results.testResults
+					assertions: res.results.testResults,
+					assertionError: '',
+					loading: false
+				});
+			},(err) => {
+				this.setState({
+					assertionError: err.responseJSON.error,
+					loading: false
 				});
 			});
 	},
@@ -250,11 +240,11 @@ export default React.createClass({
 						</div>
 						<div className="fieldRow">
 							<label className="inline largeLabel">Category</label>
-							<select ref={ref => this.getCategory = ref}>
+							<select ref={ref => this.getCategory = ref} defaultValue="javascript">
 								<option value="html">HTML</option>
 								<option value="css">CSS</option>
 								<option value="javascript">JavaScript</option>
-								<option value="javascript">React</option>
+								<option value="react">React</option>
 							</select>
 						</div>
 						<div className="fieldRow">
@@ -329,6 +319,7 @@ export default React.createClass({
 						{this.renderCards()}
 					</article>
 				</section>
+				<Loading loading={this.state.loading} loadingText='Validating Question!'/>
 			</div>
 		)
 	}
