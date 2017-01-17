@@ -24,8 +24,6 @@ export default React.createClass({
 			selectButton: 'true',
 			selectedQuestions: [],
 			testId: "",
-			allQuestions: {},
-			numOfQuestions: "",
 			selectedCard: false,
 			testQuestions: [],
 			testCreated: false,
@@ -63,7 +61,7 @@ export default React.createClass({
 		const cardRender = (item,i) => {
 			//checking to see if selectedId is INCLUDED in list of all questions
 			const isSelected = this.state.testQuestions.includes(item._id);
-			return <QuestionCards key={`question-${i}`} question={item} allQuestions={this.state.questions} selectCard={this.selectCard}  selectButton={this.state.selectButton} classId={this.props.params.courseId} showSelected={!isSelected} removeCard={this.removeQuestion}/>
+			return <QuestionCards key={`question-${i}`} question={item} selectCard={this.selectCard}  selectButton={this.state.selectButton} classId={this.props.params.courseId} showSelected={!isSelected} removeCard={this.removeQuestion}/>
 		};
 		if(this.state.showFiltered) {
 			return this.state.filteredQuestions.map(cardRender);
@@ -83,6 +81,7 @@ export default React.createClass({
 			questionId: selectedInfo
 		}).then(res => {
 			const questions = res.test.questions;
+
 			console.log('update', questions)
 			if(this.state.selectCard) {
 				this.setState({
@@ -95,9 +94,7 @@ export default React.createClass({
 			}
 
 			this.setState({
-				allQuestions: res.questions,
-				numOfQuestions: questions.length,
-				testQuestions
+				testQuestions: questions.map((res) => res._id)
 			})
 
 		})
@@ -149,7 +146,7 @@ export default React.createClass({
 					<h2>Create Your Test</h2>
 					<div className="full testForm">
 						<ul className="testTally">
-							<li>Num of questions: {this.state.numOfQuestions}</li>
+							<li>Num of questions: {this.state.testQuestions.length}</li>
 							<li>Level of difficulty: 0</li>
 							<li>Num of multiple choice: 0</li>
 							<li>Num of code questions: 0</li>

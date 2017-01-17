@@ -67,7 +67,7 @@ export default {
 			data: JSON.stringify(questionId)
 		});
 	},
-	evaluateTest(userId, testId, answer) {
+	evaluateTest(testId, answer) {
 		return $.ajax({
 			url: `${config.getApiUrl().replace('v1','v2') }/tests/${testId}/evaluate`,
 			method: 'POST',
@@ -76,7 +76,7 @@ export default {
 				'Content-Type' : 'application/json'
 			},
 			data: JSON.stringify({
-				userId,
+				userId: config.getUserId(),
 				answers: answer
 			})
 		});

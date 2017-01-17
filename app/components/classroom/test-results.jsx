@@ -1,15 +1,8 @@
 import React from 'react';
 import { Link , History} from 'react-router';
-import LessonDetails from '../lessondetails/index.jsx';
-import Modal from '../modal/index.jsx';
-let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import AuthMixin from '../../services/authMixin.jsx';
 import coursesData from '../../services/courses.jsx';
 import userData from '../../services/user.jsx';
-import config from '../../services/config.jsx';
-import Sticky from '../../services/sticky.js';
-import Loading from '../loading/index.jsx';
-import validator from 'validator';
 import TestData from '../../services/tests.jsx';
 import TestCards from '../classroom/results-card.jsx';
 
@@ -32,11 +25,16 @@ export default React.createClass({
 			.then(res => {
 				console.log(res.course.students);
 				const members = res.course.students
+					//returns an array with all of the 
+					//student ids ['id1, id2, id3, id4']
+					//maps over those ids
 					.map(student => student._id)
+					//maps over
 					.map(userData.getUser);
 
 				Promise.all(members)
 					.then(students => {
+						console.log("stud", students);
 						this.setState({
 							members: students,
 						});
@@ -45,7 +43,7 @@ export default React.createClass({
 	},
 	renderCards() {
 		const members = this.state.members;
-		return (	
+		return (
 				members.map((res) => {
 					return <TestCards studentInfo={res.user} />
 					
@@ -59,5 +57,4 @@ export default React.createClass({
 			</section>
 		)
 	}
-
 });
