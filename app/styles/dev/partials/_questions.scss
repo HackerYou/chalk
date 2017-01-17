@@ -46,6 +46,21 @@
 	}
 }
 
+//CodeMirror element 
+.codeContainer {
+	display: flex;
+	.codeArea {
+		width: 50%;
+		margin: 0 10px;
+	}
+}
+
+.console {
+	background: rgba(18, 22, 29, 0.8);
+	color: white;
+	padding: 10px;
+	margin-bottom: 15px;
+}
 .mcOptions {
 	background: #efefed;
 	padding: 15px;

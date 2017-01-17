@@ -3,15 +3,13 @@ import { Link, History} from 'react-router';
 import AuthMixin from '../../services/authMixin.jsx';
 import userData from '../../services/user.jsx';
 import questionData from '../../services/questions.jsx';
-import QuestionCards from '../questions/cards.jsx';
+import QuestionCards from './cards.jsx';
 import CodeMirror from 'react-codemirror';
-import FilteredSearch from '../questions/filteredSearch.jsx';
+import FilteredSearch from './filteredSearch.jsx';
+import CodeArea from './codeArea.jsx';
 require('codemirror/mode/javascript/javascript');
+import Loading from '../loading/index.jsx';
 
-let defaults = {
-	markdown: '# Heading\n\nSome **bold** and _italic_ text\nBy [Jed Watson](https://github.com/JedWatson)',
-	javascript: 'var component = {\n\tname: "react-codemirror",\n\tauthor: "Jed Watson",\n\trepo: "https://github.com/JedWatson/react-codemirror"\n};'
-};
 
 function findIndex(array,key,value) {
 	let index = 0;
@@ -29,15 +27,20 @@ export default React.createClass({
 	getInitialState() {
 		return {
 			answerOption: [],
-			code: defaults.markdown,
-			mode: 'markdown',
+			code: '',
+			testCode: '',
+			testMode: 'javascript',
 			readOnly: false,
-			showType: 'multiple choice',
+			showType: 'code',
 			questions: [],
 			realAnswer: "",
 			showFiltered: false,
 			filteredQuestions: [],
-			selectButton: 'false'
+			selectButton: 'false',
+			questionId: '',
+			assertions: [],
+			assertionError: '',
+			loading: false
 		}
 	},
 	componentWillMount() {
@@ -56,7 +59,6 @@ export default React.createClass({
 		const setAnswer = this.setAnswer.value;
 		const answerArray = this.state.answerOption.slice();
 
-		console.log("setq answer", setAnswer)
 		if(setLabel !== '' && setValue !== '') {
 			answerArray.push({
 				label: setLabel,
@@ -75,10 +77,8 @@ export default React.createClass({
 	changeMode(e) {
 		var mode = e.target.value;
 		this.setState({
-			mode: mode,
-			code: defaults[mode]
+			mode: mode
 		});
-
 	},
 	//Handles Codemirror implementation
 	updateCode(newCode) {
@@ -86,24 +86,53 @@ export default React.createClass({
 			code: newCode
 		})
 	},
+	updateTestCode(newCode) {
+		this.setState({
+			testCode: newCode
+		});
+	},
 	//Handles Codemirror implementation
 	renderCode() {
 		var options = {
 			lineNumbers: true,
-			mode: this.state.mode,
+			mode: 'javascript',
 			theme: 'cobalt',
 			fixedGutter: true
 		};
 		return (
-			<div>
-		 		<CodeMirror value={this.state.code} onChange={this.updateCode} options={options}/>
-				<select onChange={this.changeMode} value={this.state.mode} className="fieldRow">
-					<option value="markdown">Markdown</option>
-					<option value="javascript">JavaScript</option>
-				</select>
-				<input type="submit" value="validate" className="success"/>
-			</div>
+			<CodeArea 
+				code={this.state.unitTest}
+				updateCode={this.updateCode}
+				testCode={this.state.testCode}
+				updateTestCode={this.updateTestCode}
+				testMode={this.state.testMode}
+				changeMode={this.changeMode}
+				testMode={this.state.testMode}
+				assertions={this.state.assertions}
+				validateCode={this.validateCode}
+				questionId={this.state.questionId}
+				assertionError={this.state.assertionError}
+			/>
 		)
+	},
+	validateCode(e) {
+		e.preventDefault();
+		this.setState({
+			loading: true
+		});
+		questionData.questionDryrun(this.state.questionId,this.state.testCode)
+			.then((res) => {
+				this.setState({
+					assertions: res.results.testResults,
+					assertionError: '',
+					loading: false
+				});
+			},(err) => {
+				this.setState({
+					assertionError: err.responseJSON.error,
+					loading: false
+				});
+			});
 	},
 	renderCards(key, index) {
 		const cardRender = (item,i) => {
@@ -118,7 +147,6 @@ export default React.createClass({
 	},
 	removeCard(e,questionId) {
 		e.preventDefault();
-		console.log("hello",questionId)
 		questionData.deleteQuestion(questionId)
 			.then((res) => {
 				let questionsArray = Array.from(this.state.questions);
@@ -130,7 +158,6 @@ export default React.createClass({
 			});
 	},
 	editQuestion(e, questionId) {
-		console.log("edit", questionId)
 		return <Link to={`/questions/${questionId}/edit-question`}></Link>
 	},
 	getType(e) {
@@ -162,22 +189,29 @@ export default React.createClass({
 					multiAnswer
 				});
 			}
-			questionData.createQuestion(question).then(res => {
-				const questionsArray = Array.from(this.state.questions);
-				questionsArray.push(res.question);
-				this.setState({
-					questions: questionsArray
-				})
-			});
+			if(this.state.questionId === '') {
+				questionData.createQuestion(question).then(res => {
+					const questionsArray = Array.from(this.state.questions);
+					questionsArray.push(res.question);
+					this.setState({
+						questionId: res.question._id,
+						questions: questionsArray
+					});
+				});
+			}
+			else {
+				//update
+				questionData.editQuestion(this.state.questionId,question)
+					.then(() => {
+						console.log('Question updated');
+					});
+			}
 			this.setAnswer.value = "";
 		}
+		else {
+			alert("Make sure you add a title and body to the question!")
+		}
 	},
-	validateCode(e) {
-		e.preventDefault();
-		console.log("sending");
-		//do some validating here
-	},
-
 	changeQuestionView() {
 		this.setState({
 			showType: this.getType.value
@@ -192,18 +226,25 @@ export default React.createClass({
 				<h2>Questions</h2>
 				<section className="full detailsForm topicsForm card">
 					<h3>Assign Attributes to your Question:</h3>
-					<form onSubmit={this.addQuestion}>
+					<form onSubmit={(() => {
+						if(this.state.questionId === '') {
+							return this.addQuestion;
+						}
+						else {
+							return this.updateQuestion;
+						}
+					})()}>
 						<div className="fieldRow">
 							<label className="inline largeLabel">Title of your question:</label>
 							<input type="text" ref={ref => this.questionTitle = ref}/>
 						</div>
 						<div className="fieldRow">
 							<label className="inline largeLabel">Category</label>
-							<select ref={ref => this.getCategory = ref}>
+							<select ref={ref => this.getCategory = ref} defaultValue="javascript">
 								<option value="html">HTML</option>
 								<option value="css">CSS</option>
 								<option value="javascript">JavaScript</option>
-								<option value="javascript">React</option>
+								<option value="react">React</option>
 							</select>
 						</div>
 						<div className="fieldRow">
@@ -257,7 +298,15 @@ export default React.createClass({
 								</div>
 							</div>
 						</div>
-						<input type="submit" value="Submit" className="success"/>
+						<input type="submit" value={(() => {
+							if(this.state.questionId === '') {
+								return "Submit";
+							}
+							else {
+								return "Save"
+							}
+						})()}
+						className="success"/>
 					</form>
 				</section>
 				
@@ -270,6 +319,7 @@ export default React.createClass({
 						{this.renderCards()}
 					</article>
 				</section>
+				<Loading loading={this.state.loading} loadingText='Validating Question!'/>
 			</div>
 		)
 	}
