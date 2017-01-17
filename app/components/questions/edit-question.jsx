@@ -173,10 +173,11 @@ export default React.createClass({
 							});
 						},(err) => {
 							this.setState({
-								loading: false
+								loading: false,
+								assertionError: err.responseJSON.error
 							});
 							this._successNotification({
-								message: err.error,
+								message: 'Error validating!',
 								level:'error',
 								dismissible: true,
 								title: 'Error'
@@ -185,10 +186,10 @@ export default React.createClass({
 				},(err) => {
 					this.setState({
 						loading: false,
-						assertionError: err.error
+						assertionError: err.responseJSON.error
 					});
 					this._successNotification({
-						message: err.error,
+						message: 'An Error occurred',
 						level:'error',
 						dismissible: true,
 						title: 'Error'
