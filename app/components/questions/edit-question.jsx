@@ -3,15 +3,11 @@ import { Link, History} from 'react-router';
 import AuthMixin from '../../services/authMixin.jsx';
 import userData from '../../services/user.jsx';
 import questionData from '../../services/questions.jsx';
-import QuestionCards from '../questions/cards.jsx';
-import CodeMirror from 'react-codemirror';
-import FilteredSearch from '../questions/filteredSearch.jsx';
-require('codemirror/mode/javascript/javascript');
+import QuestionCards from './cards.jsx';
+import FilteredSearch from './filteredSearch.jsx';
+import CodeArea from './codeArea.jsx';
 import NotificationSystem from 'react-notification-system';
-
-let defaults = {
-	javascript: ''
-};
+import Loading from '../loading/index.jsx';
 
 function findIndex(array,key,value) {
 	let index = 0;
@@ -30,24 +26,29 @@ export default React.createClass({
 	getInitialState() {
 		return {
 			answerOption: [],
-			code: defaults.javascript,
+			code: '',
 			mode: 'markdown',
 			readOnly: false,
-			showType: 'multiple choice',
+			showType: 'code',
 			questions: [],
 			realAnswer: "",
 			showFiltered: false,
 			filteredQuestions: [],
 			selectButton: 'false',
+			testMode: 'javascript',
+			testCode: '',
 			updatedQuestion: {
 				title: '',
 				body: '',
 				category: '',
 				difficulty: '',
-				type: '',
+				type: 'code',
 				multiChoice: [],
 				unitTest: ''
-			}
+			},
+			assertions: [],
+			loading: false,
+			assertionError: ''
 		}
 	},
 	componentDidMount() {
@@ -56,8 +57,9 @@ export default React.createClass({
 	componentWillMount() {
 		questionData.getQuestionById(this.props.params.questionId)
 			.then((res) => {
-				console.log("ress", res);
 				this.setState({
+					showType: res.question.type,
+					code: res.question.unitTest,
 					updatedQuestion: {
 						title: res.question.title,
 						body: res.question.body,
@@ -68,9 +70,7 @@ export default React.createClass({
 						unitTest: res.question.unitTest
 					}
 				})
-			})
-		//get question by Id
-			
+			});
 	},
 	_successNotification: function(messageObj) {
 		this._notificationSystem.addNotification({
@@ -88,7 +88,7 @@ export default React.createClass({
 
 		this.setState({
 			updatedQuestion: updatedObj
-		})
+		});
 	},
 	addOption(e) {
 		e.preventDefault();
@@ -98,17 +98,14 @@ export default React.createClass({
 		const answerArray = this.state.updatedQuestion.multiChoice.slice();
 		const updatedObj = Object.assign({}, this.state.updatedQuestion);
 
-		console.log("setq answer", setAnswer)
 		if(setLabel !== '' && setValue !== '') {
 			updatedObj.multiChoice.push({
 				label: setLabel,
 				value: setValue,
 			})
 			this.setState({
-				// answerOption: answerArray,
 				updatedQuestion: updatedObj
-
-			})
+			});
 			this.setValue.value = "";
 			this.setLabel.value = ""
 		}
@@ -124,29 +121,82 @@ export default React.createClass({
 	},
 	updateCode(newCode) {
 	//Handles Codemirror implementation
+		const originalQuestion = Object.assign({},this.state.updatedQuestion);
+		originalQuestion.unitTest = newCode;
 		this.setState({
-			updatedQuestion: {
-				unitTest: newCode
-			}
-		})
+			updatedQuestion: originalQuestion
+		});
+	},
+	updateTestCode(newCode) {
+	//Handles Codemirror implementation
+		this.setState({
+			testCode: newCode
+		});
 	},
 	renderCode() {
 	//Handles Codemirror implementation
 		var options = {
 			lineNumbers: true,
 			mode: this.state.mode,
-			theme: 'cobalt',
+			theme: 'material',
 			fixedGutter: true
 		};
 		return (
-			<div>
-		 		<CodeMirror value={this.state.updatedQuestion.unitTest} onChange={this.updateCode} options={options}/>
-				<select onChange={this.changeMode} value={this.state.mode} className="fieldRow">
-					<option value="javascript">JavaScript</option>
-				</select>
-				<input type="submit" value="validate" className="success"/>
-			</div>
+			<CodeArea 
+				code={this.state.updatedQuestion.unitTest}
+				updateCode={this.updateCode}
+				testCode={this.state.testCode}
+				updateTestCode={this.updateTestCode}
+				testMode={this.state.testMode}
+				changeMode={this.changeMode}
+				testMode={this.state.testMode}
+				assertions={this.state.assertions}
+				validateCode={this.validateCode}
+				questionId={this.props.params.questionId}
+				assertionError={this.state.assertionError}
+			/>
 		)
+	},
+	validateCode(e) {
+		e.preventDefault();
+		if(this.state.testCode !== '') {
+			this.setState({
+				loading: true
+			});
+			questionData.editQuestion(this.props.params.questionId, this.state.updatedQuestion)
+				.then((res) => {
+					questionData.questionDryrun(this.props.params.questionId,this.state.testCode)
+						.then((res) => {
+							this.setState({
+								assertions: res.results.testResults,
+								loading: false
+							});
+						},(err) => {
+							this.setState({
+								loading: false,
+								assertionError: err.responseJSON.error
+							});
+							this._successNotification({
+								message: 'Error validating!',
+								level:'error',
+								dismissible: true,
+								title: 'Error'
+							});
+						});
+				},(err) => {
+					this.setState({
+						loading: false,
+						assertionError: err.responseJSON.error
+					});
+					this._successNotification({
+						message: 'An Error occurred',
+						level:'error',
+						dismissible: true,
+						title: 'Error'
+					});
+				});
+			
+		}
 	},
 	renderCards(key, index) {
 		const cardRender = (item,i) => {
@@ -161,7 +211,6 @@ export default React.createClass({
 	},
 	removeCard(e,questionId) {
 		e.preventDefault();
-		console.log("hello",questionId)
 		questionData.deleteQuestion(questionId)
 			.then((res) => {
 				let questionsArray = Array.from(this.state.questions);
@@ -183,10 +232,7 @@ export default React.createClass({
 	updateQuestion(e) {
 		e.preventDefault();
 		const updatedQuestion = this.state.updatedQuestion;
-		console.log("update",updatedQuestion)
 
-		const title = this.state.updatedQuestion.title;
-		const body = this.state.updatedQuestion.body;
 		const multiAnswer = this.setAnswer.value;
 
 		if(this.state.updatedQuestion.type === 'code') {
@@ -209,11 +255,6 @@ export default React.createClass({
 
 		this.setAnswer.value = "";
 	},
-	validateCode(e) {
-		e.preventDefault();
-		console.log("sending");
-		//do some validating here
-	},
 	changeQuestionView() {
 		this.setState({
 			showType: this.getType.value
@@ -223,7 +264,6 @@ export default React.createClass({
 		this.setState(options);
 	},
 	updateField(e) {
-		console.log("hello", e.target)
 		//make a copy of the original state
 		const ogQ = Object.assign({},this.state.updatedQuestion);
 
@@ -251,7 +291,7 @@ export default React.createClass({
 								<option value="html">HTML</option>
 								<option value="css">CSS</option>
 								<option value="javascript">JavaScript</option>
-								<option value="javascript">React</option>
+								<option value="react">React</option>
 							</select>
 						</div>
 						<div className="fieldRow">
@@ -260,7 +300,7 @@ export default React.createClass({
 						</div>
 						<div className="fieldRow">
 							<label className="inline largeLabel">Level of Difficulty</label>
-							<select name="difficulty" value={this.state.updatedQuestion.difficulty}>
+							<select name="difficulty" value={this.state.updatedQuestion.difficulty} onChange={this.updateField}>
 								<option value="easy">Easy</option>
 								<option value="medium">Medium</option>
 								<option value="hard">Hard</option>
@@ -284,20 +324,27 @@ export default React.createClass({
 									<button onClick={this.addOption} className="success">Add option</button>
 								</div>
 								<div className="fieldRow mcOptions">
-								{this.state.updatedQuestion.multiChoice.map((item, i) => {
-										return (
-											<div className="mcOptions--duo" key={i}>
-												<input className="inline" name="lala" type="radio" value={item.value}/>
-												<label>{item.label}</label>
-												<i onClick={() => this.removeOption(item._id, i)} className="fa fa-times"></i>
-											</div>
-										)
-									})}
+								{(() => {
+									if(this.state.updatedQuestion.multiChoice) {
+										return this.state.updatedQuestion.multiChoice.map((item, i) => {
+											return (
+												<div className="mcOptions--duo" key={i}>
+													<input className="inline" name="lala" type="radio" value={item.value}/>
+													<label>{item.label}</label>
+													<i onClick={() => this.removeOption(item._id, i)} className="fa fa-times"></i>
+												</div>
+											)
+										});
+									}
+									else {
+										return ''
+									}
+								})()}
 								</div>
-							</div>
-							<div className="fieldRow">
-								<label className="inline largeLabel">What is the answer?</label>
-								<input type="text" ref={ref => this.setAnswer = ref}/>
+								<div className="fieldRow">
+									<label className="inline largeLabel">What is the answer?</label>
+									<input type="text" ref={ref => this.setAnswer = ref}/>
+								</div>
 							</div>
 							<div className={this.state.updatedQuestion.type === 'code' ? 'showType' : 'hideType'}>
 								<div className="fieldRow">
@@ -310,6 +357,7 @@ export default React.createClass({
 						<Link to={`/questions`}>Go back</Link>
 					</form>
 				</section>
+				<Loading loading={this.state.loading} loadingText="Evaluating question" />
 			</div>
 		)
 	}

@@ -23,7 +23,6 @@ export default React.createClass({
 			questions: [],
 			assertions: {},
 			answer: {},
-			mode: 'javascript',
 			user: {},
 			isStudent: false,
 			testInfo: {
@@ -66,14 +65,6 @@ export default React.createClass({
 		});
 	},
 	//Handles Codemirror implementation
-	changeMode(e) {
-		var mode = e.target.value;
-		this.setState({
-			mode: mode
-		});
-
-	},
-	//Handles Codemirror implementation
 	updateAnswer(userAnswer,questionId) {
 		//get the orginal state
 		//make a copy of the original object using Object.assign
@@ -91,35 +82,37 @@ export default React.createClass({
 	},
 	dryrun(e,questionId) {
 		e.preventDefault();
-		console.log(questionId);
 
 		questionData.questionDryrun(questionId, this.state.answer[questionId])
 			.then(res => {
-				console.log("it worked", res);
-				console.log("answer", this.state.assertions[questionId] = res)
-				this.renderValidation(questionId)
+				this.renderValidation(questionId);
 				
 				const ogAss = Object.assign({}, this.state.assertions);
-				ogAss[questionId] = res.results
-				console.log("ass", ogAss);
+				ogAss[questionId] = res.results;
 
 				this.setState({
 					assertions: ogAss
-				})
+				});
 			})
 
 
 	}, 
 	renderValidation(questionId) {
 		if(this.state.assertions[questionId]) {
-			const status = this.state.assertions[questionId].success;
-				return (
-					<div className="validateScreen">
-						<ul>
-							<li>{status === true ? "Success: Code is valid!" : "Failed: Code is invalid"}</li>
-						</ul>
-					</div>
-				)
+			return (
+				<div className="console">
+					<ul>
+						{this.state.assertions[questionId]
+							.testResults.map((test) => {
+								return test.assertionResults
+								.map((assertion) => {
+									return <li>{assertion.status} - {assertion.title}</li>
+								})
+							})
+						}
+					</ul>
+				</div>
+			)
 		} 
 	},
 	evaluate() {
@@ -133,7 +126,6 @@ export default React.createClass({
 				answer: this.state.answer[key]
 			})
 		}
-		console.log("submitted");
 		this.setState({
 			testSubmitted: true
 		})
@@ -150,19 +142,15 @@ export default React.createClass({
 	//Handles Codemirror implementation
 		var options = {
 			lineNumbers: true,
-			mode: this.state.mode,
+			mode: question.category,
 			theme: 'material',
 			fixedGutter: true
 		};
 		return (
 
 			<div>
-		 		<CodeMirror value={this.state.answer[question._id]} onChange={(newCode) =>  this.updateAnswer(newCode,question._id)} options={options}/>
-				<select onChange={this.changeMode} value={this.state.mode} className="fieldRow">
-					<option value="markdown">Markdown</option>
-					<option value="javascript">JavaScript</option>
-				</select>
-				<input type="submit" value="validate" className="success" onClick={e => this.dryrun(e,question._id)}/>		
+		 		<CodeMirror value={this.state.answer[question._id]} onChange={(newCode) =>  this.updateAnswer(newCode,question._id)} options={options} />
+				<input type="submit" value="validate" className="success codeSubmit" onClick={e => this.dryrun(e,question._id)}/>		
 				{this.renderValidation(question._id)}
 			</div>
 		)
