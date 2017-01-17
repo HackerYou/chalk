@@ -227,13 +227,13 @@ export default React.createClass({
 		//if so apply className to first
 		if(this.state.user.test_results) {
 			const testRes = this.state.user.test_results.length;
+			console.log("res", this.state.user.test_results)
 			return (
 				<div className="card cardAddTest">
 					<h3>Test Progress:</h3>
 					<ul className="testProgress">
 					{this.state.user.tests.map((test, i) => {
 						i = i + 1;
-						console.log("hi", i);
 						return <li className={testRes === i ? "fillCircle" : null} key={i}>{i}</li>
 					})}
 					</ul>
@@ -288,13 +288,16 @@ export default React.createClass({
 				<Link to={`/classroom/${this.props.params.courseId}/create-test`} className="primary">Add Test</Link>
 			</div>
 		);
-
+		let testResults = (
+			<div className="card">
+				<Link to={`/classroom/${this.props.params.courseId}/test-results`}>View Test Results</Link>
+			</div>
+		)
 		let takeTest = (
 			<div className="card testCard">
 				<h3>Take Test</h3>
 				<ul>
 				{tests.map((item, i) => {
-					// console.log("item", item)
 					return (
 						<li>
 							<Link key={i} className="testLink" to={`/classroom/${this.props.params.courseId}/view-test/${item._id}`} className="primary">{item.title}</Link>
@@ -319,7 +322,7 @@ export default React.createClass({
 					<Sticky className="lessonMeta" stickyClass="supersticky" stickyStyle={{}} topOffset={100} bottomOffset={this.state.pageHeight}>
 					<aside>
 						<section className="sideCard">
-							{isAdmin === false && isInstructor === false ? this.showProgress() : null}
+							{isAdmin === false && isInstructor === false ? this.showProgress() : testResults}
 							<div className="card topicLegend">
 								<h3>Course Topics</h3>
 								<ul className="topicList">

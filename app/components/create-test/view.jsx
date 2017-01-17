@@ -9,7 +9,7 @@ import userData from '../../services/user.jsx';
 import TestData from '../../services/tests.jsx';
 import questionData from '../../services/questions.jsx'
 import config from '../../services/config.jsx';
-import CreateTest from '../create-test/index.jsx';
+import CreateTest from './index.jsx';
 import QuestionCards from '../questions/cards.jsx';
 import CodeMirror from 'react-codemirror';
 
@@ -92,9 +92,8 @@ export default React.createClass({
 
 				this.setState({
 					assertions: ogAss
-				});
-			})
-
+				})
+			});
 
 	}, 
 	renderValidation(questionId) {
@@ -131,10 +130,11 @@ export default React.createClass({
 		})
 		TestData.addUser(this.props.params.testId)
 			.then(res => {
-				TestData.evaluateTest(userId, this.props.params.testId, answerArray)
-					.then(res => {
-						console.log("ress", res)
-					})
+				TestData.evaluateTest(this.props.params.testId, answerArray)
+				.then(item => {
+					console.log("ress", item)
+					//get the students test results
+				})
 			})
 
 	},
