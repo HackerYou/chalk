@@ -4,7 +4,6 @@ import { Link , History} from 'react-router';
 export default function(props) {
 	const testRes = props.studentInfo.tests;
 	const answers = props.studentInfo.test_results;
-	console.log("answers", answers);
 	
 	return (
 		<div className="classCard">
