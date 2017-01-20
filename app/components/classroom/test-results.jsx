@@ -35,7 +35,6 @@ export default React.createClass({
 	renderCards() {
 		return (
 				this.state.members.map((res) => {
-					console.log("user", res.user);
 					return <TestCards studentInfo={res.user} />
 					
 				})
