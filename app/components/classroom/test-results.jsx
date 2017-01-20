@@ -13,38 +13,28 @@ export default React.createClass({
 	getInitialState(){
 		document.body.className = '';
 		return{
-			user: {},
-			testResults: [],
-			studentInfo: {},
-			members: [],
-			tests: []
+			members: []
 		}
 	},
 	componentDidMount() {
 		coursesData.getCourseById(this.props.params.courseId)
 			.then(res => {
-				console.log(res.course.students);
 				const members = res.course.students
-					//returns an array with all of the 
-					//student ids ['id1, id2, id3, id4']
-					//maps over those ids
 					.map(student => student._id)
-					//maps over
 					.map(userData.getUser);
 
 				Promise.all(members)
-					.then(students => {
-						console.log("stud", students);
+					.then(student => {
+
 						this.setState({
-							members: students,
+							members: student
 						});
 					});
 		});
 	},
 	renderCards() {
-		const members = this.state.members;
 		return (
-				members.map((res) => {
+				this.state.members.map((res) => {
 					return <TestCards studentInfo={res.user} />
 					
 				})

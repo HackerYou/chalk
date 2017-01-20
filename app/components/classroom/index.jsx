@@ -11,6 +11,7 @@ import Sticky from '../../services/sticky.js';
 import Loading from '../loading/index.jsx';
 import validator from 'validator';
 import TestData from '../../services/tests.jsx';
+import TestCards from '../classroom/results-card.jsx';
 
 export default React.createClass({
 	displayName: 'Classroom',
@@ -32,7 +33,8 @@ export default React.createClass({
 			pageHeight: 0,
 			loading: true,
 			memberError: '',
-			testCompletion: false
+			testCompletion: false,
+			students: []
 		}
 	},
 	openModal(){
@@ -66,6 +68,18 @@ export default React.createClass({
 			this.setState({
 				pageHeight: docheight
 			});
+
+			const members = res.course.students
+				.map(student => student._id)
+				.map(userData.getUser);
+
+			Promise.all(members)
+				.then(student => {
+					this.setState({
+						students: student
+					});
+				});
+
 		});
 	},
 	renderLessons(key, index){
@@ -225,18 +239,14 @@ export default React.createClass({
 	showProgress() {
 		//check if test_results length is equal 1
 		//if so apply className to first
+		// console.log("what", this.state.students)
 		if(this.state.user.test_results) {
 			const testRes = this.state.user.test_results.length;
-			console.log("res", this.state.user.test_results)
+			const answers = this.state.user.test_results;
 			return (
 				<div className="card cardAddTest">
 					<h3>Test Progress:</h3>
-					<ul className="testProgress">
-					{this.state.user.tests.map((test, i) => {
-						i = i + 1;
-						return <li className={testRes === i ? "fillCircle" : null} key={i}>{i}</li>
-					})}
-					</ul>
+					<TestCards studentInfo={this.state.user} />
 				</div>
 			)
 		}
