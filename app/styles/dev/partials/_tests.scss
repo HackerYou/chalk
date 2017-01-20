@@ -19,6 +19,16 @@
 			margin-bottom: 8px;
 			padding: 2px 11px;
 		}
+		&--pass{
+			background: $green;
+			color: white;
+		}
+		&--fail {
+			background: red;
+			color: white;
+			border: 1px solid red;
+			
+		}
 	}
 }
 
@@ -34,10 +44,18 @@
 	}
 }
 
-.fillCircle {
-	background: $green;
-	color: white;
-}
+// .fillCircle {
+// 	&--pass {
+// 		background: $green;
+// 		color: white;
+// 	}
+// 	&--fail {
+// 		background: red;
+// 		color: white;
+// 		border: 1px solid red;
+// 	}
+// }
+
 
 .codeSubmit {
 	margin: 10px 0;
