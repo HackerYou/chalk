@@ -41,7 +41,7 @@
     "gulp-sourcemaps": "^1.5.2",
     "gulp-strip-debug": "^1.0.2",
     "gulp-uglify": "^1.2.0",
-    "highlight.js": "^9.0.0",
+    "highlight.js": "^9.9.0",
     "history": "^1.13.1",
     "lost": "^6.6.2",
     "pixrem": "^3.0.0",
