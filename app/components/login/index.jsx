@@ -102,7 +102,7 @@ export default React.createClass({
 			<div className="card loginCard">
 				<form >
 					<img src="../images/logo-hackeryou.svg" className="loginLogo" alt="HackerYou Logo" />
-					<h1>chalk</h1>
+					<h1>readme</h1>
 					{form}
 				</form>
 			</div>
