@@ -4,7 +4,8 @@ import { Link , History} from 'react-router';
 export default function(props) {
 	const testRes = props.studentInfo.tests;
 	const answers = props.studentInfo.test_results;
-	
+	const courseTestIds = props.course.tests.map((test) => test._id);
+	let counter = 0;
 	return (
 		<div className="classCard">
 			<article className="card">
