@@ -8,7 +8,7 @@ export default function(props) {
 	return (
 		<div className="classCard">
 			<article className="card">
-				<h3>{props.studentInfo.firstName} {props.studentInfo.lastName}</h3>
+				<h3 className="studentName">{props.studentInfo.firstName} {props.studentInfo.lastName}</h3>
 				<div className="progressCard">
 					<ul className="testProgress testProgress__circles">
 						{answers !== "" && answers.map((test, i) => {
