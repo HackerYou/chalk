@@ -20,7 +20,10 @@ export default React.createClass({
 	getInitialState(){
 		document.body.className = '';
 		return{
-			user: {},
+			user: {
+				test_results:[],
+				tests: []
+			},
 			course: {
 				tests: []
 			},
@@ -240,19 +243,18 @@ export default React.createClass({
 		//check if test_results length is equal 1
 		//if so apply className to first
 		// console.log("what", this.state.students)
-		if(this.state.user.test_results) {
-			const testRes = this.state.user.test_results.length;
-			const answers = this.state.user.test_results;
+		
+		if(this.state.course.tests.length > 0) {
+			// console.log("hello", this.state.user);
 			return (
 				<div className="card cardAddTest">
 					<h3>Test Progress:</h3>
-					<TestCards studentInfo={this.state.user} />
+					<TestCards studentInfo={this.state.user} course={this.state.course}/>
 				</div>
+				
 			)
 		}
-		else {
-			return ''
-		}
+		
 	},
 	render() {
 		// let lessons = this.state.course.lessons;
@@ -332,7 +334,7 @@ export default React.createClass({
 					<Sticky className="lessonMeta" stickyClass="supersticky" stickyStyle={{}} topOffset={100} bottomOffset={this.state.pageHeight}>
 					<aside>
 						<section className="sideCard">
-							{isAdmin === false && isInstructor === false ? this.showProgress() : testResults}
+							{isAdmin || isInstructor ? testResults : this.showProgress()}
 							<div className="card topicLegend">
 								<h3>Course Topics</h3>
 								<ul className="topicList">
