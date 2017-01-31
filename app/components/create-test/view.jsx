@@ -22,6 +22,7 @@ export default React.createClass({
 			members: [],
 			questions: [],
 			assertions: {},
+			assertionErrors: {},
 			answer: {},
 			user: {},
 			isStudent: false,
@@ -87,32 +88,55 @@ export default React.createClass({
 		});
 		questionData.questionDryrun(questionId, this.state.answer[questionId])
 			.then(res => {
-				this.renderValidation(questionId);
+				// this.renderValidation(questionId);
 				
 				const ogAss = Object.assign({}, this.state.assertions);
+				const assertionErrors = Object.assign({},this.state.assertionErrors);
 				ogAss[questionId] = res.results;
+				assertionErrors[questionId] = '';
 
 				this.setState({
 					assertions: ogAss,
+					assertionErrors,
 					loading: false
 				});
+			}, (err) => {
+				const ogAss = Object.assign({}, this.state.assertionErrors);
+				ogAss[questionId] = err.responseJSON.error;
+				this.setState({
+					loading: false,
+					assertionErrors:  ogAss
+				});
 			});
-
 	}, 
 	renderValidation(questionId) {
-		if(this.state.assertions[questionId]) {
+		if(this.state.assertions[questionId] || this.state.assertionErrors[questionId]) {
 			return (
 				<div className="console">
-					<ul>
-						{this.state.assertions[questionId]
-							.testResults.map((test) => {
-								return test.assertionResults
-								.map((assertion) => {
-									return <li>{assertion.status} - {assertion.title}</li>
-								})
-							})
+					{(() => {
+						if(this.state.assertionErrors[questionId] !== '') {
+							return (
+								<pre>
+									{this.state.assertionErrors[questionId]}
+								</pre>
+							)
 						}
-					</ul>
+						else {
+							return (
+								<ul>
+									{this.state.assertions[questionId]
+										.testResults.map((test) => {
+											return test.assertionResults
+											.map((assertion) => {
+												return <li>{assertion.status} - {assertion.title}</li>
+											})
+										})
+									}
+								</ul>
+							)
+						}
+					})()}
+					
 				</div>
 			)
 		} 
@@ -140,7 +164,7 @@ export default React.createClass({
 						loading: false
 					});
 					//get the students test results
-					this.context.history.pushState(null,`classroom/${this.props.params.courseId}/`);
+					this.context.history.pushState(null,`/classroom/${this.props.params.courseId}/`);
 				})
 			})
 

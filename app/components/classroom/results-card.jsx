@@ -17,12 +17,12 @@ export default function(props) {
 							})
 							const passGrade = test.answers.length * 0.6;
 							i = i + 1;
-							return <li className={isCorrect.length >= passGrade ? "testProgress__circles--pass" : "testProgress__circles--fail"} key={i}>{i}</li>
+							return <li className={isCorrect.length >= passGrade ? "testProgress__circles--pass" : "testProgress__circles--fail"} key={`result-${i}`}>{i}</li>
 						})}
 					</ul>
 					<ul>
 						{props.studentInfo.tests.map((test, i) => {
-							return <li key={i}>{test.title}</li>
+							return <li key={`resulttitle-${i}`}>{test.title}</li>
 						})}
 					</ul>
 				</div>
