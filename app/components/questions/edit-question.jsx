@@ -235,10 +235,7 @@ export default React.createClass({
 
 		const multiAnswer = this.setAnswer.value;
 
-		if(this.state.updatedQuestion.type === 'code') {
-			updatedQuestion.unitTest = this.state.code;
-		}
-		else {
+		if(this.state.updatedQuestion.type === 'multiple choice') {
 			Object.assign(updatedQuestion,{
 				multiChoice: this.state.updatedQuestion.multiChoice,
 				multiAnswer

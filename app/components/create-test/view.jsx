@@ -12,7 +12,7 @@ import config from '../../services/config.jsx';
 import CreateTest from './index.jsx';
 import QuestionCards from '../questions/cards.jsx';
 import CodeMirror from 'react-codemirror';
-
+import Loading from '../loading/index.jsx';
 
 export default React.createClass({
 	displayName: 'ViewTest',
@@ -28,8 +28,8 @@ export default React.createClass({
 			testInfo: {
 				test: {}
 			},
-			testSubmitted: false
-
+			testSubmitted: false,
+			loading: false
 		}
 	},
 	componentDidMount() {
@@ -82,7 +82,9 @@ export default React.createClass({
 	},
 	dryrun(e,questionId) {
 		e.preventDefault();
-
+		this.setState({
+			loading: true
+		});
 		questionData.questionDryrun(questionId, this.state.answer[questionId])
 			.then(res => {
 				this.renderValidation(questionId);
@@ -91,8 +93,9 @@ export default React.createClass({
 				ogAss[questionId] = res.results;
 
 				this.setState({
-					assertions: ogAss
-				})
+					assertions: ogAss,
+					loading: false
+				});
 			});
 
 	}, 
@@ -126,14 +129,18 @@ export default React.createClass({
 			})
 		}
 		this.setState({
-			testSubmitted: true
-		})
+			testSubmitted: true,
+			loading: true
+		});
 		TestData.addUser(this.props.params.testId)
 			.then(res => {
 				TestData.evaluateTest(this.props.params.testId, answerArray)
 				.then(item => {
-					console.log("ress", item)
+					this.setState({
+						loading: false
+					});
 					//get the students test results
+					this.context.history.pushState(null,`classroom/${this.props.params.courseId}/`);
 				})
 			})
 
@@ -197,7 +204,7 @@ export default React.createClass({
 		)
 		let studentView = (
 			<div>
-				<a className='button' onClick={this.evaluate}>Submit Test</a>
+				<a className='button primary' onClick={this.evaluate}>Submit Test</a>
 				{this.state.testSubmitted === true ? testSubmitted : null}
 			</div>
 		);
@@ -209,6 +216,7 @@ export default React.createClass({
 				<h2>{testInfo.test.title}</h2>
 				{this.renderQuestions()}
 				{isStudent === true ? studentView : adminView}
+				<Loading loading={this.state.loading} loadingText="Running test..."/>
 			</div>
 		)
 	}	

@@ -13,7 +13,7 @@ export default function(props) {
 					<ul className="testProgress testProgress__circles">
 						{answers !== "" && answers.map((test, i) => {
 							const isCorrect = test.answers.filter((item) => {
-								return item.correct === true
+								return item.correct === true || item.correct.numFailedTestSuites === 0
 							})
 							const passGrade = test.answers.length * 0.6;
 							i = i + 1;

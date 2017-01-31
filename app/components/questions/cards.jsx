@@ -29,7 +29,7 @@ export default function(props) {
 				{props.showSelected === true ? showSelect : showRemove}
 			</ul>
 			<div className="questionCard--attr">
-				<p>{props.question.body}</p>
+				<p><strong>{props.question.title}</strong></p>
 				{showSelect ? edit : null}
 			</div>
 		</div>
