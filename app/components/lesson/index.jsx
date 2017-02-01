@@ -65,10 +65,11 @@ export default React.createClass({
 		});
 		Media.uploadFile(file[0])
 			.then((data) => {
+				console.log(data);
 				const fileName = data.media.path;
-				const newLesson = Object.assign({
+				const newLesson = Object.assign(this.state.lesson,{
 					exercise_link: fileName
-				}, this.state.lesson);
+				});
 				lessonData.updateLesson(this.state.lesson._id, newLesson)
 					.then((data) => {
 						this.setState({
