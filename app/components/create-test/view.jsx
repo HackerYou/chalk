@@ -35,19 +35,22 @@ export default React.createClass({
 	},
 	componentDidMount() {
 		//this.props.params.testId
-		TestData.getTest(this.props.params.testId)
+		TestData.addUser(this.props.params.testId)
 			.then(res => {
-				const questions = res.test.questions;
-				//handles shuffling
-				for (let i = questions.length; i; i--) {
-					let randomize = Math.floor(Math.random() * i);
-					[questions[i - 1], questions[randomize]] = [questions[randomize], questions[i - 1]];
-				}
-				this.setState({
-					testInfo: res,
-					questions
+			TestData.getTest(this.props.params.testId)
+				.then(res => {
+					const questions = res.test.questions;
+					//handles shuffling
+					for (let i = questions.length; i; i--) {
+						let randomize = Math.floor(Math.random() * i);
+						[questions[i - 1], questions[randomize]] = [questions[randomize], questions[i - 1]];
+					}
+					this.setState({
+						testInfo: res,
+						questions
+					})
 				})
-			});
+		})
 		userData.getUser(config.getUserId()).then(res=>{
 			if(res.user.admin === false || res.user.instructor === false) {
 				this.setState({
@@ -149,20 +152,18 @@ export default React.createClass({
 		this.setState({
 			loading: true
 		});
-		TestData.addUser(this.props.params.testId)
-			.then(res => {
-				TestData.evaluateTest(this.props.params.testId, answer)
-				.then(item => {
-					//need to save the answer state in object, then change the specific key to 'submitted' then
-					let answerState = Object.assign({}, this.state.answer);
-					answerState[questionId] = 'submitted';
-					// answer: answerState 
-					this.setState({
-						loading: false,
-						answer: answerState
-					});
-				})
-			})
+	
+		TestData.evaluateTest(this.props.params.testId, answer)
+		.then(item => {
+			//need to save the answer state in object, then change the specific key to 'submitted' then
+			let answerState = Object.assign({}, this.state.answer);
+			answerState[questionId] = 'submitted';
+			// answer: answerState 
+			this.setState({
+				loading: false,
+				answer: answerState
+			});
+		})
 	},
 	submitTest() {
 		// test to ensure all questions have been submitted then finish:
