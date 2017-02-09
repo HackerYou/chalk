@@ -77,7 +77,7 @@ export default {
 			},
 			data: JSON.stringify({
 				userId: config.getUserId(),
-				answers: answer
+				answer: answer
 			})
 		});
 	},

@@ -43,7 +43,6 @@ export default React.createClass({
 					let randomize = Math.floor(Math.random() * i);
 					[questions[i - 1], questions[randomize]] = [questions[randomize], questions[i - 1]];
 				}
-
 				this.setState({
 					testInfo: res,
 					questions
@@ -59,7 +58,6 @@ export default React.createClass({
 					isStudent: false
 				})
 			}
-
 			this.setState({
 				user: res.user
 			})
@@ -79,7 +77,6 @@ export default React.createClass({
 		this.setState({
 			answer: ogAnswer
 		})
-
 	},
 	dryrun(e,questionId) {
 		e.preventDefault();
@@ -141,12 +138,64 @@ export default React.createClass({
 			)
 		} 
 	},
+	evaluateQuestion(questionId){
+		//grab the answer to the question and then submit
+		let answer = {}
+		let answerValue = this.state.answer[questionId];
+		if (answerValue != undefined) {
+			answer.questionId = questionId;
+			answer.answer = answerValue;
+		}
+		this.setState({
+			loading: true
+		});
+		TestData.addUser(this.props.params.testId)
+			.then(res => {
+				TestData.evaluateTest(this.props.params.testId, answer)
+				.then(item => {
+					//need to save the answer state in object, then change the specific key to 'submitted' then
+					let answerState = Object.assign({}, this.state.answer);
+					answerState[questionId] = 'submitted';
+					// answer: answerState 
+					this.setState({
+						loading: false,
+						answer: answerState
+					});
+				})
+			})
+	},
+	submitTest() {
+		// test to ensure all questions have been submitted then finish:
+		const answersObj = this.state.answer;
+		let questionsToComplete = 0;
+		let questionsCompleted = 0;
+		// check the answers state object to see if any still need to be submitted
+		for (var key in answersObj) {
+			if (answersObj.hasOwnProperty(key) && 
+				answersObj[key] != 'submitted'){
+				questionsToComplete = questionsToComplete + 1;
+			} else {
+				questionsCompleted = questionsCompleted + 1;
+			}
+		}
+		// check to see if completed and to complete add up to total number of questions: 
+		if (questionsCompleted + questionsToComplete !== this.state.questions.length) {
+				questionsToComplete = this.state.questions.length - questionsCompleted;
+		}
+		// if numbers equal up, submit test
+		if (questionsCompleted === this.state.questions.length ) {
+			// send student back to classroom view:
+			this.context.history.pushState(null,`/classroom/${this.props.params.courseId}/`);
+		} else {
+			alert(`Please submit all answers before Finishing Test. You have ${questionsToComplete} unsubmitted questions`);
+		}
+	},
 	evaluate() {
 		//grab all of the ANSWERS to the questions
 		//grab the userId and the answers
 		const userId = config.getUserId();
 		const answerArray = []
-		for(let key  in this.state.answer) {
+		for(let key in this.state.answer) {
 			answerArray.push({
 				questionId: key,
 				answer: this.state.answer[key]
@@ -186,11 +235,29 @@ export default React.createClass({
 			</div>
 		)
 	},
+	checkDisabled(questionId){
+		// if the key exists in this.state.answers then false disable if not true disable
+		if (this.state.answer[questionId] === 'submitted') {
+			return true;
+		} else {
+			return false;
+		}
+	},
+	checkDisabledSubmit(questionId){
+		// if the key exists in this.state.answers then false disable if not true disable
+		if (this.state.answer[questionId] === 'submitted') {
+			return true;
+		} else if (this.state.answer[questionId] === undefined) {	
+			return true;
+		}
+		else {
+			return false;
+		}
+	},
 	renderQuestions() {
 		const questions = this.state.questions;
 		return (
 			questions.map((res, i) => {
-				// console.log(res)
 				let mc = res.multiChoice;
 				return (
 					<div key={i} className="full detailsForm card">
@@ -201,8 +268,14 @@ export default React.createClass({
 									return mc.map((item, i) => {
 										return (
 											<div key={i} className="fieldRow fieldRowQuestion">
-												<input onChange={() => this.updateAnswer(item.value, res._id)} name={res._id} type="radio" value={item.value} />
-												<label>{item.label}</label>
+												<input 
+												onChange={() => this.updateAnswer(item.value, res._id)} 
+												name={res._id} 
+												type="radio" 
+												id={item.value} 
+												value={item.value} 
+												disabled={this.checkDisabled(res._id)}/>
+												<label htmlFor={item.value}>{item.label}</label>
 											</div>
 										)
 									});
@@ -215,6 +288,11 @@ export default React.createClass({
 								} 
 							})()
 						}
+						<input 
+							type="submit" 
+							onClick={() => this.evaluateQuestion(res._id)}
+							value="Submit Question"
+							disabled={this.checkDisabledSubmit(res._id)} />
 					</div>
 				)
 			})
@@ -228,7 +306,7 @@ export default React.createClass({
 		)
 		let studentView = (
 			<div>
-				<a className='button primary' onClick={this.evaluate}>Submit Test</a>
+				<a className='button primary' onClick={() => this.submitTest()}>Finish Test</a>
 				{this.state.testSubmitted === true ? testSubmitted : null}
 			</div>
 		);
@@ -240,7 +318,7 @@ export default React.createClass({
 				<h2>{testInfo.test.title}</h2>
 				{this.renderQuestions()}
 				{isStudent === true ? studentView : adminView}
-				<Loading loading={this.state.loading} loadingText="Running test..."/>
+				<Loading loading={this.state.loading} loadingText="Loading..."/>
 			</div>
 		)
 	}	
