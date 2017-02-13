@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link , History} from 'react-router';
 
-export default function(props) {
+export default function TestCard(props) {
 	const testRes = props.studentInfo.tests;
 	const answers = [];
 	for(let key in props.studentInfo.test_results) {

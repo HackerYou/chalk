@@ -51,9 +51,8 @@ export default React.createClass({
 						return course;
 					})
 				);
-				console.log(course);
 				//Find the course we are currenty on, and only pass those tests to the testCard 
-				return <TestCards studentInfo={res.user} course={course} />
+				return <TestCards studentInfo={res.user} course={course} key={`student-${res.user._id}`}/>
 				
 			})
 		)
