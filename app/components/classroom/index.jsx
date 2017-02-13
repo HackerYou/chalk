@@ -249,7 +249,7 @@ export default React.createClass({
 			return (
 				<div className="card cardAddTest">
 					<h3>Test Progress:</h3>
-					<TestCards studentInfo={this.state.user} course={this.state.course}/>
+					<TestCards studentInfo={this.state.user} course={this.state.course} key={`tests`}/>
 				</div>
 				
 			)
@@ -287,7 +287,7 @@ export default React.createClass({
 				<ul>
 				{this.state.course.tests.map((test) => { 
 					return (
-					<li>
+					<li key={`test-${test._id}`}>
 						<Link className="testLink" to={`/classroom/${this.props.params.courseId}/view-test/${test._id}`}>{test.title}</Link>
 						<span className="testOptions">
 							<Link to={`/edit-test/${test._id}`}><i className="fa fa-edit"></i></Link>
@@ -311,8 +311,8 @@ export default React.createClass({
 				<ul>
 				{tests.map((item, i) => {
 					return (
-						<li>
-							<Link key={i} className="testLink" to={`/classroom/${this.props.params.courseId}/view-test/${item._id}`} className="primary">{item.title}</Link>
+						<li key={`test-${item._id}`}>
+							<Link className="testLink" to={`/classroom/${this.props.params.courseId}/view-test/${item._id}`} className="primary">{item.title}</Link>
 						</li>
 					)
 				})}

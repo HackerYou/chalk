@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link , History} from 'react-router';
 
-export default function(props) {
+export default function TestCard(props) {
 	const testRes = props.studentInfo.tests;
-	const answers = props.studentInfo.test_results;
+	const answers = [];
+	for(let key in props.studentInfo.test_results) {
+		answers.push(props.studentInfo.test_results[key]);
+	}
 	const courseTestIds = props.course.tests.map((test) => test._id);
 	let counter = 0;
 	return (
