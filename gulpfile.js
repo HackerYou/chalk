@@ -53,7 +53,7 @@ gulp.task('styles', () => {
 			errorHandler: $.notify.onError({
 				title: "Style Error",
 				message: "<%= error.message %>"
-			})	
+			})
 		}))
 		.pipe($.sourcemaps.init())
 		// .pipe($.postcss(lint, { syntax: scss }))
@@ -94,7 +94,7 @@ gulp.task('guidescripts', () => {
 	  .pipe($.sourcemaps.write('.'))
 	  .pipe(gulp.dest(paths.distGuideJS))
 	  .pipe(reload({stream:true}));
-});	
+});
 
 gulp.task('guidewatch', () => {
 	gulp.watch(paths.srcCSS + '**/*.css', ['styles']);
@@ -122,8 +122,7 @@ gulp.task('js', function() {
     .pipe($.sourcemaps.init({loadMaps: true}))
     .pipe($.uglify())
     .pipe($.sourcemaps.write('.'))
-	.pipe(gulp.dest('app/components'))
-	.pipe(reload({stream:true}))
+	.pipe(gulp.dest('app/components'));
 });
 
 gulp.task('bs-client', function () {
@@ -134,7 +133,7 @@ gulp.task('bs-client', function () {
 		middleware : [ historyApiFallback() ]
 	})
 });
- 
+
 gulp.task('build', ['js','styles']);
 
 gulp.task('default', ['styles', 'js','bs-client'], () => {
@@ -144,9 +143,3 @@ gulp.task('default', ['styles', 'js','bs-client'], () => {
 });
 
 gulp.task('guide', ['styles', 'guidetemplate', 'guidescripts', 'bs-guide','guidewatch']);
-
-
-
-
-
-
