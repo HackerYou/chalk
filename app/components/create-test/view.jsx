@@ -121,6 +121,16 @@ export default React.createClass({
 								</pre>
 							)
 						}
+						else if(
+							this.state.assertions[questionId]
+							.testResults[0]
+							.assertionResults.length === 0) {
+							return (
+								<pre>
+									{this.state.assertions[questionId].testResults[0].message}
+								</pre>
+							)
+						}
 						else {
 							return (
 								<ul>
@@ -129,7 +139,7 @@ export default React.createClass({
 											return test.assertionResults
 											.map((assertion) => {
 												return <li>{assertion.status} - {assertion.title}</li>
-											})
+											});
 										})
 									}
 								</ul>
@@ -164,6 +174,14 @@ export default React.createClass({
 				answer: answerState
 			});
 		})
+		.catch(err => {
+			const ogAss = Object.assign({}, this.state.assertionErrors);
+			ogAss[questionId] = err.responseJSON.error;
+			this.setState({
+				loading: false,
+				assertionErrors:  ogAss
+			});
+		});
 	},
 	submitTest() {
 		// test to ensure all questions have been submitted then finish:
