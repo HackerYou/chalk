@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, History } from 'react-router';
 import userData from '../../services/user.jsx';
+import helpers from '../utility.js';
 
 export default React.createClass({
 	displayName: 'Course',
@@ -33,7 +34,7 @@ export default React.createClass({
 			<div to="/classroom" className="classCard">
 				<article className="card" onClick={this.goToClass} data-classid={this.props.details._id}>
 					<h3>{this.props.details.title}</h3>
-					<h4>Instructor: {this.state.instructor.firstName + " " + this.state.instructor.lastName}</h4>
+					<h4>Instructor: {helpers.isEmpty(this.state.instructor) ? 'Loading...' : this.state.instructor.firstName + " " + this.state.instructor.lastName}</h4>
 					<footer className="classCardMeta">
 						<p className="red"><strong>{this.props.details.term}</strong></p>
 						<button data-classid={this.props.details._id} onClick={this.goToClass} className="primary">View Class</button>
