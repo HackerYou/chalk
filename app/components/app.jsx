@@ -32,11 +32,8 @@ import EditTest from './create-test/edit-test.jsx';
 import EditQuestion from './questions/edit-question.jsx';
 import TestResults from './classroom/test-results.jsx';
 
-
 let createBrowserHistory = require('history/lib/createBrowserHistory');
 let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-
-
 function userName(context) {
 	return new Promise((resolve, reject) => {
 

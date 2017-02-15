@@ -9,7 +9,13 @@ const gulp = require('gulp'),
 		reload = browserSync.reload,
 		$ = require('gulp-load-plugins')(),
 		scss = require("postcss-scss"),
-		historyApiFallback = require('connect-history-api-fallback');
+		historyApiFallback = require('connect-history-api-fallback'),
+		watchify = require('watchify'),
+		argv = require('yargs').argv,
+		gulpif = require('gulp-if');
+
+
+
 
 // Define paths
 const paths = {
@@ -109,20 +115,38 @@ gulp.task('bs-guide', function () {
 		}
 	})
 });
-
 gulp.task('js', function() {
-	browserify(paths.jsx)
-		.transform(babelify,{presets: ["es2015", "react"]})
-		.bundle().on('error', $.notify.onError({
-      title: "JSX Error",
-      message: "<%= error.message %>"
-    }))
-	.pipe(source('app.min.js'))
-    .pipe(buffer())
-    .pipe($.sourcemaps.init({loadMaps: true}))
-    .pipe($.uglify())
-    .pipe($.sourcemaps.write('.'))
-	.pipe(gulp.dest('app/components'));
+	var bundler = browserify(paths.jsx, { 
+			debug: true, 
+			cache: {}, 
+			packageCache: {} 
+		})
+		.transform(babelify,{presets: ["es2015", "react"]});
+
+	watchify(bundler);
+
+	function rebundle(){
+	    return bundler
+	    	.bundle()
+	        .on('error', $.notify.onError({
+	        		title: "JSX Error",
+	        		message: "<%= error.message %>"
+			}))
+	        .pipe(source('app.min.js'))
+	        .pipe(buffer())
+	        .pipe($.sourcemaps.init({ loadMaps: true }))
+	        .pipe(gulpif(argv.production,$.uglify()))
+	        .pipe($.sourcemaps.write('.'))
+	        .pipe(gulp.dest('./app/components/'))
+	        .pipe(reload({stream:true}));
+	}
+
+	bundler.on('update', function() {
+	    console.log('-> bundling...');
+	    rebundle();
+	});
+
+	rebundle();
 });
 
 gulp.task('bs-client', function () {
@@ -137,8 +161,8 @@ gulp.task('bs-client', function () {
 gulp.task('build', ['js','styles']);
 
 gulp.task('default', ['styles', 'js','bs-client'], () => {
-	gulp.watch('app/**/*.jsx',['js']);
-	gulp.watch('app/components/app.min.js', reload);
+	// gulp.watch('app/**/*.jsx',['js']);
+	// gulp.watch('app/components/app.min.js', reload);
 	gulp.watch(paths.srcCSS + '**/*.scss', ['styles']);
 });
 
