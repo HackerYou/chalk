@@ -346,7 +346,7 @@ export default React.createClass({
 							{(isAdmin || isInstructor) ? test : null}
 							{(() => {
 								if(this.state.course.tests.length > 0) {
-									return (isAdmin === false && isInstructor === false ? takeTest : null)
+									return ((isAdmin === false || isAdmin === undefined) && (isInstructor === false || isInstructor === undefined) ? takeTest : null)
 								}
 							})()}
 						</section>
