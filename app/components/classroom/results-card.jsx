@@ -24,12 +24,12 @@ export default function TestCard(props) {
 							const isCorrect = correctAnswers(test);
 							correct[i] = isCorrect;
 							const passGrade = test.answers.length * 0.6;
-							return <li className={isCorrect.length >= passGrade ? "testProgress__circles--pass" : "testProgress__circles--fail"} key={`result-${i + 1}`}>{i + 1}</li>
+							return correct[i] ? <li className={isCorrect.length >= passGrade ? "testProgress__circles--pass" : "testProgress__circles--fail"} key={`result-${i + 1}`}>{i + 1}</li> : null
 						})}
 					</ul>
 					<ul>
 						{props.studentInfo.tests.map((test, i) => {
-							return <li key={`resulttitle-${i}`}>{test.title} {correct[i].length}/{test.questions.length}</li>
+							return correct[i] ? <li key={`resulttitle-${i}`}>{test.title} {correct[i].length}/{test.questions.length}</li> : null
 						})}
 					</ul>
 				</div>
