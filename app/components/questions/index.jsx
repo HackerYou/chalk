@@ -52,6 +52,10 @@ export default React.createClass({
 			});
 	},
 
+	removeOption(label) {
+		const answerOption = this.state.answerOption.filter(answer => answer.label !== label);
+		this.setState({answerOption});
+	},
 	addOption(e) {
 		e.preventDefault();
 		let setLabel = this.setLabel.value;
@@ -281,7 +285,10 @@ export default React.createClass({
 										return (
 											<div className="mc-options" key={i}>
 												<input className="inline" name="lala" type="radio" value={item.value}/>
-												<label>{item.label}</label>
+												<label>{item.label}&nbsp;
+												<i onClick={() => this.removeOption(item.label)} className="fa fa-times"></i>
+												</label>
+												
 											</div>
 										)
 									})}
