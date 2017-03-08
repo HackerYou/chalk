@@ -112,7 +112,7 @@ gulp.task('bs-guide', function () {
 
 gulp.task('js', function() {
 	browserify(paths.jsx)
-		.transform(babelify,{presets: ["es2015", "react"]})
+		.transform(babelify,{presets: ["es2015", "react"], plugins: ["transform-object-rest-spread"]})
 		.bundle().on('error', $.notify.onError({
       title: "JSX Error",
       message: "<%= error.message %>"

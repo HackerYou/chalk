@@ -59,6 +59,15 @@ export default React.createClass({
 		coursesData.getCourseById(id).then(res=>{
 			this.originalMembers = res.course.students;
 
+			// if tests don't have a 'hidden' flag, assume they don't need to be hidden
+			res.course.tests = res.course.tests.map((test) => {
+				if (typeof test.show === "undefined") {
+					test.show = true;
+				}
+
+				return test;
+			});
+
 			this.setState({
 				course: res.course,
 				sections: res.course.sections,
@@ -242,10 +251,8 @@ export default React.createClass({
 	showProgress() {
 		//check if test_results length is equal 1
 		//if so apply className to first
-		// console.log("what", this.state.students)
 		
 		if(this.state.course.tests.length > 0) {
-			// console.log("hello", this.state.user);
 			return (
 				<div className="card cardAddTest">
 					<h3>Test Progress:</h3>
@@ -310,7 +317,7 @@ export default React.createClass({
 				<h3>Take Test</h3>
 				<ul>
 				{tests.map((item, i) => {
-					return (
+					return item.show === "true" && (
 						<li key={`test-${item._id}`}>
 							<Link className="testLink" to={`/classroom/${this.props.params.courseId}/view-test/${item._id}`} className="primary">{item.title}</Link>
 						</li>
