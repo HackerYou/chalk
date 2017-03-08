@@ -318,8 +318,7 @@ export default React.createClass({
 		)
 	},
 	isStudent() {
-		if ( (this.state.isStudent === true || 
-			this.state.user.admin === false || 
+		if ( (this.state.user.admin === false || 
 			this.state.user.admin === undefined) 
 			&& (this.state.user.instructor === false || 
 				this.state.user.instructor === undefined)
