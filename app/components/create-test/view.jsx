@@ -317,26 +317,33 @@ export default React.createClass({
 			})
 		)
 	},
+	isStudent() {
+		if ( (this.state.user.admin === false || 
+			this.state.user.admin === undefined) 
+			&& (this.state.user.instructor === false || 
+				this.state.user.instructor === undefined)
+			) {
+			return (<div>
+						<a className='button primary' onClick={() => this.submitTest()}>Finish Test</a>
+						{this.state.testSubmitted === true ? testSubmitted : null}
+					</div>);
+		} else {
+			return (<Link className='button' to={`/edit-test/${this.state.testInfo.test._id}`}>Back</Link>);
+		}
+	
+	},
 	render() {
 		const testInfo = this.state.testInfo;
-		const isStudent = this.state.isStudent;
 		let testSubmitted = (
 			<h3>Test submitted!</h3>
 		)
-		let studentView = (
-			<div>
-				<a className='button primary' onClick={() => this.submitTest()}>Finish Test</a>
-				{this.state.testSubmitted === true ? testSubmitted : null}
-			</div>
-		);
-		let adminView = (
-			<Link className='button' to={`/edit-test/${this.state.testInfo.test._id}`}>Back</Link>
-		);
+
 		return (
 			<div className='classCard'>
 				<h2>{testInfo.test.title}</h2>
 				{this.renderQuestions()}
-				{isStudent === true ? studentView : adminView}
+
+				{this.isStudent()}
 				<Loading loading={this.state.loading} loadingText="Loading..."/>
 			</div>
 		)
