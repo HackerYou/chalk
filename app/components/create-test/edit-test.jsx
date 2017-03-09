@@ -51,6 +51,7 @@ export default React.createClass({
 						title: res.test.title,
 						courseId: res.test.course
 					},
+					show: res.test.show,
 					testQuestions: (() => {
 						return res.test.questions.map(question =>  question._id);
 					})()
@@ -183,7 +184,7 @@ export default React.createClass({
 						</div>
 						<div className="fieldRow">
 							<label htmlFor="show">
-								Hide test from students in classroom?
+								Show test in classroom?
 							</label>
 							<select value={this.state.show} onChange={e => this.updateField(e, "show")} id="show">
 								  <option value="true">Yes</option>

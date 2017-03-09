@@ -27,9 +27,19 @@ export default React.createClass({
 			selectedCard: false,
 			testQuestions: [],
 			testCreated: false,
-			testTitle: ""
+			testTitle: "",
+			showTest: "true"
 
 		}
+	},
+	updateField(e, field) {
+		const val = e.target.value;
+		this.setState(prevState => {
+			return {
+				...prevState,
+				[field]: val
+			}
+		});
 	},
 	componentWillMount(){
 		questionData.getQuestion()
@@ -112,11 +122,13 @@ export default React.createClass({
 	createNewTest(e) {
 		e.preventDefault();
 		const testName = this.testName.value;
+		const showTest = this.state.showTest
 
 		TestData.createTest({
 			courseId: this.props.params.courseId,
 			data: {
-				title: testName
+				title: testName,
+				show: showTest
 			}
 		})
 		.then(res => {
@@ -136,6 +148,15 @@ export default React.createClass({
 						<label>What is the name of the test?</label>
 						<input type="text" ref={ref => this.testName = ref}/>
 						<input type="submit" />
+						<div className="fieldRow">
+							<label htmlFor="show">
+								Show test in classroom?
+							</label>
+							<select value={this.state.show} onChange={e => this.updateField(e, "showTest")} id="show">
+								  <option value="true">Yes</option>
+								  <option value="false">No</option>
+							</select>
+						</div>
 					</form>
 				</section>
 				<h2 className={this.state.testCreated === false ? 'cardHide' : null}>Test Created: {this.state.testTitle}</h2>
