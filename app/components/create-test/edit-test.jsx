@@ -51,6 +51,7 @@ export default React.createClass({
 						title: res.test.title,
 						courseId: res.test.course
 					},
+					show: res.test.show,
 					testQuestions: (() => {
 						return res.test.questions.map(question =>  question._id);
 					})()
