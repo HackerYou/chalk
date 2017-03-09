@@ -67,6 +67,7 @@ export default React.createClass({
 						difficulty: res.question.difficulty,
 						type: res.question.type,
 						multiChoice: res.question.multiChoice,
+						multiAnswer: res.question.multiAnswer,
 						unitTest: res.question.unitTest
 					}
 				})
@@ -250,7 +251,6 @@ export default React.createClass({
 			});
 		});
 
-		this.setAnswer.value = "";
 	},
 	changeQuestionView() {
 		this.setState({
@@ -340,7 +340,7 @@ export default React.createClass({
 								</div>
 								<div className="fieldRow">
 									<label className="inline largeLabel">What is the answer?</label>
-									<input type="text" ref={ref => this.setAnswer = ref}/>
+									<input type="text" ref={ref => this.setAnswer = ref} value={this.state.updatedQuestion.multiAnswer} />
 								</div>
 							</div>
 							<div className={this.state.updatedQuestion.type === 'code' ? 'showType' : 'hideType'}>
