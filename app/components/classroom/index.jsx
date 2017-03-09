@@ -292,7 +292,7 @@ export default React.createClass({
 		let isInstructor = this.state.user.instructor;
 		let dragAndDrop = <p className="title">Drag and drop to reorganize lessons</p>
 		let displayMembers;
-		let favList = this.state.user.favorites ? this.state.user.favorites[this.props.params.courseId].lessons : [];
+		let favList = [];
 		let displayFavButton= <button className="primary" onClick={this.showFavs}>{this.state.showFavs ? 'show all lessons' : 'show starred lessons'}</button>
 		if (this.state.members.length <= 0) {
 			displayMembers = <p className="emptyState">No members yet!</p>
