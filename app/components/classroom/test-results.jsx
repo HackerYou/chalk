@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link , History} from 'react-router';
+import { Link , History } from 'react-router';
 import AuthMixin from '../../services/authMixin.jsx';
 import coursesData from '../../services/courses.jsx';
 import userData from '../../services/user.jsx';
 import TestData from '../../services/tests.jsx';
 import TestCards from '../classroom/results-card.jsx';
+import config from '../../services/config.jsx';
 
 function fold(arr) {
 	return arr[0];
@@ -21,6 +22,14 @@ export default React.createClass({
 		}
 	},
 	componentDidMount() {
+		userData.getUser(config.getUserId()).then(res=>{
+			if (!res.user.admin) {
+				this.props.history.push('/');
+			} 
+			this.setState({
+				user: res.user
+			});
+		});
 		coursesData.getCourseById(this.props.params.courseId)
 			.then(res => {
 				const members = res.course.students
@@ -52,7 +61,7 @@ export default React.createClass({
 					})
 				);
 				//Find the course we are currenty on, and only pass those tests to the testCard 
-				return <TestCards studentInfo={res.user} course={course} key={`student-${res.user._id}`}/>
+				return <TestCards studentInfo={res.user} course={course} key={`student-${res.user._id}`} isAdmin={this.state.user.admin} />
 				
 			})
 		)
