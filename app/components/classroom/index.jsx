@@ -22,7 +22,8 @@ export default React.createClass({
 		return{
 			user: {
 				test_results:[],
-				tests: []
+				tests: [],
+				favorites: []
 			},
 			course: {
 				tests: []
@@ -37,8 +38,7 @@ export default React.createClass({
 			loading: true,
 			memberError: '',
 			testCompletion: false,
-			students: [],
-		}
+			students: []		}
 	},
 	openModal(){
 		this.setState({isModalOpen: true});
@@ -292,7 +292,7 @@ export default React.createClass({
 		let isInstructor = this.state.user.instructor;
 		let dragAndDrop = <p className="title">Drag and drop to reorganize lessons</p>
 		let displayMembers;
-		let favList = [];
+		let favList = typeof this.state.user.favorites[this.props.params.courseId] !== "undefined" ? this.state.user.favorites[this.props.params.courseId].lessons : [];
 		let displayFavButton= <button className="primary" onClick={this.showFavs}>{this.state.showFavs ? 'show all lessons' : 'show starred lessons'}</button>
 		if (this.state.members.length <= 0) {
 			displayMembers = <p className="emptyState">No members yet!</p>
