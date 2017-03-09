@@ -4,30 +4,9 @@ import userData from  '../../services/user.jsx';
 
 export default React.createClass({
 	displayName: 'LessonDetails',
-	getInitialState() {
-		return {
-			star: this.props.star
-		}
-	},
-	starLesson() {
-		if(!this.state.star) {
-			userData.favoriteLesson(this.props.classroomId,this.props.details._id).then((res) => {
-				this.setState({
-					star: !this.state.star
-				});
-			});
-		}
-		else {
-			userData.unFavoriteLesson(this.props.classroomId,this.props.details._id).then((res) => {
-				this.setState({
-					star: !this.state.star
-				});
-			});
-		}
-	},
 	render() {
 		return (
-			<li className={this.state.star ? 'lessonRow fav' : 'lessonRow'}>
+			<li className={this.props.star ? 'lessonRow fav' : 'lessonRow'}>
 				<Link to={`/lesson/${this.props.details._id}/${this.props.classroomId}`} className="lessonInfo">
 					<p className="lessonTitle">{this.props.details.title}</p>
 				</Link>
@@ -35,7 +14,7 @@ export default React.createClass({
 					<span>
 						<Link to={`/lesson/${this.props.details._id}/${this.props.classroomId}`}>view</Link>
 					</span>
-					<i className={this.state.star ? 'chalk-star redLight' : 'chalk-star'} onClick={this.starLesson}></i>
+					<i className={this.props.star ? 'chalk-star redLight' : 'chalk-star'} onClick={() => this.props.starLesson(this.props.classroomId, this.props.details._id, this.props.star)}></i>
 				</div>
 			</li>
 		)

@@ -37,7 +37,7 @@ export default React.createClass({
 			loading: true,
 			memberError: '',
 			testCompletion: false,
-			students: []
+			students: [],
 		}
 	},
 	openModal(){
@@ -94,17 +94,40 @@ export default React.createClass({
 
 		});
 	},
+	starLesson(classroomId, lessonId, star) {
+		const courseId = this.props.params.courseId;
+		if (!star) {
+			userData.favoriteLesson(classroomId,lessonId).then((res) => {
+				this.setState({
+					user: res.user,
+				}); 
+			});
+
+		} else {
+			userData.unFavoriteLesson(classroomId,lessonId).then((res) => {
+				this.setState({user: res.user}); 
+				
+				if (this.state.user.favorites[classroomId].lessons.length === 0 && this.state.showFavs) {
+					this.showFavs();
+				}
+
+			});
+
+
+		}
+	},
 	renderLessons(key, index){
 		//Loop favorites
 		let userFavs = this.state.user.favorites;
 		let courseId = this.props.params.courseId;
 		let star = false;
+
 		if(userFavs && userFavs[courseId]) {
 			star = userFavs[courseId].lessons.filter((lesson) => {
 				return lesson._id === key._id
 			}).length > 0 ? true : false;
 		}
-		return <LessonDetails key={index} index={index} details={key} classroomId={this.props.params.courseId} star={star} />
+		return <LessonDetails key={index} starLesson={this.starLesson} index={index} details={key} classroomId={this.props.params.courseId} star={star} />
 	},
 	renderTopics(key, index){
 		let link = '#' + this.state.sections[index].title.replace(/ /g, "_").toLowerCase();
@@ -264,13 +287,12 @@ export default React.createClass({
 		
 	},
 	render() {
-		// let lessons = this.state.course.lessons;
 		let tests = this.state.course.tests;
 		let isAdmin = this.state.user.admin;
 		let isInstructor = this.state.user.instructor;
 		let dragAndDrop = <p className="title">Drag and drop to reorganize lessons</p>
 		let displayMembers;
-		let favList = document.querySelectorAll('.lessonGroup .fav');
+		let favList = this.state.user.favorites ? this.state.user.favorites[this.props.params.courseId].lessons : [];
 		let displayFavButton= <button className="primary" onClick={this.showFavs}>{this.state.showFavs ? 'show all lessons' : 'show starred lessons'}</button>
 		if (this.state.members.length <= 0) {
 			displayMembers = <p className="emptyState">No members yet!</p>
