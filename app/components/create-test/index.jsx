@@ -124,7 +124,6 @@ export default React.createClass({
 		const testName = this.testName.value;
 		const showTest = this.state.showTest
 
-		console.log(`showtest: ${showTest}`);
 		TestData.createTest({
 			courseId: this.props.params.courseId,
 			data: {
