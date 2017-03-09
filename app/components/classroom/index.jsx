@@ -48,8 +48,11 @@ export default React.createClass({
 		this.setState({isModalOpen: false});
 		document.body.className = '';
 	},
-	componentWillMount(){
+	componentDidMount(){
 		userData.getUser(config.getUserId()).then(res=>{
+			if (res.user.favorites === undefined) {
+				res.user.favorites = [];
+			}
 			this.setState({
 				user: res.user
 			});
