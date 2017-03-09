@@ -29,6 +29,7 @@ export default React.createClass({
 			testQuestions: [],
 			testCreated: false,
 			courseId: "",
+			show: "true",
 			testInfo: {
 				title: ""
 			}
@@ -43,7 +44,6 @@ export default React.createClass({
 			})
 		TestData.getTest(this.props.params.testId)
 			.then(res => {
-					console.log("item", res)
 				this.setState({
 					testTitle: res.test.title,
 					numOfQuestions: res.test.questions.length,
@@ -126,9 +126,17 @@ export default React.createClass({
 
 		})
 	},
-	updateField(e) {
+	updateField(e, field) {
+		const val = e.target.value;
+		this.setState(prevState => {
+			return {
+				...prevState,
+				[field]: val
+			}
+		});
+	},
+	updateTestName(e) {
 		const target = e.target
-		console.log("lala", e.target);
 		const ogQ = Object.assign({}, this.state.testInfo);
 
 		ogQ[e.target.name] = e.target.value
@@ -150,7 +158,8 @@ export default React.createClass({
 		e.preventDefault();
 
 		TestData.editTest(this.props.params.testId, {
-			title: this.state.testInfo.title
+			title: this.state.testInfo.title,
+			show: this.state.show
 		})
 		.then(res => {
 
@@ -168,9 +177,22 @@ export default React.createClass({
 				<h2>Test Created: {this.state.testInfo.title}</h2>
 				<section className={this.state.testCreated === true ? 'cardHide' : 'full detailsForm card'}>
 					<form onSubmit={this.updateTest}>
-						<label>What is the name of the test?</label>
-						<input type="text" name="title" onChange={this.updateField} value={this.state.testInfo.title}/>
-						<input type="submit" value="Save"/>
+						<div className="fieldRow">
+							<label>What is the name of the test?</label>
+							<input type="text" name="title" onChange={this.updateTestName} value={this.state.testInfo.title}/>
+						</div>
+						<div className="fieldRow">
+							<label htmlFor="show">
+								Hide test from students in classroom?
+							</label>
+							<select value={this.state.show} onChange={e => this.updateField(e, "show")} id="show">
+								  <option value="true">Yes</option>
+								  <option value="false">No</option>
+							</select>
+						</div>
+						<div className="fieldRow">
+							<input type="submit" value="Save"/>
+						</div>
 					</form>
 				</section>
 				<section className='full detailsForm card'>
@@ -195,7 +217,5 @@ export default React.createClass({
 			</div>
 		)
 	}	
-
-	//this.state.testId
 
 });

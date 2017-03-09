@@ -37,7 +37,7 @@ export default React.createClass({
 			loading: true,
 			memberError: '',
 			testCompletion: false,
-			students: []
+			students: [],
 		}
 	},
 	openModal(){
@@ -58,6 +58,15 @@ export default React.createClass({
 		let id = this.props.params.courseId;
 		coursesData.getCourseById(id).then(res=>{
 			this.originalMembers = res.course.students;
+
+			// if tests don't have a 'hidden' flag, assume they don't need to be hidden
+			res.course.tests = res.course.tests.map((test) => {
+				if (typeof test.show === "undefined") {
+					test.show = true;
+				}
+
+				return test;
+			});
 
 			this.setState({
 				course: res.course,
@@ -85,17 +94,40 @@ export default React.createClass({
 
 		});
 	},
+	starLesson(classroomId, lessonId, star) {
+		const courseId = this.props.params.courseId;
+		if (!star) {
+			userData.favoriteLesson(classroomId,lessonId).then((res) => {
+				this.setState({
+					user: res.user,
+				}); 
+			});
+
+		} else {
+			userData.unFavoriteLesson(classroomId,lessonId).then((res) => {
+				this.setState({user: res.user}); 
+				
+				if (this.state.user.favorites[classroomId].lessons.length === 0 && this.state.showFavs) {
+					this.showFavs();
+				}
+
+			});
+
+
+		}
+	},
 	renderLessons(key, index){
 		//Loop favorites
 		let userFavs = this.state.user.favorites;
 		let courseId = this.props.params.courseId;
 		let star = false;
+
 		if(userFavs && userFavs[courseId]) {
 			star = userFavs[courseId].lessons.filter((lesson) => {
 				return lesson._id === key._id
 			}).length > 0 ? true : false;
 		}
-		return <LessonDetails key={index} index={index} details={key} classroomId={this.props.params.courseId} star={star} />
+		return <LessonDetails key={index} starLesson={this.starLesson} index={index} details={key} classroomId={this.props.params.courseId} star={star} />
 	},
 	renderTopics(key, index){
 		let link = '#' + this.state.sections[index].title.replace(/ /g, "_").toLowerCase();
@@ -242,10 +274,8 @@ export default React.createClass({
 	showProgress() {
 		//check if test_results length is equal 1
 		//if so apply className to first
-		// console.log("what", this.state.students)
 		
 		if(this.state.course.tests.length > 0) {
-			// console.log("hello", this.state.user);
 			return (
 				<div className="card cardAddTest">
 					<h3>Test Progress:</h3>
@@ -257,13 +287,12 @@ export default React.createClass({
 		
 	},
 	render() {
-		// let lessons = this.state.course.lessons;
 		let tests = this.state.course.tests;
 		let isAdmin = this.state.user.admin;
 		let isInstructor = this.state.user.instructor;
 		let dragAndDrop = <p className="title">Drag and drop to reorganize lessons</p>
 		let displayMembers;
-		let favList = document.querySelectorAll('.lessonGroup .fav');
+		let favList = this.state.user.favorites ? this.state.user.favorites[this.props.params.courseId].lessons : [];
 		let displayFavButton= <button className="primary" onClick={this.showFavs}>{this.state.showFavs ? 'show all lessons' : 'show starred lessons'}</button>
 		if (this.state.members.length <= 0) {
 			displayMembers = <p className="emptyState">No members yet!</p>
@@ -310,7 +339,7 @@ export default React.createClass({
 				<h3>Take Test</h3>
 				<ul>
 				{tests.map((item, i) => {
-					return (
+					return item.show === "true" && (
 						<li key={`test-${item._id}`}>
 							<Link className="testLink" to={`/classroom/${this.props.params.courseId}/view-test/${item._id}`} className="primary">{item.title}</Link>
 						</li>
