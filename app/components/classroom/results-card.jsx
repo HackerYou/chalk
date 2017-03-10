@@ -7,6 +7,16 @@ function correctAnswers(test) {
 	});
 }
 
+function showResults(correct, test, i, isAdmin) {
+	if (correct[i] && !isAdmin) {
+		return (<li key={`resulttitle-${i}`}>{test.title}</li>)
+	} else if (correct[i] && isAdmin) {
+		return (<li key={`resulttitle-${i}`}>{test.title} {correct[i].length}/{test.questions.length}</li>)	
+	} else {
+		return null;
+	}
+}
+
 export default function TestCard(props) {
 	const testRes = props.studentInfo.tests;
 	const answers = [];
@@ -29,7 +39,7 @@ export default function TestCard(props) {
 					</ul>
 					<ul>
 						{props.studentInfo.tests.map((test, i) => {
-							return correct[i] ? <li key={`resulttitle-${i}`}>{test.title} {/*correct[i].length}/{test.questions.length*/}</li> : null
+							return showResults(correct, test, i, props.isAdmin);
 						})}
 					</ul>
 				</div>

@@ -21,13 +21,12 @@
 		}
 		&--pass{
 			background: $green;
-			color: white;
+			color: #fff;
 		}
 		&--fail {
 			background: red;
-			color: white;
+			color: #fff;			
 			border: 1px solid red;
-			
 		}
 	}
 }

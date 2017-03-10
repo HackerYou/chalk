@@ -277,7 +277,6 @@ export default React.createClass({
 	showProgress() {
 		//check if test_results length is equal 1
 		//if so apply className to first
-		
 		if(this.state.course.tests.length > 0) {
 			return (
 				<div className="card cardAddTest">
