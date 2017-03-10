@@ -2,33 +2,32 @@
 	color: grey;
 }
 
-.testProgress {
+.testProgress__test {
 	display: flex;
-	padding: 0;
-	margin: 0; 
-	li {
-		border: 1px solid $green;
-		margin: 0 10px;
-		padding: 11px 20px;
-		list-style-type: none;
-		border-radius: 50%;
-	}
-	&__circles {
-		display: block;
-		li {
-			margin-bottom: 8px;
-			padding: 2px 11px;
-		}
-		&--pass{
-			background: $green;
-			color: #fff;
-		}
-		&--fail {
-			background: red;
-			color: #fff;			
-			border: 1px solid red;
-		}
-	}
+	list-style-type: none;
+	align-items: center;
+}
+
+.testProgress__circles {
+	border-radius: 50%;
+	padding: 2px 8px;
+	color: #fff;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-right: 10px;
+}
+
+.testProgress__circles--pass {
+	background-color: #000;
+}
+
+.testProgress__circles--fail {
+	background-color: #000;
+}
+
+.testProgress__testName {
+	font-family: $headerFont;
+	font-weight: 700;
 }
 
 .progressCard {

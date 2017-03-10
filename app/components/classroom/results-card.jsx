@@ -7,14 +7,54 @@ function correctAnswers(test) {
 	});
 }
 
-function showResults(correct, test, i, isAdmin) {
-	if (correct[i] && !isAdmin) {
-		return (<li key={`resulttitle-${i}`}>{test.title}</li>)
-	} else if (correct[i] && isAdmin) {
-		return (<li key={`resulttitle-${i}`}>{test.title} {correct[i].length}/{test.questions.length}</li>)	
-	} else {
-		return null;
-	}
+const getResults = (testResults, testsTaken) => {
+	let results = [];
+
+	// tests and results are stored in separate places, let's merge them together
+	const testsWithResults = testsTaken.map((test) => {
+		for (let key in testResults) {
+			key === test._id ? test.answers = testResults[key].answers : null;
+		}
+		return test;
+	});
+
+	testsWithResults.forEach((test) => {
+		const { title, answers, questions } = test;
+		const mark = answers.filter((answer) => answer.correct).length;
+		const outOf = questions.length;
+		const requiredToPass = questions.length * 0.6;
+		const passed = (mark / questions.length) > 0.6;
+
+		const result = {
+			title,
+			answers,
+			questions,
+			mark,
+			outOf,
+			passed
+		}
+		results.push(result);
+	});
+
+
+	return results;
+}
+
+const showResults = (results, isAdmin) => {
+	results = results.map((result, i) => {
+		const { mark, outOf, passed, title } = result;
+		const modifier = passed ? "pass" : "fail";
+
+		return (
+		<li key={`testProgress-${i}`} className='testProgress__test' >
+			<div className={`testProgress__circles testProgress__circles--${modifier}`}>
+				<i className='fa fa-check'></i>
+			</div>
+			 <span className='testProgress__testName'>{title}</span>&nbsp;<span>{isAdmin ? `(${mark}/${outOf})` : null}</span>
+		</li>)
+	});
+
+	return results;
 }
 
 export default function TestCard(props) {
@@ -24,23 +64,15 @@ export default function TestCard(props) {
 	for(let key in props.studentInfo.test_results) {
 		answers.push(props.studentInfo.test_results[key]);
 	}
+	const results = getResults(props.studentInfo.test_results, props.studentInfo.tests);
+
 	return (
 		<div className="classCard">
 			<article className="card">
 				<h3 className="studentName">{props.studentInfo.firstName} {props.studentInfo.lastName}</h3>
 				<div className="progressCard">
-					<ul className="testProgress testProgress__circles">
-						{answers.map((test, i) => {
-							const isCorrect = correctAnswers(test);
-							correct[i] = isCorrect;
-							const passGrade = test.answers.length * 0.6;
-							return correct[i] ? <li className={isCorrect.length >= passGrade ? "testProgress__circles--pass" : "testProgress__circles--fail"} key={`result-${i + 1}`}>{i + 1}</li> : null
-						})}
-					</ul>
-					<ul>
-						{props.studentInfo.tests.map((test, i) => {
-							return showResults(correct, test, i, props.isAdmin);
-						})}
+					<ul className="testProgress">
+						{showResults(results, props.isAdmin)}
 					</ul>
 				</div>
 			</article>
