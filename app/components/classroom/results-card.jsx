@@ -8,7 +8,6 @@ function correctAnswers(test) {
 }
 
 function showResults(correct, test, i, isAdmin) {
-	console.log(isAdmin);
 	if (correct[i] && !isAdmin) {
 		return (<li key={`resulttitle-${i}`}>{test.title}</li>)
 	} else if (correct[i] && isAdmin) {
