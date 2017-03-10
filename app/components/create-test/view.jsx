@@ -13,6 +13,7 @@ import CreateTest from './index.jsx';
 import QuestionCards from '../questions/cards.jsx';
 import CodeMirror from 'react-codemirror';
 import Loading from '../loading/index.jsx';
+import utility from '../utility.js';
 
 export default React.createClass({
 	displayName: 'ViewTest',
@@ -24,7 +25,9 @@ export default React.createClass({
 			assertions: {},
 			assertionErrors: {},
 			answer: {},
-			user: {},
+			user: {
+				test_results: {}
+			},
 			isStudent: false,
 			testInfo: {
 				test: {}
@@ -34,7 +37,8 @@ export default React.createClass({
 		}
 	},
 	componentDidMount() {
-		//this.props.params.testId
+
+
 		TestData.addUser(this.props.params.testId)
 			.then(res => {
 			TestData.getTest(this.props.params.testId)
@@ -61,6 +65,7 @@ export default React.createClass({
 					isStudent: false
 				})
 			}
+
 			this.setState({
 				user: res.user
 			})
@@ -274,7 +279,24 @@ export default React.createClass({
 		}
 	},
 	renderQuestions() {
-		const questions = this.state.questions;
+		let questions = this.state.questions;
+		const testId = this.props.params.testId;
+		let submittedAnswers = [];
+		const testResults = this.state.user.test_results || {};
+
+		if (testResults[testId] !== undefined) {
+			submittedAnswers = testResults[testId].answers;
+			questions = questions.map((question) => {
+
+				let userAnswer = utility
+					.expect(utility
+					.fold(submittedAnswers
+					.filter((answer) => answer.id === question._id)), 'actual', undefined);
+
+				return {...question, userAnswer: userAnswer };
+			});
+		}
+
 		return (
 			questions.map((res, i) => {
 				let mc = res.multiChoice;
@@ -285,6 +307,7 @@ export default React.createClass({
 							(() => {
 								if(res.type === "multiple choice") {
 									return mc.map((item, i) => {
+
 										return (
 											<div key={i} className="fieldRow fieldRowQuestion">
 												<input 
@@ -292,8 +315,9 @@ export default React.createClass({
 												name={res._id} 
 												type="radio" 
 												id={item.value} 
-												value={item.value} 
-												disabled={this.checkDisabled(res._id)}/>
+												value={item.value}
+												checked={res.userAnswer ? item.value === res.userAnswer : null} 
+												disabled={item.value === res.userAnswer ? true : this.checkDisabled(res._id)}/>
 												<label htmlFor={item.value}>{item.label}</label>
 											</div>
 										)
