@@ -13,6 +13,7 @@ import CreateTest from './index.jsx';
 import QuestionCards from '../questions/cards.jsx';
 import CodeMirror from 'react-codemirror';
 import Loading from '../loading/index.jsx';
+import utility from '../utility.js';
 
 export default React.createClass({
 	displayName: 'ViewTest',
@@ -286,13 +287,13 @@ export default React.createClass({
 		if (testResults[testId] !== undefined) {
 			submittedAnswers = testResults[testId].answers;
 			questions = questions.map((question) => {
-				let userAnswer;
-				submittedAnswers.forEach((answer) => {
-					if (answer.id === question._id) {
-						userAnswer = answer.actual;
-					}
-				});
-				return {...question, userAnswer };
+
+				let userAnswer = utility
+					.expect(utility
+					.fold(submittedAnswers
+					.filter((answer) => answer.id === question._id)), 'actual', undefined);
+
+				return {...question, userAnswer: userAnswer };
 			});
 		}
 
