@@ -64,7 +64,8 @@
     "react-notification-system": "^0.2.6",
     "react-sticky": "^3.0.0",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.9.0"
   },
   "dependencies": {
     "babel-preset-es2015": "^6.0.15",
