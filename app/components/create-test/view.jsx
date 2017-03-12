@@ -32,6 +32,7 @@ export default React.createClass({
 			testInfo: {
 				test: {}
 			},
+			submittedAnswers: 0,
 			testSubmitted: false,
 			loading: false
 		}
@@ -53,6 +54,14 @@ export default React.createClass({
 						testInfo: res,
 						questions
 					})
+					const testResults = this.state.user.test_results || {};
+					const testId = this.props.params.testId;
+
+					if (testResults[testId] !== undefined) {
+						let submittedAnswers = testResults[testId].answers.length;
+						this.setState({submittedAnswers});
+					}
+
 				})
 		})
 		userData.getUser(config.getUserId()).then(res=>{
@@ -73,13 +82,8 @@ export default React.createClass({
 	},
 	//Handles Codemirror implementation
 	updateAnswer(userAnswer,questionId) {
-		//get the orginal state
-		//make a copy of the original object using Object.assign
-		//first arg is making the copy {}
-		//and second arg is the object you are making a copy of
+		
 		const ogAnswer = Object.assign({},this.state.answer)
-		//getting the Id of the specific code question [questionId]
-		//and reassigning the value of newCode
 		ogAnswer[questionId] = userAnswer
 
 		this.setState({
@@ -93,7 +97,6 @@ export default React.createClass({
 		});
 		questionData.questionDryrun(questionId, this.state.answer[questionId])
 			.then(res => {
-				// this.renderValidation(questionId);
 				
 				const ogAss = Object.assign({}, this.state.assertions);
 				const assertionErrors = Object.assign({},this.state.assertionErrors);
@@ -172,11 +175,14 @@ export default React.createClass({
 		.then(item => {
 			//need to save the answer state in object, then change the specific key to 'submitted' then
 			let answerState = Object.assign({}, this.state.answer);
+			let submittedAnswers = this.state.submittedAnswers + 1;
+
 			answerState[questionId] = 'submitted';
 			// answer: answerState 
 			this.setState({
 				loading: false,
-				answer: answerState
+				answer: answerState,
+				submittedAnswers
 			});
 		})
 		.catch(err => {
@@ -189,29 +195,10 @@ export default React.createClass({
 		});
 	},
 	submitTest() {
-		// test to ensure all questions have been submitted then finish:
-		const answersObj = this.state.answer;
-		let questionsToComplete = 0;
-		let questionsCompleted = 0;
-		// check the answers state object to see if any still need to be submitted
-		for (var key in answersObj) {
-			if (answersObj.hasOwnProperty(key) && 
-				answersObj[key] != 'submitted'){
-				questionsToComplete = questionsToComplete + 1;
-			} else {
-				questionsCompleted = questionsCompleted + 1;
-			}
-		}
-		// check to see if completed and to complete add up to total number of questions: 
-		if (questionsCompleted + questionsToComplete !== this.state.questions.length) {
-				questionsToComplete = this.state.questions.length - questionsCompleted;
-		}
-		// if numbers equal up, submit test
-		if (questionsCompleted === this.state.questions.length ) {
-			// send student back to classroom view:
-			this.context.history.pushState(null,`/classroom/${this.props.params.courseId}/`);
+		if (this.state.submittedAnswers < this.state.questions.length) {
+			alert(`Please submit all answers before Finishing Test. You have ${this.state.questions.length - this.state.submittedAnswers} unsubmitted questions`);
 		} else {
-			alert(`Please submit all answers before Finishing Test. You have ${questionsToComplete} unsubmitted questions`);
+			this.context.history.pushState(null,`/classroom/${this.props.params.courseId}/`);
 		}
 	},
 	evaluate() {
@@ -286,6 +273,8 @@ export default React.createClass({
 
 		if (testResults[testId] !== undefined) {
 			submittedAnswers = testResults[testId].answers;
+			
+
 			questions = questions.map((question) => {
 
 				let userAnswer = utility
@@ -341,21 +330,6 @@ export default React.createClass({
 			})
 		)
 	},
-	isStudent() {
-		if ( (this.state.user.admin === false || 
-			this.state.user.admin === undefined) 
-			&& (this.state.user.instructor === false || 
-				this.state.user.instructor === undefined)
-			) {
-			return (<div>
-						<a className='button primary' onClick={() => this.submitTest()}>Finish Test</a>
-						{this.state.testSubmitted === true ? testSubmitted : null}
-					</div>);
-		} else {
-			return (<Link className='button' to={`/edit-test/${this.state.testInfo.test._id}`}>Back</Link>);
-		}
-	
-	},
 	render() {
 		const testInfo = this.state.testInfo;
 		let testSubmitted = (
@@ -367,7 +341,13 @@ export default React.createClass({
 				<h2>{testInfo.test.title}</h2>
 				{this.renderQuestions()}
 
-				{this.isStudent()}
+				{(this.state.user.admin || this.state.user.instructor) ? 
+					<Link className='button' to={`/edit-test/${this.state.testInfo.test._id}`}>Back</Link>
+				:
+					<div>
+						<a className='button primary' onClick={() => this.submitTest()}>Finish Test</a>
+					</div>
+				}
 				<Loading loading={this.state.loading} loadingText="Loading..."/>
 			</div>
 		)
