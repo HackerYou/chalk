@@ -1,7 +1,7 @@
 import React from 'react';
 import Exercise from '../exercise/index.jsx';
 import Markdown from 'react-remarkable';
-import hljs from 'highlight.js';
+import Prism from 'prismjs';
 import userData from '../../services/user.jsx';
 import config from '../../services/config.jsx';
 import {History} from 'react-router';
@@ -29,17 +29,15 @@ export default React.createClass({
 		this.history.pushState(null,`/topic/${this.props.details._id}/edit`);
 	},
 	render(){
-		let hl = function (str, lang) {
-		if (lang && hljs.getLanguage(lang)) {
+
+		let prs = function () {
 			try {
-				return hljs.highlight(lang, str).value;
-			} catch (err) {}
+				return Prism.highlightAll(false);				
+			} catch (err){
+				return '';
+			}
 		}
-		try {
-			return hljs.highlightAuto(str).value;
-		} catch (err) {}
-			return ''; // use external default escaping
-		};
+
 		let showEdit = '';
 		if(this.state.user.admin) {
 			showEdit = <i className="fa fa-pencil topic-edit" onClick={this.editLesson}></i>;
@@ -47,7 +45,7 @@ export default React.createClass({
 		return (
 			<div className="lessonTopic">
 				<h2 className="lessonTitle">{this.props.details.title} {showEdit}</h2>
-				<Markdown options={{'html':true, highlight: hl}}>{(this.props.details.body)}</Markdown>
+				<Markdown options={{'html':true, highlight: prs}}>{(this.props.details.body)}</Markdown>
 			</div>
 		)
 	}
