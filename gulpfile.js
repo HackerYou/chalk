@@ -10,6 +10,8 @@ const gulp = require('gulp'),
 		$ = require('gulp-load-plugins')(),
 		scss = require("postcss-scss"),
 		watchify = require("watchify"),
+		gulpif = require('gulp-if'),
+		argv = require('yargs').argv,
 		historyApiFallback = require('connect-history-api-fallback');
 
 // Define paths
@@ -114,7 +116,7 @@ gulp.task('bs-guide', function () {
 });
 
 
-gulp.task('browserify', () => {
+gulp.task('js', () => {
 	const bundler = watchify(browserify(paths.jsx, { debug: true, cache: {} }))
 		.transform(babelify, {
 			presets: ['es2015', 'react'],
@@ -123,16 +125,16 @@ gulp.task('browserify', () => {
 
 	const rebundle = function() {
 		return bundler.bundle()
-			.on('error', (err) => {
-				console.log(err);
-				this.emit('end');
-			})
+			.on('error', $.notify.onError({
+			      title: "JSX Error",
+			      message: "<%= error.message %>",
+			}))
 			.pipe(source('app.min.js'))
 			.pipe(buffer())
 			.pipe($.sourcemaps.init({
 				loadMaps: true
 			}))
-			// .pipe($.uglify())
+			.pipe(gulpif(argv.production, $.uglify()))
 			.pipe($.sourcemaps.write('.'))
 			.pipe(gulp.dest('app/components'))
 			.pipe(reload({stream:true}));
@@ -147,20 +149,6 @@ gulp.task('browserify', () => {
 	rebundle();
 });
 
-gulp.task('js', function() {
-	return browserify(paths.jsx)
-		.transform(babelify,{presets: ["es2015", "react"], plugins: ["transform-object-rest-spread"]})
-		.bundle().on('error', $.notify.onError({
-      title: "JSX Error",
-      message: "<%= error.message %>",
-    }))
-	.pipe(source('app.min.js'))
-    .pipe(buffer())
-    // .pipe($.sourcemaps.init({loadMaps: true}))
-    .pipe($.uglify())
-    .pipe($.sourcemaps.write('.'))
-	.pipe(gulp.dest('app/components'));
-});
 
 gulp.task('bs-client', function () {
 	browserSync({
@@ -173,9 +161,7 @@ gulp.task('bs-client', function () {
 
 gulp.task('build', ['js','styles']);
 
-gulp.task('default', ['styles', 'browserify','bs-client'], () => {
-	// gulp.watch('app/**/*.jsx',['browserify']);
-	// gulp.watch('app/components/app.min.js', reload);
+gulp.task('default', ['styles', 'js','bs-client'], () => {
 	gulp.watch(paths.srcCSS + '**/*.scss', ['styles']);
 });
 
