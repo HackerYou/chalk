@@ -6,7 +6,6 @@ import Course from '../course/index.jsx';
 import coursesData from '../../services/courses.jsx';
 import userData from '../../services/user.jsx';
 import NotificationSystem from 'react-notification-system';
-import config from '../../services/config.jsx';
 
 export default React.createClass({
 	displayName: 'ManageClassrooms',
@@ -75,7 +74,6 @@ export default React.createClass({
 	},
 	createCourse(e){
 		e.preventDefault();
-		let creatorId = config.getUserId();
 		//create course
 		let createCourse = coursesData.createCourse({
 			'title': this.refs.title.value,
@@ -85,7 +83,6 @@ export default React.createClass({
 			'end_date': this.state.endDate,
 			'instructor': this.refs.instructor.value,
 			'description': this.refs.description.value,
-			'created_by': creatorId
  		});
 
 	
