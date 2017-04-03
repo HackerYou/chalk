@@ -13,14 +13,16 @@ const getResults = (testResults, testsTaken) => {
 	// tests and results are stored in separate places, let's merge them together
 	const testsWithResults = testsTaken.map((test) => {
 		for (let key in testResults) {
-			key === test._id ? test.answers = testResults[key].answers : null;
+			if(key === test._id) {
+				test.answers = testResults[key].answers
+			}
 		}
 		return test;
 	});
 
 	testsWithResults.forEach((test) => {
 		const { title, answers, questions } = test;
-		const mark = answers.filter((answer) => answer.correct).length;
+		const mark = answers ? answers.filter((answer) => answer.correct).length : []
 		const outOf = questions.length;
 		const requiredToPass = questions.length * 0.6;
 		const passed = (mark / questions.length) > 0.6;
