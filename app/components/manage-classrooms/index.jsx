@@ -28,6 +28,8 @@ export default React.createClass({
 			});
 		});
 
+
+
 		coursesData.getCourses().then(res=>{
 			let courses = res.course.filter((obj)=>{
 				return obj.template === false;
@@ -80,8 +82,8 @@ export default React.createClass({
 			'start_date': this.state.startDate,
 			'end_date': this.state.endDate,
 			'instructor': this.refs.instructor.value,
-			'description': this.refs.description.value
-		});
+			'description': this.refs.description.value,
+ 		});
 
 	
 		let getTemplate = coursesData.getTemplateById(this.refs.template.value);
