@@ -29,10 +29,20 @@ export default React.createClass({
 			this.history.pushState(null, `/classroom/${e.target.dataset.classid}`);
 		}
 	},
+	favorite(favoriteId) {
+		if (this.props.isFavorite) {
+			this.props.unFavorite(favoriteId);
+		} else {
+			this.props.favorite(favoriteId);
+		}
+	},
 	render() {
 		return (
 			<div to="/classroom" className="classCard">
 				<article className="card" onClick={this.goToClass} data-classid={this.props.details._id}>
+					<div className='classCard-meta'>
+						<i className={`chalk-star ${this.props.isFavorite && 'redLight'}`} onClick={() => this.favorite(this.props.details._id)}></i>
+					</div>
 					<h3>{this.props.details.title}</h3>
 					<h4>Instructor: {helpers.isEmpty(this.state.instructor) ? 'Loading...' : this.state.instructor.firstName + " " + this.state.instructor.lastName}</h4>
 					<footer className="classCardMeta">
