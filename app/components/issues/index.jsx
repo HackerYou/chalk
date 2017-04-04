@@ -17,13 +17,12 @@ export default React.createClass({
 			.then((data) => {
 				this.setState({
 					issues: data.issues
-				})
-			})
+				});
+			});
 	},
 	removeIssue(id) {
 		issuesData.removeIssueById(id)
 			.then((data) => {
-				console.log("delete this", data)
 				this.setState({
 					issues: data.issues
 				});
