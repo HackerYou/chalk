@@ -11,6 +11,7 @@ export default function IssueCard(props) {
 				<p>{props.issue.body}</p>
 				<Link className="button primary" to={`/topic/${props.issue.topic_id}/edit`}>Edit topic</Link>
 				<button className="button error" onClick={() => props.removeIssue(props.issue._id)}>Delete</button>
+				<button className="button" onClick={() => props.archiveIssue(props.issue)}>Archive</button>
 			</article>
 		</div>
 	)

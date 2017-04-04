@@ -31,5 +31,16 @@ export default {
 				'Content-Type' : 'application/json'
 			}
 		});
+	},
+	updateIssueById(id, issue) {
+		return $.ajax({
+			url: `${config.getApiUrl().replace('v1','v2') }/flaggedIssues/${id}`,
+			method: 'PUT',
+			headers: {
+				'x-access-token' : config.getToken(),
+				'Content-Type' : 'application/json'
+			},
+			data: JSON.stringify(issue)
+		})
 	}
 }

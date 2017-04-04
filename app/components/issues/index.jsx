@@ -3,6 +3,7 @@ import {  Link,  History } from 'react-router';
 import AuthMixin from '../../services/authMixin.jsx';
 import IssuesCard from './card.jsx';
 import issuesData from '../../services/issues.jsx';
+import config from '../../services/config.jsx';
 
 export default React.createClass({
 	displayName: 'Issues',
@@ -28,13 +29,22 @@ export default React.createClass({
 				});
 			});
 	},
+	archiveIssue(issue) {
+		issue.archived = true;
+		issue.archived_at = Date.now();
+		issue.archived_by = config.getUserId();
+		issueDate.updateIssuebyId(issue._id,issue)
+			.then((res) => {
+				console.log(res);
+			});
+	},
 	render() {
 		return (
 			<div className="content">
 				<h1></h1>
 				<section className="dashWrap">
 					{this.state.issues.map((item) => {
-						return <IssuesCard issue={item} removeIssue={this.removeIssue}/>
+						return <IssuesCard issue={item} removeIssue={this.removeIssue} key={item._id} archiveIssue={this.archiveIssue}/>
 					})}
 				</section>
 			</div>
