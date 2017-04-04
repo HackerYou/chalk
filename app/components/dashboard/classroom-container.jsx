@@ -18,7 +18,7 @@ class ClassroomContainer extends React.Component {
             return <p className="emptyState">You don't have any favourited classrooms.</p>
         } else {
             return this.state.classrooms.map((classroom, index) => {
-                return <Course unFavorite={this.props.unfavoriteClass} favorite={this.props.favoriteClass} isFavorite={classroom.isFavorite} key={index} index={index} details={classroom} />
+                return <Course unFavorite={this.props.unfavoriteClass} favorite={this.props.favoriteClass} isFavorite={classroom.isFavorite} key={classroom._id} index={index} details={classroom} />
             });
         }
     }
