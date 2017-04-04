@@ -21,5 +21,15 @@ export default {
 				'Content-Type' : 'application/json'
 			}
 		});
+	},
+	removeIssueById(id) {
+		return $.ajax({
+			url: `${config.getApiUrl().replace('v1','v2') }/flaggedIssues/${id}`,
+			method: 'DELETE',
+			headers: {
+				'x-access-token' : config.getToken(),
+				'Content-Type' : 'application/json'
+			}
+		});
 	}
 }

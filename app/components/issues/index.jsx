@@ -20,13 +20,22 @@ export default React.createClass({
 				})
 			})
 	},
+	removeIssue(id) {
+		issuesData.removeIssueById(id)
+			.then((data) => {
+				console.log("delete this", data)
+				this.setState({
+					issues: data.issues
+				});
+			});
+	},
 	render() {
 		return (
 			<div className="content">
 				<h1></h1>
 				<section className="dashWrap">
 					{this.state.issues.map((item) => {
-						return <IssuesCard issue={item} />
+						return <IssuesCard issue={item} removeIssue={this.removeIssue}/>
 					})}
 				</section>
 			</div>

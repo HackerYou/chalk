@@ -10,7 +10,7 @@ export default function IssueCard(props) {
 				<p>{moment(props.issue.created_at).format('MMM D, YYYY')}</p>
 				<p>{props.issue.body}</p>
 				<Link className="button primary" to={`/topic/${props.issue.topic_id}/edit`}>Edit topic</Link>
-				<button className="button error">Delete</button>
+				<button className="button error" onClick={() => props.removeIssue(props.issue._id)}>Delete</button>
 			</article>
 		</div>
 	)
