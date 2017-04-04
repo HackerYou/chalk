@@ -91,7 +91,7 @@ export default React.createClass({
 
 					<form className="modalBody card flagForm" onSubmit={this.submitIssue}>
 						<i className="fa fa-times chalk-close" onClick={this.closeModal}></i>
-						<label>What is your issue? GOMP?</label>
+						<label>What is your issue? Add a description here and we will fix it for you!</label>
 						<textarea name="issueNote" onChange={this.handleChange}></textarea>
 						<br/>
 						<input type="submit" value="Send" />

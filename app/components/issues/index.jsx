@@ -17,8 +17,16 @@ export default React.createClass({
 			.then((data) => {
 				this.setState({
 					issues: data.issues
-				})
-			})
+				});
+			});
+	},
+	removeIssue(id) {
+		issuesData.removeIssueById(id)
+			.then((data) => {
+				this.setState({
+					issues: data.issues
+				});
+			});
 	},
 	render() {
 		return (
@@ -26,7 +34,7 @@ export default React.createClass({
 				<h1></h1>
 				<section className="dashWrap">
 					{this.state.issues.map((item) => {
-						return <IssuesCard issue={item} />
+						return <IssuesCard issue={item} removeIssue={this.removeIssue}/>
 					})}
 				</section>
 			</div>
