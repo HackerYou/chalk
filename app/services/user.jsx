@@ -84,6 +84,28 @@ export default {
 			}
 		});
 	},
+	favoriteClass(courseId) {
+		return $.ajax({
+			url: `${config.getApiUrl()}/user/favoriteClassroom`.replace('v1','v2'),
+			method: 'POST',
+			headers: {
+				'x-access-token' : config.getToken(),
+				'Content-Type': 'application/json'
+			},
+			data: JSON.stringify({classroomId: courseId})
+		});
+	},
+	unFavoriteClass(courseId) {
+		return $.ajax({
+			url: `${config.getApiUrl()}/user/favoriteClassroom`.replace('v1','v2'),
+			method: 'DELETE',
+			headers: {
+				'x-access-token' : config.getToken(),
+				'Content-Type': 'application/json'
+			},
+			data: JSON.stringify({classroomId: courseId})
+		});
+	},
 	favoriteLesson(courseId,lessonId) {
 		return $.ajax({
 			url: `${config.getApiUrl()}/user/course/${courseId}/lesson/${lessonId}/favorite`,

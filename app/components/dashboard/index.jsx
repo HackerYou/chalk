@@ -7,6 +7,8 @@ import coursesData from '../../services/courses.jsx';
 import userData from '../../services/user.jsx';
 import Loading from '../loading/index.jsx';
 import auth from '../../services/authentication.jsx';
+import ClassroomContainer from './classroom-container.jsx';
+import user from '../../services/user.jsx';
 
 export default React.createClass({
 	displayName: 'Dashboard',
@@ -14,6 +16,7 @@ export default React.createClass({
 	getInitialState(){
 		return{
 			courses: [],
+			filter: 'SHOW_ALL',
 			user: {},
 			loading: true
 		}
@@ -27,6 +30,7 @@ export default React.createClass({
 			}
 			let isAdmin = res.user.admin;
 			if (isAdmin) {
+				
 				this.setState({
 					user: res.user
 				});
@@ -48,12 +52,28 @@ export default React.createClass({
 			}
 		});
 	},
-	renderCourses(key, index){
-		return <Course key={index} index={index} details={this.state.courses[index]} />
+
+	favoriteClass(id) {
+		user.favoriteClass(id)
+			.then((res) => {
+				this.setState({user: res.user});
+			});
+    },
+
+    unFavoriteClass(id) {
+		user.unFavoriteClass(id)
+			.then((res) => {
+				this.setState({user: res.user});
+			});
+    },
+
+	updateFilter(filter) {
+		this.setState({
+			filter
+		})
 	},
-	renderEmpty() {
-		return <p className="emptyState">You're not the member of any classrooms</p>
-	},
+
+
 	render() {
 		let isAdmin = this.state.user.admin;
 		let adminPanel = <header className="intro">
@@ -92,21 +112,30 @@ export default React.createClass({
 				</Link>
 			</div>
 		</header>;
-		var displayClass;
-		if (this.state.courses.length < 0) {
-			displayClass = this.renderEmpty()
-		} else {
-			displayClass = (this.state.courses).map(this.renderCourses)
-		}
+
 		return (
-			<div className="container full">
+			<div className="container full classroom-container">
 				{isAdmin ? adminPanel : null}
+				<ul className='filters'>
+					<li onClick={() => this.updateFilter('SHOW_FAVORITES') } 
+						className={this.state.filter === 'SHOW_FAVORITES' ? 'filter selected' : 'filter'}>
+						<i className="fa fa-star" aria-hidden="true" />
+					</li>
+					<li onClick={() => this.updateFilter('SHOW_ALL') } 
+						className={this.state.filter === 'SHOW_ALL' ? 'filter selected' : 'filter'}>
+							<i className="fa fa-th-large" aria-hidden="true" />
+					</li>
+				</ul>
 				<div className="content">
 				<Loading loading={this.state.loading} />
 				<h1>Your Classrooms</h1>
-					<section className="dashWrap">
-						{displayClass}
-					</section>
+					<ClassroomContainer 
+						filter={this.state.filter}
+						favoriteClass={this.favoriteClass}
+						unfavoriteClass={this.unFavoriteClass}
+						userFavorites={this.state.user.favoriteClassrooms}
+						classrooms={this.state.courses} 
+					/>
 				</div>
 			</div>
 		)

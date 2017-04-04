@@ -1,0 +1,22 @@
+.filters {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    right: 0;
+}
+
+.filter {
+    color: #ADB2A8;
+    cursor: pointer;
+    list-style-type: none;
+    padding: 5px;
+    font-size: 16px;
+    transition: 0.4s all ease;
+    &:hover {
+        color: #E53D3E;
+    }
+}
+
+.filter.selected {
+    color: #E53D3E;
+}
