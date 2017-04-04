@@ -55,6 +55,12 @@ button, .button {
 
 a.linkBtn {
   border: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  &.dashboardBtn i {
+    font-size: 2.5rem;
+  }  
 }
 
 input[type="submit"] {
