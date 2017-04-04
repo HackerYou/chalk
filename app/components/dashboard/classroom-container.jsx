@@ -5,7 +5,7 @@ class ClassroomContainer extends React.Component {
     constructor() {
         super();
         this.state = {
-            classrooms: [],
+            classrooms: [ ],
             hasClasses: false
         }
     }
