@@ -48,6 +48,10 @@ section.dashWrap {
 header.intro {
 	text-align: center;
 	.buttons {
+		display: flex;
+		justify-content: space-between;
+		background: white;
+		padding: 30px;
 		@include bp(sm) {
 			display: flex;
 			flex-flow: row wrap;
@@ -56,6 +60,9 @@ header.intro {
 				display: inline-block;
 				margin-top: 1rem;
 			}
+		}
+		p {
+			margin: 0
 		}
 	}
 }

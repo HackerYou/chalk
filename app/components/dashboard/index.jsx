@@ -59,13 +59,37 @@ export default React.createClass({
 		let adminPanel = <header className="intro">
 			<h2>What would you like to do?</h2>
 			<div className='buttons'>
-				<Link className="linkBtn" to='/classroom/manage'><button className="primary">Classrooms</button></Link>
-				<Link className="linkBtn" to='topics'><button className="primary">Topics</button></Link>
-				<Link className="linkBtn" to='course-templates'><button className="primary">Course Templates</button></Link>
-				<Link className="linkBtn" to='instructors'><button className="primary">Instructors</button></Link>
-				<Link className="linkBtn" to='media'><button className="primary">Media</button></Link>
-				<Link className="linkBtn" to='members'><button className="primary">Members</button></Link>
-				<Link className="linkBtn" to='questions'><button className="primary">Question</button></Link>
+				<Link className="linkBtn dashboardBtn" to='/classroom/manage'>
+					<i className="fa fa-th-large"></i>
+					<p>Classrooms</p>
+				</Link>
+				<Link className="linkBtn dashboardBtn" to='topics'>
+					<i className="fa fa-th-list"></i>
+					<p>Topics</p>
+				</Link>
+				<Link className="linkBtn dashboardBtn" to='course-templates'>
+					<i className="fa fa-file-text"></i>
+					<p>Course Templates</p>
+				</Link>
+				<Link className="linkBtn dashboardBtn" to='instructors'>
+					<i className="fa fa-graduation-cap"></i>
+					<p>Instructors</p>
+				</Link>
+				<Link className="linkBtn dashboardBtn" to='members'>
+					<i className="fa fa-users"></i>
+					<p>Members</p></Link>
+				<Link className="linkBtn dashboardBtn" to='media'>
+					<i className="fa fa-file-image-o"></i>
+					<p>Media</p>
+				</Link>
+				<Link className="linkBtn dashboardBtn" to='questions'>
+					<i className="fa fa-check-square-o"></i>
+					<p>Questions</p>
+				</Link>
+					<Link className="linkBtn dashboardBtn" to='issues'>
+					<i className="fa fa-inbox"></i>
+					<p>Flagged Notes</p>
+				</Link>
 			</div>
 		</header>;
 		var displayClass;
