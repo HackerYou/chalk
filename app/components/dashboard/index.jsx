@@ -50,7 +50,7 @@ export default React.createClass({
 				});
 			}
 			this.setState({
-				filter: res.user.dashboardFilter
+				filter: res.user.dashboardFilter || 'SHOW_ALL'
 			})
 
 		});
