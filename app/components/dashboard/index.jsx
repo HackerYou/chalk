@@ -55,7 +55,6 @@ export default React.createClass({
 		});
 		issuesData.getAllIssues()
 			.then((res) => {
-				console.log("what are these??", res);
 				const activeIssues = res.issues.filter((item) => {
 					return item.archived === false
 				}).length;
