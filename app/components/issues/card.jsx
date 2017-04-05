@@ -5,13 +5,13 @@ import moment from 'moment';
 export default function IssueCard(props) {
 	return (
 		<div className="classCard">
-			<article className="card">
+			<article className="issueCard card">
+				<i className={props.issue.archived ? "fa fa-archive redLight" : "fa fa-archive "} onClick={() => props.archiveIssue(props.issue)}></i>
 				<h3>{props.issue.title}</h3>
 				<p>{moment(props.issue.created_at).format('MMM D, YYYY')}</p>
 				<p>{props.issue.body}</p>
 				<Link className="button primary" to={`/topic/${props.issue.topic_id}/edit`}>Edit topic</Link>
 				<button className="button error" onClick={() => props.removeIssue(props.issue._id)}>Delete</button>
-				<button className="button" onClick={() => props.archiveIssue(props.issue)}>Archive</button>
 			</article>
 		</div>
 	)
