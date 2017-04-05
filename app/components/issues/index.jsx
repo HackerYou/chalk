@@ -33,7 +33,7 @@ export default React.createClass({
 		issue.archived = true;
 		issue.archived_at = Date.now();
 		issue.archived_by = config.getUserId();
-		issueDate.updateIssuebyId(issue._id,issue)
+		issuesData.updateIssueById(issue._id,issue)
 			.then((res) => {
 				console.log(res);
 			});
@@ -41,7 +41,11 @@ export default React.createClass({
 	render() {
 		return (
 			<div className="content">
-				<h1></h1>
+				<h1>Issues</h1>
+				<nav>
+					<a href="">All Issues | </a>
+					<a href="">Archived Issues</a>
+				</nav>
 				<section className="dashWrap">
 					{this.state.issues.map((item) => {
 						return <IssuesCard issue={item} removeIssue={this.removeIssue} key={item._id} archiveIssue={this.archiveIssue}/>

@@ -65,7 +65,7 @@ gulp.task('styles', () => {
 		.pipe($.sass().on('error', $.sass.logError))
 		.pipe($.postcss(postcss))
 		.pipe($.minifyCss())
-    .pipe($.sourcemaps.write('.'))
+		.pipe($.sourcemaps.write('.'))
 		.pipe(gulp.dest(paths.distCSS))
 		.pipe(reload({stream:true}));
 });
@@ -148,7 +148,6 @@ gulp.task('js', () => {
 
 	rebundle();
 });
-
 
 gulp.task('bs-client', function () {
 	browserSync({
