@@ -5,6 +5,7 @@ import AuthMixin from '../../services/authMixin.jsx';
 import config from '../../services/config.jsx';
 import coursesData from '../../services/courses.jsx';
 import userData from '../../services/user.jsx';
+import issuesData from '../../services/issues.jsx';
 import Loading from '../loading/index.jsx';
 import auth from '../../services/authentication.jsx';
 import ClassroomContainer from './classroom-container.jsx';
@@ -18,7 +19,8 @@ export default React.createClass({
 			courses: [],
 			filter: 'SHOW_ALL',
 			user: {},
-			loading: true
+			loading: true,
+			numOfIssues: 0
 		}
 	},
 	componentWillMount(){
@@ -54,6 +56,16 @@ export default React.createClass({
 			})
 
 		});
+		issuesData.getAllIssues()
+			.then((res) => {
+				const activeIssues = res.issues.filter((item) => {
+					return item.archived === false
+				}).length;
+				this.setState({
+					numOfIssues: activeIssues
+				})
+
+			})
 	},
 
 	favoriteClass(id) {
@@ -80,6 +92,9 @@ export default React.createClass({
 
 	render() {
 		let isAdmin = this.state.user.admin;
+		let showNotification = (
+			<div className="flaggedNum"><p>{this.state.numOfIssues}</p></div>
+		)
 		let adminPanel = <header className="intro">
 			<h2>What would you like to do?</h2>
 			<div className='buttons'>
@@ -110,7 +125,8 @@ export default React.createClass({
 					<i className="fa fa-check-square-o"></i>
 					<p>Questions</p>
 				</Link>
-					<Link className="linkBtn dashboardBtn" to='issues'>
+				<Link className="linkBtn dashboardBtn flagged" to='issues'>
+					{this.state.numOfIssues !== 0 ? showNotification : null}
 					<i className="fa fa-inbox"></i>
 					<p>Flagged Notes</p>
 				</Link>
