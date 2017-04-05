@@ -123,15 +123,23 @@ p.editTopic {
 	margin-top: 35px;
 }
 
-.lessonTitle .topic-edit {
-	float: right;
-	opacity: 0.5;
-	font-size: 16px;
+.lessonTitle {
 	position: relative;
-	top: 13px;
-	margin-right: 13px;
-	&:hover {
-		cursor: pointer;
+	.flag-in-topic {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+	.topic-edit {
+		float: right;
+		opacity: 0.5;
+		font-size: 16px;
+		position: relative;
+		top: 13px;
+		margin-right: 13px;
+		&:hover {
+			cursor: pointer;
+		}
 	}
 }
 

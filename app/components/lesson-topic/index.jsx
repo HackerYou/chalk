@@ -74,7 +74,7 @@ export default React.createClass({
 		let showEdit = '';
 		if(this.state.user.instructor && this.state.user.admin) {
 			showEdit = (
-				<div>
+				<div className="flag-in-topic">
 					<i className="fa fa-pencil topic-edit" onClick={this.editLesson}></i>
 					<i className="fa fa-flag topic-edit" onClick={this.flagLesson}></i>
 				</div>
