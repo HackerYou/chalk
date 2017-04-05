@@ -84,6 +84,17 @@ export default {
 			}
 		});
 	},
+	setDashboardFilter(filter) {
+		return $.ajax({
+			url: `${config.getApiUrl()}/user/setDashboardFilter`.replace('v1','v2'),
+			method: 'POST',
+			headers: {
+				'x-access-token': config.getToken(),
+				'Content-Type': 'application/json'
+			},
+			data: JSON.stringify({filter})
+		});
+	},
 	favoriteClass(courseId) {
 		return $.ajax({
 			url: `${config.getApiUrl()}/user/favoriteClassroom`.replace('v1','v2'),
