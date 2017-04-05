@@ -115,8 +115,23 @@ gulp.task('bs-guide', function () {
 	})
 });
 
+gulp.task('js', function() {
+	browserify(paths.jsx)
+		.transform(babelify,{presets: ["es2015", "react"], plugins: ['transform-object-rest-spread']})
+		.bundle().on('error', $.notify.onError({
+      title: "JSX Error",
+      message: "<%= error.message %>"
+    }))
+	.pipe(source('app.min.js'))
+    .pipe(buffer())
+    .pipe($.sourcemaps.init({loadMaps: true}))
+    .pipe($.uglify())
+    .pipe($.sourcemaps.write('.'))
+	.pipe(gulp.dest('app/components'));
+});
 
-gulp.task('js', () => {
+
+gulp.task('dev', () => {
 	const bundler = watchify(browserify(paths.jsx, { debug: true, cache: {} }))
 		.transform(babelify, {
 			presets: ['es2015', 'react'],
@@ -161,7 +176,7 @@ gulp.task('bs-client', function () {
 
 gulp.task('build', ['js','styles']);
 
-gulp.task('default', ['styles', 'js','bs-client'], () => {
+gulp.task('default', ['styles', 'dev','bs-client'], () => {
 	gulp.watch(paths.srcCSS + '**/*.scss', ['styles']);
 });
 
