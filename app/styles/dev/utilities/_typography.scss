@@ -317,6 +317,9 @@ i[class^="chalk-"] {
 .chalk-users:before {
   content: "\e913";
 }
+.chalk-star {
+  cursor: pointer;
+}
 .chalk-star:before {
   content: "\e914";
 }
