@@ -30,7 +30,6 @@ export default React.createClass({
 			}
 			let isAdmin = res.user.admin;
 			if (isAdmin) {
-				
 				this.setState({
 					user: res.user
 				});
@@ -50,6 +49,10 @@ export default React.createClass({
 					loading: false
 				});
 			}
+			this.setState({
+				filter: res.user.dashboardFilter
+			})
+
 		});
 	},
 
@@ -68,6 +71,7 @@ export default React.createClass({
     },
 
 	updateFilter(filter) {
+		user.setDashboardFilter(filter);
 		this.setState({
 			filter
 		})
