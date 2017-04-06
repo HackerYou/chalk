@@ -49,6 +49,7 @@ export default React.createClass({
 		});
 	},
 	renderTopics(key, index){
+		console.log("topic", this.state.topic)
 		return <LessonTopic key={index} index={index} details={this.state.topic[index]} />
 	},
 	openModal(){

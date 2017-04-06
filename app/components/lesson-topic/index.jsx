@@ -83,6 +83,7 @@ export default React.createClass({
 		else if(this.state.user.admin) {
 			showEdit = <i className="fa fa-flag topic-edit" onClick={this.flagLesson}></i>;
 		}
+
 		return (
 			<div className="lessonTopic">
 				<h2 className="lessonTitle">{this.props.details.title} {showEdit}</h2>
