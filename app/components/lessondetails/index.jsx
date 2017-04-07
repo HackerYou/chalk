@@ -40,7 +40,7 @@ export default React.createClass({
 	render() {
 		let showList = (
 			this.state.topics.map((item, i) => {
-				return <li key={`topic-${i}`}>{item}</li>
+				return <li className="lessonTopics" key={`topic-${i}`}>{item}</li>
 			})
 		)
 		let openList = (
@@ -61,7 +61,7 @@ export default React.createClass({
 					<i className={this.props.star ? 'chalk-star redLight' : 'chalk-star'} onClick={() => this.props.starLesson(this.props.classroomId, this.props.details._id, this.props.star)}></i>
 					{this.state.showList === false ? openList : closeList}
 				</div>
-				<ul>
+				<ul className="tableContent">
 					{this.state.showList ? showList : null}
 				</ul>
 				

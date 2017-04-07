@@ -100,9 +100,6 @@ export default React.createClass({
 				});
 
 		});
-		// let topicsId = this.props.params.details;
-		// console.log("sddsas", topicsId)
-		// lessonData.getLessonById()
 	},
 	starLesson(classroomId, lessonId, star) {
 		const courseId = this.props.params.courseId;
@@ -140,28 +137,6 @@ export default React.createClass({
 	
 		return <LessonDetails key={index} starLesson={this.starLesson} index={index} details={key} classroomId={this.props.params.courseId} star={star} />
 	},
-	// getTopicNames(topics) {
-	// 		// console.log("topics", topics)
-	// 		topics.topics.map((title) => {
-	// 			topicsData.getTopicById(title)
-	// 				.then((res) => {
-	// 					console.log("res",res)
-
-	// 					// console.log("results", res.topic.title)
-	// 					// this.setState({
-	// 					// 	topics: res
-	// 					// })
-	// 				})
-	// 		})
-	// 		// topicsData.getTopicById(topicId)
-	// 		// 	.then((res) => {
-	// 		// 		console.log(res.topic.title)
-	// 		// 		// console.log("results", res.topic.title)
-	// 		// 		// this.setState({
-	// 		// 		// 	topics: res
-	// 		// 		// })
-	// 		// 	})
-	// },
 	renderTopics(key, index){
 		let link = '#' + this.state.sections[index].title.replace(/ /g, "_").toLowerCase();
 		return <li key={index}><a href={link}>{this.state.sections[index].title}</a></li>;

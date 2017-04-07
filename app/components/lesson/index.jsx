@@ -49,8 +49,7 @@ export default React.createClass({
 		});
 	},
 	renderTopics(key, index){
-		console.log("topic", this.state.topic)
-		return <LessonTopic key={index} index={index} details={this.state.topic[index]} />
+		return <LessonTopic key={index} index={index} topics={this.state.topic} details={this.state.topic[index]} />
 	},
 	openModal(){
 		this.setState({isModalOpen: true});
@@ -66,7 +65,6 @@ export default React.createClass({
 		});
 		Media.uploadFile(file[0])
 			.then((data) => {
-				console.log(data);
 				const fileName = data.media.path;
 				const newLesson = Object.assign(this.state.lesson,{
 					exercise_link: fileName
