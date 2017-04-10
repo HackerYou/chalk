@@ -6,6 +6,7 @@ let ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 import AuthMixin from '../../services/authMixin.jsx';
 import coursesData from '../../services/courses.jsx';
 import userData from '../../services/user.jsx';
+import topicsData from '../../services/topic.jsx';
 import config from '../../services/config.jsx';
 import Sticky from '../../services/sticky.js';
 import Loading from '../loading/index.jsx';
@@ -38,7 +39,9 @@ export default React.createClass({
 			loading: true,
 			memberError: '',
 			testCompletion: false,
-			students: []		}
+			students: [],
+			topics: {}
+		}
 	},
 	openModal(){
 		this.setState({isModalOpen: true});
@@ -130,6 +133,7 @@ export default React.createClass({
 				return lesson._id === key._id
 			}).length > 0 ? true : false;
 		}
+	
 		return <LessonDetails key={index} starLesson={this.starLesson} index={index} details={key} classroomId={this.props.params.courseId} star={star} />
 	},
 	renderTopics(key, index){

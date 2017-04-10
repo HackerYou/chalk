@@ -149,3 +149,14 @@ p.editTopic {
 	justify-content: space-between;
 	align-items: center;
 }
+
+ul.tableContent {
+	padding-left: 0;
+	li.lessonTopics {
+		list-style: none;
+		padding: 6px 0 !important;
+		&:before {
+			display: none;
+		}
+	}
+}
