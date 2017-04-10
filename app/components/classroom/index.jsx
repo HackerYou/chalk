@@ -7,7 +7,6 @@ import AuthMixin from '../../services/authMixin.jsx';
 import coursesData from '../../services/courses.jsx';
 import userData from '../../services/user.jsx';
 import topicsData from '../../services/topic.jsx';
-// import lessonData from '../../services/lessons.jsx';
 import config from '../../services/config.jsx';
 import Sticky from '../../services/sticky.js';
 import Loading from '../loading/index.jsx';
