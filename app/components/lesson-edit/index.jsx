@@ -334,6 +334,7 @@ export default React.createClass({
 												<option value="html">HTML</option>
 												<option value="css">CSS</option>
 												<option value="javascript">JavaScript</option>
+												<option value="javascript-pt">Part Time - JavaScript</option>
 												<option value="git">Git</option>
 												<option value="wordpress">WordPress</option>
 												<option value="wordpress-pt">Part Time - WordPress</option>

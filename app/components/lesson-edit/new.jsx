@@ -15,7 +15,6 @@ export default React.createClass({
 		}).then(res=>{
 			//get lesson id and add lesson to section
 			let lessonId = res.lesson._id;
-			console.log(lessonId)
 			let sectionId = this.props.params.sectionId;
 			coursesData.addLessonToSection(sectionId, lessonId).then(res=>{
 				this.history.pushState(null, `/lesson/${lessonId}/${this.props.params.classroomId}/edit`);
