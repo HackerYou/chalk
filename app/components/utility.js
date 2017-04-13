@@ -7,7 +7,7 @@ let helpers =  {
   expect: function(obj, prop, _default) {
     return obj ? obj[prop] : _default;
   },
-  formatDate :  function(date) {
+  formatDate: function(date) {
   	return moment(date).format('MMMM D YYYY').toString();
   },
   isEmpty: function(obj) {
