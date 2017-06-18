@@ -45,6 +45,7 @@ export default class FilteredSearch extends React.Component {
 						<option value="css">CSS</option>
 						<option value="javascript">JavaScript</option>
 						<option value="javascript">React</option>
+						<option value="exam">Final Exam</option>
 					</select>
 					<label className="inline largeLabel">Search keyword</label>
 					<input type="text" ref={ref => this.searchKey = ref} />
