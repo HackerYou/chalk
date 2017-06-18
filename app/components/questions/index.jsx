@@ -249,6 +249,7 @@ export default React.createClass({
 								<option value="css">CSS</option>
 								<option value="javascript">JavaScript</option>
 								<option value="react">React</option>
+								<option value="exam">Final Exam</option>
 							</select>
 						</div>
 						<div className="fieldRow">
