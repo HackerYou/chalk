@@ -140,6 +140,20 @@
 			}
 		}
 	}
+	.memebersSection {
+		margin-right: 5px;
+		label {
+			display: inline-block;
+			border-radius: 3px;
+			padding: 0 3px;
+		}
+		input {
+			display: none;
+		}
+		input[type=checkbox]:checked + label {
+			background: $green;
+		}
+	}
 }
 
 
