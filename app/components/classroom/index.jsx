@@ -156,13 +156,13 @@ export default React.createClass({
 		let sectionId = e.target.id;
 		this.history.pushState(null,`/lesson/${classroomId}/${sectionId}/new`);
 	},
-	renderSections(key, index){
-		let title = this.state.sections[index].title.replace(/ /g, "_").toLowerCase();
-		return (<li key={index} className="lessonGroup" id={title}>
-				<h3>{this.state.sections[index].title}</h3>
+	renderSections(section, index){
+		let title = section.title.replace(/ /g, "_").toLowerCase();
+		return (<li key={section._id} className="lessonGroup" id={title}>
+				<h3>{section.title}</h3>
 				<div className="card lessonCard">
 					<ol className="lessonSection">
-						{(this.state.sections[index].lessons).map(this.renderLessons)}
+						{(section.lessons).map(this.renderLessons)}
 					</ol>
 				</div>
 			</li>);
@@ -170,9 +170,6 @@ export default React.createClass({
 	editCourse(e){
 		e.preventDefault();
 		this.history.pushState(null, `/classroom/${this.props.params.courseId}/edit`);
-	},
-	renderMembers(obj, index){
-		return <li key={index}>{this.state.members[index].firstName +" "+ this.state.members[index].lastName +" - "+ this.state.members[index].email} <i className="chalk-remove"></i></li>
 	},
 	addUser(e){
 		e.preventDefault();
@@ -220,9 +217,6 @@ export default React.createClass({
 				});
 			});
 		}
-	},
-	renderMembers(obj, index){
-		return <li key={index}>{this.state.members[index].firstName +" "+ this.state.members[index].lastName +" - "+ this.state.members[index].email} <i id={this.state.members[index]._id} onClick={this.removeUser} className="chalk-remove"></i></li>
 	},
 	showFavs() {
 		if(!this.state.showFavs) {
@@ -290,25 +284,76 @@ export default React.createClass({
 				
 			)
 		}
-		
+	},
+	removeSectionOnUser(e,section,userId) {
+		//Remove section from user,
+		userData.removeCourseSection(this.state.course._id,section._id,userId)
+			.then((res) => {
+				//Get member again.
+				const memberState = Array.from(this.state.members);
+				const memberIndex = memberState.findIndex(member => member._id === userId);
+				memberState[memberIndex] = res.user;
+				this.setState({
+					members: memberState
+				});
+			})
+			.fail((err) => alert(`An error occured: ${err.error}`));
+	},
+	addSectionOnUser(e,section,userId) {
+		userData.addCourseSection(this.state.course._id,section._id,userId)
+			.then((res) => {
+				//Get member again.
+				const memberState = Array.from(this.state.members);
+				const memberIndex = memberState.findIndex(member => member._id === userId);
+				memberState[memberIndex] = res.user;
+				this.setState({
+					members: memberState
+				});
+			})
+			.fail((err) => alert(`An error occured: ${err.error}`));
+	},
+	displayMembers() {
+		if (this.state.members.length <= 0) {
+		 	return <p className="emptyState">No members yet!</p>
+		} else {
+			return (
+				<ul className="membersModalList">
+					{(this.state.members).map((user, index) => {
+						let currentCourse = user.courseSections.find((course) => course.courseId === this.state.course._id);
+						if(currentCourse === undefined) {
+							currentCourse = {
+								sections:[]
+							};
+						}
+						return (
+							<li key={user._id}>
+								<strong>{user.firstName +" "+ user.lastName +" - "+ user.email}</strong> <i className="chalk-remove"></i>
+								<div>
+									{this.state.course.sections.map(section => {
+										return (
+											<span key={`${user._id}-${section._id}`} className="memebersSection">
+												{currentCourse.sections.indexOf(section._id) >= 0 ? 
+													<input type="checkbox" checked="true" onChange={(e) => this.removeSectionOnUser(e,section,user._id)} id={`${user._id}-${section._id}`}/> : 
+													<input type="checkbox" onChange={(e) => this.addSectionOnUser(e,section,user._id)} id={`${user._id}-${section._id}`} />}
+												<label htmlFor={`${user._id}-${section._id}`}>{section.title}</label>
+											</span>
+										)
+									})}
+								</div>
+							</li>
+						)
+					})}
+				</ul>
+			)
+		}
 	},
 	render() {
 		let tests = this.state.course.tests;
 		let isAdmin = this.state.user.admin;
 		let isInstructor = this.state.user.instructor;
 		let dragAndDrop = <p className="title">Drag and drop to reorganize lessons</p>
-		let displayMembers;
 		let favList = typeof this.state.user.favorites[this.props.params.courseId] !== "undefined" ? this.state.user.favorites[this.props.params.courseId].lessons : [];
 		let displayFavButton= <button className="primary" onClick={this.showFavs}>{this.state.showFavs ? 'show all lessons' : 'show starred lessons'}</button>
-		if (this.state.members.length <= 0) {
-			displayMembers = <p className="emptyState">No members yet!</p>
-		} else {
-			displayMembers = (
-				<ul className="membersModalList">
-					{(this.state.members).map(this.renderMembers)}
-				</ul>
-			)
-		}
 		let members = (
 			<div className="card">
 				<h3>Members</h3>
@@ -364,7 +409,15 @@ export default React.createClass({
 				<Loading loading={this.state.loading} />
 				<section className="lessonsWrap clearfix">
 					<ol className="lessonColumn">
-						{(this.state.sections).map(this.renderSections)}
+						{(this.state.sections)
+							.filter(section => {
+								//Filter
+								const currentCourseForUser = this.state.user.courseSections.find(course => {
+									return course.courseId === this.state.course._id;
+								});
+								return currentCourseForUser.sections.indexOf(section._id) >= 0;
+							})
+							.map(this.renderSections)}
 					</ol>
 					<Sticky className="lessonMeta" stickyClass="supersticky" stickyStyle={{}} topOffset={100} bottomOffset={this.state.pageHeight}>
 					<aside>
@@ -406,7 +459,7 @@ export default React.createClass({
 									</div>
 									<div className="memberModalColumn memberModalManage">
 										<h3>Classroom Members</h3>
-										{displayMembers}
+										{this.displayMembers()}
 
 									</div>
 								</div>

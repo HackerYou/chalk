@@ -136,6 +136,26 @@ export default {
 				'Content-Type': 'application/json'
 			}
 		});
+	},
+	removeCourseSection(courseId,sectionId,userId) {
+		return $.ajax({
+			url: (`${config.getApiUrl()}/user/removeCourseSection/${userId}/${courseId}/${sectionId}`).replace('v1','v2'),
+			method: 'DELETE',
+			headers: {
+				'x-access-token': config.getToken(),
+				'Content-Type': 'application/json'
+			}
+		});
+	},
+	addCourseSection(courseId,sectionId,userId) {
+		return $.ajax({
+			url: (`${config.getApiUrl()}/user/addCourseSection/${userId}/${courseId}/${sectionId}`).replace('v1','v2'),
+			method: 'PUT',
+			headers: {
+				'x-access-token': config.getToken(),
+				'Content-Type': 'application/json'
+			}
+		});
 	}
 };
 
