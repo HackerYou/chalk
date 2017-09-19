@@ -412,6 +412,9 @@ export default React.createClass({
 						{(this.state.sections)
 							.filter(section => {
 								//Filter
+								if(this.state.user.admin === true) {
+									return true
+								}
 								const currentCourseForUser = this.state.user.courseSections.find(course => {
 									return course.courseId === this.state.course._id;
 								});
