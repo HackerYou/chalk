@@ -118,13 +118,14 @@ export default React.createClass({
 			this.setState({lessonTopics: updatedTopics});
 		});
 	},
-	deleteTopic(index){
+	deleteTopic(id){
 		let deleteConfirm = confirm('Are you sure you want to delete this topic?');
-
+		const topicToDelete = this.state.lessonTopics.find(l => l._id === id);
+		const topicIndex = this.state.lessonTopics.findIndex(l => l._id === id);
 		if(deleteConfirm) {
-			lessonData.deleteTopicFromLesson(this.props.params.lessonId, this.state.lessonTopics[index]._id).then(res=>{
+			lessonData.deleteTopicFromLesson(this.props.params.lessonId, topicToDelete._id).then(res=>{
 				let updatedLessons = this.state.lessonTopics.slice();
-				updatedLessons.splice(index, 1);
+				updatedLessons.splice(topicIndex, 1);
 				this.setState({lessonTopics: updatedLessons});
 			});
 		}
@@ -191,11 +192,11 @@ export default React.createClass({
 	    } catch (err) {}
 	    	return ''; // use external default escaping
 	  	};
-		return <div key={index} className='lessonTopic' draggable="true" onDragEnd={this.dragEnd} onDragStart={this.dragStart} data-id={index} >
+		return <div key={key._id} className='lessonTopic' draggable="true" onDragEnd={this.dragEnd} onDragStart={this.dragStart} data-id={index} >
 					<details>
 					<summary className="lessonTitle">{this.state.lessonTopics[index].title}</summary>
 					<div className="deleteTopicBlock">
-						<p data-id={this.state.lessonTopics[index]._id} onClick={this.deleteTopic.bind(this, index)} className="deleteTopic"><i className="chalk-remove "></i>Remove {this.state.lessonTopics[index].title}</p>
+						<p data-id={this.state.lessonTopics[index]._id} onClick={this.deleteTopic.bind(this, key._id)} className="deleteTopic"><i className="chalk-remove "></i>Remove {this.state.lessonTopics[index].title}</p>
 						<p data-id={this.state.lessonTopics[index]._id} onClick={this.editTopic.bind(this, this.state.lessonTopics[index]._id)} className="editTopic"><i className="chalk-edit "></i>Edit {this.state.lessonTopics[index].title}</p>
 					</div>
 					<Markdown options={{'html':true, highlight: hl}}>{this.state.lessonTopics[index].body}</Markdown>
