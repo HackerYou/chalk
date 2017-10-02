@@ -205,9 +205,8 @@ export default React.createClass({
 			});
 		});
 	},
-	removeUser(e){
+	removeUser(e,userId){
 		e.preventDefault();
-		let userId = e.target.id;
 		let deleteConfirm = confirm('Are you sure you want to delete this user?');
 		if(deleteConfirm) {
 			coursesData.removeUserFromCourse(this.props.params.courseId, userId).then(res=>{
@@ -327,7 +326,7 @@ export default React.createClass({
 						}
 						return (
 							<li key={user._id}>
-								<strong>{user.firstName +" "+ user.lastName +" - "+ user.email}</strong> <i className="chalk-remove"></i>
+								<strong>{user.firstName +" "+ user.lastName +" - "+ user.email}</strong> <i className="chalk-remove" onClick={(e) => this.removeUser(e,user._id)}></i>
 								<div>
 									{this.state.course.sections.map(section => {
 										return (
