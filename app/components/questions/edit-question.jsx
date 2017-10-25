@@ -325,10 +325,11 @@ export default React.createClass({
 								{(() => {
 									if(this.state.updatedQuestion.multiChoice) {
 										return this.state.updatedQuestion.multiChoice.map((item, i) => {
+											const name = item.value.replace(' ','');
 											return (
 												<div className="mcOptions--duo" key={i}>
-													<input className="inline" name="lala" type="radio" value={item.value}/>
-													<label>{item.label}</label>
+													<input className="inline" name={name} type="radio" value={item.value}/>
+													<label htmlFor={name} id={name}>{item.label}</label>
 													<i onClick={() => this.removeOption(item._id, i)} className="fa fa-times"></i>
 												</div>
 											)

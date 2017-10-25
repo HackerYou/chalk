@@ -4,10 +4,8 @@ import AuthMixin from '../../services/authMixin.jsx';
 import userData from '../../services/user.jsx';
 import questionData from '../../services/questions.jsx';
 import QuestionCards from './cards.jsx';
-import CodeMirror from 'react-codemirror';
 import FilteredSearch from './filteredSearch.jsx';
 import CodeArea from './codeArea.jsx';
-require('codemirror/mode/javascript/javascript');
 import Loading from '../loading/index.jsx';
 
 
@@ -283,10 +281,11 @@ export default React.createClass({
 								</div>
 								<div className="fieldRow">
 									{this.state.answerOption.map((item, i) => {
+										const name = item.value.replace(' ', '');
 										return (
 											<div className="mc-options" key={i}>
-												<input className="inline" name="lala" type="radio" value={item.value}/>
-												<label>{item.label}&nbsp;
+												<input className="inline" name={name} type="radio" value={item.value}/>
+												<label htmlFor={name} id={name}>{item.label}&nbsp;
 												<i onClick={() => this.removeOption(item.label)} className="fa fa-times"></i>
 												</label>
 												
