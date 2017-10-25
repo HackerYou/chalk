@@ -296,7 +296,6 @@ export default React.createClass({
 							(() => {
 								if(res.type === "multiple choice") {
 									return mc.map((item, i) => {
-										console.log(item);
 										return (
 											<div key={i} className="fieldRow fieldRowQuestion">
 												<input 
