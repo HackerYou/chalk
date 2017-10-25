@@ -296,18 +296,17 @@ export default React.createClass({
 							(() => {
 								if(res.type === "multiple choice") {
 									return mc.map((item, i) => {
-
 										return (
 											<div key={i} className="fieldRow fieldRowQuestion">
 												<input 
 												onChange={() => this.updateAnswer(item.value, res._id)} 
-												name={res._id} 
+												name={item._id} 
 												type="radio" 
-												id={item.value} 
+												id={item._id} 
 												value={item.value}
 												checked={res.userAnswer ? item.value === res.userAnswer : null} 
 												disabled={item.value === res.userAnswer ? true : this.checkDisabled(res._id)}/>
-												<label htmlFor={item.value}>{item.label}</label>
+												<label htmlFor={item._id}>{item.label}</label>
 											</div>
 										)
 									});
@@ -324,6 +323,7 @@ export default React.createClass({
 							type="submit" 
 							onClick={() => this.evaluateQuestion(res._id)}
 							value="Submit Question"
+							className={res.userAnswer || this.state.answer[res._id] === "submitted" ? 'answered' : null}
 							disabled={this.checkDisabledSubmit(res._id)} />
 					</div>
 				)
@@ -337,7 +337,7 @@ export default React.createClass({
 		)
 
 		return (
-			<div className='classCard'>
+			<div className='classCard testQuestions'>
 				<h2>{testInfo.test.title}</h2>
 				{this.renderQuestions()}
 
