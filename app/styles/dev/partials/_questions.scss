@@ -46,6 +46,15 @@
 	}
 }
 
+.testQuestions {
+	input[type=submit].answered {
+		background: $blue;
+	}
+	input[type=submit] {
+		background: $green;
+	}
+}
+
 //CodeMirror element 
 .codeContainer {
 	display: flex;
@@ -61,6 +70,7 @@
 	padding: 10px;
 	margin-bottom: 15px;
 }
+
 .mcOptions {
 	background: #efefed;
 	padding: 15px;
