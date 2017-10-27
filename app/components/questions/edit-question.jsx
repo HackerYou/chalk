@@ -21,7 +21,7 @@ function findIndex(array,key,value) {
 
 export default React.createClass({
 	_notificationSystem: null,
-	displayName: 'Questions',
+	displayName: 'EditQuestions',
 	mixins: [AuthMixin,History],
 	getInitialState() {
 		return {
@@ -89,7 +89,7 @@ export default React.createClass({
 
 		this.setState({
 			updatedQuestion: updatedObj
-		});
+		},this.updateQuestion);
 	},
 	addOption(e) {
 		e.preventDefault();
@@ -230,8 +230,8 @@ export default React.createClass({
 		})
 		//if showType is equal MC then add class
 	},
-	updateQuestion(e) {
-		e.preventDefault();
+
+	updateQuestion() {
 		const updatedQuestion = this.state.updatedQuestion;
 
 		const multiAnswer = this.setAnswer.value;
@@ -244,13 +244,11 @@ export default React.createClass({
 		}
 		questionData.editQuestion(this.props.params.questionId, updatedQuestion)
 			.then(res => {
-
 				this._successNotification({
-				title: 'Question',
-				message: 'Saved Successfully'
+					title: 'Question',
+					message: 'Saved Successfully'
+				});
 			});
-		});
-
 	},
 	changeQuestionView() {
 		this.setState({
@@ -270,6 +268,11 @@ export default React.createClass({
 			updatedQuestion: ogQ
 		})
 	},
+	updateAnswer(e) {
+		const state = Object.assign({},this.state);
+		state.updatedQuestion.multiAnswer = this.setAnswer.value;
+		this.setState(state)
+	},
 	render() {
 		return (
 			<div className="classCard">
@@ -277,7 +280,10 @@ export default React.createClass({
 				<h2>Title of your question: {this.state.updatedQuestion.title}</h2>
 				<section className="full detailsForm topicsForm card">
 					<h3>Assign Attributes to your Question:</h3>
-					<form onSubmit={this.updateQuestion}>
+					<form onSubmit={(e) => {
+						e.preventDefault();
+						this.updateQuestion();
+					}}>
 						<div className="fieldRow">
 							<label className="inline largeLabel">Title of your question:</label>
 							<input type="text" name="title" value={this.state.updatedQuestion.title} onChange={this.updateField}/>
@@ -331,6 +337,7 @@ export default React.createClass({
 													<input className="inline" name={name} type="radio" value={item.value}/>
 													<label htmlFor={name} id={name}>{item.label}</label>
 													<i onClick={() => this.removeOption(item._id, i)} className="fa fa-times"></i>
+													<p className="mcOptions--value">The value is: {item.value}</p>
 												</div>
 											)
 										});
@@ -342,7 +349,7 @@ export default React.createClass({
 								</div>
 								<div className="fieldRow">
 									<label className="inline largeLabel">What is the answer?</label>
-									<input type="text" ref={ref => this.setAnswer = ref} value={this.state.updatedQuestion.multiAnswer} />
+									<input type="text" ref={ref => this.setAnswer = ref} value={this.state.updatedQuestion.multiAnswer} onChange={this.updateAnswer} />
 								</div>
 							</div>
 							<div className={this.state.updatedQuestion.type === 'code' ? 'showType' : 'hideType'}>
