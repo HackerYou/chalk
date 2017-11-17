@@ -300,7 +300,7 @@ export default React.createClass({
 											<div key={i} className="fieldRow fieldRowQuestion">
 												<input 
 												onChange={() => this.updateAnswer(item.value, res._id)} 
-												name={item._id} 
+												name={res._id} 
 												type="radio" 
 												id={item._id} 
 												value={item.value}
