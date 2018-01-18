@@ -72,7 +72,7 @@ export default React.createClass({
 		}
 
 		let showEdit = '';
-		if(this.state.user.instructor && this.state.user.admin) {
+		if(this.state.user.admin) {
 			showEdit = (
 				<div className="flag-in-topic">
 					<i className="fa fa-pencil topic-edit" onClick={this.editLesson}></i>
@@ -80,7 +80,7 @@ export default React.createClass({
 				</div>
 			);
 		}
-		else if(this.state.user.admin) {
+		else if(this.state.user.admin || this.state.user.instructor) {
 			showEdit = <i className="fa fa-flag topic-edit" onClick={this.flagLesson}></i>;
 		}
 
