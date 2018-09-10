@@ -1,5 +1,4 @@
 import React from 'react';
-import Exercise from '../exercise/index.jsx';
 import Markdown from 'react-remarkable';
 import Prism from 'prismjs';
 import userData from '../../services/user.jsx';

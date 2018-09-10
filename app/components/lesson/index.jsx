@@ -8,7 +8,6 @@ import userData from '../../services/user.jsx';
 import config from '../../services/config.jsx';
 import coursesData from '../../services/courses.jsx';
 import Loading from '../loading/index.jsx';
-import Exercise from '../exercise/index.jsx';
 import Dropzone from 'react-dropzone';
 import Media from '../../services/media.jsx';
 
@@ -85,10 +84,6 @@ export default React.createClass({
 
 		let templateLink = `/course-templates/${this.props.params.classroomId}/edit`;
 		let classroomLink = `/classroom/${this.props.params.classroomId}`
-		let exerciseLink = '';
-		if(this.state.lesson.exercise_link && this.state.lesson.exercise_link.length > 0) {
-			exerciseLink = <Exercise link={this.state.lesson.exercise_link} />
-		}
 		return (
 		<div className="full">
 				<header className="topContent container">
@@ -97,25 +92,7 @@ export default React.createClass({
 					</div>
 					<div className="lessonHeader">
 						<h1>{this.state.lesson.title}</h1>
-						<div>
-							{(()=> {
-								if(isAdmin) {
-									return <p><a href="#" onClick={this.openModal}><i className="fa fa-cloud-upload"></i> Upload Exercise Files</a></p>;
-								}
-							})()}
-							{exerciseLink}
-						</div>
 					</div>
-					<Modal isOpen={this.state.isModalOpen} transitionName='modal-animation'>
-							<div className="modalBody--small card loginModal">
-								<i className="chalk-close" onClick={this.closeModal}></i>
-								<h3>Upload an exercise file</h3>
-								<p>Please give it a good name, for example <code>pt-class8-exercises.zip</code>.</p>
-								<Dropzone onDrop={this.onDrop} className="dropZone">
-									<p>Drag and drop files here or click to select files to upload</p>
-								</Dropzone>
-							</div>
-					</Modal>
 				</header>
 				<section className="lessonView card">
 					<Loading loading={this.state.loading} />
